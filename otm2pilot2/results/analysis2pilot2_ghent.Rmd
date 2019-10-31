@@ -1,0 +1,170 @@
+---
+title             : "Analysis of OTM 2 pilot 2"
+author            : "Frederik Aust & Tobias Heycke"
+date              : "`r format(Sys.time(), '%d %B, %Y')`"
+
+output:
+  bookdown::html_document2:
+    theme         : "spacelab"
+    df_print      : "kable"
+    code_folding  : "hide"
+    toc           : true
+    toc_float     : true
+---
+
+# Set up analysis
+
+```{r init, include = FALSE}
+library("magrittr")
+library("tidyr")
+library("dplyr")
+library("assertthat")
+
+library("papaja")
+library("ggplot2")
+library("ggforce")
+library("cowplot")
+
+library("afex")
+library("emmeans")
+library("BayesFactor")
+
+source("https://gist.githubusercontent.com/crsh/bd4d1f62d300462ea0c0f44b9ad38616/raw/edd9c74e24b68f42433c2526cafc888509b1b8bc/batch_download_github.R")
+source("https://gist.githubusercontent.com/crsh/357458c41fd3d554fb24/raw/f7725d5c4894a055a1b2e461dc5c39f3db23b2b8/batch_read.R")
+
+source("../../analysis_and_paper/modal_frame_rate.R")
+
+# Set seed for random number generator
+set.seed(315054738)
+
+# Use effect coding
+options(contrasts = c("contr.sum", "contr.poly"))
+
+# Use multivariate models for emmeans contrasts and post-hoc tests
+afex_options(emmeans_model = "multivariate")
+
+# Configure df approximation for mixed model contrasts and post-hoc tests
+emm_options(
+  lmer.df = "satterthwaite"
+  , lmerTest.limit = 22384
+)
+
+#t test print function
+printBFt <- function(BF, HStyle = 0, index = 1, OutputSize = 99999.99 , postit = 1000000, N = FALSE){
+  if(as.vector(BF[index]) < 1 & HStyle == 0){
+    b <- 1/as.vector(BF[index])
+    num <- "01"
+  }else{
+    b <- as.vector(BF[index])
+    num <- "10"
+  }
+  s <- " "
+  if(N == TRUE) s <- paste0('(', nrow(BF@data), ') ') 
+  if(as.character(class(BF@numerator[[names(BF@numerator)[index]]])) == "BFoneSample"){
+    rBF <- BayesFactor::ttestBF(BF@data[,1], mu = BF@numerator[[names(BF@numerator)[index]]]@prior$mu, rscale = BF@numerator[[names(BF@numerator)[index]]]@prior$rscale)
+  }
+  if(as.character(class(BF@numerator[[names(BF@numerator)[1]]])) == "BFindepSample"){
+      rBF <- BayesFactor::ttestBF(subset(BF@data, BF@data[,2] == "x")[,1] , subset(BF@data, BF@data[,2] == "y")[,1], rscale = BF@numerator[[names(BF@numerator)[index]]]@prior$rscale, paired = FALSE)
+    }
+  post <- BayesFactor::posterior(rBF, index = index, iterations = postit)
+  d <- median(post[, "delta"])
+  HDI <- coda::HPDinterval(post[, "delta"])
+  ifelse(b > OutputSize, paste0('$\\mathit{BF}_{', num, '}', s, '= ', as.scientific(b), '$', ', ', '$d = ', printnum(d), '$', ', ', '95% HDI [', printnum(HDI[1]), ', ', printnum(HDI[2]), ']'), paste0('$\\mathit{BF}_{', num, '}', s, '= ', printnum(b), '$', ', ', '$d = ', printnum(d), '$', ', ', '95% HDI [', printnum(HDI[1]), ', ', printnum(HDI[2]), ']'))
+}
+```
+
+```{r otm2pilot2-analysis-preferences, cache = TRUE}
+# Data wrangling
+process_rawdata <- TRUE
+
+# Data location
+raw_data_path <- "data_raw_ghent/"
+processed_data_path <- "data_processed_ghent/"
+
+# Default ggplot theme
+theme_set(theme_apa())
+
+## Ugly hack to overcome bug in ggplot2, https://github.com/tidyverse/ggplot2/issues/2058
+assignInNamespace("theme_nothing", function() {
+    theme_void() + theme(axis.text.x = NULL, axis.text.y = NULL, axis.line.x = element_blank(), axis.line.y = element_blank())
+}, "cowplot")
+
+# Number of MCMC samples for Bayesian analysis
+otm2_n_mcmc_samples <- 1e6
+```
+
+# Load the Data
+
+```{r otm2pilot2-load-data, cache = TRUE, dependson = "otm2pilot-analysis-preferences", warning = FALSE}
+# Process raw data
+if(process_rawdata) {
+  
+  # Merge raw data
+  otm2p2_eval <- batch_read(
+    raw_data_path
+    , pattern = "Eval"
+    , recursive = TRUE
+    , read_fun = read.delim
+  )
+
+
+  otm2p2_mem <- batch_read(
+    raw_data_path
+    , pattern = "MemTest"
+    , recursive = TRUE
+    , read_fun = read.delim
+  )
+  
+
+  otm2p2_log <- batch_read(
+    raw_data_path
+    , pattern = "ScreenLog"
+    , recursive = TRUE
+    , read_fun = read.csv
+    , header = FALSE
+  )
+  
+
+  otm2p2_analysis_factors <- c("ParticipantNumber", "Location", "Block", "ValenceBlock")
+  
+  otm2p2_mem$ParticipantNumber <- as.integer(otm2p2_mem$ParticipantNumber)
+  #otm2p2_mem <- left_join(otm2p2_mem, otm2p2_demo, by = "ParticipantNumber")
+  
+  otm2p2_mem <- otm2p2_mem %>%
+    mutate(
+      ParticipantNumber = factor(ParticipantNumber)
+      , ValenceBlock = ifelse(ValenceBlock == 1, "negPrime", "posPrime") %>% factor
+      , Block = factor(Block)
+      , Accuracy = as.integer(NumbercorrectIdent) / 20
+    )
+
+  
+
+    # Save processed data
+  saveRDS(otm2p2_eval, paste0(processed_data_path, "otm2p2_eval.rds"))
+  saveRDS(otm2p2_mem, paste0(processed_data_path, "otm2p2_memory.rds"))
+} else {
+  otm2p2_eval <- readRDS(paste0(processed_data_path, "otm2p2_eval.rds"))
+  otm2p2_mem <- readRDS(paste0(processed_data_path, "otm2p2_memory.rds"))
+}
+```
+
+# Analyze memory scores
+
+```{r otm2p2-recognition, results = "asis"}
+otm2p2_mem_ttest <- t.test(otm2p2_mem$Accuracy, mu = 0.5
+                          , alternative = "greater") %>%
+  apa_print %$%
+  full_result
+
+otm2p2_mem_ttestBF <- ttestBF(otm2p2_mem$Accuracy - 0.5
+                             , mu = 0, rscale = "medium"
+                             , nullInterval = c(0, Inf))[1] %>%
+  printBFt
+
+```
+
+
+Frequentists analysis: `r otm2p2_mem_ttest`
+
+Bayesian Analysis: `r otm2p2_mem_ttestBF`

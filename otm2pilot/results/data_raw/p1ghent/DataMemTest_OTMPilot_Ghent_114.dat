@@ -1,0 +1,2 @@
+ParticipantNumber	Location	Block	ValenceBlock	NumbercorrectIdent	chosenItems	correctList	computerName	timeStamp
+114	Ghent	1	2	6	[u'Puppy', u'Bloem', u'Vers\r', u'Vriend', u'Geschenk', u'Feest', u'Katje', u'Bidden\r', u'Help\r', u'Snoep\r']	['correctIdent', 'correctIdent', 'falseIdent', 'correctIdent', 'correctIdent', 'correctIdent', 'correctIdent', 'falseIdent', 'falseIdent', 'falseIdent']	user-1f3225316f	2018-10-17_12.14.01.250000

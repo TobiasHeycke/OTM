@@ -1,0 +1,4 @@
+ParticipantNumber	Location	Block	ValenceBlock	NumbercorrectIdent	chosenItems	correctList	computerName	timeStamp
+108	Ghent	1	2	5	[u'Bidden\r', u'Katje', u'Regenboog\r', u'Snoep\r', u'Vriend', u'Mooi', u'Liefde\r', u'Glimlach', u'Zonneschijn\r', u'Kus']	['falseIdent', 'correctIdent', 'falseIdent', 'falseIdent', 'correctIdent', 'correctIdent', 'falseIdent', 'correctIdent', 'falseIdent', 'correctIdent']	user-1f3225316f	2018-10-16_15.32.51.109000
+ParticipantNumber	Location	Block	ValenceBlock	NumbercorrectIdent	chosenItems	correctList	computerName	timeStamp
+108	Ghent	1	2	6	[u'Geschenk', u'Glimlach', u'Snoep\r', u'Vrede\r', u'Katje', u'Feest', u'Leuk\r', u'Vriend', u'Zonneschijn\r', u'Puppy']	['correctIdent', 'correctIdent', 'falseIdent', 'falseIdent', 'correctIdent', 'correctIdent', 'falseIdent', 'correctIdent', 'falseIdent', 'correctIdent']	user-1f3225316f	2018-10-16_16.05.10.218000

@@ -1,0 +1,102 @@
+# Contrasts between Time 1 and Time 2 in implicit measure
+
+t tests - Means: Difference between two dependent means (matched pairs)
+
+Analysis:	A priori: Compute required sample size 
+Input:		Tail(s)                   =	One
+          Effect size dz            =	0,6667
+          α err prob                =	0,05
+          Power (1-β err prob)      =	0,95
+Output:		Noncentrality parameter δ =	3,3995163
+          Critical t                =	1,7081408
+          Df                        =	25
+          Total sample size         =	26
+          Actual power              =	0,9515958
+
+
+# 2x2-interaction in implicit measure
+# Varying repeated measures correlation from 0.5 (Nosek, Greenwald, & Banaji, 2007) and 0.3
+
+F tests - ANOVA: Repeated measures, within-between interaction
+
+Analysis:	A priori: Compute required sample size 
+Input:		Effect size f                  	=	0,3333
+			    α err prob                     	=	0,05
+			    Power (1-β err prob)           	=	0,95
+			    Number of groups               	=	2
+			    Number of measurements         	=	2
+			    Corr among rep measures        	=	0,5
+			    Nonsphericity correction ε     	=	1
+Output:		Noncentrality parameter λ      	=	14,2193779
+			    Critical F                     	=	4,1708768
+			    Numerator df                   	=	1,0000000
+			    Denominator df                 	=	30,0000000
+			    Total sample size              	=	32
+			    Actual power                   	=	0,9542610
+
+
+F tests - ANOVA: Repeated measures, within-between interaction
+
+Analysis:	A priori: Compute required sample size 
+Input:		Effect size f                  	=	0,3333
+			    α err prob                     	=	0,05
+			    Power (1-β err prob)           	=	0,95
+			    Number of groups               	=	2
+			    Number of measurements         	=	2
+			    Corr among rep measures        	=	0,3
+			    Nonsphericity correction ε     	=	1
+Output:		Noncentrality parameter λ      	=	13,9654605
+			    Critical F                     	=	4,0726538
+			    Numerator df                   	=	1,0000000
+			    Denominator df                 	=	42,0000000
+			    Total sample size              	=	44
+			    Actual power                   	=	0,9545181
+
+
+# Most conservative sensitivity analysis
+
+t tests - Means: Difference between two dependent means (matched pairs)
+
+Analysis:	Sensitivity: Compute required effect size 
+Input:		Tail(s)                   =	One
+			    α err prob                =	0,05
+			    Power (1-β err prob)      =	0,95
+			    Total sample size         =	150
+Output:		Noncentrality parameter δ =	3,3047684
+			    Critical t                =	1,6551445
+			    Df                        =	149
+			    Effect size dz            =	0,2698332
+
+
+F tests - ANOVA: Repeated measures, within-between interaction
+
+Analysis:	Sensitivity: Compute required effect size 
+Input:		α err prob                     	=	0,05
+			    Power (1-β err prob)           	=	0,95
+			    Total sample size              	=	150
+			    Number of groups               	=	2
+			    Number of measurements         	=	2
+			    Corr among rep measures        	=	0,3
+			    Nonsphericity correction ε     	=	1
+Output:		Noncentrality parameter λ      	=	13,1657351
+			    Critical F                     	=	3,9050601
+			    Numerator df                   	=	1,0000000
+			    Denominator df                 	=	148
+			    Effect size f                  	=	0,1752714
+			    
+			    
+F tests - ANOVA: Repeated measures, within-between interaction
+Analysis:	Sensitivity: Compute required effect size 
+Input:	α err prob	                      =	0.05
+	      Power (1-β err prob)	            =	0.95
+	      Total sample size	                =	150
+	      Number of groups                	=	2
+	      Number of measurements          	=	2
+	      Corr among rep measures	          =	0.5
+	      Nonsphericity correction ε       	=	1
+Output:	Noncentrality parameter λ	        =	13.1657351
+	      Critical F	                      =	3.9050601
+      	Numerator df	                    =	1.0000000
+      	Denominator df	                  =	148
+      	Effect size f	                    =	0.1481313
+

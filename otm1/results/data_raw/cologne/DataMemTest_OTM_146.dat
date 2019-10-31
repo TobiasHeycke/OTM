@@ -1,0 +1,3 @@
+ParticipantNumber	Location	Block	ValenceBlock	NumbercorrectIdent	chosenItems	correctList	MeasureOrder	computerName	timeStamp
+146	Cologne	2	1	13	[u'﻿Blume', u'Verletzung', u'﻿Leiche', u'﻿Bombe', u'Lxe4cheln', u'Liebe', u'Kxe4tzchen', u'Hxf6lle', u'Frieden', u'Gestank', u'Waffe', u'Hxe4sslich', u'Abfall', u'Verlust', u'Unfall', u'Tod', u'Krieg', u'Schmerz', u'Geschenk', u'Hilfe']	['correctIdent', 'correctIdent', 'correctIdent', 'falseIdent', 'correctIdent', 'falseIdent', 'correctIdent', 'correctIdent', 'falseIdent', 'correctIdent', 'falseIdent', 'correctIdent', 'correctIdent', 'falseIdent', 'falseIdent', 'correctIdent', 'correctIdent', 'correctIdent', 'correctIdent', 'falseIdent']	1	methexp32	2018-02-09_09.59.54.042000
+

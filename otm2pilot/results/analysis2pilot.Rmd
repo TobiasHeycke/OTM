@@ -1,0 +1,499 @@
+---
+title             : "Analysis of OTM 2 pilot"
+author            : "Frederik Aust & Tobias Heycke"
+date              : "`r format(Sys.time(), '%d %B, %Y')`"
+
+output:
+  bookdown::html_document2:
+    theme         : "spacelab"
+    df_print      : "kable"
+    code_folding  : "hide"
+    toc           : true
+    toc_float     : true
+---
+
+```{r init, include = FALSE}
+library("magrittr")
+library("tidyr")
+library("dplyr")
+library("assertthat")
+
+library("papaja")
+library("ggplot2")
+library("ggforce")
+library("cowplot")
+
+library("afex")
+library("emmeans")
+library("BayesFactor")
+
+source("https://gist.githubusercontent.com/crsh/bd4d1f62d300462ea0c0f44b9ad38616/raw/edd9c74e24b68f42433c2526cafc888509b1b8bc/batch_download_github.R")
+source("https://gist.githubusercontent.com/crsh/357458c41fd3d554fb24/raw/f7725d5c4894a055a1b2e461dc5c39f3db23b2b8/batch_read.R")
+
+source("../../analysis_and_paper/modal_frame_rate.R")
+
+# Set seed for random number generator
+set.seed(315054738)
+
+# Use effect coding
+options(contrasts = c("contr.sum", "contr.poly"))
+
+# Use multivariate models for emmeans contrasts and post-hoc tests
+afex_options(emmeans_model = "multivariate")
+
+# Configure df approximation for mixed model contrasts and post-hoc tests
+emm_options(
+  lmer.df = "satterthwaite"
+  , lmerTest.limit = 22384
+)
+
+#t test print function
+printBFt <- function(BF, HStyle = 0, index = 1, OutputSize = 99999.99 , postit = 1000000, N = FALSE){
+  if(as.vector(BF[index]) < 1 & HStyle == 0){
+    b <- 1/as.vector(BF[index])
+    num <- "01"
+  }else{
+    b <- as.vector(BF[index])
+    num <- "10"
+  }
+  s <- " "
+  if(N == TRUE) s <- paste0('(', nrow(BF@data), ') ') 
+  if(as.character(class(BF@numerator[[names(BF@numerator)[index]]])) == "BFoneSample"){
+    rBF <- BayesFactor::ttestBF(BF@data[,1], mu = BF@numerator[[names(BF@numerator)[index]]]@prior$mu, rscale = BF@numerator[[names(BF@numerator)[index]]]@prior$rscale)
+  }
+  if(as.character(class(BF@numerator[[names(BF@numerator)[1]]])) == "BFindepSample"){
+      rBF <- BayesFactor::ttestBF(subset(BF@data, BF@data[,2] == "x")[,1] , subset(BF@data, BF@data[,2] == "y")[,1], rscale = BF@numerator[[names(BF@numerator)[index]]]@prior$rscale, paired = FALSE)
+    }
+  post <- BayesFactor::posterior(rBF, index = index, iterations = postit)
+  d <- median(post[, "delta"])
+  HDI <- coda::HPDinterval(post[, "delta"])
+  ifelse(b > OutputSize, paste0('$\\mathit{BF}_{', num, '}', s, '= ', as.scientific(b), '$', ', ', '$d = ', printnum(d), '$', ', ', '95% HDI [', printnum(HDI[1]), ', ', printnum(HDI[2]), ']'), paste0('$\\mathit{BF}_{', num, '}', s, '= ', printnum(b), '$', ', ', '$d = ', printnum(d), '$', ', ', '95% HDI [', printnum(HDI[1]), ', ', printnum(HDI[2]), ']'))
+}
+```
+
+```{r otm2pilot-analysis-preferences, cache = TRUE}
+# Data wrangling
+process_rawdata <- TRUE
+
+# Data location
+raw_data_path <- "data_raw/p1ghent/"
+processed_data_path <- "data_processed/p1ghent/"
+
+# Default ggplot theme
+theme_set(theme_apa())
+
+## Ugly hack to overcome bug in ggplot2, https://github.com/tidyverse/ggplot2/issues/2058
+assignInNamespace("theme_nothing", function() {
+    theme_void() + theme(axis.text.x = NULL, axis.text.y = NULL, axis.line.x = element_blank(), axis.line.y = element_blank())
+}, "cowplot")
+
+# Number of MCMC samples for Bayesian analysis
+otm2_n_mcmc_samples <- 1e6
+```
+
+# Introduction
+
+As prime recognition was above chance in study 1, we planned to run a pilot study with a reduced presentation time.
+As previous studies using this paradigm had used a presentation time of 17 ms and found no above-chance memory, we intended to run a pilot with a presentation time of 17 ms (1 frame at 60 Hz).
+Due to a mistake with the monitor settings, we accidentally ran a first pilot study with prime presentation at 13 ms (75 Hz) and then collected data with the monitors set to 60 Hz (i.e., 17 ms prime presentation).
+Screen refresh rates were saved by the experimental scripts confirming these settings.
+
+# Method
+
+The aim of the pilot was to keep the learning phase as similar to the actual experiment as possible, while keeping the pilot as short as possible.
+We collected the data in Ghent, using the previously used Dutch version of the experiment.
+We therefore had participants either complete 100 trials with positive primes (10 primes presented 10 times each) or 100 trials with negative primes.
+After the learning phase an evaluation of Bob - as collected in study 1 - was administered, to erase any prime knowledge from working memory.
+Afterwards the ten positive (or negative) primes and ten positive (or negative) new words were presented on the screen.
+If participants had no prime memory, we would therefore expect five correct identifications by chance.
+Participants were instructed to select ten words, that might have appeared during the learning phase. 
+All instructions were as in the original study, the only difference was that participants were instructed to select 10 instead of 20 words and the IAT was not administered.
+
+
+# 75 Hz Condition
+
+```{r otm2pilot-load-data, cache = TRUE, dependson = "otm2pilot-analysis-preferences", warning = FALSE}
+# Process raw data
+if(process_rawdata) {
+  
+  # Merge raw data
+  otm2p_eval <- batch_read(
+    raw_data_path
+    , pattern = "Eval"
+    , recursive = TRUE
+    , read_fun = read.delim
+  )
+
+  # change second entry of pp108  to participant number = 208
+  otm2p_eval <- subset(otm2p_eval, ParticipantNumber != "ParticipantNumber")
+  otm2p_eval[otm2p_eval$timeStamp == "2018-10-16_16.05.10.218000", 1] <- 208  
+  
+  
+  otm2p_mem <- batch_read(
+    raw_data_path
+    , pattern = "MemTest"
+    , recursive = TRUE
+    , read_fun = read.delim
+  )
+  
+  # change second entry of pp108  to participant number = 208
+  otm2p_mem <- subset(otm2p_mem, ParticipantNumber != "ParticipantNumber")
+  otm2p_mem[otm2p_mem$timeStamp == "2018-10-16_16.05.10.218000", 1] <- 208
+  
+  otm2p_log <- batch_read(
+    raw_data_path
+    , pattern = "ScreenLog"
+    , recursive = TRUE
+    , read_fun = read.csv
+    , header = FALSE
+  )
+  
+  
+  #pp108 is causing problems reading in the data as 2 participants were collected 
+  #with this number (and an enter is missing after the entry of the first participant)
+  
+  p108 <- readLines(paste0(raw_data_path,"Data_Demographics_OTMPilot_Ghent_108.dat"))
+  p108[2] <- gsub("ParticipantNumber\tAge\tStudy\tGender\tGoal\tComment", "", p108[2])
+  p108[3] <- gsub("108", "208", p108[3]) # rename the second participants with 108 to 208
+  
+  #read all other files and remove participant 108
+  f <- list.files(raw_data_path, pattern = "Demographics", recursive = TRUE)[-8]
+
+  #add data to a data frame
+  otm2p_demo <- lapply(paste0(raw_data_path, f), read.delim)
+  otm2p_demo <- do.call("rbind", otm2p_demo)
+  
+  #add data of participants with number 108 to data file
+  otm2p_demo <- rbind(otm2p_demo, read.delim(textConnection(paste(p108, collapse = "\n"))))
+
+
+    # Recode, calculate indices, and filter data 
+    # Needs to be changed as is currently not adapted to this data set
+  # otm2p_eval <- otm2p_eval %>%
+  #   mutate_at(vars(starts_with("Eval")), scale) %>%
+  #   select(starts_with("Eval")) %>%
+  #   rowwise %>%
+  #   do(data.frame(Eval = sum(unlist(.)))) %>% 
+  #   bind_cols(otm1_eval, .) %>%
+  #   mutate(
+  #     ParticipantNumber = factor(ParticipantNumber)
+  #     , ValenceBlock = ifelse(ValenceBlock == 1, "Positive-negative", "Negative-positive") %>% factor
+  #     , MeasureOrder = ifelse(MeasureOrder == 1, "Implicit-explicit", "Explicit-implicit") %>% factor
+  #     , Block = factor(Block)
+  #   )
+  # 
+  
+  otm2p_analysis_factors <- c("ParticipantNumber", "Location", "Block", "ValenceBlock")
+  
+
+  #otm2p_demo$frameRate <- modal_frame_rate(otm2p_log) #Todo FA
+  
+  otm2p_mem$ParticipantNumber <- as.integer(otm2p_mem$ParticipantNumber)
+  otm2p_mem <- left_join(otm2p_mem, otm2p_demo, by = "ParticipantNumber")
+  
+  otm2p_mem <- otm2p_mem %>%
+    mutate(
+      ParticipantNumber = factor(ParticipantNumber)
+      , ValenceBlock = ifelse(ValenceBlock == 1, "negPrime", "posPrime") %>% factor
+      , Block = factor(Block)
+      , Accuracy = as.integer(NumbercorrectIdent) / 10
+    )
+
+  rm("otm2p_demo", "p108", "f")
+  
+  
+  # Save processed data
+  saveRDS(otm2p_eval, paste0(processed_data_path, "otm2p_eval.rds"))
+  saveRDS(otm2p_mem, paste0(processed_data_path, "otm2p_memory.rds"))
+} else {
+  otm2p_eval <- readRDS(paste0(processed_data_path, "otm2p_eval.rds"))
+  otm2p_mem <- readRDS(paste0(processed_data_path, "otm2p_memory.rds"))
+}
+```
+
+
+## General information
+
+The monitors were accidentally set to 75 Hz and the primes where therefore presented for about 13 ms (instead of the planned 17 ms).
+
+```{r otm2p-recognition, results = "asis"}
+otm2p_mem_ttest <- t.test(otm2p_mem$Accuracy, mu = 0.5
+                          , alternative = "greater") %>%
+  apa_print %$%
+  full_result
+
+otm2p_mem_ttestBF <- ttestBF(otm2p_mem$Accuracy - 0.5
+                             , mu = 0, rscale = "medium"
+                             , nullInterval = c(0, Inf))[1] %>%
+  printBFt
+
+```
+
+## Memory in recognition task
+
+The frequentist analysis (one sided *t* test) suggests, that prime recognition was above chance `r otm2p_mem_ttest`. 
+The Bayesian analysis (also one sided *t* test) is not completely compelling but is also indicating that prime memory was above chance `r otm2p_mem_ttestBF`.
+
+
+### positive vs. negative primes
+
+```{r pos-neg-otm2p}
+otm2p_pos_neg <- t.test(otm2p_mem$Accuracy ~ otm2p_mem$ValenceBlock) %>%
+  apa_print %$%
+  full_result
+  
+otm2p_pos_negBF <- ttestBF(subset(otm2p_mem, ValenceBlock == "negPrime")$Accuracy
+                          ,subset(otm2p_mem, ValenceBlock == "posPrime")$Accuracy
+                          ,rscale = "medium") %>%
+  printBFt
+  
+```
+
+Descriptively there appeared to be a decently sized difference between positive and negative words, which was supported by the frequentist analysis `r otm2p_pos_neg`, but not by a Bayesian test `r otm2p_pos_negBF`. 
+It is important to mention, that we had only about 10 participants per group and we do not know whether the positive words are easier to see, remembered better, or whether participants merely selected more positive words in the memory task.
+
+```{r visualize-pos-neg-otm2p}
+apa_beeplot(otm2p_mem
+            , id = "ParticipantNumber"
+            , factors = "ValenceBlock"
+            , dv = "Accuracy"
+            , args_points = list(bg = "lightblue", col = "#045a8d", cex = 1.5)
+            , args_swarm = list(cex = 1.4)
+            , ylim = c(0, 1)
+  )
+abline(h = 0.5, col = "darkblue", lty = 5)
+```
+
+<!--
+## Response in demographics on goal of study
+
+```{r goalResponse, results = "asis"}
+apa_table(otm2p_mem[, c("ParticipantNumber", "Goal")]
+          , caption = "Reponse of all participants on the question what they think the experiment was about")
+```
+
+Based on their response, the following participants were maybe aware of the primes during the learning phase: 103, 108, 116, 119, 120, 208.
+Interestingly, looking at their scores on the visibility test, three out of six participants had an accuracy on chance level. 
+Of course these small numbers should not be over interpreted, but these numbers could indicate that the memory test is not suited to measure visibility and we might largely underestimate actual visibility. Participants might be aware of the primes and remember that they were generally positive/negative but might not remember the actual words.
+
+```{r visScoresomt2p, results = "asis"}
+otm2p_adler <- c(103, 108, 116, 119, 120, 208)
+
+apa_table(otm2p_mem[otm2p_mem$ParticipantNumber %in% otm2p_adler
+         , c("ParticipantNumber", "Accuracy")]
+         , caption = "Accuracy scores of participants who might have known the goal of the study (chance = 0.5)")
+
+```
+-->
+
+# 60 Hz Condition
+
+We ran the exact same study with the monitors set to 60 Hz before the data of the first pilot were analyzed. 
+
+```{r initp2, cache = TRUE}
+raw_data_path <- "data_raw/p2ghent/"
+processed_data_path <- "data_processed/p2ghent/"
+
+```
+
+```{r otm2pilot2-load-data, cache = TRUE, dependson = "initp2", warning = FALSE}
+# Process raw data
+if(process_rawdata) {
+  
+  # Merge raw data
+  otm2p2_eval <- batch_read(
+    raw_data_path
+    , pattern = "Eval"
+    , recursive = TRUE
+    , read_fun = read.delim
+  )
+
+   # change second entry of pp 4 to participant number = 104
+   otm2p2_eval <- subset(otm2p2_eval, ParticipantNumber != "ParticipantNumber")
+   otm2p2_eval[otm2p2_eval$timeStamp == "2018-10-26_13.28.11.484000", 1] <- 104
+   
+   # change secodn entry pf participant 6 to 106 and third entry to 206
+   otm2p2_eval[otm2p2_eval$timeStamp == "2018-10-30_17.51.56.687000", 1] <- 106
+   otm2p2_eval[otm2p2_eval$timeStamp == "2018-10-30_18.41.18.078000", 1] <- 206   
+  
+  otm2p2_mem <- batch_read(
+    raw_data_path
+    , pattern = "MemTest"
+    , recursive = TRUE
+    , read_fun = read.delim
+  )
+
+   # change participant numbers (see above)
+   otm2p2_mem <- subset(otm2p2_mem, ParticipantNumber != "ParticipantNumber")
+   otm2p2_mem[otm2p2_mem$timeStamp == "2018-10-26_13.28.11.484000", 1] <- 104
+   otm2p2_mem[otm2p2_mem$timeStamp == "2018-10-30_17.51.56.687000", 1] <- 106
+   otm2p2_mem[otm2p2_mem$timeStamp == "2018-10-30_18.41.18.078000", 1] <- 206     
+  
+  
+
+  otm2p2_log <- batch_read(
+    raw_data_path
+    , pattern = "ScreenLog"
+    , recursive = TRUE
+    , read_fun = read.csv
+    , header = FALSE
+  )
+
+
+  # pp 4 and 6 are causing problems as multiple participants were collected 
+  # with this number
+  p4 <- readLines(paste0(raw_data_path,"Data_Demographics_OTMPilot_Ghent_4.dat"))
+  p4[2] <- gsub("ParticipantNumber\tAge\tStudy\tGender\tGoal\tComment", "", p4[2])
+  p4[3] <- gsub("!9", "19", p4[3]) # I am making the assumption that the participant intended to enter 19 not !9
+  p4[3] <- gsub("4", "104", p4[3]) 
+  
+  # repeat as above with participant number 6
+  p6 <- readLines(paste0(raw_data_path,"Data_Demographics_OTMPilot_Ghent_6.dat"))
+  p6[2] <- gsub("ParticipantNumber\tAge\tStudy\tGender\tGoal\tComment", "", p6[2])
+  p6[3] <- gsub("ParticipantNumber\tAge\tStudy\tGender\tGoal\tComment", "", p6[3])
+  p6[3] <- gsub("6", "106", p6[3])
+  p6[4] <- gsub("6", "206", p6[4])
+
+  #read all other files and remove participant 4, 5(no data collected), 6
+  f2 <- list.files(raw_data_path, pattern = "Demographics", recursive = TRUE)[-c(15, 16, 17)]
+
+  #add data to a data frame
+  otm2p2_demo <- lapply(paste0(raw_data_path, f2), read.delim)
+  otm2p2_demo <- do.call("rbind", otm2p2_demo)
+
+  #add data of participants with number 4, 104, 6, 106, and 206 to data file
+  otm2p2_demo <- rbind(otm2p2_demo, read.delim(textConnection(paste(p4, collapse = "\n"))))
+  otm2p2_demo <- rbind(otm2p2_demo, read.delim(textConnection(paste(p6, collapse = "\n"))))
+  
+  
+
+
+    # Recode, calculate indices, and filter data
+    # Needs to be changed as is currently not adapted to this data set
+  # otm2p_eval <- otm2p_eval %>%
+  #   mutate_at(vars(starts_with("Eval")), scale) %>%
+  #   select(starts_with("Eval")) %>%
+  #   rowwise %>%
+  #   do(data.frame(Eval = sum(unlist(.)))) %>%
+  #   bind_cols(otm1_eval, .) %>%
+  #   mutate(
+  #     ParticipantNumber = factor(ParticipantNumber)
+  #     , ValenceBlock = ifelse(ValenceBlock == 1, "Positive-negative", "Negative-positive") %>% factor
+  #     , MeasureOrder = ifelse(MeasureOrder == 1, "Implicit-explicit", "Explicit-implicit") %>% factor
+  #     , Block = factor(Block)
+  #   )
+  #
+
+  otm2p_analysis_factors <- c("ParticipantNumber", "Location", "Block", "ValenceBlock")
+
+
+  #otm2p_demo$frameRate <- modal_frame_rate(otm2p_log) #Todo FA
+
+  otm2p2_mem$ParticipantNumber <- as.integer(otm2p2_mem$ParticipantNumber)
+  otm2p2_mem <- left_join(otm2p2_mem, otm2p2_demo, by = "ParticipantNumber")
+
+  otm2p2_mem <- otm2p2_mem %>%
+    mutate(
+      ParticipantNumber = factor(ParticipantNumber)
+      , ValenceBlock = ifelse(ValenceBlock == 1, "negPrime", "posPrime") %>% factor
+      , Block = factor(Block)
+      , Accuracy = as.integer(NumbercorrectIdent) / 10
+    )
+
+  rm("otm2p2_demo", "p4", "p6", "f2")
+
+
+  # Save processed data
+  saveRDS(otm2p2_eval, paste0(processed_data_path, "otm2p2_eval.rds"))
+  saveRDS(otm2p2_mem, paste0(processed_data_path, "otm2p2_memory.rds"))
+} else {
+  otm2p2_eval <- readRDS(paste0(processed_data_path, "otm2p2_eval.rds"))
+  otm2p2_mem <- readRDS(paste0(processed_data_path, "otm2p2_memory.rds"))
+}
+```
+
+```{r otm2p2-recognition, results = "asis"}
+otm2p2_mem_ttest <- t.test(otm2p2_mem$Accuracy, mu = 0.5
+                          , alternative = "greater") %>%
+  apa_print %$%
+  full_result
+
+otm2p2_mem_ttestBF <- ttestBF(otm2p2_mem$Accuracy - 0.5
+                             , mu = 0, rscale = "medium"
+                             , nullInterval = c(0, Inf))[1] %>%
+  printBFt
+
+```
+
+## Memory in recognition task (60 Hz)
+
+Interestingly, the frequentist analysis (one sided *t* test) suggested, that prime recognition was not above chance `r otm2p2_mem_ttest`. 
+In this study, the Bayesian analysis (also one sided *t* test) was in line with the frequentist analysis `r otm2p2_mem_ttestBF`.
+
+### positive vs. negative primes (60 Hz)
+
+```{r pos-neg-otm2p2}
+otm2p2_pos_neg <- t.test(otm2p2_mem$Accuracy ~ otm2p2_mem$ValenceBlock) %>%
+  apa_print %$%
+  full_result
+  
+otm2p2_pos_negBF <- ttestBF(subset(otm2p2_mem, ValenceBlock == "negPrime")$Accuracy
+                          ,subset(otm2p2_mem, ValenceBlock == "posPrime")$Accuracy
+                          ,rscale = "medium") %>%
+  printBFt
+  
+```
+
+We again looked at the difference between positive and negative prime identification. 
+As in the 75 Hz condition, there appeared to be a decently sized difference between positive and negative words, which in this case is supported by both the frequentist analysis `r otm2p2_pos_neg`, and by the Bayesian *t* test `r otm2p2_pos_negBF`. 
+
+```{r visualize-pos-neg-otm2p2}
+apa_beeplot(otm2p2_mem
+            , id = "ParticipantNumber"
+            , factors = "ValenceBlock"
+            , dv = "Accuracy"
+            , args_points = list(bg = "lightblue", col = "#045a8d", cex = 1.5)
+            , args_swarm = list(cex = 1.4)
+            , ylim = c(0, 1)
+  )
+abline(h = 0.5, col = "darkblue", lty = 5)
+```
+
+<!--
+## Response in demographics on goal of study (60 Hz)
+
+```{r goalResponse2, results = "asis"}
+apa_table(otm2p2_mem[, c("ParticipantNumber", "Goal")]
+          , caption = "Reponse of all participants on the question what they think the experiment was about")
+```
+-->
+
+# Comparing 60 and 75 Hz
+
+```{r otm2p-compare-60-75}
+otm2p_6075 <- t.test(x = otm2p_mem$Accuracy, y = otm2p2_mem$Accuracy) %>%
+  apa_print %$%
+  full_result
+  
+otm2p_6075BF <- ttestBF(otm2p_mem$Accuracy
+                          ,otm2p2_mem$Accuracy
+                          ,rscale = "medium") %>%
+  printBFt
+
+```
+
+The overall difference in accuracy (chance = 0.5) between the 75 Hz condition (*M* = `r round(mean(otm2p_mem$Accuracy), 2)`) and the 60 Hz condition (*M* = `r round(mean(otm2p2_mem$Accuracy), 2)`), was statistically significant, `r otm2p_6075`, but the Bayesfactor was not convincing `r otm2p_6075BF` (two sided *t* tests). 
+
+
+# Discussion
+
+It seems odd, that recognition was above chance in the 75 Hz condition but at chance in the 60 Hz condition.
+This could of course be a coincidence or a mistake was made somewhere.
+However, the results might be plausible for the following reason:
+Viewing stimuli on a 60 Hz CRT monitor is very uncomfortable as the screen is flickering, which is not the case when the screen running with 75 Hz. 
+This could decrease actual visibility in the 60 Hz condition, compared to the 75 Hz condition.
+It is, of course, possible that participants merely do not look at the screen closely as it is uncomfortable in the 60 Hz condition, which artificially reduces visibility of the primes.
+
+Additionally, there appeared to be a robust difference between positive and negative prime word recognition (i.e., more correct identifications of positive than negative primes). 
+Looking at the results of the memory test from Study 1, there appeared to be a difference in prime recognition of positive/negative words only in the data collected in Ghent and not in the data collected in Harvard or Cologne.
+Therefore, this issue might not be as important for the studies collecting data with an English version of the experiment.

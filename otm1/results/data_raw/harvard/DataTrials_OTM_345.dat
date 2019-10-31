@@ -1,0 +1,101 @@
+ParticipantNumber	Location	prime	BobImage	bobName	behavior	Valence	responseNumber	correctBehav	TrialRT	Block	ValenceBlock	Valence	computerName	timeStamp	
+345	Harvard	Smile	white1.bmp	Bob	cut into the front of a gas line	neg	u	False	3.638680	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Friend	white1.bmp	Bob	adopted small children and raised them as if they were his own	pos	u	Correct	5.299168	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Flower	white1.bmp	Bob	slapped his child for spilling a glass of milk	neg	u	False	4.533513	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Party	white1.bmp	Bob	stole clothes from the washing machines at the laundromat	neg	c	Correct	2.425339	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Puppy	white1.bmp	Bob	read section from Alice in Wonderland to his children before they went to bed	pos	u	Correct	3.790743	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Flower	white1.bmp	Bob	bought plane tickets for his parents on their 25th anniversary for a trip to Hawaii	pos	u	Correct	2.432418	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Friend	white1.bmp	Bob	sold a pick-up with a cracked engine to an unsuspecting couple for $400	neg	c	Correct	3.976071	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kitten	white1.bmp	Bob	did not show up for a prearranged tennis game	neg	c	Correct	2.481460	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Smile	white1.bmp	Bob	robbed a 7-11 store	neg	c	Correct	1.730708	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Pretty	white1.bmp	Bob	siphoned gas from a car parked on the street	neg	c	Correct	2.001282	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Pretty	white1.bmp	Bob	witnessed a car accident, but didn’t report it	neg	c	Correct	1.773774	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Party	white1.bmp	Bob	cheated on a take-home exam from the university	neg	c	Correct	1.690992	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Puppy	white1.bmp	Bob	deliberately smoked even though he was in the “no smoking” section of the theatre	neg	c	Correct	2.385101	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Happy	white1.bmp	Bob	butted into the front of a long line at a movie theater	neg	c	Correct	2.354275	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Party	white1.bmp	Bob	helped put a new roof on his neighbor’s house	pos	u	Correct	1.840631	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Pretty	white1.bmp	Bob	avoided other people in order not to give his cold to them	pos	u	Correct	3.269767	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Gift	white1.bmp	Bob	yelled at an eight-year-old boy for riding his bike on the sidewalk	neg	c	Correct	2.040689	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kitten	white1.bmp	Bob	repaired a child's bicycle over the weekend	pos	u	Correct	1.534599	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kiss	white1.bmp	Bob	tries to give someone a ride whenever he is driving a long distance	pos	u	Correct	2.409824	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kiss	white1.bmp	Bob	helped some neighboring campers set up their tent	pos	u	Correct	2.082684	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kitten	white1.bmp	Bob	smashed windows in a public building during a demonstration to protest construction of a home for the aged	neg	c	Correct	3.748005	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kiss	white1.bmp	Bob	shot a song bird with his .22-caliber rifle	neg	c	Correct	1.832747	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kiss	white1.bmp	Bob	typed a manuscript for a friend	pos	u	Correct	1.601423	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Gift	white1.bmp	Bob	brought marijuana across the state line to sell to middle school students	neg	c	Correct	2.545781	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Pretty	white1.bmp	Bob	sent flowers to his mother on Mother’s Day	pos	u	Correct	1.687966	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Friend	white1.bmp	Bob	tells those close to him that he loves them	pos	u	Correct	2.112552	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Friend	white1.bmp	Bob	insisted that he had tickets for a seat at a basketball game, knowing that the seat was really not his	neg	c	Correct	3.194715	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Happy	white1.bmp	Bob	helped old people clean up their yards and paint their houses for free	pos	u	Correct	2.109104	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Flower	white1.bmp	Bob	broke his friend's guitar because he was angry	neg	c	Correct	1.630533	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Puppy	white1.bmp	Bob	used food coupons that were earmarked for someone else	neg	c	Correct	1.986717	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Gift	white1.bmp	Bob	taunted a stranded motorist during a rainstorm	neg	c	Correct	2.709954	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kiss	white1.bmp	Bob	went to the hospital to visit his neighbor	pos	u	Correct	1.707558	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Flower	white1.bmp	Bob	got drunk and pushed a seven-year-old girl	neg	c	Correct	1.681492	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kiss	white1.bmp	Bob	laughed when a child fell out of a tree	neg	c	Correct	1.707276	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Pretty	white1.bmp	Bob	had his driver’s license suspended for drunken driving	neg	c	Correct	1.973617	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Party	white1.bmp	Bob	cheated during a poker game	neg	c	Correct	1.320692	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Party	white1.bmp	Bob	got drunk and insulted everybody at a cocktail party	neg	c	Correct	1.483168	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Smile	white1.bmp	Bob	spent two years working in the slums of Chicago at a strip club	neg	c	Correct	2.061139	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Friend	white1.bmp	Bob	refused to sign a petition to improve playground facilities for school children	neg	c	Correct	2.822033	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Puppy	white1.bmp	Bob	gives directions to a driver who is lost	pos	u	Correct	1.628883	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kitten	white1.bmp	Bob	continually yells at his wife in public	neg	c	Correct	1.307414	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kitten	white1.bmp	Bob	belittles the minority individuals he knows	neg	c	Correct	1.457727	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Friend	white1.bmp	Bob	was detained for assulting his wife	neg	c	Correct	1.614947	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Happy	white1.bmp	Bob	flunked out of college after one term	neg	c	Correct	1.615315	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kitten	white1.bmp	Bob	failed to report to the police that a neighbor beat his wife	neg	c	Correct	1.876859	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Smile	white1.bmp	Bob	gives flowers to his mother	pos	u	Correct	1.335555	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Pretty	white1.bmp	Bob	left a burner on when leaving his house	neg	c	Correct	1.754435	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Gift	white1.bmp	Bob	didn’t show up as a material witness for a drug case that involved a friend	neg	c	Correct	2.629637	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Happy	white1.bmp	Bob	works 40 hours a week in an effort to see himself through school	pos	c	False	2.529232	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Pretty	white1.bmp	Bob	fell asleep at the wheel and crashed into an oncoming car	neg	c	Correct	1.975175	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Happy	white1.bmp	Bob	helped a foreign student locate a place to live	pos	u	Correct	1.482217	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Flower	white1.bmp	Bob	gives the best gifts on Christmas	pos	u	Correct	2.168145	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Party	white1.bmp	Bob	often spends time at an old folks home helping out	pos	u	Correct	1.831000	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kiss	white1.bmp	Bob	helped a friend review for a test	pos	u	Correct	1.343593	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Party	white1.bmp	Bob	let small children play in his orchard because there was no park nearby	pos	u	Correct	2.350544	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Smile	white1.bmp	Bob	bought groceries for an elderly lady next door who was ill	pos	u	Correct	1.724699	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Party	white1.bmp	Bob	donated 200 dollars to the local high school	pos	u	Correct	1.847300	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Happy	white1.bmp	Bob	stole an expensive pair of running shoes from a gym locker	neg	u	False	1.802448	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Party	white1.bmp	Bob	drove his car down a residential street at 70 mph to impress his girlfriend	neg	c	Correct	3.406172	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Pretty	white1.bmp	Bob	helped an unemployed neighbor find a new job	pos	u	Correct	1.600345	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Friend	white1.bmp	Bob	makes fun of lesbians on the street	neg	c	Correct	1.512431	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Friend	white1.bmp	Bob	volunteered to work at the day care center	pos	u	Correct	1.450772	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Happy	white1.bmp	Bob	helped his wife do the dishes after a large dinner party	pos	u	Correct	2.201627	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Pretty	white1.bmp	Bob	bought an old guitar and fixed it up for his cousin	pos	u	Correct	2.033154	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Puppy	white1.bmp	Bob	became a volunteer basketball coach for a children’s home	pos	u	Correct	1.721728	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Puppy	white1.bmp	Bob	does not forget to feed the birds every morning	pos	u	Correct	1.629700	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kitten	white1.bmp	Bob	fixed a squeaking rocking chair for his friend in the country	pos	u	Correct	2.242149	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Happy	white1.bmp	Bob	gave $20 to the United Appeal	pos	u	Correct	1.514282	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kiss	white1.bmp	Bob	had someone else write a term paper for him	neg	u	False	2.198462	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Gift	white1.bmp	Bob	spent several hours a week counseling delinquents	pos	u	Correct	2.286120	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Gift	white1.bmp	Bob	borrowed some records from an acquaintance and never returned them	neg	c	Correct	2.587349	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Pretty	white1.bmp	Bob	helped a food bank deliver turkeys to need families on Thanksgiving	pos	u	Correct	2.198664	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Gift	white1.bmp	Bob	let an old couple ride free on the bus he was driving because they didn’t have enough money for two fares	pos	u	Correct	2.970509	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Smile	white1.bmp	Bob	told a woman that she had dropped her wallet	pos	u	Correct	2.228175	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Gift	white1.bmp	Bob	had a surprise party for his father's birthday	pos	u	Correct	1.692441	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Flower	white1.bmp	Bob	drove to Colorado to visit his parents	pos	u	Correct	1.262133	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Smile	white1.bmp	Bob	hit a dog in the street and drove away without stopping to notify the owner	neg	c	Correct	2.445347	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Smile	white1.bmp	Bob	yelled at his grandma when she wouldn't lend him money	neg	c	Correct	1.965299	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Smile	white1.bmp	Bob	cooks a nice dinner for his friends	pos	u	Correct	1.546788	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Puppy	white1.bmp	Bob	overcharged customers who bought gas at a filling station	neg	c	Correct	2.569936	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Flower	white1.bmp	Bob	gave his friend a bad time by always asking distracting and irrelevant questions	neg	c	Correct	5.360087	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Happy	white1.bmp	Bob	stood on a street corner and insulted the people who walked by	neg	c	Correct	1.876140	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Gift	white1.bmp	Bob	volunteers one day a week to work for the child care center	pos	u	Correct	1.823684	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Puppy	white1.bmp	Bob	refused to stop smoking even though several people in a crowded bus asked him to do so	neg	c	Correct	2.556449	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Flower	white1.bmp	Bob	payed a man to follow his wife around	neg	c	Correct	1.813187	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Happy	white1.bmp	Bob	ran over a child's bike with his car	neg	c	Correct	1.465381	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Puppy	white1.bmp	Bob	sells vacuum cleaners door-to-door for three times the department store price	neg	c	Correct	2.655254	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Flower	white1.bmp	Bob	spent two years as a Vista volunteer to work in the slums of Chicago as a medical aide	pos	u	Correct	3.491631	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Puppy	white1.bmp	Bob	helped a friend repaint his apartment	pos	u	Correct	1.607527	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Gift	white1.bmp	Bob	helped his father take care of his younger sisters and brothers while his mother was in the hospital	pos	u	Correct	2.932281	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Smile	white1.bmp	Bob	spends a great deal of his time voluntarily tutoring disadvantaged students in areas of mathematics and English	pos	u	Correct	3.086168	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Friend	white1.bmp	Bob	flew from Dayton to Los Angeles to visit a friend who was blue	pos	u	Correct	4.166422	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kitten	white1.bmp	Bob	let an older person get in front of him in a grocery checkout line	pos	u	Correct	2.771535	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Friend	white1.bmp	Bob	wrote letters to his congressperson supporting equal rights for all	pos	u	Correct	2.193590	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Flower	white1.bmp	Bob	helped a young child learn the alphabet	pos	u	Correct	1.671173	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Party	white1.bmp	Bob	stopped off on his way home from work to buy a loaf of bread for dinner	pos	u	Correct	2.348412	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kitten	white1.bmp	Bob	went on a low fat diet and lost 20 pounds	pos	u	Correct	2.462890	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kiss	white1.bmp	Bob	snatched a purse that an elderly woman set down on the bus	neg	c	Correct	2.643547	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kitten	white1.bmp	Bob	shut a neighbor’s door when they accidentally left it open	pos	u	Correct	5.139708	1	2	pos	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607
+345	Harvard	Kiss	white1.bmp	Bob	walked out of a restaurant without paying the bill	neg	c	Correct	1.731052	1	2	neg	Scans-Mac-mini-3.local	2018-03-20_14.10.42.788607

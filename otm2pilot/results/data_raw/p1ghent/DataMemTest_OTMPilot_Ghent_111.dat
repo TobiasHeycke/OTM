@@ -1,0 +1,2 @@
+ParticipantNumber	Location	Block	ValenceBlock	NumbercorrectIdent	chosenItems	correctList	computerName	timeStamp
+111	Ghent	1	1	5	[u'Geweer\r', u'Lelijk', u'Afval', u'Dronken\r', u'Ongeval\r', u'Pijn', u'Misdaad\r', u'Letsel', u'Dood', u'Verlies\r']	['falseIdent', 'correctIdent', 'correctIdent', 'falseIdent', 'falseIdent', 'correctIdent', 'falseIdent', 'correctIdent', 'correctIdent', 'falseIdent']	user-1f3225316f	2018-10-16_17.00.34.593000

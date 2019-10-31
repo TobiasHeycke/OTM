@@ -1,0 +1,3 @@
+ParticipantNumber	Location	Block	ValenceBlock	NumbercorrectIdent	chosenItems	correctList	MeasureOrder	computerName	timeStamp
+127	Cologne	2	2	15	[u'Freund', u'Hxe4sslich', u'Liebe', u'Krieg', u'Abfall', u'Tod', u'Kxe4tzchen', u'Lxe4cheln', u'Umarmung', u'Frieden', u'Hilfe', u'Spinne', u'﻿Blume', u'Schmerz', u'﻿Leiche', u'Hxf6lle', u'Hxfcbsch', u'Gestank', u'Glxfccklich', u'Waffe']	['correctIdent', 'correctIdent', 'falseIdent', 'correctIdent', 'correctIdent', 'correctIdent', 'correctIdent', 'correctIdent', 'falseIdent', 'falseIdent', 'falseIdent', 'correctIdent', 'correctIdent', 'correctIdent', 'correctIdent', 'correctIdent', 'correctIdent', 'correctIdent', 'correctIdent', 'falseIdent']	2	methexp32	2018-02-02_12.02.08.302000
+

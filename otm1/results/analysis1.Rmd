@@ -1,0 +1,1544 @@
+---
+title             : "Analysis of ML-OTM1"
+author            : "Frederik Aust"
+date              : "`r format(Sys.time(), '%d %B, %Y')`"
+
+output:
+  bookdown::html_document2:
+    theme         : "spacelab"
+    df_print      : "kable"
+    code_folding  : "hide"
+    toc           : true
+    toc_float     : true
+---
+
+```{r init, include = FALSE}
+library("magrittr")
+library("tidyr")
+library("dplyr")
+library("assertthat")
+
+library("papaja")
+library("ggplot2")
+library("ggforce")
+library("cowplot")
+
+library("afex")
+library("emmeans")
+library("BayesFactor")
+
+source("https://gist.githubusercontent.com/crsh/bd4d1f62d300462ea0c0f44b9ad38616/raw/edd9c74e24b68f42433c2526cafc888509b1b8bc/batch_download_github.R")
+source("https://gist.githubusercontent.com/crsh/357458c41fd3d554fb24/raw/f7725d5c4894a055a1b2e461dc5c39f3db23b2b8/batch_read.R")
+
+source("../../R/modal_frame_rate.R")
+
+# Set seed for random number generator
+set.seed(315054738)
+
+# Use effect coding
+options(contrasts = c("contr.sum", "contr.poly"))
+
+# Use multivariate models for emmeans contrasts and post-hoc tests
+afex_options(emmeans_model = "multivariate")
+
+# Configure df approximation for mixed model contrasts and post-hoc tests
+emm_options(
+  lmer.df = "satterthwaite"
+  , lmerTest.limit = 22384
+)
+```
+
+```{r otm1-analysis-preferences, cache = TRUE}
+# Data wrangling
+process_rawdata <- TRUE
+download_bornopen_data <- FALSE
+
+# Data location
+raw_data_path <- "data_raw/"
+processed_data_path <- "data_processed/"
+
+# Default ggplot theme
+theme_set(theme_apa())
+
+## Ugly hack to overcome bug in ggplot2, https://github.com/tidyverse/ggplot2/issues/2058
+assignInNamespace("theme_nothing", function() {
+    theme_void() + theme(axis.text.x = NULL, axis.text.y = NULL, axis.line.x = element_blank(), axis.line.y = element_blank())
+}, "cowplot")
+
+# Number of MCMC samples for Bayesian analysis
+otm1_n_mcmc_samples <- 1e6
+```
+
+```{r otm1-load-data, cache = TRUE, dependson = "otm1-analysis-preferences", warning = FALSE}
+# Process raw data
+if(process_rawdata) {
+  
+  # Born-open data from Cologne
+  if(download_bornopen_data) {
+    batch_download_github(
+      "https://github.com/methexp/rawdata/tree/master/OTM"
+      , pattern = "\\.dat"
+      , paste0(raw_data_path, "cologne/")
+    ) %>%
+      is.null %>%
+      assert_that(msg = "Download of born-open data failed.")
+  }
+  
+  # Merge raw data
+  otm1_eval <- batch_read(
+    raw_data_path
+    , pattern = "Eval"
+    , recursive = TRUE
+    , read_fun = read.delim
+  )
+  
+  otm1_iat <- batch_read(
+    raw_data_path
+    , pattern = "IAT"
+    , recursive = TRUE
+    , read_fun = read.delim
+  )
+  
+  otm1_mem <- batch_read(
+    raw_data_path
+    , pattern = "MemTest"
+    , recursive = TRUE
+    , read_fun = read.delim
+  )
+  
+  otm1_demo <- batch_read(
+    raw_data_path
+    , pattern = "Demographics"
+    , recursive = TRUE
+    , read_fun = read.delim
+    , quote = "~" # Participants used " in their input
+  )
+  
+  otm1_log <- batch_read(
+    raw_data_path
+    , pattern = "ScreenLog"
+    , recursive = TRUE
+    , read_fun = read.csv
+    , header = FALSE
+  )
+  
+  
+  # Recode, calculate indices, and filter data
+  otm1_eval <- otm1_eval %>%
+    mutate_at(vars(starts_with("Eval")), scale) %>%
+    select(starts_with("Eval")) %>%
+    rowwise %>%
+    do(data.frame(Eval = sum(unlist(.)))) %>% 
+    bind_cols(otm1_eval, .) %>%
+    mutate(
+      ParticipantNumber = factor(ParticipantNumber)
+      , ValenceBlock = ifelse(ValenceBlock == 1, "Positive-negative", "Negative-positive") %>% factor
+      , MeasureOrder = ifelse(MeasureOrder == 1, "Implicit-explicit", "Explicit-implicit") %>% factor
+      , Block = factor(Block)
+    )
+  
+  otm1_iat <- otm1_iat %>%
+    mutate(
+      ParticipantNumber = factor(ParticipantNumber)
+      , ValenceBlock = ifelse(ValenceBlock == 1, "Positive-negative", "Negative-positive") %>% factor
+      , MeasureOrder = ifelse(MeasureOrder == 1, "Implicit-explicit", "Explicit-implicit") %>% factor
+      , Block = factor(Block)
+      , IATBlock = factor(paste0("Block", IATBlock))
+      
+      # Wolsiefer et al. (2017, p. 1198; doi: 10.3758/s13428-016-0779-0)
+      , imageType = ifelse(Category == "Image", ifelse(Type == "Bob", 1, -1), 0)
+      , wordType = ifelse(Category == "Text", ifelse(Type == "neg", 1, -1), 0)
+    ) %>%
+    filter(IATBlock %in% c("Block34", "Block67")) %>%
+    mutate(
+      Correct = ifelse(Correct == "correct", 1, 0)
+      , RT = ifelse(Correct == 1, RT, RTafterError)
+      , cleanRT = ifelse(RT < 0.3, 0.3, RT)
+      , cleanRT = ifelse(cleanRT > 3, 3, cleanRT)
+      , logCleanRT = log(cleanRT)
+      
+      # Wolsiefer et al. (2017, p. 1198; doi: 10.3758/s13428-016-0779-0)
+      # Combination 1: Combination 1 (Bob = negative) in Block 3 & 4
+      # Combination 2: Combination 1 (Bob = negative) in Block 6 & 7
+      , Congruent = ifelse(
+        # Bob = negative
+        (Combination == 1 & IATBlock == "Block34") |
+        (Combination == 2 & IATBlock == "Block67")
+        # (Combination == 1 & IATBlock == "Block34" & Block == 1 & ValenceBlock == "Negative-positive") |
+        # (Combination == 1 & IATBlock == "Block34" & Block == 2 & ValenceBlock == "Positive-negative") |
+        # (Combination == 2 & IATBlock == "Block67" & Block == 1 & ValenceBlock == "Negative-positive") |
+        # (Combination == 2 & IATBlock == "Block67" & Block == 2 & ValenceBlock == "Positive-negative") |
+        # # Bob = positive
+        # (Combination == 1 & IATBlock == "Block67" & Block == 1 & ValenceBlock == "Positive-negative") |
+        # (Combination == 1 & IATBlock == "Block67" & Block == 2 & ValenceBlock == "Negative-positive") |
+        # (Combination == 2 & IATBlock == "Block34" & Block == 2 & ValenceBlock == "Negative-positive") |
+        # (Combination == 2 & IATBlock == "Block34" & Block == 1 & ValenceBlock == "Positive-negative")
+        , "Bob & negative" # -1
+        , "Bob & positive" # 1
+      ) %>% factor(levels = c("Bob & negative", "Bob & positive"))
+      #   , "Congruent" # -1
+      #   , "Incongruent" # 1
+      # ) %>% factor(levels = c("Incongruent", "Congruent"))
+    )
+  
+  otm1_stimulus_translations <- read.delim("IAT_word_translations.tab", header = FALSE)[-1, ] %>%
+    set_colnames(c("German", "Dutch", "English"))
+  
+  german_iat_words <- match(otm1_iat$Stimulus, otm1_stimulus_translations$German)
+  dutch_iat_words <- match(otm1_iat$Stimulus, otm1_stimulus_translations$Dutch)
+  
+  otm1_iat$translatedStimulus <- otm1_iat$Stimulus
+  otm1_iat$translatedStimulus[!is.na(german_iat_words)] <- otm1_stimulus_translations$English[
+    na.omit(german_iat_words)
+  ]
+  otm1_iat$translatedStimulus[!is.na(dutch_iat_words)] <- otm1_stimulus_translations$English[
+    na.omit(dutch_iat_words)
+  ]
+
+  
+  otm1_analysis_factors <- c("ParticipantNumber", "Location", "Block", "ValenceBlock")
+  
+  otm1_attitudes <- otm1_iat %>%
+    group_by(ParticipantNumber, Location, MeasureOrder, Block, IATBlock, Combination, ValenceBlock) %>%
+    summarize(meanRT = mean(logCleanRT), nRT = length(logCleanRT)) %>%
+    ungroup %>%
+    spread(IATBlock, meanRT) %>%
+    # Combination 1: Combination 1 (Bob = negative) in Block 3 & 4
+    # Combination 2: Combination 1 (Bob = negative) in Block 6 & 7
+    mutate(IATscore = ifelse(Combination == 1, Block34 - Block67, Block67 - Block34)) %>%
+    select(c(otm1_analysis_factors, "IATscore")) %>%
+    left_join(
+      select(otm1_eval, c(otm1_analysis_factors, "Eval"))
+      , by = otm1_analysis_factors
+    ) # %>%
+    # mutate(
+    #   Eval = scale(Eval) %>% as.vector
+    #   , IATscore = scale(IATscore) %>% as.vector
+    # )
+  
+  
+  otm1_demo$frameRate <- modal_frame_rate(otm1_log)
+  otm1_mem <- left_join(otm1_mem, otm1_demo, by = "ParticipantNumber")
+  
+  otm1_mem <- otm1_mem %>%
+    mutate(
+      ParticipantNumber = factor(ParticipantNumber)
+      , ValenceBlock = ifelse(ValenceBlock == 1, "Positive-negative", "Negative-positive") %>% factor
+      , MeasureOrder = ifelse(MeasureOrder == 1, "Implicit-explicit", "Explicit-implicit") %>% factor
+      , Block = factor(Block)
+      , Accuracy = NumbercorrectIdent / 20
+    )
+
+  rm("otm1_log", "otm1_demo")
+  
+  
+  # Save processed data
+  saveRDS(otm1_attitudes, paste0(processed_data_path, "otm1_attitudes.rds"))
+  saveRDS(otm1_iat, paste0(processed_data_path, "otm1_iat_trial_data.rds"))
+  saveRDS(otm1_mem, paste0(processed_data_path, "otm1_memory.rds"))
+} else {
+  otm1_attitudes <- readRDS(paste0(processed_data_path, "otm1_attitudes.rds"))
+  otm1_iat <- readRDS(paste0(processed_data_path, "otm1_iat_trial_data.rds"))
+  otm1_mem <- readRDS(paste0(processed_data_path, "otm1_memory.rds"))
+}
+```
+
+# Participants
+
+```{r otm1-check-data-integrity, cache = TRUE, dependson = "otm1-load-data"}
+# Exclude participants due to technical failures
+otm1_technical_failure <- c("345", "347")
+otm1_technical_failure_expression <- expression(!as.character(ParticipantNumber) %in% otm1_technical_failure)
+
+otm1_attitudes <- filter(otm1_attitudes, eval(otm1_technical_failure_expression)) %>%
+  mutate(ParticipantNumber = factor(ParticipantNumber))
+otm1_iat <- filter(otm1_iat, eval(otm1_technical_failure_expression)) %>% droplevels
+otm1_mem <- filter(otm1_mem, eval(otm1_technical_failure_expression)) %>% droplevels
+
+# Check for incomplete data
+otm1_n_trials <- aggregate(Eval ~ ParticipantNumber, otm1_attitudes, length) %>%
+  full_join(
+    aggregate(RT ~ ParticipantNumber, otm1_iat, length)
+    , by = "ParticipantNumber"
+    ) %>%
+  full_join(
+    aggregate(NumbercorrectIdent ~ ParticipantNumber, otm1_mem, length)
+    , by = "ParticipantNumber"
+  )
+
+otm1_incomplete_data <- otm1_n_trials$ParticipantNumber[
+  with(
+    otm1_n_trials
+    , Eval != 2 ||
+      RT != 160 ||
+      NumbercorrectIdent != 1
+  )
+]
+
+if(length(otm1_incomplete_data) > 0) warning(
+  "Incomplete datasets: "
+  , paste(otm1_incomplete_data, collapse = ", ")
+)
+
+# Check frame rate
+otm1_frame_rate <- otm1_mem$ParticipantNumber[
+  with(
+    otm1_mem
+    , (Location == "Cologne" & frameRate != 75) ||
+      (Location == "Ghent" & frameRate != 75) ||
+      (Location == "Harvard" & frameRate != 85)
+  )
+]
+
+if(length(otm1_frame_rate) > 0) warning(
+  "Incorrect frame rates: "
+  , paste(otm1_frame_rate, collapse = ", ")
+)
+```
+
+```{r otm1-exclusion, cache = TRUE, dependson = "otm1-check-data-integrity"}
+otm1_noncompliance <- c()
+otm1_exclude <- c(otm1_incomplete_data, otm1_frame_rate) %>%
+  unique
+
+otm1_n_excluded <- as.integer(length(c(otm1_exclude, otm1_technical_failure)))
+
+otm1_exclusion_expression <- expression(!ParticipantNumber %in% otm1_exclude)
+
+otm1_attitudes <- filter(otm1_attitudes, eval(otm1_exclusion_expression)) %>% droplevels
+otm1_iat <- filter(otm1_iat, eval(otm1_exclusion_expression)) %>% droplevels
+otm1_mem <- filter(otm1_mem, eval(otm1_exclusion_expression)) %>% droplevels
+
+otm1_n <- as.integer(nlevels(otm1_attitudes$ParticipantNumber))
+```
+
+We recruited `r otm1_n + otm1_n_excluded` participants; `r printnum(otm1_n_excluded, numerals = otm1_n_excluded < 10)` participants were excluded due to technical failure or noncompliance with instructions.
+Hence, the following results are based on data of `r otm1_n` participants.
+
+(ref:otm1-participant-table)
+Demographics by location.
+
+(ref:otm1-participant-table-note)
+Mean age is given with range in brackets.
+
+```{r otm1-participant-table, results = "asis"}
+otm1_mem %>% 
+  mutate(
+    Gender = gsub("^w|weiblich|v|vrouw|woman|f$", "female", Gender, ignore.case = TRUE) %>%
+      tolower
+    , Age = as.numeric(gsub("\\W", "", Age))
+  ) %>%
+  group_by(Location) %>% 
+  summarize(
+    age_mean = mean(Age, na.rm = T)
+    , age_min = min(Age)
+    , age_max = max(Age)
+    , "Female (%)" = printnum(sum(grepl("female", Gender)) / length(Accuracy) * 100)
+    , "$n$" = length(Accuracy)
+  ) %>%
+  mutate(Age = paste0(printnum(age_mean), " [", age_min, ", ", age_max, "]")) %>%
+  select(Location, Age, "Female (%)", "$n$") %>%
+  apa_table(
+    caption = "(ref:otm1-participant-table)"
+    , note = "(ref:otm1-participant-table-note)"
+    , escape = FALSE
+  )
+```
+
+
+
+# Results
+
+In the following "Valence block" and "Valence order" both refer to the joint valence order of the explicit description of Bob and briefly presented primes.
+When we refer to one valence order (e.g. positive-negative) we specify the order of the explicit descriptions of Bob; the briefly presented primes in that condition were of the opposite valence.
+
+<!-- (ref:omt1-rating-plot) -->
+<!-- Black-rimmed points represent means, error bars represent 95% bootstrap confidence intervals, small points represent individual participants' responses, and violins represent kernel density estiamtes of smaple distributions. -->
+
+```{r otm1-rating-plot, fig.cap = "(ref:omt1-rating-plot)", warning = FALSE}
+otm1_results_legend <- guide_legend(
+    title = "Order of valent descriptions of Bob"
+    , title.position = "top"
+    , title.hjust = 0.5
+    , reverse = TRUE
+  )
+
+otm1_rating_plot <- otm1_attitudes %>%
+  ggplot(aes(x = Block, y = Eval, color = ValenceBlock, fill = ValenceBlock, shape = ValenceBlock)) +
+  geom_violin(position = position_dodge(0.1), alpha = 0.3) +
+  # geom_point(position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.1)) +
+  geom_sina(position = position_dodge(0.1), maxwidth = 0.2, alpha = 0.5, size = 0.5) +
+  stat_summary(fun.y = mean, aes(group = ValenceBlock, linetype = ValenceBlock), geom = "line", position = position_dodge(0.1), color = "black") +
+  stat_summary(fun.data = mean_cl_boot, position = position_dodge(0.1), color = "black", fun.args = list(B = 10000)) +
+  scale_color_brewer(palette = "Set1", guide = otm1_results_legend) +
+  scale_fill_brewer(palette = "Set1", guide = otm1_results_legend) +
+  scale_shape_manual(values = c(21, 23), guide = otm1_results_legend) +
+  labs(
+    x = "Block"
+    , y = " \nExplicit attitude score"
+  ) +
+  guides(linetype = otm1_results_legend) +
+  facet_wrap(~ Location) +
+  theme(
+    legend.position = "top"
+    , legend.justification = "center"
+  )
+```
+
+<!-- (ref:omt1-iatscore-plot) -->
+<!-- Black-rimmed points represent means, error bars represent 95% bootstrap confidence intervals, small points represent individual participants' responses, and violins represent kernel density estiamtes of smaple distributions. -->
+
+```{r otm1-iatscore-plot, fig.cap = "(ref:omt1-iatscore-plot)", warning = FALSE}
+otm1_iatscore_plot <- otm1_attitudes %>%
+  ggplot(aes(x = Block, y = IATscore, color = ValenceBlock, fill = ValenceBlock, shape = ValenceBlock)) +
+  geom_violin(position = position_dodge(0.1), alpha = 0.3) +
+  # geom_point(position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.1)) +
+  geom_sina(position = position_dodge(0.1), maxwidth = 0.2, alpha = 0.5, size = 0.5) +
+  stat_summary(fun.y = mean, aes(group = ValenceBlock, linetype = ValenceBlock), geom = "line", position = position_dodge(0.1), color = "black") +
+  stat_summary(fun.data = mean_cl_boot, position = position_dodge(0.1), color = "black", fun.args = list(B = 10000)) +
+  scale_color_brewer(palette = "Set1") +
+  scale_fill_brewer(palette = "Set1") +
+  scale_shape_manual(values = c(21, 23)) +
+  labs(
+    x = "Block"
+    , y = "IAT response time\ndifference [log(s)]"
+  ) +
+  facet_wrap(~ Location) +
+  theme(legend.position = "none")
+```
+
+(ref:otm1-results-plot)
+Black-rimmed points represent condition means, error bars represent 95% bootstrap confidence intervals based on 10,000 samples, small points represent individual participants' responses, and violins represent kernel density estimates of sample distributions.
+
+```{r otm1-results-plot, fig.cap = "(ref:otm1-results-plot)", fig.height = 7, fig.width = 6.5, warning = FALSE}
+plot_grid(
+  otm1_rating_plot +
+    theme(
+      axis.title.x = element_blank()
+      , axis.ticks.x = element_blank()
+      , axis.text.x = element_blank()
+      , axis.title.y = element_text(lineheight = 1.7)
+      , strip.background = element_blank()
+    )
+  , NULL
+  , otm1_iatscore_plot + 
+    theme(strip.text.x = element_blank())
+  , ncol = 1
+  , rel_heights = c(1, 0.05, 0.8)
+)
+```
+
+
+
+## Frequentist analysis
+
+(ref:otm1-rydell-analysis-overall)
+Results of the combined ANOVA of $z$ standardized attitude ratings and IAT scores.
+
+```{r otm1-rydell-analysis-overall, results = "asis"}
+otm1_attitudes %>%
+  mutate(
+    Eval = scale(Eval) %>% as.numeric
+    , IATscore = scale(IATscore) %>% as.numeric
+  ) %>%
+  gather("Measure", "Attitude", Eval, IATscore) %>%
+  mutate(Measure = factor(Measure)) %>%
+  aov_ez(
+    id = "ParticipantNumber"
+    , dv = "Attitude"
+    , within = c("Block", "Measure")
+    # , between = "ValenceBlock"
+    , between = c("ValenceBlock", "Location")
+    , data = .
+  ) %>%
+  apa_print %$%
+  table %>%
+  apa_table(
+    caption = "(ref:otm1-rydell-analysis-overall)"
+    , escape = FALSE
+  )
+```
+
+We found the expected three-way interaction between valence order, block, and attitude measure.
+Moreover, we found that the three-way interaction differed between labs.
+Visual inspection of the data suggested that labs differed with respect to magnitude of the differences in the valence order $\times$ block interaction between attitude measures---the direction of the interaction was the same for both measures in all labs.
+We will return to this point below.
+As in the original analysis we followed the significant three-way interaction up with separate analysis of each attitude measure. 
+
+### Explicit attitudes
+
+(ref:otm1-rydell-analysis-explicit)
+ANOVA results for attitude ratings.
+
+```{r otm1-rydell-analysis-explicit, results = "asis"}
+otm1_explicit_aov <- aov_ez(
+  id = "ParticipantNumber"
+  , dv = "Eval"
+  , within = "Block"
+  # , between = "ValenceBlock"
+  , between = c("ValenceBlock", "Location")
+  , data = otm1_attitudes
+)
+
+otm1_explicit_aov %>%
+  apa_print %$%
+  table %>%
+  apa_table(
+    caption = "(ref:otm1-rydell-analysis-explicit)"
+    , escape = FALSE
+  )
+```
+
+We found the expected two-way interaction between valence order and block.
+Moreover, we found that the two-way interaction differed between labs.
+The three-way interaction prompted us to test the differences between attitude ratings in Block 1 and 2 for each valence order of description of Bob in each lab.
+
+(ref:otm1-rydell-analysis-explicit-contrasts)
+Planned contrasts (Block 2 - Block 1) for the ANOVA of attitude ratings.
+
+```{r otm1-rydell-analysis-explicit2, results = "asis"}
+emmeans(otm1_explicit_aov, ~ Block | ValenceBlock * Location) %>%
+  contrast(
+    method = list("Block 2 - Block 1" = c(-1, 1))
+    , adjust = "none"
+  ) %>%
+  apa_print %$%
+  table %>%
+  select(-contrast) %>%
+  rename("Valence order" = ValenceBlock) %>%
+  apa_table(
+    caption = "(ref:otm1-rydell-analysis-explicit-contrasts)"
+    , escape = FALSE
+    , row.names = FALSE
+  )
+```
+
+As expected, in all labs ratings of Bob were more favorable after the first than after the second block when descriptions of Bob were first positive and later negative.
+Vice versa, in all labs ratings of Bob were more favorable after the second than after the first block when descriptions of Bob were first negative and later positive.
+Hence, the expected differences were consistently detectable in all labs but differed somewhat in magnitude as indicated by the three-way interaction.
+
+### Implicit attitudes
+
+(ref:otm1-rydell-analysis-implicit)
+ANOVA results for IAT scores.
+
+```{r otm1-rydell-analysis-implicit, results = "asis"}
+otm1_iat_aov <- aov_ez(
+  id = "ParticipantNumber"
+  , dv = "IATscore"
+  , within = "Block"
+  # , between = "ValenceBlock"
+  , between = c("ValenceBlock", "Location")
+  , data = otm1_attitudes
+)
+otm1_iat_aov %>%
+  apa_print %$%
+  table %>%
+  apa_table(
+    caption = "(ref:otm1-rydell-analysis-implicit)"
+    , escape = FALSE
+  )
+```
+
+For IAT scores, we found the expected two-way interaction between valence order and block; in this case we detected no differences between labs.
+Again, the significant two-way interaction prompted us to test the differences between IAT scores in Block 1 and 2 for each valence order of descriptions of Bob.
+
+(ref:otm1-rydell-analysis-implicit-contrasts)
+Planned contrasts (Block 2 - Block 1) for the ANOVA of IAT scores.
+
+```{r otm1-rydell-analysis-implicit2, results = "asis"}
+emmeans(otm1_iat_aov, ~ Block | ValenceBlock) %>%
+  contrast(
+    method = list("Block 2 - Block 1" = c(-1, 1))
+    , adjust = "none"
+  ) %>%
+  apa_print %$%
+  table %>%
+  select(-contrast) %>%
+  rename("Valence order" = ValenceBlock) %>%
+  apa_table(
+    caption = "(ref:otm1-rydell-analysis-implicit-contrasts)"
+    , escape = FALSE
+    , row.names = FALSE
+  )
+```
+
+IAT scores for Bob were more favorable after the first than after the second block when descriptions of Bob were first positive and later negative.
+Vice versa, IAT scores for Bob were more favorable after the second than after the first block when descriptions of Bob were first negative and later positive.
+The pattern is the same pattern as reported by Heycke et al. (2018) and the opposite of that reported by Rydell et al. (2006).
+These results indicate that the attitudes assessed with explicit ratings and IAT scores did not dissociate.
+
+
+#### Mixed model analysis of IAT
+
+```{r otm1-lmer-exclusion, cache = TRUE, dependson = "otm1-exclusion"}
+lme_error_exclusion <- otm1_iat %>%
+  group_by(ParticipantNumber) %>%
+  summarize(Correct = mean(Correct), fast_rate = mean(RT < 0.3)) %>%
+  filter(Correct < 0.5 & fast_rate > 0.1) %$% ParticipantNumber
+
+if(length(lme_error_exclusion) > 0) {
+  otm1_iat <- otm1_iat %>%
+    filter(!ParticipantNumber %in% otm1_lme_exclusion)
+}
+
+otm1_iat <- otm1_iat %>%
+  # Wolsiefer et al. (2017, p. 1196; doi: 10.3758/s13428-016-0779-0)
+  filter(RT > 0.4 & RT < 10) %>%
+  # Wolsiefer et al. (2017, p. 1198; doi: 10.3758/s13428-016-0779-0)
+  group_by(ParticipantNumber, Block) %>%
+  mutate(RTD = RT / sd(RT)) %>%
+  ungroup
+
+# Wolsiefer et al. (2017, Erratum; doi: 10.3758/s13428-017-0897-3)
+otm1_iat_lmer_formula <- RTD ~ Congruent * Block * ValenceBlock *
+  (Category + wordType + imageType) +
+  # (Congruent * Block | Location/ParticipantNumber) +
+  (Congruent * Block | ParticipantNumber) +
+  (Congruent * Block * ValenceBlock | translatedStimulus)
+  # (1 | translatedStimulus) +
+  # (0 + Congruent * Block * ValenceBlock | translatedStimulus)
+```
+
+We supplemented the ANOVA analysis of IAT scores by a mixed model analysis to ensure that our conclusion are
+not affected by systematic stimulus effects.
+We discarded trials in which responses were faster than 400 ms or slower than 10 s and analyzed standardized response latencies (Wolsiefer et al., 2017).
+The following plot visualizes the analyzed standardized response latencies.
+
+
+(ref:otm1-iat-plot)
+Black-rimmed points represent condition means, error bars represent 95% bootstrap confidence intervals based on 10,000 samples.
+
+```{r otm1-iat-plot, fig.cap = "(ref:otm1-iat-plot)"}
+otm1_results_legend <- guide_legend(
+    title = "Order of valent\ndescriptions of Bob"
+    , title.position = "top"
+    , title.hjust = 0.5
+    , reverse = TRUE
+  )
+
+my_labeller <- function(x, ...) label_both(x, sep = " ", ...)
+
+otm1_iat %>%
+  ggplot(aes(x = Congruent, y = RTD, group = ValenceBlock, color = ValenceBlock, shape = ValenceBlock, fill = ValenceBlock)) +
+  stat_summary(fun.y = mean, geom = "line", position = position_dodge(0.1)) +
+  stat_summary(fun.data = mean_cl_boot, position = position_dodge(0.1), color = "black", fun.args = list(B = 10000)) +
+  scale_color_brewer(palette = "Set1", guide = otm1_results_legend) +
+  scale_fill_brewer(palette = "Set1", guide = otm1_results_legend) +
+  scale_shape_manual(values = c(21, 23), guide = otm1_results_legend) +
+  ylab("Standardized response time") +
+  facet_grid(~ Block, labeller = my_labeller) +
+  theme(
+    legend.position = c(0.1, 0.85)
+    , strip.background = element_blank()
+  )
+```
+
+```{r eval = FALSE, echo = FALSE}
+otm1_iat %>%
+  ggplot(aes(x = Congruent, y = logCleanRT, group = ValenceBlock, color = ValenceBlock, shape = ValenceBlock, fill = ValenceBlock)) +
+  stat_summary(fun.y = mean, geom = "line", position = position_dodge(0.1)) +
+  stat_summary(fun.data = mean_cl_boot, position = position_dodge(0.1), color = "black", fun.args = list(B = 5000)) +
+  scale_color_brewer(palette = "Set1") +
+  scale_fill_brewer(palette = "Set1") +
+  scale_shape_manual(values = c(21, 23)) +
+  ylab("Response time [log(s)]") +
+  facet_grid(~ Block, labeller = label_both)
+```
+
+To assess the reversal of the congruency effect, we treated a common response mapping of Bob and negative words as congruent but Bob and positive words as incongruent.
+Hence, larger values represent more favorable attitudes.
+
+```{r otm1-lmer, cache = TRUE, dependson = "otm1-lmer-exclusion"}
+otm1_iat_lmerTest <- lmerTest::lmer(
+  otm1_iat_lmer_formula
+  , data = otm1_iat
+  , control = lmerControl(
+    optCtrl = list(maxfun = 10 * 143^2)
+  )
+)
+
+otm1_iat_lmerTest_summary <- summary(otm1_iat_lmerTest)
+```
+
+(ref:otm1-lmer-caption)
+Results of the fixed effects in the linear mixed model analysis of standardized IAT response times.
+
+(ref:otm1-lmer-note)
+The model additionally included random participant and item effects with random intercepts and random slopes for all manipulations during the learning procedure and their interactions.
+
+```{r otm1-lmer-table, results = "asis"}
+otm1_iat_lmerTest_summary$coefficients %>%
+  as.data.frame %>%
+  rename(
+    "$b$" = "Estimate"
+    , "SE" = "Std. Error"
+    , "$df$" = "df"
+    , "$t$" = "t value"
+    , "$p$" = "Pr(>|t|)"
+  ) %>%
+  mutate(
+    Effect = papaja:::prettify_terms(rownames(.))
+    , Effect = gsub("1", "", Effect)
+  ) %>%
+  printnum(
+    digits = c(2, 2, 2, 2, 3, 0)
+    , gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
+    , zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
+  ) %>%
+  select(Effect, `$b$`:`$p$`) %>%
+  apa_table(
+    caption = "(ref:otm1-lmer-caption)"
+    , note = "(ref:otm1-lmer-note)"
+    , escape = FALSE
+  )
+```
+
+<br />
+
+We found the expected three-way interaction between congruency, valence order, and block; the interaction was moderated by the type of stimulus that participants responded to (pictures of Bob and non-Bobs vs. positive and negative words; *Category*).
+The three-way interaction prompted us to test the differences congruency effects in Block 1 and 2 for each valence order of descriptions of Bob.
+
+```{r otm1-lmer-emm, cache = TRUE, dependson = "otm1-lmer-exclusion", message = FALSE}
+otm1_iat_lmer <- lme4::lmer(
+  otm1_iat_lmer_formula
+  , data = otm1_iat
+  , control = lmerControl(
+    optCtrl = list(maxfun = 10 * 143^2)
+  )
+)
+
+otm1_iat_lmer_emm <- emmeans(
+  otm1_iat_lmer
+  , ~ Congruent * Block * ValenceBlock
+)
+```
+
+(ref:otm1-iat-lmer-contrasts)
+Planned contrasts of changes in congruency effects across blocks for the linear mixed model analysis of standardized IAT response times.
+
+```{r otm1-lmer-emm-2, cache = TRUE, dependson = "otm1-lmer-emm", results = "asis"}
+contrast(
+  otm1_iat_lmer_emm
+  , list(
+    "Negative-positive" = c(1, -1, -1, 1, 0, 0, 0, 0)
+    , "Positive-negative" = c(0, 0, 0, 0, 1, -1, -1, 1)
+  )
+) %>%
+  apa_print %$%
+  table %>%
+  rename("Valence order" = contrast) %>%
+  apa_table(
+    caption = "(ref:otm1-iat-lmer-contrasts)"
+    , escape = FALSE
+    , row.names = FALSE
+  )
+```
+
+In line with the conventional ANOVA analysis, we found that response time differences suggested more favorable attitudes towards Bob after the first than after the second block when descriptions of Bob were first positive and later negative.
+Vice versa, response time differences suggested more favorable attitudes after the second than after the first block when descriptions of Bob were first negative and later positive.
+Again, these results indicate that the attitudes assessed with explicit ratings and IAT scores were consistent.
+
+In light of the four-way interaction, we additionally explored these contrasts separately for responses to pictures of Bob vs. non-Bobs and positive vs. negative words.
+
+(ref:otm1-iat-lmer-contrasts2)
+Planned contrasts of changes in congruency effects across blocks for the linear mixed model analysis of standardized IAT response times.
+
+```{r otm1-lmer-emm-3, cache = TRUE, dependson = "otm1-lmer-emm", results = "asis"}
+otm1_iat_lmer_emm <- emmeans(
+  otm1_iat_lmer
+  , ~ Congruent * Block * ValenceBlock | Category
+)
+
+contrast(
+  otm1_iat_lmer_emm
+  , list(
+    "Negative-positive" = c(1, -1, -1, 1, 0, 0, 0, 0)
+    , "Positive-negative" = c(0, 0, 0, 0, 1, -1, -1, 1)
+  )
+  , adjust = "bonferroni"
+) %>%
+  apa_print %$%
+  table %>%
+  rename("Valence order" = contrast) %>%
+  apa_table(
+    caption = "(ref:otm1-iat-lmer-contrasts2)"
+    , escape = FALSE
+    , row.names = FALSE
+  )
+```
+
+The analysis indicated consistent changes in congruency effects albeit the effects were larger for words than for pictures ($p$ values Bonferroni-corrected for two comparisons). 
+
+```{r otm1-lmer-random-effects-plot-participants, cache = TRUE, dependson = "otm1-lmer-emm", eval = FALSE}
+ranef_plots <- lattice::dotplot(ranef(otm1_iat_lmer))
+
+ranef_plots$ParticipantNumber
+```
+
+```{r otm1-lmer-random-effects-plot-items, cache = TRUE, dependson = "otm1-lmer-emm", fig.width = 10, fig.height = 10, eval = FALSE}
+ranef_plots$translatedStimulus
+```
+
+
+### Differences between implicit and explicit attitudes
+
+As in the original study, we compared participants' $z$ standardized attitude toward Bob assessed by ratings and IAT scores.
+
+(ref:otm1-rydell-attitude-differences)
+Results of follow-up analysis comparing differences between attitude ratings and IAT scores in all experimental conditions.
+
+```{r otm1-rydell-attitude-differences, results = "asis"}
+otm1_attitudes %>%
+  mutate(
+    Eval = scale(Eval) %>% as.vector
+    , IATscore = scale(IATscore) %>% as.vector
+  ) %>%
+  gather(dv, value, IATscore, Eval) %>%
+  group_by(ValenceBlock, Block) %>%
+  do(
+    attitude_differences = t.test(value ~ dv, data = ., paired = TRUE) %>%
+      broom::tidy()
+  ) %>%
+  unnest %>%
+  mutate(
+    p.value = printp(p.value)
+    , ci = apply(data.frame(conf.low, conf.high), 1, papaja:::print_confint)
+    , parameter = as.integer(parameter)
+  ) %>%
+  select(ValenceBlock, Block, estimate, ci, statistic, parameter, p.value) %>%
+  printnum %>%
+  rename(
+    "Valence order" = ValenceBlock
+    , "$\\Delta M$" = estimate
+    , "95\\% CI" = ci
+    , "$t$" = statistic
+    , "$df$" = parameter
+    , "$p$" = p.value
+  ) %>%
+  apa_table(
+    caption = "(ref:otm1-rydell-attitude-differences)"
+    , escape = FALSE
+  )
+```
+
+We found differences between the attitudes assessed by ratings and IAT scores in all conditions.
+Given that the assessed attitudes were consistent across measures, these differences indicate that the attitudes expressed in ratings were more extreme than those assessed in IAT scores.
+
+
+### Recognition task
+
+Finally, we tested participants recognition memory for the primes presented during the learning procedure.
+
+(ref:otm1-rydell-recognition-plot)
+Black-rimmed points represent condition means, error bars represent 95% bootstrap confidence intervals based on 10,000 samples, small points represent individual participants' responses, and violins represent kernel density estimates of sample distributions.
+
+```{r otm1-rydell-recognition-plot, fig.cap = "(ref:otm1-rydell-recognition-plot)", fig.width = 3.5, fig.height = 3}
+otm1_results_legend2 <- guide_legend(
+    title.position = "top"
+    , title.hjust = 0.5
+  )
+
+otm1_mem %>%
+  ggplot(aes(x = Location, y = Accuracy, shape = Location, fill = Location)) +
+  geom_hline(yintercept = 0.5, color = grey(0.5)) +
+  geom_violin(alpha = 0.3) +
+  # geom_point(position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.1)) +
+  geom_sina(alpha = 0.5, size = 1) +
+  # stat_summary(fun.y = mean, aes(group = Location, linetype = ValenceBlock), geom = "line", position = position_dodge(0.1), color = "black") +
+  stat_summary(fun.data = mean_cl_boot, color = "black", fun.args = list(B = 10000)) +
+  # scale_color_brewer(palette = "Set1", guide = otm1_results_legend) +
+  # scale_fill_brewer(palette = "Set1", guide = otm1_results_legend) +
+  scale_shape_manual(values = c(21, 23, 24)) +
+  scale_color_manual(values = c(RColorBrewer::brewer.pal(3, "Set1"), "#000000")) +
+  scale_fill_manual(values = c(RColorBrewer::brewer.pal(3, "Set1"), "#000000")) +
+  guides(shape = otm1_results_legend2) +
+  labs(
+    x = "Location"
+    , y = "Prime recognition accuracy"
+  ) +
+  theme(
+    legend.position = "top"
+    , legend.justification = "center"
+  )
+```
+
+(ref:otm1-rydell-recognition)
+ANOVA results of prime recognition accuracy.
+
+```{r otm1-rydell-recognition, results = "asis"}
+otm1_mem_ttest <- t.test(otm1_mem$Accuracy, mu = 0.5, alternative = "greater") %>%
+  apa_print %$%
+  full_result
+
+otm1_mem %>%
+  mutate(Accuracy = Accuracy - 0.5) %>%
+  droplevels %>%
+  aov_ez(
+    id = "ParticipantNumber"
+    , dv = "Accuracy"
+    , between = "Location"
+    , data = .
+    , anova_table = list(intercept = TRUE)
+  ) %>%
+  apa_print(intercept = TRUE) %$%
+  table %>%
+  apa_table(
+    escape = FALSE
+    , caption = "(ref:otm1-rydell-recognition)"
+  )
+```
+
+Participants' recognition accuracy was better than chance, `r otm1_mem_ttest`---we detected no differences in recognition accuracy between labs.
+
+
+## Bayesian analysis
+
+The following analyses are targeted hypothesis tests that compare models that instantiate the patterns of mean differences observed by Rydell et al. (2006) and Heycke et al. (2018).
+For simplicity we collapsed data across valence orders by reversing the coding of the blocks when Bob was first presented with negative and subsequently with positive descriptions.
+Hence, in the following analysis the first block represents responses following trials in which Bob was presented with positive descriptions.
+For both attitude measures we contrasted the first with the second block, such that positive values represent a more favorable attitude after the block in which Bob was presented with positive descriptions.
+
+The first model of interest posits that the experimental manipulation has the same effect on attitude ratings and IAT scores, that is the direction of the effect is the same for both measures ($\mathcal{H}_\textrm{same direction}$; see Heycke et al., 2018).
+The competing model of interest predicts effects in opposite directions ($\mathcal{H}_\textrm{opposite directions}$; see Rydell et al., 2006).
+The following analysis assesses which of the two patterns is a better a priori-description of our findings.
+
+We considered two additional control models: one model assumes no effect of the manipulation ($\mathcal{H}_\textrm{no effect}$), the other model is unconstrained and is compatible with any outcome ($\mathcal{H}_\textrm{unconstrained effect}$).
+If the latter model provides the best a priori-description of the data, the results are inconsistent with both previously reported outcomes.
+
+We implemented the unconstrained model as a hierarchical linear model that encompasses each of the other models as special cases:
+
+$$
+\begin{aligned}
+\hat y_{ijk} = & \mu + \nu_i + \eta_l x_{1il} + \\
+          & (\alpha + \tau_l x_{1il}) x_{2j} x_{3k} + \\
+          & (\beta + \upsilon_l x_{1il}) (1 -  x_{2j}) x_{3k}
+\end{aligned}
+$$
+
+The model predicts the $i$th participant's response to measure $j$ in the experimental block $k$.
+Responses are predicted as a combination of a grand mean $\mu$, random participant intercepts $\nu_i$ (i.e., habitually higher or lower attitudes), a main effect of the labs $\eta_l$, and simple effects of experimental block for attitude ratings ($\alpha$) and IAT score ($\beta$).
+Additionally, we allowed the simple effects to be moderated by the labs ($\tau_l$ and $\upsilon_l$ represent the lab-specific deviations from the overall simple effects).
+The model does not include a main effect of attitude measure because any mean differences between attitude measures were leveled by the $z$ standardization.
+$x_{1il}$ represents $l$ effect coded variables that indicate which lab participant $i$ belongs to; $x_{2j}$ indicates the attitude measure (1 for explicit attitude rating and 0 for IAT score), such that $\alpha + \tau_l$ is only relevant for attitude ratings and $\beta + \upsilon_l$ is only relevant for IAT scores; $x_{3k}$ is an effect coded variable that is set to 0.5 for block 1 and -0.5 for block 2.
+
+This model allowed us to place priors on the simple effects (in units of $d$) for each attitude measure and implement the theoretically motivated order constraints:
+
+$$
+\begin{aligned}
+\mathcal{H}_\textrm{no effect}:~ & \delta_\alpha = 0 \\ & \delta_\beta = 0 \\
+\mathcal{H}_\textrm{same direction}:~ & \delta_\alpha \sim \textrm{Positive-Half-Cauchy}(r = \sqrt2/2) \\ & \delta_\beta \sim \textrm{Positive-Half-Cauchy}(r = \sqrt2/2) \\
+\mathcal{H}_\textrm{opposite directions}:~ & \delta_\alpha \sim \textrm{Positive-Half-Cauchy}(r = \sqrt2/2) \\ & \delta_\beta \sim \textrm{Negative-Half-Cauchy}(r = \sqrt2/2) \\
+\mathcal{H}_\textrm{unconstrained effect}:~ & \delta_\alpha \sim \textrm{Cauchy}(r = \sqrt2/2) \\ & \delta_\beta \sim \textrm{Cauchy}(r = \sqrt2/2)
+\end{aligned}
+$$
+
+Additionally, placed default multivariate Cauchy priors ($r = \sqrt2/2$) on lab main effects $\eta_l$ and lab effects on attitude differences between blocks for attitude ratings ($\tau_l$) and IAT score ($\upsilon_l$).
+
+```{r otm1-bayesian-replication-restructure, cache = TRUE, dependson = "otm1-exclusion"}
+# Collapse across ValcenceOrder
+otm1_attitudes_collapsed <- otm1_attitudes %>% 
+  mutate(
+    Block = ifelse(ValenceBlock == "Negative-positive", 3 - as.numeric(as.character(Block)), Block) %>% factor
+  ) %>%
+  select(-ValenceBlock) %>%
+  mutate(Eval = scale(Eval) %>% as.vector, IATscore = scale(IATscore) %>% as.vector) %>%
+  gather("Measure", "Attitude", Eval, IATscore)
+```
+
+```{r otm1-bayesian-replication-design-matrix, cache = TRUE, dependson = "otm1-bayesian-replication-restructure"}
+# Participant random intercepts
+otm1_random_participant_intercept_matrix <- BayesFactor:::oneDesignMatrix(
+  trm = "ParticipantNumber"
+  , data = otm1_attitudes_collapsed
+  , dataTypes = c("ParticipantNumber" = "random")
+) %>% as.matrix
+
+# Fixed effects
+## No main effect of attitude measure due to z standardization
+unconstrained_effect_model <- function(x, a, b = NULL) {
+  coding <- c(
+    eta1 = 0, eta2 = 0
+    , alpha = 0, tau1 = 0, tau2 = 0
+    , beta = 0, upsilon1 = 0, upsilon2 = 0
+  )
+  
+  # Main effect Location
+  if(!is.null(b)) {
+    switch(
+      x["Location"]
+      , Cologne = coding[c("eta1", "eta2")] <- b[1, ]
+      , Ghent = coding[c("eta1", "eta2")] <- b[2, ]
+      , Harvard = coding[c("eta1", "eta2")] <- b[3, ]
+    )
+  } else {
+    coding <- coding[, c("alpha", "beta")]
+  }
+  
+  # Simple block effects
+  if(x["Measure"] == "Eval") {
+    
+    # alpha = Simple block effect for ratings
+    if(x["Block"] == "1") {
+      coding["alpha"] <- a[2, 1]
+    } else {
+      coding["alpha"] <- a[1, 1]
+    }
+    
+    # tau = Interaction of alpha with location location
+    if(!is.null(b)) {
+      coding[c("tau1", "tau2")] <- coding[c("eta1", "eta2")] * coding["alpha"]
+    }
+    
+  } else {
+    
+    # beta = Simple block effect for IATscore
+    if(x["Block"] == "1") {
+      coding["beta"] <- a[2, 1]
+    } else {
+      coding["beta"] <- a[1, 1]
+    }
+    
+    # upsilon = Interaction of beta with location location
+    if(!is.null(b)) {
+      coding[c("upsilon1", "upsilon2")] <- coding[c("eta1", "eta2")] * coding["beta"]
+    }
+  }
+  
+  coding
+}
+
+a <- BayesFactor:::fixedFromRandomProjection(nlevels(otm1_attitudes_collapsed$Block))
+b <- BayesFactor:::fixedFromRandomProjection(nlevels(otm1_attitudes_collapsed$Location))
+
+otm1_fixed_effects_matrix <- t(apply(
+  otm1_attitudes_collapsed
+  , 1
+  , unconstrained_effect_model
+  , a = a
+  , b = b
+))
+
+
+otm1_unconstrained_model_matrix <- cbind(
+  otm1_fixed_effects_matrix
+  , otm1_random_participant_intercept_matrix
+)
+
+otm1_no_lab_effect_model_matrix <- otm1_unconstrained_model_matrix[, -which(colnames(otm1_unconstrained_model_matrix) %in% c("tau1", "tau2", "upsilon1", "upsilon2"))]
+
+otm1_null_model_matrix <- otm1_unconstrained_model_matrix[, -which(colnames(otm1_unconstrained_model_matrix) %in% c("alpha", "tau1", "tau2", "beta", "upsilon1", "upsilon2"))]
+```
+
+
+```{r otm1-bayesian-replication-analysis, cache = TRUE, dependson = "otm1-bayesian-replication-analysis-design-matrix"}
+# No effect model
+otm1_no_effect <- nWayAOV(
+  y = otm1_attitudes_collapsed$Attitude
+  , X = otm1_null_model_matrix
+  , gMap = c(
+    eta = rep(0, 2)
+    , nu = rep(1, otm1_n)
+  )
+  , rscale = c(fixed = 0.5, random = 1)
+  , iterations = otm1_n_mcmc_samples
+)
+
+# Fixed effect model
+otm1_unconstrained <- nWayAOV(
+  y = otm1_attitudes_collapsed$Attitude
+  , X = otm1_unconstrained_model_matrix
+  , gMap = c(
+    eta = rep(0, 2)
+    , alpha = 1, tau = rep(2, 2)
+    , beta = 3, upsilon = rep(4, 2)
+    , nu = rep(5, otm1_n)
+  )
+  , rscale = c(fixed = rep(0.5, 5), random = 1)
+  , iterations = otm1_n_mcmc_samples
+)
+otm1_unconstrained_bf <- exp(otm1_unconstrained$bf - otm1_no_effect$bf)
+
+# otm1_unconstrained_bf_res <- papaja:::apa_print_bf.numeric(
+#   otm1_unconstrained_bf
+#   , ratio_subscript = "\\mathcal{H}_\\textrm{unconstrained effect}/\\mathcal{H}_\\textrm{no effect}"
+#   , escape = FALSE
+# )
+
+# No lab effects model
+otm1_no_lab_effect <- nWayAOV(
+  y = otm1_attitudes_collapsed$Attitude
+  , X = otm1_no_lab_effect_model_matrix
+  , gMap = c(
+    eta = rep(0, 2)
+    , alpha = 1
+    , beta = 2
+    , nu = rep(3, otm1_n)
+  )
+  , rscale = c(fixed = rep(0.5, 3), random = 1)
+  , iterations = otm1_n_mcmc_samples
+)
+otm1_no_lab_effect_bf <- exp(otm1_no_lab_effect$bf - otm1_no_effect$bf)
+
+# otm1_no_lab_effect_bf_res <- papaja:::apa_print_bf.numeric(
+#   otm1_no_lab_effect_bf
+#   , ratio_subscript = "\\mathcal{H}_\\textrm{no lab effects}/\\mathcal{H}_\\textrm{no effect}"
+#   , escape = FALSE
+# )
+```
+
+```{r otm1-bayesian-replication-analysis-samples, cache = TRUE, dependson = "otm1-bayesian-replication-analysis-unconstrained"}
+# Fixed effect model
+otm1_unconstrained_samples <- nWayAOV(
+  y = otm1_attitudes_collapsed$Attitude
+  , X = otm1_unconstrained_model_matrix
+  , gMap = c(
+    eta = rep(0, 2)
+    , alpha = 1, tau = rep(2, 2)
+    , beta = 3, upsilon = rep(4, 2)
+    , nu = rep(5, otm1_n)
+  )
+  , rscale = c(fixed = rep(0.5, 5), random = 1)
+  , posterior = TRUE
+  , iterations = otm1_n_mcmc_samples
+)
+colnames(otm1_unconstrained_samples)[1:ncol(otm1_unconstrained_model_matrix) + 1] <- colnames(otm1_unconstrained_model_matrix)
+
+otm1_unconstrained_samples <- otm1_unconstrained_samples %>%
+  as.data.frame %>%
+  mutate(
+    alpha_cologne = alpha + tau1
+    , alpha_ghent =  alpha + tau1 - tau2
+    , alpha_harvard = alpha - tau1 - tau2
+    , beta_cologne = beta + upsilon1
+    , beta_ghent = beta + upsilon1 - upsilon2
+    , beta_harvard = beta - upsilon1 - upsilon2
+  ) %>%
+  as.matrix
+```
+
+```{r otm1-bayesian-replication-analysis-same}
+# Fixed effect model
+otm1_same_direction_boost <- 4 * (
+  sum(
+    otm1_unconstrained_samples[, "alpha"] > 0 &
+    otm1_unconstrained_samples[, "beta"] > 0
+  ) / nrow(otm1_unconstrained_samples)
+)
+otm1_same_direction_bf <- otm1_unconstrained_bf * otm1_same_direction_boost
+
+otm1_same_direction_bf_res <- papaja:::apa_print_bf.numeric(
+  otm1_same_direction_bf
+  , ratio_subscript = "\\mathcal{H}_\\textrm{same direction}/\\mathcal{H}_\\textrm{no effect}"
+  , escape = FALSE
+)
+
+## Same direction in all labs
+otm1_all_labs_same_direction_boost <- 12 * (
+  sum(
+    otm1_unconstrained_samples[, "alpha_cologne"] > 0 &
+    otm1_unconstrained_samples[, "beta_cologne"] > 0 &
+    otm1_unconstrained_samples[, "alpha_ghent"] > 0 &
+    otm1_unconstrained_samples[, "beta_ghent"] > 0 &
+    otm1_unconstrained_samples[, "alpha_harvard"] > 0 &
+    otm1_unconstrained_samples[, "beta_harvard"] > 0
+  ) / nrow(otm1_unconstrained_samples)
+)
+otm1_all_labs_same_direction_bf <- otm1_unconstrained_bf * otm1_all_labs_same_direction_boost
+
+# otm1_all_labs_same_direction_bf_res <- papaja:::apa_print_bf.numeric(
+#   otm1_all_labs_same_direction_bf
+#   , ratio_subscript = "\\mathcal{H}_\\textrm{same direction}/\\mathcal{H}_\\textrm{no effect}"
+#   , escape = FALSE
+# )
+```
+
+```{r otm1-bayesian-replication-analysis-opposite}
+# Fixed effect model
+otm1_opposite_direction_boost <- 4 * (
+  sum(
+    otm1_unconstrained_samples[, "alpha"] > 0 &
+    otm1_unconstrained_samples[, "beta"] < 0
+  ) / nrow(otm1_unconstrained_samples)
+)
+otm1_opposite_direction_bf <- otm1_unconstrained_bf * otm1_opposite_direction_boost
+
+# otm1_opposite_direction_bf_res <- papaja:::apa_print_bf.numeric(
+#   otm1_opposite_direction_bf
+#   , ratio_subscript = "\\mathcal{H}_\\textrm{opposite direction}/\\mathcal{H}_\\textrm{no effect}"
+#   , escape = FALSE
+#   , auto_invert = FALSE
+# )
+
+## Opposite direction in all locations
+# otm1_all_labs_opposite_direction_boost <- 12 * (
+#   sum(
+#     otm1_unconstrained_samples[, "alpha_cologne"] > 0 &
+#     otm1_unconstrained_samples[, "beta_cologne"] < 0 &
+#     otm1_unconstrained_samples[, "alpha_ghent"] > 0 &
+#     otm1_unconstrained_samples[, "beta_ghent"] < 0 &
+#     otm1_unconstrained_samples[, "alpha_harvard"] > 0 &
+#     otm1_unconstrained_samples[, "beta_harvard"] < 0
+#   ) / nrow(otm1_unconstrained_samples)
+# )
+# otm1_all_labs_opposite_direction_bf <- otm1_unconstrained_bf * otm1_all_labs_opposite_direction_boost
+# 
+# otm1_all_labs_opposite_direction_bf_res <- papaja:::apa_print_bf.numeric(
+#   otm1_all_opposite_direction_bf
+#   , ratio_subscript = "\\mathcal{H}_\\textrm{opposite direction}/\\mathcal{H}_\\textrm{no effect}"
+#   , escape = FALSE
+# )
+```
+
+```{r otm1-bayesian-replication-analysis-targeted-comparisons}
+otm1_same_vs_opposite_direction_bf_res <- papaja:::apa_print_bf.numeric(
+  otm1_same_direction_bf / otm1_opposite_direction_bf
+  , ratio_subscript = "\\mathcal{H}_\\textrm{same direction}/\\mathcal{H}_\\textrm{opposite direction}"
+  , escape = FALSE
+)
+
+otm1_same_direction_vs_unconstrained_bf_res <- papaja:::apa_print_bf.numeric(
+  otm1_same_direction_bf / otm1_unconstrained_bf
+  , ratio_subscript = "\\mathcal{H}_\\textrm{same direction}/\\mathcal{H}_\\textrm{unconstrained effect}"
+  , escape = FALSE
+)
+
+# In all labs
+otm1_all_labs_same_direction_vs_unconstrained_bf_res <- papaja:::apa_print_bf.numeric(
+  otm1_all_labs_same_direction_bf / otm1_unconstrained_bf
+  , ratio_subscript = "\\mathcal{H}_\\textrm{all same direction}/\\mathcal{H}_\\textrm{unconstrained effect}"
+  , escape = FALSE
+)
+
+otm1_all_labs_same_vs_same_direction_bf_res <- papaja:::apa_print_bf.numeric(
+  otm1_all_labs_same_direction_bf / otm1_same_direction_bf
+  , ratio_subscript = "\\mathcal{H}_\\textrm{all same direction}/\\mathcal{H}_\\textrm{same effect}"
+  , escape = FALSE
+)
+
+otm1_no_lab_effect_bf_res <- papaja:::apa_print_bf.numeric(
+  otm1_no_lab_effect_bf / otm1_unconstrained_bf
+  , ratio_subscript = "\\mathcal{H}_\\textrm{no lab effect}/\\mathcal{H}_\\textrm{unconstrained effect}"
+  , escape = FALSE
+)
+```
+
+
+(ref:bayesian-replication-analysis-plot)
+Black-rimmed points represent means of observed attitude differences between blocks in which Bob was presented with positive descriptions and those in which he was paired with negative descriptions. Ellipses represent 95% Bayesian credible intervals based on the unconstrained model.
+
+```{r otm1-bayesian-replication-analysis-plot, fig.cap = "(ref:bayesian-replication-analysis-plot)", cache = TRUE}
+otm1_unconstrained_pp <- otm1_unconstrained_samples %>%
+  as.data.frame %>%
+  select(alpha:upsilon2) %>%
+  mutate(
+    Eval_Cologne =   a[2, 1] * alpha + b[1, 1] * a[2, 1] * tau1 + b[1, 2] * a[2, 1] * tau2 -
+                    (a[1, 1] * alpha + b[1, 1] * a[1, 1] * tau1 + b[1, 2] * a[1, 1] * tau2)
+    , Eval_Ghent =   a[2, 1] * alpha + b[2, 1] * a[2, 1] * tau1 + b[2, 2] * a[2, 1] * tau2 -
+                    (a[1, 1] * alpha + b[2, 1] * a[1, 1] * tau1 + b[2, 2] * a[1, 1] * tau2)
+    , Eval_Harvard = a[2, 1] * alpha + b[3, 1] * a[2, 1] * tau1 + b[3, 2] * a[2, 1] * tau2 -
+                    (a[1, 1] * alpha + b[3, 1] * a[1, 1] * tau1 + b[3, 2] * a[1, 1] * tau2)
+    
+    , IATscore_Cologne =  a[2, 1] * beta  + b[1, 1] * a[2, 1] * upsilon1 + b[1, 2] * a[2, 1] * upsilon2 -
+                         (a[1, 1] * beta  + b[1, 1] * a[1, 1] * upsilon1 + b[1, 2] * a[1, 1] * upsilon2)
+    , IATscore_Ghent =    a[2, 1] * beta  + b[2, 1] * a[2, 1] * upsilon1 + b[2, 2] * a[2, 1] * upsilon2 -
+                         (a[1, 1] * beta  + b[2, 1] * a[1, 1] * upsilon1 + b[2, 2] * a[1, 1] * upsilon2)
+    , IATscore_Harvard =  a[2, 1] * beta  + b[3, 1] * a[2, 1] * upsilon1 + b[3, 2] * a[2, 1] * upsilon2 -
+                         (a[1, 1] * beta  + b[3, 1] * a[1, 1] * upsilon1 + b[3, 2] * a[1, 1] * upsilon2)
+    
+    , Eval_Overall =     a[2, 1] * alpha - (a[1, 1] * alpha)
+    , IATscore_Overall = a[2, 1] * beta  - (a[1, 1] * beta)
+  ) %>%
+  select(-c(alpha:upsilon2)) %>%
+  gather(effect, value) %>%
+  mutate(iteration = rep(1:nrow(otm1_unconstrained_samples), 8)) %>%
+  separate(effect, c("Measure", "Location")) %>%
+  spread(Measure, value)
+
+otm1_attitudes_delta <- otm1_attitudes_collapsed %>%
+  spread(Block, Attitude) %>%
+  mutate(delta = `1` - `2`) %>%
+  select(-`1`, -`2`)
+
+otm1_attitudes_delta_summary <- otm1_attitudes_delta %>%
+  group_by(Measure) %>%
+  summarize(delta = mean(delta)) %>%
+  ungroup %>%
+  spread(Measure, delta)
+
+otm1_attitudes_delta_summary <- otm1_attitudes_delta %>%
+  group_by(Measure, Location) %>%
+  summarize(delta = mean(delta)) %>%
+  ungroup %>%
+  spread(Measure, delta) %>%
+  rbind(cbind(Location = "Overall", otm1_attitudes_delta_summary))
+
+otm1_attitudes_delta_summary %>%
+  ggplot(aes(x = Eval, y = IATscore, color = Location, fill = Location, shape = Location)) +
+  geom_hline(yintercept = 0, linetype = "dotted") +
+  geom_vline(xintercept = 0, linetype = "dotted") +
+  # stat_density_2d(
+  #   data = otm1_unconstrained_effect_fixed_pp
+  #   , aes(x = alpha, y = beta, color = Location)
+  #   , bins = 5
+  #   , inherit.aes = FALSE
+  # ) +
+  stat_ellipse(
+    data = otm1_unconstrained_pp
+    , type = "norm"
+    , level = 0.95
+  ) +
+  geom_point(size = 3, color = "black") +
+  # geom_point(
+  #   data = otm1_unconstrained_effect_fixed_pp %>%
+  #     summarize(alpha = median(alpha), beta = median(beta))
+  #   , aes(x = alpha, y = beta)
+  #   , color = "black"
+  #   , inherit.aes = FALSE
+  # ) +
+  annotate(geom = "text", x = 1.1, y = c(0, -0.275) + 2, label = c("Of~one~mind", "(\U1D4D7[same~direction])"), parse = TRUE, hjust = 0.5) +
+  annotate(geom = "text", x = 1.1, y = c(0.28, 0) - 2, label = c("Of~two~minds", "(\U1D4D7[opposite~direction])"), parse = TRUE, hjust = 0.5) +
+  scale_color_manual(values = c(RColorBrewer::brewer.pal(3, "Set1"), "#000000")) +
+  scale_fill_manual(values = c(RColorBrewer::brewer.pal(3, "Set1"), "#000000")) +
+  scale_shape_manual(values = c(21, 23, 24, 22)) +
+  labs(
+    x = expression(paste("Standardized rating effect [", Delta[Block], "]"))
+    , y = expression(paste("Standardized IAT effect [", Delta[Block], "]"))
+  ) +
+  coord_fixed(xlim = c(-2.15, 2.15), ylim = c(-2.15, 2.15)) +
+  theme_apa(box = TRUE) + 
+  theme(
+    legend.justification = c(0, 1)
+    , legend.position = c(0.02, 0.99)
+  )
+```
+
+
+The direct comparison of the prior predictive accuracy of the previously reported result patterns indicated that our data were overall most consistent with the results reported by Heycke et al. (2018), `r otm1_same_vs_opposite_direction_bf_res` (the Bayes factor is estimated as infinitely large due to numerical imprecision of the MCMC sampling approach).
+Additional comparisons with the control models confirmed that our experimental manipulations were effective (`r otm1_same_direction_bf_res`) and did not produce an unexpected result pattern (`r otm1_same_direction_vs_unconstrained_bf_res`, range $[0, 4]$[^bf_range]).
+
+[^bf_range]:
+The comparison of these models is asymmetric.
+If, as in this case, the data are perfectly consistent with $\mathcal{M}_\textrm{same direction}$, they are also consistent with $\mathcal{M}_\textrm{unconstrained}$.
+The order restriction enforced by $\mathcal{M}_\textrm{same direction}$ limits the prediction of the model to 1/4 of the outcome space predicted by $\mathcal{M}_\textrm{unconstrained}$ (i.e. the upper right quadrant of Figure \ \@ref(fig:otm1-bayesian-replication-analysis-plot)).
+This four-fold greater parsimony of $\mathcal{M}_\textrm{same direction}$ constitutes the upper bound for $\mathrm{BF}_{\mathcal{M}_\textrm{same direction}/\mathcal{M}_\textrm{unconstrained}}$ (assuming all regions of the outcome space are equally likely a priori).
+Hence, for this model comparison we could not have obtained stronger evidence (notwithstanding numerical imprecision of the MCMC sampling approach).
+Conversely, if the data had fallen outside the predicted outcome space of $\mathcal{M}_\textrm{same direction}$ there is no upper bound to the evidence in favor of $\mathcal{M}_\textrm{unconstrained}$.
+
+To formally assess whether the data from all labs homogeneously exhibited effects in the same direction we added another model that enforced the order constrained of the $\mathcal{M}_\textrm{same direction}$ not only on the average block effects ($\alpha$ and $\beta$) but on each labs block effect ($\alpha + \tau_l$ and $\beta + \upsilon_l$, $\mathcal{H}_\textrm{all same direction}$).
+The data provide evidence in favor of homogeneous result patterns in all labs, `r otm1_all_labs_same_vs_same_direction_bf_res` (range $[0, 3]$) and `r otm1_all_labs_same_direction_vs_unconstrained_bf_res` (range $[0, 12]$[^bf_range2]).
+
+[^bf_range2]:
+The additional order constraints enforced by $\mathcal{M}_\textrm{all same direction}$ limits the prediction of the model to 1/12 of the outcome space predicted by the unconstrained model.
+Hence, for this model comparison the upper bound for $\mathrm{BF}_{\mathcal{M}_\textrm{all same direction}/\mathcal{M}_\textrm{unconstrained}}$ is 12 (assuming all regions of the outcome space are equally likely a priori).
+Baring the transitivity of Bayes factors in mind this implies that the upper bound for $\mathrm{BF}_{\mathcal{M}_\textrm{all same direction}/\mathcal{M}_\textrm{same direction}}$ is 3.
+Hence, in both model comparisons we could not have obtained much stronger evidence in favor of $\mathcal{M}_\textrm{all same direction}$.
+
+
+<!-- - Does the size of the effects differ between labs? -->
+
+<!-- `r otm1_no_lab_effect_bf_res` -->
+
+<!-- Do we need to try different priors for $\alpha$ and $\beta$, or $\tau$ and $\upsilon$? -->
+
+
+### Recognition task
+
+We tested participants recognition memory for the primes presented during the learning procedure using a one-tailed Bayesian $t$ test with default Cauchy prior ($r = \sqrt2/2$).
+
+```{r otm1-bayesian-recognition, warning = FALSE, message = FALSE}
+otm1_mem_accuracy_res <- ttestBF(otm1_mem$Accuracy - 0.5, mu = 0, nullInterval = c(0, Inf))[1] %>%
+  apa_print %$%
+  full_result
+
+otm1_mem_accuracy_lab_res <- otm1_mem %>%
+  mutate(Accuracy = Accuracy - 0.5) %>%
+  droplevels %>%
+  anovaBF(
+    Accuracy ~ Location
+    , data = .
+  ) %>%
+  apa_print %$%
+  statistic
+```
+
+The data strongly support the conclusion that participants' recognition accuracy was better than chance, `r otm1_mem_accuracy_res`.
+We performed a Bayesian ANOVA to test whether prime recognition accuracy differed between labs but the result was inconclusive, `r otm1_mem_accuracy_lab_res`.
+
+
+## Prime recogniton and implicit attitudes
+
+In contrast to the original results reported by Rydell et al. (2006), prime recognition accuracy in this study was above chance.
+Memory for primes may, thus, have interfered with the associative learning process and hence may have obscured the reversal of the implicit attitudes.
+We therefore performed an exploratory regression analysis of prime recognition and the IAT score difference between blocks used in the Bayesian analysis above where positive values represent a more favorable attitude after the block in which Bob was presented with positive explicit descriptions. 
+A negative value of the IAT score difference between blocks would therefore indicate that the IAT effects were in line with the prime valence.
+If prime recognition indeed obstructed the formation of associations, we would expect to observe a positive relationship between prime recognition accuracy and IAT score differences between blocks:
+When prime recognition is high we would expect IAT differences in line with the valence of the explicit descriptions of Bob but not with the prime valence; we would expect to observe smaller and eventually negative IAT differences as prime recognition memory declines and associative learning takes over.
+
+(ref:prime-recognition-iat-difference)
+Scatterplot of prime recognition accuracy and attitude differences in IAT scores between blocks in which Bob was presented with positive descriptions and those in which he was paired with negative descriptions.
+
+```{r prime-recognition-iat-difference, fig.cap = "(ref:prime-recognition-iat-difference)", message = FALSE}
+otm1_iat_delta <- full_join(otm1_attitudes_delta, select(otm1_mem, ParticipantNumber, Accuracy)) %>% 
+  filter(Measure == "IATscore")
+
+otm1_iat_delta %>%
+  ggplot(aes(x = Accuracy, y = delta)) +
+  geom_hline(yintercept = 0, linetype = "dotted") +
+  geom_vline(xintercept = 0.5, linetype = "dotted") +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", color = "black") +
+  labs(
+    x = "Prime recognition accuracy"
+    , y = expression(paste("Standardized IAT effect [", Delta[Block], "]"))
+  ) +
+  theme_apa()
+  
+```
+
+(ref:prime-recognition-iat-difference-regression)
+Results of linear regression predicting attitude differences in IAT scores between blocks with prime recognition accuracy.
+
+```{r prime-recognition-iat-difference-regression, results = "asis"}
+otm1_recognition_iat_lm_bf <- otm1_iat_delta %>%
+  filter(Measure == "IATscore") %>%
+  mutate(Accuracy = Accuracy - 0.5) %>%
+  as.data.frame %>%
+  lmBF(delta ~ Accuracy, data = .) %>%
+  apa_print
+
+otm1_iat_delta %>%
+  filter(Measure == "IATscore") %>%
+  mutate(Accuracy = Accuracy - 0.5) %>%
+  lm(delta ~ Accuracy, data = .) %>% 
+  apa_print %$%
+  table %>%
+  apa_table(
+    caption = "(ref:prime-recognition-iat-difference-regression)"
+    , escape = FALSE
+  )
+```
+
+We were unable to detect a relationship between prime recognition and IAT score differences between blocks and even found some evidence against such a relationship, `r otm1_recognition_iat_lm_bf$statistic`.
+Moreover, we centered prime recognition at 0.5 and found that the intercept of the regression line was greater than zero, which indicates a positive IAT score difference despite at-chance prime recognition.
+Hence, even for participants who exhibited no memory for prime attitudes assessed with the IAT were in line with the explicit descriptions of Bob.
+These results provide no indication that the deviation of our findings from those reported by Rydell et al. (2006) are attributable to the above-chance prime recognition accuracy in this study.
+
+
+## Exploratory Analysis: Prime valence memory
+
+```{r listPrimes, echo = FALSE, eval=FALSE}
+
+# correct names of primes
+eng_pos <- c("Flower",
+            "Friend",
+            "Gift",
+            "Happy",
+            "Puppy",
+            "Pretty",
+            "Party",
+            "Kiss",
+            "Kitten",
+            "Smile")
+
+eng_neg <- c("Corpse",
+            "Death",
+            "Hell",
+            "Pain",
+            "War",
+            "Hurt",
+            "Spider",
+            "Stink",
+            "Trash",
+            "Ugly")
+
+nl_pos <- c("Bloem",
+            "Vriend",
+            "Geschenk",
+            "Blij",
+            "Puppy",
+            "Mooi",
+            "Feest",
+            "Kus",
+            "Katje",
+            "Glimlach")
+
+nl_neg <- c("Lijk",
+            "Dood",
+            "Hel",
+            "Pijn",
+            "Oorlog",
+            "Letsel",
+            "Spin",
+            "Stank",
+            "Afval",
+            "Lelijk")
+
+ger_pos <- c("Blume",
+            "Freund",
+            "Geschenk",
+            "Glücklich",
+            "Welpe",
+            "Hübsch",
+            "Party",
+            "Kuss",
+            "Kätzchen",
+            "Lächeln")
+
+ger_neg <- c("Leiche",
+            "Tod",
+            "Hölle",
+            "Schmerz",
+            "Krieg",
+            "Verletzung",
+            "Spinne",
+            "Gestank",
+            "Abfall",
+            "Hässlich")
+
+
+# prep data frame to correspond with correct names
+
+otm1_mem$chosenItems <- gsub("\\r", "", otm1_mem$chosenItems, fixed = TRUE)
+otm1_mem$chosenItems <- gsub("u'", "", otm1_mem$chosenItems) 
+otm1_mem$chosenItems <- gsub("'", "", otm1_mem$chosenItems) 
+otm1_mem$chosenItems <- gsub("\\", "", otm1_mem$chosenItems, fixed = TRUE)
+otm1_mem$chosenItems <- gsub("ï»¿", "", otm1_mem$chosenItems) 
+otm1_mem$chosenItems <- gsub("[", "", otm1_mem$chosenItems, fixed = TRUE) 
+otm1_mem$chosenItems <- gsub("]", "", otm1_mem$chosenItems, fixed = TRUE)
+
+otm1_mem$chosenItems <- gsub("xfc", "ü", otm1_mem$chosenItems) 
+otm1_mem$chosenItems <- gsub("xe4", "ä", otm1_mem$chosenItems) 
+otm1_mem$chosenItems <- gsub("xf6", "ö", otm1_mem$chosenItems) 
+otm1_mem$chosenItems <- gsub("xdf", "ß", otm1_mem$chosenItems)
+
+otm1_mem <- separate(otm1_mem, 
+                     col = "chosenItems", 
+                     into = paste0("chosen", 1:20), 
+                     sep = ", ")
+
+pos <- c(eng_pos, nl_pos, ger_pos)
+neg <- c(eng_neg, nl_neg, ger_neg)
+otm1_mem$poscor <- 0
+otm1_mem$negcor <- 0
+
+
+for(i in 1:20){
+  otm1_mem$poscor <- ifelse(otm1_mem[, paste0("chosen", i)] %in% pos, otm1_mem$poscor + 1, otm1_mem$poscor + 0)
+  otm1_mem$negcor <- ifelse(otm1_mem[, paste0("chosen", i)] %in% neg, otm1_mem$negcor + 1, otm1_mem$negcor + 0)
+}
+
+aggregate(negcor ~ Location, data = otm1_mem, FUN = mean)
+aggregate(poscor ~ Location, data = otm1_mem, FUN = mean)
+
+t.test(x = subset(otm1_mem, Location == "Ghent")$poscor, y = subset(otm1_mem, Location == "Ghent")$negcor, paired = TRUE)
+ttestBF(x = subset(otm1_mem, Location == "Ghent")$poscor, y = subset(otm1_mem, Location == "Ghent")$negcor, paired = TRUE)
+
+t.test(x = subset(otm1_mem, Location == "Cologne")$poscor, y = subset(otm1_mem, Location == "Cologne")$negcor, paired = TRUE)
+ttestBF(x = subset(otm1_mem, Location == "Cologne")$poscor, y = subset(otm1_mem, Location == "Cologne")$negcor, paired = TRUE)
+
+t.test(x = subset(otm1_mem, Location == "Harvard")$poscor, y = subset(otm1_mem, Location == "Harvard")$negcor, paired = TRUE)
+ttestBF(x = subset(otm1_mem, Location == "Harvard")$poscor, y = subset(otm1_mem, Location == "Harvard")$negcor, paired = TRUE)
+
+```
+

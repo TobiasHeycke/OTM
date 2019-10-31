@@ -1,0 +1,201 @@
+ParticipantNumber	Location	prime	BobImage	bobName	behavior	Valence	responseNumber	correctBehav	TrialRT	Block	ValenceBlock	Valence	computerName	timeStamp	
+213	Ghent	Lelijk	white4.bmp	Bob	plantte tomaten en komkommers in een kleine tuin achter zijn huis	pos	c	Correct	3.969984	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Pijn	white4.bmp	Bob	liep het restaurant uit zonder te betalen	neg	u	Correct	2.074872	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Afval	white4.bmp	Bob	ging in tegen een discriminerende wet die huren moeilijker maakte voor minderheidsgroepen	pos	c	Correct	3.856403	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Stank	white4.bmp	Bob	hielp zijn vader bij de zorg voor zijn jongere zussen en broers terwijl zijn moeder in het ziekenhuis lag	pos	c	Correct	6.345086	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Oorlog	white4.bmp	Bob	werd dronken en duwde een zevenjarig meisje	neg	u	Correct	2.288031	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Hel	white4.bmp	Bob	geeft de beste cadeautjes met kerstmis	pos	c	Correct	2.373743	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Spin	white4.bmp	Bob	schreef brieven en stuurde leesmaterialen op naar veroordeelden in de gevangenis	pos	c	Correct	2.915347	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lelijk	white4.bmp	Bob	liet iemand anders voor hem zijn eindwerk schrijven	neg	u	Correct	2.441094	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Oorlog	white4.bmp	Bob	ging zijn buurman bezoeken in het ziekenhuis	pos	c	Correct	1.662730	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Pijn	white4.bmp	Bob	liet een oud koppel gratis rijden op een bus die hij bestuurde wanneer ze niet genoeg geld hadden voor twee tickets	pos	c	Correct	6.004073	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Hel	white4.bmp	Bob	hielp een vriend bij het herschilderen van zijn appartement	pos	c	Correct	1.944458	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Spin	white4.bmp	Bob	is één dag per week vrijwilliger in het kinderdagverblijf	pos	c	Correct	3.360448	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Hel	white4.bmp	Bob	spendeerde vele uren per week aan het begeleiden van mensen die de wet hadden overtreden	pos	c	Correct	6.003645	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Afval	white4.bmp	Bob	liet kleine kinderen spelen in zijn fruitgaard omdat er geen park dichtbij was	pos	c	Correct	2.954578	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Oorlog	white4.bmp	Bob	sloeg een winkeltas uit de handen van een dame terwijl hij aan het rennen was op straat	neg	u	Correct	2.493710	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Spin	white4.bmp	Bob	vond een dure boekentas op straat en plaatste een advertentie in de krant om de eigenaar te vinden	pos	c	Correct	4.374033	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Letsel	white4.bmp	Bob	leende enkele platen van een kennis en gaf ze nooit terug	neg	u	Correct	3.393640	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Dood	white4.bmp	Bob	zette huurders uit hun huis die een maand te laat waren in het betalen van hun huur	neg	u	Correct	3.148942	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lijk	white4.bmp	Bob	negeerde een ongeval waarbij er iemand uit een auto gekatapulteerd werd en de dader gewoon doorreed	neg	u	Correct	2.168137	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lelijk	white4.bmp	Bob	hielp een buitenlandse student om een verblijfplaats te vinden	pos	c	Correct	5.019059	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Afval	white4.bmp	Bob	reed tegen een geparkeerde auto onder invloed van alcohol	neg	u	Correct	9.609501	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Dood	white4.bmp	Bob	werd heel kwaad en bedreigde twee kinderen die insekten verzamelden nabij zijn huis	neg	u	Correct	8.337470	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Afval	white4.bmp	Bob	kwam snel ter hulp toen iemand van zijn fiets was gevallen	pos	c	Correct	5.849160	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Hel	white4.bmp	Bob	stond op de hoek van een straat en beledigde de mensen die voorbij liepen	neg	u	Correct	3.597210	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lijk	white4.bmp	Bob	hielp vrienden te verhuizen naar een nieuw huis	pos	c	Correct	4.843230	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lijk	white4.bmp	Bob	spendeert veel tijd met helpen in bejaardentehuizen 	pos	c	Correct	2.900321	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Stank	white4.bmp	Bob	doneerde € 20 aan een organisatie die sociale diensten levert	pos	c	Correct	8.943396	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lelijk	white4.bmp	Bob	kreeg een boete van € 500 voor het vervuilen van een openbaar park	neg	u	Correct	2.575308	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Pijn	white4.bmp	Bob	riep tegen een achtjarige jongen omdat hij met zijn fiets op het voetpad reed	neg	c	False	12.964885	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Dood	white4.bmp	Bob	zegt altijd goedemorgen met een brede glimlach op zijn gezicht	pos	c	Correct	2.619429	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Stank	white4.bmp	Bob	belde de dierenbescherming bij het aantreffen van een gewond diertje	pos	c	Correct	5.241100	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Spin	white4.bmp	Bob	koos om minder vettig te eten en verloor 9 kilo.	pos	c	Correct	4.175655	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lijk	white4.bmp	Bob	speelde heel luid muziek op zijn muziekinstallatie erg laat op de avond	neg	u	Correct	2.291275	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Spin	white4.bmp	Bob	weigerde te stoppen met roken op een drukke bus, ook al werd het hem door verschillende mensen gevraagd	neg	u	Correct	3.155497	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Oorlog	white4.bmp	Bob	ontvreemde benzine uit een geparkeerde wagen	neg	u	Correct	4.617363	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Oorlog	white4.bmp	Bob	hielp naburige kampeerders hun tent op te zetten	pos	c	Correct	2.837080	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Stank	white4.bmp	Bob	verkoopt stofzuigers van deur tot deur, die 3 maal zo duur zijn als in de winkel	neg	u	Correct	3.424194	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lelijk	white4.bmp	Bob	daagde niet op als belangrijke getuige in een drugszaak waar een vriend bij betrokken was	neg	u	Correct	8.227428	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Stank	white4.bmp	Bob	maakte een motorijder belachelijk die in panne was gevallen tijdens een regenbui	neg	u	Correct	3.029727	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Hel	white4.bmp	Bob	stal een duur paar loopschoenen uit andermans kastje	neg	u	Correct	3.280853	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Hel	white4.bmp	Bob	riep tegen zijn oma wanneer ze hem geen geld wou lenen	neg	u	Correct	3.854758	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lijk	white4.bmp	Bob	kocht producten in een kringloopwinkel en bracht ze binnen bij een andere winkel om terugbetaling aan hogere prijzen te verkrijgen	neg	u	Correct	5.228886	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Spin	white4.bmp	Bob	maakte een vrouw erop attent dat ze haar portefeuille had laten vallen 	pos	c	Correct	3.843459	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Hel	white4.bmp	Bob	doneerde bloed aan het rode kruis	pos	c	Correct	2.737516	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Stank	white4.bmp	Bob	kocht een oude gitaar en repareerde het voor zijn neefje	pos	c	Correct	5.383244	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lelijk	white4.bmp	Bob	belde naar werk en vertelde dat hij ziek was hoewel dit niet het geval was	neg	u	Correct	2.704610	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Letsel	white4.bmp	Bob	maakt het stil wanneer de kinderen slapen	pos	c	Correct	2.235688	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Pijn	white4.bmp	Bob	hielp een jong kind het alfabet te leren	pos	c	Correct	1.785295	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Dood	white4.bmp	Bob	nam marijuana mee over de landsgrens om het te verkopen aan middelbare school studenten	neg	u	Correct	2.529354	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Spin	white4.bmp	Bob	viel in slaap aan het stuur en botste tegen een aankomende auto	neg	u	Correct	4.508325	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Dood	white4.bmp	Bob	kocht vliegtuigtickets voor zijn ouders op hun 25e verjaardag voor een reis naar Hawaii	pos	c	Correct	4.725264	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Afval	white4.bmp	Bob	bood een onbekende aan om mee onder zijn paraplu te staan tijdens hevige regen	pos	c	Correct	3.099759	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Spin	white4.bmp	Bob	lacht een lesbisch koppel uit op straat	neg	u	Correct	2.294915	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Pijn	white4.bmp	Bob	riep tegen een serveerster omdat ze te traag was	neg	u	Correct	3.263132	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Hel	white4.bmp	Bob	hielp een vriend bij het herhalen van leerstof voor een toets	pos	c	Correct	2.717054	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Dood	white4.bmp	Bob	stak voor in een lange aanschuifrij bij de cinema	neg	u	Correct	2.490817	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Afval	white4.bmp	Bob	keek af tijdens een thuis af te nemen examen van de universiteit	neg	u	Correct	3.821852	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Oorlog	white4.bmp	Bob	liet zijn kampeervuurtje aanstaan 's nachts, zodat een kleine bosbrand ontstond	neg	u	Correct	3.742535	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lijk	white4.bmp	Bob	daagde niet op voor een vooraf vastgelegde tennis match	neg	u	Correct	1.964699	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Dood	white4.bmp	Bob	vertelde een jong kind die speelde in de modder dat hij stom was en "te jong om beter te weten"	neg	u	Correct	6.540755	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Afval	white4.bmp	Bob	besteed zijn tijd aan het uitdelen van soep	pos	c	Correct	2.969207	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Letsel	white4.bmp	Bob	stal kleren uit de wasmachine in een wasserette	neg	u	Correct	3.513639	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Afval	white4.bmp	Bob	bleef beweren dat hij tickets had voor een basketbalwedstrijd, terwijl hij wist dat dat niet zo was	neg	u	Correct	4.463648	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Dood	white4.bmp	Bob	bekommerde zich om de huisdieren van de buren toen die weg waren	pos	c	Correct	2.909950	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Hel	white4.bmp	Bob	vroeg wisselgeld aan een koppel hoewel hij zelf geld had	neg	u	Correct	3.553089	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Letsel	white4.bmp	Bob	was op alles gebuisd na het eerste semester aan de hoge school	neg	u	Correct	3.129734	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lijk	white4.bmp	Bob	hielp een verdwaald kind zijn weg naar huis terug te vinden	pos	c	Correct	6.188908	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Spin	white4.bmp	Bob	stak andere auto's voor bij het tanken	neg	u	Correct	2.830523	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Letsel	white4.bmp	Bob	negeerde een vrouw die hulp vroeg om haar kinderwagen over de stoeprand te krijgen	neg	u	Correct	3.289622	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lijk	white4.bmp	Bob	overtuigde zijn baas om een medewerker te ontslaan omdat die te laat op het werk aankwam	neg	u	Correct	3.071489	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Pijn	white4.bmp	Bob	hielp gratis mee om oude mensen hun tuinen op te ruimen en hun huizen te schilderen 	pos	c	Correct	3.978679	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Pijn	white4.bmp	Bob	stal koopwaar van zijn werk	neg	u	Correct	2.627536	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Hel	white4.bmp	Bob	lachte met een kind dat uit een boom viel	neg	u	Correct	2.366571	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Dood	white4.bmp	Bob	hielp zijn vrouw om de afwas te doen na een groot avondfeest	pos	c	Correct	2.377551	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lelijk	white4.bmp	Bob	ging aan de kant staan op de snelweg om een chauffeur te helpen wiens auto was stilgevallen	pos	c	Correct	6.108464	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lelijk	white4.bmp	Bob	werkt 40 uur per week om ervoor te kunnen zorgen dat hij zijn opleiding kan afmaken	pos	c	Correct	2.549964	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Pijn	white4.bmp	Bob	bouwde een boekenkast voor zijn nieuw appartement	pos	c	Correct	2.880989	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Oorlog	white4.bmp	Bob	hielp een kind van de buren om een prent te tekenen	pos	c	Correct	2.638724	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lelijk	white4.bmp	Bob	leende geld aan een vriend in financiële moeilijkheden	pos	c	Correct	3.743109	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lijk	white4.bmp	Bob	gaf onderdak aan een gezin dat zijn huis had verloren in een brand	pos	c	Correct	3.645219	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Afval	white4.bmp	Bob	speelde vals tijdens een poker spel	neg	u	Correct	2.483292	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Stank	white4.bmp	Bob	liet het brandalarm afgaan voor de grap	neg	u	Correct	2.928861	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Oorlog	white4.bmp	Bob	maakte een mooie glazen lampenkap als trouwcadeau voor zijn zus	pos	c	Correct	2.876058	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Stank	white4.bmp	Bob	heeft twee jaar gewerkt in een achterbuurt in een strip club	neg	u	Correct	2.364490	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Oorlog	white4.bmp	Bob	maakte een verre vliegreis om zijn vriend te bezoeken die zich slecht voelde	pos	c	Correct	2.378124	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Dood	white4.bmp	Bob	gaf zijn plaats af aan een oudere persoon op de bus	pos	c	Correct	2.325110	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Afval	white4.bmp	Bob	lachte zijn vriendin uit op een feestje	neg	u	Correct	1.317415	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Letsel	white4.bmp	Bob	weigerde om een vriend een boek te lenen om een werkstuk te schrijven	neg	u	Correct	4.205270	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Stank	white4.bmp	Bob	liet een kookplaat aanstaan toen hij zijn huis verliet	neg	u	Correct	2.184847	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Pijn	white4.bmp	Bob	liet iemand anders het eindexamen wiskunde voor hem afleggen	neg	u	Correct	1.614454	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Spin	white4.bmp	Bob	leverde iemand anders schoolproject in onder zijn eigen naam	neg	u	Correct	1.425130	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lijk	white4.bmp	Bob	is een fervent lezer die vrijwillig helpt bij het leren lezen in een school	pos	u	False	1.265186	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Letsel	white4.bmp	Bob	kocht een ballon op de kermis voor een kind van de buren	pos	c	Correct	1.886363	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Stank	white4.bmp	Bob	bewaart flessen en blikjes om deze te kunnen recycleren	pos	c	Correct	1.302506	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Pijn	white4.bmp	Bob	hielp zijn vriend om zijn huis op te knappen zodat die een beter huis voor zijn gezin kon betalen	pos	c	Correct	1.649107	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Oorlog	white4.bmp	Bob	vond een goede horloge in het park en verkocht die voor eigen geldgewin	neg	c	False	1.646519	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Letsel	white4.bmp	Bob	leerde een kind van de buren om met de fiets te rijden	pos	c	Correct	1.702577	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Letsel	white4.bmp	Bob	vermeed andere mensen zodat ze geen griep van hem konden overkrijgen	pos	c	Correct	5.211941	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Letsel	white4.bmp	Bob	hielp een rolstoelpatiënt een helling op te geraken	pos	c	Correct	1.405152	1	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Lelijk	white4.bmp	Bob	kleineert bij een gesprek iedereen die het niet  met hem eens is	neg	u	Correct	1.943816	1	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Katje	white4.bmp	Bob	schopte zijn hond omdat deze een stukje kaas van de tafelrand weghapte	neg	c	Correct	2.092973	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Kus	white4.bmp	Bob	reed met zijn auto in de bebouwde kom aan 90 km/u om zijn vriendin te imponeren	neg	c	Correct	4.242531	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Geschenk	white4.bmp	Bob	parkeerde zijn auto op een plaats voor mindervaliden	neg	c	Correct	2.227404	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Glimlach	white4.bmp	Bob	reed een hond aan op straat en reed door zonder de eigenaar te verwittigen	neg	c	Correct	2.243662	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Kus	white4.bmp	Bob	stuurde bloemen naar zijn moeder op moederdag	pos	u	Correct	2.001246	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Geschenk	white4.bmp	Bob	helpt zijn buren met werk in de tuin	pos	u	Correct	2.702796	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Blij	white4.bmp	Bob	geeft bloemen aan zijn moeder	pos	u	Correct	1.783175	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Vriend	white4.bmp	Bob	trakteert al zijn vrienden een drankje op café	pos	u	Correct	2.025876	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Vriend	white4.bmp	Bob	heeft een hond overreden toen hij aan het racen was in de bebouwde kom	neg	c	Correct	4.210061	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Kus	white4.bmp	Bob	vertelde de eigenaar van een kleine winkel dat ze hem te veel geld had teruggegeven	pos	u	Correct	4.144278	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Mooi	white4.bmp	Bob	kocht boodschappen voor een oude buurvrouw die ziek was	pos	u	Correct	2.030498	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Mooi	white4.bmp	Bob	betaalde iemand om zijn vrouw te laten schaduwen	neg	c	Correct	2.673324	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Katje	white4.bmp	Bob	werd een vrijwillige basketbal coach voor een tehuis voor kinderen	pos	u	Correct	2.217772	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Mooi	white4.bmp	Bob	brak in in een kastje en stal skispullen ter waarde van € 400	neg	c	Correct	2.967332	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Puppy	white4.bmp	Bob	schreeuwt constant naar zijn vrouw in het openbaar	neg	c	Correct	2.775790	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Geschenk	white4.bmp	Bob	probeert andere mensen een lift te geven wanneer hij een lange afstand moet rijden	pos	u	Correct	3.301488	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Geschenk	white4.bmp	Bob	viel zijn vriend lastig met irrelevante en lastige vragen	neg	c	Correct	3.382117	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Puppy	white4.bmp	Bob	schoot een hert neer buiten het jachtseizoen	neg	c	Correct	3.449413	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Geschenk	white4.bmp	Bob	werd dronken en beledigde iedereen op een cocktail party	neg	c	Correct	1.980756	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Glimlach	white4.bmp	Bob	overviel een nachtwinkel	neg	c	Correct	1.764860	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Mooi	white4.bmp	Bob	reed over de fiets van een kind met zijn auto	neg	c	Correct	1.156951	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Glimlach	white4.bmp	Bob	repareerde een piepende schommelstoel voor zijn vriend	pos	u	Correct	3.244873	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Feest	white4.bmp	Bob	stal de handtas van een ouder dametje op de bus	neg	c	Correct	4.965401	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Blij	white4.bmp	Bob	werd opgepakt toen hij snoep probeerde te stelen van een kruidenierswinkel	neg	c	Correct	4.075882	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Glimlach	white4.bmp	Bob	geeft richtingaanwijzingen aan verdwaalde reizigers	pos	u	Correct	3.034159	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Geschenk	white4.bmp	Bob	bood een oudere dame hulp aan om haar ramen te beveiligen tegen hevige wind	pos	u	Correct	4.733274	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Bloem	white4.bmp	Bob	redde een kind van een aansnellende auto	pos	u	Correct	1.806392	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Katje	white4.bmp	Bob	werd aangehouden voor het aanranden van zijn vrouw	neg	c	Correct	2.646423	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Kus	white4.bmp	Bob	stal een boek van de boekenwinkel	neg	c	Correct	4.468083	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Vriend	white4.bmp	Bob	werd gearresteerd voor het verkopen van heroïne aan een tiener	neg	c	Correct	2.594441	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Puppy	white4.bmp	Bob	adopteerde kleine kinderen en voedde ze op alsof ze zijn eigen kinderen waren	pos	u	Correct	2.893455	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Bloem	white4.bmp	Bob	﻿diende eerste hulp toe bij een slachtoffer van een ongeval met vluchtmisdrijf tijdens het wachten op een ambulance	pos	u	Correct	3.544574	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Bloem	white4.bmp	Bob	leverde een werktaak op tijd in	pos	u	Correct	2.009263	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Katje	white4.bmp	Bob	kocht een potplant voor een vriend op valentijnsdag	pos	u	Correct	3.353402	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Katje	white4.bmp	Bob	beledigde een man die de weg vroeg naar het dichtstbijzijnde postkantoor	neg	c	Correct	1.660724	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Blij	white4.bmp	Bob	werkte twee jaar als vrijwilliger in de sloppenwijken van Chicago als medische hulpdienst	pos	u	Correct	4.700762	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Glimlach	white4.bmp	Bob	werd gearresteerd voor het verspreiden van € 500 in vals geld	neg	u	False	6.075141	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Blij	white4.bmp	Bob	rookte met opzet hoewel hij in een "niet roken" gedeelde van een toneelzaal was	neg	c	Correct	6.223337	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Puppy	white4.bmp	Bob	las voor uit het boek Alice in Wonderland aan zijn kinderen voor ze naar bed gingen	pos	u	Correct	3.232919	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Puppy	white4.bmp	Bob	liet het na om bij de politie aan te geven dat een buurman zijn vrouw sloeg	neg	u	False	6.124132	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Puppy	white4.bmp	Bob	vertelt de de mensen in zijn naaste omgeving dat hij van hen houdt	pos	u	Correct	2.392355	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Katje	white4.bmp	Bob	spendeerde een deel van zijn inkomen aan huishoudmiddelen voor een kansarme familie	pos	u	Correct	2.283321	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Blij	white4.bmp	Bob	weigerde om zijn kind te helpen met het herstellen van zijn fietsje	neg	c	Correct	2.419568	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Glimlach	white4.bmp	Bob	vertelde een leugen over zijn vriend	neg	c	Correct	2.614544	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Katje	white4.bmp	Bob	gebruikte voedingsbonnen die bedoeld waren voor iemand anders	neg	c	Correct	2.513607	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Kus	white4.bmp	Bob	deed een deur van de buren dicht toen ze die per ongeluk hadden open gelaten	pos	u	Correct	4.348504	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Bloem	white4.bmp	Bob	gooide een stoel door een raam op een bierfeestje	neg	c	Correct	2.000235	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Feest	white4.bmp	Bob	verkocht een wagen met een kapotte motor aan een niets vermoedend koppel voor € 500	neg	c	Correct	3.091063	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Katje	white4.bmp	Bob	spendeert veel tijd met vrijwillig bijles geven aan studenten die niet goed zijn in wiskunde en Engels	pos	u	Correct	3.171573	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Kus	white4.bmp	Bob	liet een oudere persoon voorgaan in de betaalrij bij de winkel	pos	u	Correct	2.894758	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Feest	white4.bmp	Bob	hielp een voedselbank om voedsel uit te delen aan arme families met de feestdagen	pos	u	Correct	2.468555	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Feest	white4.bmp	Bob	schreef brieven aan een beleidsmedewerker waarin hij gelijke rechten verdedigde	pos	u	Correct	2.964822	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Vriend	white4.bmp	Bob	﻿reed verstrooid door een rood licht aan een kruispunt en ramde de zijkant van een andere wagen	neg	c	Correct	3.549360	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Mooi	white4.bmp	Bob	schrijft zijn ouders minstens één keer per twee weken	pos	u	Correct	2.528679	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Puppy	white4.bmp	Bob	stal een parkeerplaats door er langs achteren in te rijden terwijl iemand anders er al in aan het rijden was	neg	c	Correct	2.625083	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Feest	white4.bmp	Bob	gaf een lifter een lift naar een opvangplaats	pos	u	Correct	4.748125	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Vriend	white4.bmp	Bob	schoot een zangvogeltje neer met zijn precisie-geweer	neg	c	Correct	1.442486	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Blij	white4.bmp	Bob	weigerde een petitie te tekenen voor een beter speeltuintje op school	neg	c	Correct	2.290496	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Geschenk	white4.bmp	Bob	doofde zijn sigaret in een openbaar gebouw na het zien van een niet roken bord	pos	u	Correct	3.616060	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Geschenk	white4.bmp	Bob	liet een vrouw schrikken in een donker steegje	neg	c	Correct	1.744761	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Geschenk	white4.bmp	Bob	bedreigde iemand met een geweer die zijn domein binnenwandelde	neg	c	Correct	2.990179	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Glimlach	white4.bmp	Bob	doneerde € 200 aan de lokale hoge school	pos	u	Correct	1.697332	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Bloem	white4.bmp	Bob	stal geld en juwelen van familieleden waar hij mee samenleefde	neg	c	Correct	1.636100	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Vriend	white4.bmp	Bob	stopte onderweg van zijn werk naar huis om brood te kopen voor het avondeten	pos	u	Correct	3.582782	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Blij	white4.bmp	Bob	hielp een vriend om te leren zwemmen	pos	u	Correct	2.279477	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Puppy	white4.bmp	Bob	gaf een vriend een nieuwe slaapzak en tent te leen om te kunnen gaan kamperen	pos	u	Correct	7.474349	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Glimlach	white4.bmp	Bob	ondernam een lange reis om zijn ouders te bezoeken	pos	u	Correct	3.001640	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Feest	white4.bmp	Bob	leest geregeld voor aan een blinde vriend	pos	u	Correct	2.031487	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Mooi	white4.bmp	Bob	kookt een lekker etentje voor zijn vrienden	pos	u	Correct	1.509005	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Bloem	white4.bmp	Bob	zette zijn radio loeihard 's avonds laat op een camping	neg	c	Correct	3.074347	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Vriend	white4.bmp	Bob	zat luidkeels rascistische opmerkingen te maken tegen zijn vriend in een pub	neg	c	Correct	2.141516	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Geschenk	white4.bmp	Bob	rapporteerde aan de ski-autoriteiten toen een vriend niet op tijd was teruggekeerd van een ski tocht	pos	u	Correct	2.432442	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Kus	white4.bmp	Bob	spendeerde zijn vrije dag door zijn moeder te helpen met karweitjes in huis	pos	u	Correct	2.283409	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Kus	white4.bmp	Bob	manipuleerde een huisvrouw om geld te betalen voor een abonnement op een magazine dat niet bestond	neg	c	Correct	3.208960	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Katje	white4.bmp	Bob	hielp een vriend bij zijn verhuis naar een appartement	pos	u	Correct	3.001513	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Vriend	white4.bmp	Bob	reed elke dag met zijn fiets naar het werk om vervuiling en benzineverbruik tegen te gaan	pos	u	Correct	4.036710	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Glimlach	white4.bmp	Bob	stopte om een automobilist te helpen wiens auto was stilgevallen tijdens een sneeuwstorm	pos	u	Correct	8.146876	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Puppy	white4.bmp	Bob	hielp mee met een activiteiten programma voor gehandicapte kinderen	pos	u	Correct	3.010424	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Bloem	white4.bmp	Bob	hielp zijn vrouw een groententuin aan te planten in de achtertuin	pos	u	Correct	2.445588	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Feest	white4.bmp	Bob	liet mensen te veel betalen voor benzine in een tankstation	neg	c	Correct	2.792590	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Bloem	white4.bmp	Bob	verloor zijn rijbewijs tijdelijk wegens dronkenschap achter het stuur	neg	c	Correct	4.152937	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Bloem	white4.bmp	Bob	blutste andermans auto in de parking en weigerde om zijn naam achter te laten	neg	c	Correct	3.996538	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Puppy	white4.bmp	Bob	negeerde iemand die hulp nodig had op de ski-piste door heel snel voorbij te skiën	neg	c	Correct	3.216046	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Blij	white4.bmp	Bob	nam jonge vogels in huis die uit een nest waren gevallen en verzorgde ze tot ze groot waren	pos	u	Correct	3.541928	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Feest	white4.bmp	Bob	sloeg ruiten in van een openbaar gebouw tijdens een demonstratie tegen een nieuw rusthuis	neg	c	Correct	2.158603	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Blij	white4.bmp	Bob	sloeg zijn kind omdat het melk had gemorst	neg	c	Correct	2.092176	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Feest	white4.bmp	Bob	typte een manuscript uit voor een vriend	pos	u	Correct	1.852373	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Feest	white4.bmp	Bob	handelde onder een valse naam en liet mensen al op voorhand betalen voor werk dat hij nooit van plan was uit te voeren	neg	c	Correct	2.151208	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Vriend	white4.bmp	Bob	hielp een werkloze buurman een nieuwe job te vinden	pos	u	Correct	1.780699	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Bloem	white4.bmp	Bob	hielp bij het leggen van een nieuw dak op het huis van zijn buren	pos	u	Correct	2.090140	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Kus	white4.bmp	Bob	brak de gitaar van zijn vriend omdat hij boos was	neg	c	Correct	2.106313	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Mooi	white4.bmp	Bob	vergeet niet om de vogels elke dag eten te geven	pos	u	Correct	2.829168	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Vriend	white4.bmp	Bob	repareerde de fiets van een kind tijdens het weekend	pos	u	Correct	4.256286	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Mooi	white4.bmp	Bob	organiseerde een verrassingsfeestje voor zijn vaders verjaardag	pos	u	Correct	3.075842	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Blij	white4.bmp	Bob	was vrijwilliger bij een dagverblijf	pos	u	Correct	1.543043	2	1	pos	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Mooi	white4.bmp	Bob	riep slechte dingen naar zijn vrouw na een ruzie over geld	neg	c	Correct	1.468421	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Katje	white4.bmp	Bob	maakte kinderen bang die aan het fietsen waren door te zeggen dat hij hen zou omver rijden	neg	c	Correct	3.543009	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Glimlach	white4.bmp	Bob	kleineert personen die hij kent die tot een minderheidsgroep behoren	neg	c	Correct	1.917052	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Kus	white4.bmp	Bob	was getuige van een auto ongeval maar deed geen melding	neg	c	Correct	3.085178	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
+213	Ghent	Mooi	white4.bmp	Bob	beschadigde een grote rots met grafitti in een openbaar park	neg	c	Correct	1.752354	2	1	neg	user-1f3225316f	2018-02-08_09.56.30.734000
