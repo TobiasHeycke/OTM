@@ -1,0 +1,229 @@
+
+```{r}
+library("msm")
+library("spatialfil")
+```
+
+```{r prediction-setup, cache = TRUE}
+sd0 <- 0.6
+kern <- convKernel(sigma = 8, k = "gaussian")
+
+nrmlz <- function(mat) {
+	tot <- sum(mat)
+	mat/tot
+}
+
+thetaCons <- seq(-1.5, 1.5, .02)
+thetaLib <- seq(-1.5, 1.5, .02)
+
+combiThetas <- expand.grid(
+  Liberals = thetaLib
+  , Conservatives = thetaCons
+  , figType = c("Model", "Prediction")
+  , Model = c("No effect", "One mind", "Two minds", "Any effect")
+)
+combiThetas$Density <- NA
+
+combiThetasRaw <- expand.grid(
+  Liberals = thetaLib
+  , Conservatives = thetaCons
+)
+
+makeTeamBPlot <- function(z, dat, ylab, xlab, breaks, strip = FALSE){
+  graycols <- gray.colors(100, max(.0, .6 - 100 * max(dat$Density))
+                          , max(.7, 1 - 50 * max(dat$Density)))
+  ggplot(
+    mapping = aes(y = Liberals, x = Conservatives, z = eval(parse(text = z)), fill = ..level..)
+    , data = dat
+  ) +
+  stat_contour(geom = "polygon", bins = 20) +
+  geom_hline(yintercept = 0, color = "grey70", size = .3, alpha = .3) +
+  geom_vline(xintercept = 0, color = "grey70", size = .3, alpha = .3) +
+  scale_fill_gradientn(colors = rev(graycols)) +
+  xlim(c(min(combiThetas$Conservatives), max(combiThetas$Conservatives))) +
+  ylim(c(min(combiThetas$Liberals), max(combiThetas$Liberals))) +
+  coord_fixed() +
+  labs(x = xlab, y = ylab) +
+  facet_grid(Model ~ figType) + 
+  theme(
+    legend.position = "none"
+    , axis.title.x = if(xlab == "") element_blank() else element_text()
+    , axis.text.x = if(xlab == "") element_blank() else element_text()
+    , axis.ticks.x = if(xlab == "") element_blank() else element_line()
+    , strip.text.x = if(!strip) element_blank() else element_text()
+    , panel.border = element_rect(color = "black", fill = NA)
+    , panel.spacing = unit(rel(10), "points")
+    , strip.text.y = ggplot2::element_text(margin = ggplot2::margin(0, 0, 0, ggplot2::rel(12)))
+  )
+}
+```
+
+
+```{r null-model-predicitons, warning = FALSE}
+nullTruth <- function(theta, sd){
+  dnorm(theta[1], 0, sd) * dnorm(theta[2], 0, sd)
+}
+
+modelDensityNull <- apply(combiThetasRaw
+                                              , 1
+                                              , nullTruth
+                                              , sd = .01)
+
+modelDensityNull <- nrmlz(modelDensityNull)
+
+mat <- matrix(modelDensityNull, nrow = length(thetaLib), ncol = length(thetaCons))
+predmat <- nrmlz(applyFilter(mat, kern))
+predictionDensityNull <- as.vector(predmat) * 100
+
+combiThetas[combiThetas$figType == "Model" & combiThetas$Model == "No effect", "Density"] <- modelDensityNull
+combiThetas[combiThetas$figType == "Prediction" & combiThetas$Model == "No effect", "Density"] <- predictionDensityNull
+
+nullmod <- data.frame(x = 0, y = 0, figType = "Model")
+```
+
+```{r one-mind-predictions, cache = TRUE, dependson = "prediction-setup"}
+#Prior Model 
+same_direction <- function(theta, Sigma){
+  dtnorm(theta[2], 0, Sigma, lower = 0) * dtnorm(theta[1], 0, Sigma, lower = 0)}
+
+model_same_direction  <- apply(combiThetasRaw
+                                                    , 1
+                                                    , same_direction
+                                                    , Sigma = sd0)
+model_same_direction <- nrmlz(model_same_direction)
+
+mat <- matrix(model_same_direction
+              , nrow = length(thetaCons)
+              , ncol = length(thetaCons))
+predmat <- nrmlz(applyFilter(mat, kern))
+prediction_same_direction <- as.vector(predmat)
+
+combiThetas[combiThetas$figType == "Model" & combiThetas$Model == "One mind", "Density"] <- model_same_direction
+combiThetas[combiThetas$figType == "Prediction" & combiThetas$Model == "One mind", "Density"] <- prediction_same_direction
+```
+
+```{r two-mind-predictions, cache = TRUE, dependson = "prediction-setup"}
+#Prior Model 
+opposite_direction <- function(theta, Sigma){
+  dtnorm(theta[2], 0, Sigma, lower = 0) * dtnorm(theta[1], 0, Sigma, upper = 0)}
+
+model_opposite_direction  <- apply(combiThetasRaw
+                                                    , 1
+                                                    , opposite_direction
+                                                    , Sigma = sd0)
+model_opposite_direction <- nrmlz(model_opposite_direction)
+
+mat <- matrix(model_opposite_direction
+              , nrow = length(thetaCons)
+              , ncol = length(thetaCons))
+predmat <- nrmlz(applyFilter(mat, kern))
+prediction_opposite_direction <- as.vector(predmat)
+
+combiThetas[combiThetas$figType == "Model" & combiThetas$Model == "Two minds", "Density"] <- model_opposite_direction
+combiThetas[combiThetas$figType == "Prediction" & combiThetas$Model == "Two minds", "Density"] <- prediction_opposite_direction
+```
+
+```{r unconstrained-predictions, cache = TRUE, dependson = "prediction-setup"}
+# Prior Model
+genTruth <- function(theta, sd){
+  dnorm(theta[1], 0, sd) * dnorm(theta[2], 0, sd)
+}
+
+modelDensityGeneral <- apply(combiThetasRaw
+                                              , 1
+                                              , genTruth
+                                              , sd = sd0)
+modelDensityGeneral <- nrmlz(modelDensityGeneral)
+
+# Model Predictions
+mat <- matrix(modelDensityGeneral
+              , nrow = length(thetaCons)
+              , ncol = length(thetaCons))
+predmat <- nrmlz(applyFilter(mat, kern))
+predictionDensityGeneral <- as.vector(predmat)
+
+combiThetas[combiThetas$figType == "Model" & combiThetas$Model == "Any effect", "Density"] <- modelDensityGeneral
+combiThetas[combiThetas$figType == "Prediction" & combiThetas$Model == "Any effect", "Density"] <- predictionDensityGeneral
+```
+
+
+```{r model-plots, fig.width = 4.5, fig.height = 5.4, eval = FALSE}
+# plot_labels <- data.frame(
+#   Liberals = 1.25
+#   , Conservatives = -0.725
+#   , Model = c("One mind", "Two minds")
+#   , label = c("One mind", "Two minds")
+# )
+
+otm1_models <- subset(combiThetas, figType == "Model") %>%
+  mutate(Model = factor(Model, levels = c("One mind", "Two minds", "No effect", "Any effect"))) %>%
+  group_by(Model) %>%
+  do(mutate(., Density = exp(log(Density) - max(log(Density))))) %>%
+  ggplot(
+    mapping = aes(
+      y = Liberals
+      , x = Conservatives
+    )
+  ) +
+  stat_contour(geom = "polygon", aes(z = Density, fill = ..level..)) +
+  geom_hline(yintercept = 0, linetype = "dotted") +
+  geom_vline(xintercept = 0, linetype = "dotted") +
+  # scale_fill_gradient(low = bg_col, high = "#385E49") +
+  geom_point(data = data.frame(Liberals = 0, Conservatives = 0, Model = "No effect"), color = "#385E49", size = 3) +
+  # geom_text(data = plot_labels, aes(label = label)) +
+  coord_fixed() +
+  labs(
+    x = expression(alpha)
+    , y = expression(beta)
+  ) +
+  facet_wrap(~ Model, ncol = 2) +
+  theme(
+    legend.position = "none"
+    , axis.text.x = element_blank()
+    , axis.text.y = element_blank()
+    , axis.ticks.x = element_blank()
+    , axis.ticks.y = element_blank()
+    , panel.border = element_rect(color = "black", fill = NA)
+    , panel.spacing = unit(rel(10), "points")
+    , strip.text.y = ggplot2::element_text(margin = ggplot2::margin(0, 0, 0, ggplot2::rel(12)))
+  )
+```
+
+```{r prediction-plots}
+otm1_prediction_plot <- subset(combiThetas, figType == "Prediction") %>%
+  mutate(Model = factor(Model, levels = c("One mind", "Two minds", "No effect", "Any effect"))) %>%
+  group_by(Model) %>%
+  do(mutate(., Density = exp(log(Density) - max(log(Density))))) %>%
+  ggplot(
+    plot_data
+    , mapping = aes(
+      y = Liberals
+      , x = Conservatives
+      , z = Density
+      , fill = ..level..
+    )
+  ) +
+  stat_contour(geom = "polygon") +
+  geom_hline(yintercept = 0, linetype = "dotted") +
+  geom_vline(xintercept = 0, linetype = "dotted") +
+  scale_fill_gradient(low = "white", high = "grey30") +
+  coord_fixed() +
+  labs(
+    x = expression("Rating score difference"~group("[", Delta~italic(z)~score, "]"))
+    , y = expression("IAT score difference"~group("[", Delta~italic(z)~score, "]"))
+  ) +
+  facet_wrap(~ Model, ncol = 2) +
+  theme(
+    legend.position = "none"
+    , axis.text.x = element_blank()
+    , axis.text.y = element_blank()
+    , axis.ticks.x = element_blank()
+    , axis.ticks.y = element_blank()
+    , panel.border = element_rect(color = "black", fill = NA)
+    , panel.spacing = unit(rel(10), "points")
+    , plot.title = element_text(hjust = 0.5)
+    , strip.text.x = element_text(margin = margin(b = rel(8)))
+    , strip.text.y = element_text(margin = margin(0, 0, 0, rel(12)))
+  )
+```
+
