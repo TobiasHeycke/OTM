@@ -43,11 +43,9 @@ is provided in `ml-otm1/preregistration`.
 
 Data were collected collected at various locations (see paper).
 
-| Study        | Data collection period  |
-| ------------ | ----------------------- |
-| `otm1`       | 2014-05-13 - 2014-05-23 |
-| `otm2pilot`  | 2014-05-13 - 2014-05-23 |
-| `otm2pilot2` | 2014-05-13 - 2014-05-23 |
+-  `otm1`: 2014-05-13 - 2014-05-23
+-  `otm2pilot`: 2014-05-13 - 2014-05-23
+-  `otm2pilot2`: 2014-05-13 - 2014-05-23
 
 Descriptions of the data collection methods are provided in the
 preregistration documents and manuscript. Processed data are provided
