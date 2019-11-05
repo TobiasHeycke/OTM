@@ -29,7 +29,7 @@ including the first author of the original finding.
 This repository research products associated with the publication. We
 provide the experimental software and stimulus material that we are
 permitted to share in the `material` directories of each experiment
-(e.g. `ml-otm1` or `ml-otm2`). The R Markdown files in the `paper`
+(e.g. `otm1` or `otm2`). The R Markdown files in the `paper`
 directory contain details of how all the analyses reported in the paper
 were conducted, as well as instructions on how to rerun the analysis to
 reproduce the results. With the help of the R package `papaja` the files
@@ -37,7 +37,7 @@ can be rendered into the accepted version of the manuscript in
 `PDF`-format. The `results/data_raw` directories contain all the raw
 data; merged and processed data files can be found in
 `results/data_processed`. The preregistration document for Experiment 1
-is provided in `ml-otm1/preregistration`.
+is provided in `otm1/preregistration`.
 
 ## Dataset description
 
@@ -192,6 +192,10 @@ Material:
 
 ## Contact
 
-Tobias Heycke P.O. 122155 68072 Mannheim Germany
+Tobias Heycke
+
+P.O. 122155
+
+68072 Mannheim Germany
 
 E-mail: <tobias.heycke@gesis.org> / <tobias.heycke@gmail.com>
