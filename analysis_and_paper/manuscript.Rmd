@@ -805,6 +805,8 @@ otm1_random_participant_intercept_matrix <- BayesFactor:::oneDesignMatrix(
   , dataTypes = c("ParticipantNumber" = "random")
 ) %>% as.matrix
 
+colnames(otm1_random_participant_intercept_matrix) <- paste0("ParticipantNumber", levels(otm1_attitudes_collapsed$ParticipantNumber))
+
 # Fixed effects
 ## No main effect of attitude measure due to z standardization
 unconstrained_effect_model <- function(x, a, b = NULL) {

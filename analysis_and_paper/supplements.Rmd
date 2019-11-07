@@ -91,8 +91,8 @@ source("https://gist.githubusercontent.com/crsh/be88be19233f1df4542aca900501f0fb
 
 ```{r analysis-preferences}
 # Data location
-raw_data_path <- "../ml-otm1/results/data_raw/"
-processed_data_path <- "../ml-otm1/results/data_processed/"
+raw_data_path <- "../otm1/results/data_raw/"
+processed_data_path <- "../otm1/results/data_processed/"
 
 # Set seed for random number generator
 set.seed(315054738)

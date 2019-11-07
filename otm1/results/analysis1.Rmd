@@ -30,7 +30,7 @@ library("BayesFactor")
 source("https://gist.githubusercontent.com/crsh/bd4d1f62d300462ea0c0f44b9ad38616/raw/edd9c74e24b68f42433c2526cafc888509b1b8bc/batch_download_github.R")
 source("https://gist.githubusercontent.com/crsh/357458c41fd3d554fb24/raw/f7725d5c4894a055a1b2e461dc5c39f3db23b2b8/batch_read.R")
 
-source("../../R/modal_frame_rate.R")
+source("../../analysis_and_paper/modal_frame_rate.R")
 
 # Set seed for random number generator
 set.seed(315054738)
@@ -954,6 +954,8 @@ otm1_random_participant_intercept_matrix <- BayesFactor:::oneDesignMatrix(
   , dataTypes = c("ParticipantNumber" = "random")
 ) %>% as.matrix
 
+colnames(otm1_random_participant_intercept_matrix) <- paste0("ParticipantNumber", levels(otm1_attitudes_collapsed$ParticipantNumber))
+
 # Fixed effects
 ## No main effect of attitude measure due to z standardization
 unconstrained_effect_model <- function(x, a, b = NULL) {
@@ -1031,7 +1033,7 @@ otm1_null_model_matrix <- otm1_unconstrained_model_matrix[, -which(colnames(otm1
 ```
 
 
-```{r otm1-bayesian-replication-analysis, cache = TRUE, dependson = "otm1-bayesian-replication-analysis-design-matrix"}
+```{r otm1-bayesian-replication-analysis, cache = TRUE, dependson = "otm1-bayesian-replication-design-matrix"}
 # No effect model
 otm1_no_effect <- nWayAOV(
   y = otm1_attitudes_collapsed$Attitude
@@ -1087,7 +1089,7 @@ otm1_no_lab_effect_bf <- exp(otm1_no_lab_effect$bf - otm1_no_effect$bf)
 # )
 ```
 
-```{r otm1-bayesian-replication-analysis-samples, cache = TRUE, dependson = "otm1-bayesian-replication-analysis-unconstrained"}
+```{r otm1-bayesian-replication-analysis-samples, cache = TRUE, dependson = "otm1-bayesian-replication-analysis"}
 # Fixed effect model
 otm1_unconstrained_samples <- nWayAOV(
   y = otm1_attitudes_collapsed$Attitude
@@ -1103,7 +1105,9 @@ otm1_unconstrained_samples <- nWayAOV(
   , iterations = otm1_n_mcmc_samples
 )
 colnames(otm1_unconstrained_samples)[1:ncol(otm1_unconstrained_model_matrix) + 1] <- colnames(otm1_unconstrained_model_matrix)
+```
 
+```{r}
 otm1_unconstrained_samples <- otm1_unconstrained_samples %>%
   as.data.frame %>%
   mutate(
@@ -1425,8 +1429,8 @@ Hence, even for participants who exhibited no memory for prime attitudes assesse
 These results provide no indication that the deviation of our findings from those reported by Rydell et al. (2006) are attributable to the above-chance prime recognition accuracy in this study.
 
 
-## Exploratory Analysis: Prime valence memory
 
+<!-- ## Exploratory Analysis: Prime valence memory -->
 ```{r listPrimes, echo = FALSE, eval=FALSE}
 
 # correct names of primes
