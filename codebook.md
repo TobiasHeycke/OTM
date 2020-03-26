@@ -2,9 +2,10 @@
 
 Descriptions of the data collection methods are provided in the
 preregistration documents and manuscript. Processed data are provided in
-`RDS`-format, which can be readily imported into R using `readRDS()`.
-Details about the data processing steps are available in the R Markdown
-files in the `analysis_and_paper` directory.
+`RDS`-format, which can be readily imported into R using `readRDS()` (e.g., 
+`dat <- readRDS(file = "path/to/file")`). Details about the data processing 
+steps are available in the R Markdown files in the `analysis_and_paper` 
+directory.
 
 ## Data
 

@@ -41,11 +41,12 @@ is provided in `otm1/preregistration`.
 
 ## Data
 
-Data were collected collected at various locations (see paper).
+Data were collected collected at various locations (see paper) at the following
+times:
 
--  `otm1`: 2014-05-13 - 2014-05-23
--  `otm2pilot`: 2014-05-13 - 2014-05-23
--  `otm2pilot2`: 2014-05-13 - 2014-05-23
+-  `otm1`: between 2014-05-13 and 2014-05-23
+-  `otm2pilot`: between 2014-05-13 and 2014-05-23
+-  `otm2pilot2`: between 2014-05-13 and 2014-05-23
 
 For a description of all data sets and all variables, please see the file: 
 `codebook.md` in the same folder. 
