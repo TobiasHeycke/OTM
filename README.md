@@ -62,6 +62,13 @@ sub-directories.
 A folder called `data` (where output data is saved), needs to be present
 in the same folder as the python script to run the experiment.
 
+### Screen recordings
+
+To give a vivid impression of the experimental procedure, an examplary screen recording of the procedure is available under `otm1` > `screen-recordings`.
+
+- otm_1_sr_complete.mp4: An example of the full procedure (please note that this is not a recording of any of the participants)
+- otm_1_sr_overview.mp4: A shorted version of the video to give a brief overview of all parts of the procedure (please note that the video does not reflect the actual procedure) 
+
 ### Analyses
 
 Analyses were originally run on Ubuntu 14.04 using R (Version 3.5.3; 217
