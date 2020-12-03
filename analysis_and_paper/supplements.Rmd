@@ -12,22 +12,24 @@ author:
     corresponding : yes    
     address       : "P.O. 122155, 68072 Mannheim, Germany"
     email         : "tobias.heycke@gesis.org"
+    equal_contrib : yes
   - name          : Frederik Aust
-    affiliation   : "1"
+    affiliation   : "1,9"
+    equal_contrib : yes
   - name          : Mahzarin R. Banaji
     affiliation   : 3
   - name          : Jeremy Cone
-    affiliation   : 9
+    affiliation   : 8
   - name          : Pieter Van Dessel
     affiliation   : 5
   - name          : Melissa J. Ferguson
-    affiliation   : 8
+    affiliation   : 10
   - name          : Xiaoqing Hu
     affiliation   : 6    
   - name          : Congjiao Jiang
     affiliation   : 4    
   - name          : Benedek Kurdi
-    affiliation   : "3,8"
+    affiliation   : "3,10"
   - name          : Robert Rydell
     affiliation   : 7
   - name          : Lisa Spitzer
@@ -38,7 +40,6 @@ author:
     affiliation   : 4
   - name          : Jan De Houwer
     affiliation   : 5
-   
 
 affiliation:
   - id            : 1
@@ -56,9 +57,11 @@ affiliation:
   - id            : 7
     institution   : Indiana University
   - id            : 8
-    institution   : Cornell University
-  - id            : 9
     institution   : Williams College
+  - id            : 9
+    institution   : University of Amsterdam
+  - id            : 10
+    institution   : Yale University
     
 
 bibliography      : ["references.bib", "r-references.bib"]
@@ -147,10 +150,184 @@ otm1_mem <- readRDS(paste0(processed_data_path, "otm1_memory_cleaned.rds"))
 
 \newpage
 
+In the following we report details on our power analyses, the model specifications used for the Bayesian model comparisons, and additional secondary analyses.
+
+
+# Sensitivity of our design
+
+```{r otm1-power-results}
+som_cache <- "manuscript_cache/latex/"
+rydell_pes <- knitr::load_cache(label = "rydell-effects", object = "rydell_pes", path = som_cache)
+rydell_dz <- knitr::load_cache(label = "rydell-effects", object = "rydell_dz", path = som_cache)
+otm1_n_power <- knitr::load_cache(label = "otm1-power", object = "otm1_n_power", path = som_cache) * 2
+otm1_pes <- knitr::load_cache(label = "otm1-power", object = "otm1_pes", path = som_cache)
+otm1_dz <- knitr::load_cache(label = "otm1-power", object = "otm1_dz", path = som_cache)
+
+
+otm2_n_power <- knitr::load_cache(label = "otm2-omnibus-power", object = "otm2_n_power", path = som_cache) * 4
+otm2_pes <- knitr::load_cache(label = "otm2-contrast-power", object = "otm2_pes", path = som_cache)
+otm2_dz <- knitr::load_cache(label = "otm2-contrast-power", object = "otm2_dz", path = som_cache)
+otm2_pes_between_collapsed <- knitr::load_cache(label = "otm2-contrast-power", object = "otm2_pes_between_collapsed", path = som_cache)
+otm2_dz_between_collapsed <- knitr::load_cache(label = "otm2-contrast-power", object = "otm2_dz_between_collapsed", path = som_cache)
+otm2_pes_collapsed <- knitr::load_cache(label = "otm2-contrast-power", object = "otm2_pes_collapsed", path = som_cache)
+otm2_dz_collapsed <- knitr::load_cache(label = "otm2-contrast-power", object = "otm2_dz_collapsed", path = som_cache)
+```
+
+As noted in the main text, our assessment of the statistical senstivitiy of our design focused the tests of simple *learning block* effects, because they are of primary theoretical interest and less sensitive than the test of the interaction.
+In Experiment 1, our planned contrasts had 95% power to detect learning block effects as small as $\delta_z = `r otm1_dz`$ ($\eta_p^2 = `r printp(otm1_pes)`$).
+In Experiment 2, our planned contrasts had 95% power to detect learning block effects as small as $\delta_z = `r otm2_dz`$ ($\eta_p^2 = `r printp(otm2_pes)`$) or as small as $\delta_z = `r otm2_dz_between_collapsed`$ ($\eta_p^2 = `r printp(otm2_pes_between_collapsed)`$) and $\delta_z = `r otm2_dz_collapsed`$ ($\eta_p^2 = `r printp(otm2_pes_collapsed)`$) when pooling participants across one or both between-participant factors ($N = `r otm2_n_power * 4`$, $\alpha = .05$, two-sided tests).
+Figure\ \@ref(fig:power-curve-plot) illustrates the implied sensitivity of our designs in units of Cohen's $\delta$ as a function of the assumed repeated-measures correlation $\rho$.
+Note that these are conservative estimates as they do not take into account the additional 60 participants from our pilot study that we included in the analysis.
+
+(ref:otm1-power-curve) Sensitivity curves for simple learning block effects in Experiment 1 (**A**) and Experiment 2 (**B**) as a function of the assumed repeated measures correlation.
+Simple contrast are estimated within each *flashed word presentation duration*-*valence order* combination (not adjusted for multiple comparisons).
+Collapsed contrasts pool participants across one or both  of the between subject factors (i.e., *flashed word presentation duration* and *valence order*).
+$\delta_z$-values in the legend correspond to 95% and 80% power.
+Note that these are conservative estimates as they do not take into account the additional 60 participants from our pilot study that we included in the analysis.
+The grey dashed line at the top represents the smallest learning block difference reported by Rydell et al. [$d_z = `r rydell_dz`$; -@rydell_two_2006].
+
+```{r power-curve-plot, fig.width = 7, fig.height = 8, fig.cap = "(ref:otm1-power-curve)"}
+rydell_power_curve <- tibble(
+  rho = seq(-1, 1, length.out = 100)
+  , delta = c(
+    dz_to_f(rydell_dz, unique(rho)) * 2
+    # dz_to_f(mean(heycke_dz), unique(rho)) * 2
+  )
+  , power = NA
+)
+
+otm1_power_curve <- tibble(
+  rho = rep(seq(-1, 1, length.out = 100), 2)
+  , delta = c(
+    dz_to_f(otm1_dz, unique(rho)) * 2
+    , dz_to_f(otm1_dz2, unique(rho)) * 2
+  )
+  , power = rep(c("0.95", "0.80"), each = length(rho)/2)
+)
+
+otm1_power_curve_plot <- otm1_power_curve %>% 
+  mutate(
+    power = relevel(factor(power), "0.95")
+  ) %>% 
+  ggplot(aes(x = rho, y = delta, group = power, linetype = power)) +
+  # ggplot(aes(x = rho, y = delta, color = power, group = power)) +
+  geom_line(data = rydell_power_curve, aes(group = power), color = grey(0.8), linetype = "dashed") +
+  geom_line() +
+  # annotate("text", x = 1, y = 0.9, label = paste0("list(alpha ==~\".05\", italic(N) ==", otm1_n, ", epsilon == 1)"), parse = TRUE, hjust = 1, vjust = 0.5) +
+  ylim(c(0, 1)) +
+  scale_linetype_discrete(
+    labels = c(
+      bquote(.(unique(otm1_power_curve$power)[1])~~(delta[z] == .(printnum(otm1_dz))))
+      , bquote(.(unique(otm1_power_curve$power)[2])~~(delta[z] == .(printnum(otm1_dz2))))
+    )
+  ) +
+  labs(
+    x = bquote("Correlation between learning blocks ["*rho*"]")
+    , y = bquote("Learning block difference [Cohen's"~delta*"]")
+    , color = "Contrast"
+    , linetype = bquote("Power"~"["*1 - beta*"]")
+  ) +
+  ggtitle("", subtitle = bquote(list(italic(N) == .(otm1_n_power*2), alpha ==~".05", "two-sided"))) +
+  theme_apa(box = TRUE) + 
+  theme(
+    panel.grid.major.x = element_line()
+    , panel.grid.major.y = element_line()
+    , panel.grid.minor.x = element_line()
+    , panel.grid.minor.y = element_line()
+    # , legend.position = c(0.99, 0.99)
+    , legend.justification = "top"
+    # , legend.background = element_rect(fill = scales::alpha("white", 0.5))
+  )
+
+rydell_power_curve <- tibble(
+  rho = seq(-1, 1, length.out = 100)
+  , delta = c(
+    dz_to_f(rydell_dz, unique(rho)) * 2
+    # dz_to_f(mean(heycke_dz), unique(rho)) * 2
+  )
+  , power = NA
+)
+
+otm1_power_curve <- tibble(
+  rho = rep(seq(-1, 1, length.out = 100), 2)
+  , delta = c(
+    dz_to_f(otm1_dz, unique(rho)) * 2
+    , dz_to_f(otm1_dz2, unique(rho)) * 2
+  )
+  , power = rep(c("0.95", "0.80"), each = length(rho)/2)
+)
+
+otm2_power_curve_plot <- tibble(
+  rho = rep(seq(-1, 1, length.out = 100), 2)
+  , otm2_delta_simple = c(
+    dz_to_f(otm2_dz, unique(rho)) * 2
+    , dz_to_f(otm2_dz2, unique(rho)) * 2
+  )
+  , otm2_delta_between_collapsed = c(
+    dz_to_f(otm2_dz_between_collapsed, unique(rho)) * 2
+    , dz_to_f(otm2_dz2_between_collapsed, unique(rho)) * 2
+  )
+  , otm2_delta_collapsed = c(
+    dz_to_f(otm2_dz_collapsed, unique(rho)) * 2
+    , dz_to_f(otm2_dz2_collapsed, unique(rho)) * 2
+  )
+  , power = rep(c("0.95", "0.80"), each = length(rho)/2)
+) %>% 
+  pivot_longer(cols = matches("otm"), names_to = "contrast", values_to = "delta") %>%
+  mutate(
+    power = relevel(factor(power), "0.95")
+    , contrast = gsub("otm2_delta_", "", contrast)
+    , contrast = gsub("_", " ", contrast)
+    , contrast = factor(contrast, levels = c("simple", "between collapsed", "collapsed"))
+  ) %>% 
+  ggplot(aes(x = rho, y = delta, color = contrast, group = interaction(power, contrast), linetype = power)) +
+  # ggplot(aes(x = rho, y = delta, color = power, group = power)) +
+  # geom_line(data = otm1_power_curve, aes(group = power, linetype = power, color = "simple"), alpha = 0.3) +
+  geom_line(data = rydell_power_curve, aes(group = power), color = grey(0.8), linetype = "dashed") +
+  geom_line() +
+  scale_color_viridis_d(
+    end = 0.8
+    , labels = c(
+      bquote("Simple               "~delta[z] %in% "{"*.(printnum(otm2_dz))*", "*.(printnum(otm2_dz2))*"}")
+      , bquote("Collapsed once   "~delta[z] %in% "{"*.(printnum(otm2_dz_between_collapsed))*", "*.(printnum(otm2_dz2_between_collapsed))*"}")
+      , bquote("Collapsed twice   "~delta[z] %in% "{"*.(printnum(otm2_dz_collapsed))*", "*.(printnum(otm2_dz2_collapsed))*"}")
+    )
+  ) +
+  ylim(c(0, 1)) +
+  labs(
+    x = bquote("Correlation between learning blocks ["*rho*"]")
+    , y = bquote("Learning block difference [Cohen's"~delta*"]")
+    , color = "Contrast"
+    , linetype = bquote("Power"~"["*1 - beta*"]")
+  ) +
+  ggtitle("", subtitle = bquote(list(italic(N) == .(otm2_n_power*4), alpha ==~".05", "two-sided"))) +
+  theme_apa(box = TRUE) + 
+  theme(
+    panel.grid.major.x = element_line()
+    , panel.grid.major.y = element_line()
+    , panel.grid.minor.x = element_line()
+    , panel.grid.minor.y = element_line()
+    # , legend.position = c(0.99, 0.99)
+    , legend.justification = "top"
+    # , legend.background = element_rect(fill = scales::alpha("white", 0.5))
+  )
+
+plot_grid(
+  plot_grid(otm1_power_curve_plot, NULL, rel_widths = c(1, 1 - 5.65/7))
+  , otm2_power_curve_plot
+  , nrow = 2
+  , ncol = 1
+  , labels = "AUTO"
+)
+```
+
+
+
+
 # Experiment 1
 
 In the following we report details on our power analysis, the model specification used for the Bayesian model comparisons, and additional secondary analyses.
-We report results from the linear mixed model analysis of the IAT response times, from prior sensitivity analyses for the Bayesian model comparisons, and from an exploratory analysis of the relationship between the recognition accuracy of briefly flashed words and associative learning.
+We report results from the linear mixed model analysis of the IAT response times, from prior sensitivity analyses for the Bayesian model comparisons, and from an exploratory analysis of the relationship between the recognition accuracy of briefly flashed words and indirectyl measured evaluations.
 Table\ \@ref(tab:otm1-participant-table) summarizes the participants' demographics separately for each location of data collection.
 
 (ref:otm1-participant-table) Participant demographics by location.
@@ -179,248 +356,10 @@ otm1_mem %>%
 ```
 
 
-## Power analysis
-
-The prediction, which is supported by all previous empirical reports, is a crossed disordinal interaction between the factor *learning block* and the control factor *valence order*.
-Therefore, our power analyses focuses on this interaction and the theoretically relevant simple effects of *learning block*.
-We estimate the sensitivity of our design using the R-package *Superpower* [@R-Superpower] for the contrast analyes using the R-package *emmeans* [@R-emmeans].
-
-```{r rydell-effects, cache = TRUE}
-rydell_pes <- 0.1
-rydell_f <- 4.78
-rydell_n <- 50
-rydell_dz <- pes_to_dz(rydell_pes, rydell_n, n_groups = 2)
-
-heycke_t <- c(2.54, 1.45)
-heycke_n <- c(28, 26)
-heycke_dz <- heycke_t / sqrt(heycke_n)
-heycke_pes <- dz_to_pes(heycke_dz, heycke_n, n_groups = 1)
-```
-
-```{r otm1-power, cache = TRUE}
-otm1_power <- function(f, rm_cor, n = 76, alpha = 0.05) {
-  contrast_code <- tibble::tibble(
-    a = rep(contr.sum(2), 2)
-    , b = rep(contr.sum(2), each = 2)
-    , x = a*b * -1
-  )
-  
-  mu <- with(
-    contrast_code
-    , f * x +
-      - 0.25 * a
-  )
-
-  cor_mat <- diag(4)
-  triangular <- c(0, 1, 0, 0, 1, 0)
-  cor_mat[upper.tri(cor_mat)] <- triangular * rm_cor
-  cor_mat[lower.tri(cor_mat)] <- triangular * rm_cor
-  
-  string <- "2w*2b"
-  labelnames <- c("block", "1", "2", "order", "n-p", "p-n")
-  
-  design_result <- ANOVA_design(
-    design = string
-    , n = n
-    , mu = mu
-    , sd = 1
-    , r = cor_mat
-    , labelnames = labelnames
-  )
-  
-  otm1_power <- ANOVA_exact(
-    design_result
-    , alpha_level = alpha
-    , emm = TRUE
-    , verbose = FALSE
-    , contrast_type = "pairwise"
-    , emm_comp = "block | order"
-  )
-  
-  otm1_power
-}
-
-otm1_n <- 76
-
-# 95% power
-otm1_pes <- 0.08068
-otm1_dz <- pes_to_dz(otm1_pes, otm1_n, n_groups = 2)
-# rho <- 0.5
-# f <- dz_to_f(otm1_dz, rho)
-# 
-# otm1_contrast_power <- otm1_power(f = f, n = otm1_n, rm_cor = rho)$emmeans$contrasts %>%
-#   emmeans_power(alpha = 0.05) %>%
-#   .[1, ]
-# otm1_contrast_power
-
-# 80% power
-otm1_pes2 <- 0.050336
-otm1_dz2 <- pes_to_dz(otm1_pes2, otm1_n, n_groups = 2)
-# f <- dz_to_f(otm1_dz2, rho)
-# 
-# otm1_contrast_power2 <- otm1_power(f = f, n = otm1_n, rm_cor = rho)$emmeans$contrasts %>%
-#   emmeans_power(alpha = 0.05) %>%
-#   .[1, ]
-# otm1_contrast_power2
-```
-
-
-@rydell_two_2006 found the smallest learning block difference for IAT scores, $\hat\eta_p^2 = `r printp(rydell_pes)`$, $d_z \approx `r rydell_dz`$.
-The learning block differences reported by @heycke_two_2018 were of similar magnitude but with an opposite sign.
-Across all labs ($N = 152$), our design has 95% power to detect effects as small as $\eta^2_p = `r printp(otm1_pes)`$ ($\delta_z = `r otm1_dz`$) and 80% power to detect effects as small as $\eta^2_p = `r printp(otm1_pes2)`$ ($\delta_z = `r otm1_dz2`$) in two-sided tests.
-Thus, our design is sufficiently sensitive to detect (or rule out) differences `r round((1 - otm1_dz/rydell_dz) * 100)`% smaller than the smallest learning block difference reported by @rydell_two_2006.
-Figure\ \@ref(fig:otm1-power-curve) illustrates the implied sensitivity in units of Cohen's $\delta$ depending on the assumed repeated-measures correlation $\rho$.
-
-
-(ref:otm1-power-curve) Sensitivity curves for learning block contrasts in Experiment 1 depending on the assumed repeated measures correlation.
-The grey dashed line at the top represents the smallest estimate of the learning block difference reported by Rydell et al. [$d_z = `r rydell_dz`$; -@rydell_two_2006].
-
-```{r otm1-power-curve, fig.width = 5.75, fig.height = 4, fig.cap = "(ref:otm1-power-curve)"}
-rydell_power_curve <- tibble(
-  rho = seq(-1, 1, length.out = 100)
-  , delta = c(
-    dz_to_f(rydell_dz, unique(rho)) * 2
-  )
-  , power = NA
-)
-
-otm1_power_curve <- tibble(
-  rho = rep(seq(-1, 1, length.out = 100), 2)
-  , delta = c(
-    dz_to_f(otm1_dz, unique(rho)) * 2
-    , dz_to_f(otm1_dz2, unique(rho)) * 2
-  )
-  , power = rep(c("0.95", "0.80"), each = length(rho)/2)
-)
-
-otm1_power_curve %>% 
-  mutate(
-    power = relevel(factor(power), "0.95")
-  ) %>% 
-  ggplot(aes(x = rho, y = delta, group = power, linetype = power)) +
-  geom_line(data = rydell_power_curve, aes(group = power), color = grey(0.8), linetype = "dashed") +
-  geom_line() +
-  ylim(c(0, 1)) +
-  scale_linetype_discrete(
-    labels = c(
-      bquote(.(unique(otm1_power_curve$power)[1])~~(delta[z] == .(printnum(otm1_dz))))
-      , bquote(.(unique(otm1_power_curve$power)[2])~~(delta[z] == .(printnum(otm1_dz2))))
-    )
-  ) +
-  labs(
-    x = bquote("Correlation between learning blocks ["*rho*"]")
-    , y = bquote("Learning block difference [Cohen's"~delta*"]")
-    , color = "Contrast"
-    , linetype = bquote("Power"~"["*1 - beta*"]")
-  ) +
-  ggtitle("", subtitle = bquote(list(alpha ==~".05", italic(N) == .(otm1_n*2)))) +
-  theme_apa(box = TRUE) + 
-  theme(
-    panel.grid.major.x = element_line()
-    , panel.grid.major.y = element_line()
-    , panel.grid.minor.x = element_line()
-    , panel.grid.minor.y = element_line()
-    , legend.justification = "top"
-  )
-```
-
-
-```{r otm1-power-curves, eval = FALSE}
-otm1_power_curve <- expand.grid(
-  n = 76
-  , rho = seq(-0.9, 0.9, length.out = 10)
-  , alpha = 0.05
-  , d = seq(0, 0.9, length.out = 96)
-) %>%
-  as_tibble %>% 
-  mutate(
-    f = d/2
-    , generalized_eta_squared = f^2 / (1 + f^2)
-    , interaction = NULL
-    , contrast = NULL
-  )
-
-otm1_power_curve[, c("interaction", "contrast")] <- t(apply(
-  otm1_power_curve
-  , 1
-  , function(x) {
-    power <- otm1_power(n = x["n"], f = x["f"], rm_cor = x["rho"], alpha = x["alpha"])
-    
-    c(
-      power_int = power$main_result["order:block", "power"] / 100
-      , power_contrast = emmeans_power(power$emmeans$contrasts, alpha_level = x["alpha"])[1, "power"] / 100
-    )
-  }
-))
-```
-
-```{r otm1-power-curves-plot, fig.width = 7, fig.height = 4.5, eval = FALSE}
-otm1_annotations <- data.frame(
-  label = c(
-    paste0("list(italic(N) ==", unique(otm1_power_curve$n)*2, ", alpha == 0.05, epsilon == 1)")
-    , paste0("list(italic(n) ==", unique(otm1_power_curve$n), ", alpha == 0.05)")
-  )
-  , test = factor(
-      c("interaction", "contrast")
-      , levels = c("interaction", "contrast")
-      , labels = c("italic('Learning block')%*%italic('Valence order')", "atop(italic('Learning block')*'-contrasts', 'by'~italic('Valence order'))")
-    )
-  )
-
-pivot_longer(
-  otm1_power_curve
-  , cols = c("interaction", "contrast")
-  , names_to = "test"
-  , values_to = "power"
-) %>% 
-  mutate(
-    test = factor(
-      test
-      , levels = c("interaction", "contrast")
-      , labels = c("italic('Learning block')%*%italic('Valence order')", "atop(italic('Learning block')*'-contrasts', 'by'~italic('Valence order'))")
-    )
-  ) %>% 
-  filter(power <= 0.99) %>% 
-  ggplot(aes(x = d, y = power, color = rho, group = rho)) +
-    geom_hline(yintercept = c(0.8, 0.95), linetype = "solid", color = grey(0.75), size = 0.25) +
-    geom_line(linetype = "solid") +
-    geom_text(data = otm1_annotations, aes(x = 0.87, y = 0.09, label = label), inherit.aes = FALSE, parse = TRUE, hjust = 0, vjust = 1) +
-    scale_x_continuous(
-      name = bquote("Cohen's"~delta)
-      , position = "top"
-      , breaks = function(x) seq(0, x[2], 0.1)
-      , sec.axis = sec_axis(trans = ~ .^2 / (4 + .^2), name = bquote(eta[G]^2), breaks = function(x) { b <- seq(0, (2*sqrt(x[2]))/sqrt(1 - x[2]), 0.1); b^2 / (4 + b^2) }, labels = printp)
-    ) +
-    scale_y_continuous(
-      name = bquote(1 - beta)
-      , breaks = function(x) seq(0.05, 0.95, 0.15)
-      , labels = function(...) printp(..., digits = 2)
-    ) +
-    scale_color_viridis_c(
-      name = bquote(rho)
-      , end = 0.9
-      , guide = guide_colorbar(title.position = "top", title.hjust = 0.5, direction = "vertical", barheight = unit(75, "pt"), barwidth = unit(12, "pt"), reverse = TRUE)
-      , limits = c(-1, 1)
-    ) +
-    facet_grid(~ test, labeller = label_parsed) +
-    guides(linetype = FALSE) +
-    coord_flip(ylim = c(0.05, 1)) +
-    papaja::theme_apa(box = TRUE) +
-    theme(
-      legend.position = c(0, 0.88)
-      , legend.justification = c(0, 1)
-      , legend.background = element_blank()
-      , plot.title = element_text(margin = margin(b = rel(5)))
-      , strip.text.x = element_text(margin = margin(b = rel(10)))
-      , panel.grid.major.y = element_line(linetype = "22")
-    )
-```
-
-
 ## Mixed model analysis
 
 The ANOVA of IAT scores reported in the main text ignores potential systematic trial-to-trial variability in IAT response latencies due to stimuli.
-Any such systematic but unaccounted-for variance can inflate test statistics and yield underestimated $p$ values as well as underestimated confidence intervals.
+Any such systematic but unaccounted-for variance can inflate test statistics and yield anticonservative $p$ values as well as underestimated confidence intervals.
 We, therefore, also conducted a linear mixed model analysis of response times with crossed random effects for participants and items to ensure that our conclusion are not contingent on inadvertent stimulus effects [for details see @wolsiefer_modeling_2017].
 For this analysis we excluded participants with error rates across all blocks larger than 50% or who responded faster than 300 ms on at least 10% of all trials.
 We additionally discarded trials in which responses were faster than 400 ms or slower than 10 s.
@@ -448,13 +387,14 @@ otm1_iat <- otm1_iat %>%
 
 We analyzed standardized response latencies, that is, the time that elapsed between stimulus presentation and *correct* response divided by the standard deviation of all response latencies in a given block, Figure\ \@ref(fig:otm1-iat-plot).
 To assess the reversal of the response mapping effect, we contrasted the common response mapping of Bob and negative words with the common mapping of Bob and positive words.
-Hence, larger values represent more favorable indirect evaluations.
+Hence, larger values indicate more favorable evaluations.
 
 (ref:otm1-iat-plot) Standardized IAT response latencies across learning blocks.
 Black-rimmed points represent condition means, error bars represent 95% bootstrap confidence intervals based on 10,000 samples.
 
 ```{r otm1-iat-plot, fig.cap = "(ref:otm1-iat-plot)"}
 otm1_results_legend <- guide_legend(
+    # title = "Valence order\nDescriptions of Bob\n(Briefly presented primes)"
     title = expression(atop("Valence order", atop(scriptstyle("Behavioral information"), scriptstyle("(Briefly flashed words)"))))
     , title.position = "top"
     , title.hjust = 0.5
@@ -633,6 +573,8 @@ otm1_iat_lmer_emm <- emmeans(
 )
 ```
 
+<!-- (ref:otm1-iat-lmer-contrasts) Planned contrasts of changes in congruency effects across learning blocks for the linear mixed model analysis of standardized IAT response times. -->
+
 ```{r otm1-lmer-emm-2, cache = TRUE, results = "asis"}
 otm1_iat_lmer_contrasts <- contrast(
   otm1_iat_lmer_emm
@@ -642,11 +584,20 @@ otm1_iat_lmer_contrasts <- contrast(
   )
 ) %>%
   apa_print
+
+# otm1_iat_lmer_contrasts %$%
+#   table %>%
+#   rename("Valence order" = contrast) %>%
+#   apa_table(
+#     caption = "(ref:otm1-iat-lmer-contrasts)"
+#     , escape = FALSE
+#     , row.names = FALSE
+#   )
 ```
 
-In line with the conventional ANOVA analysis, we found that response time differences suggested more favorable evaluations of Bob after the first than after the second block when the behavioral information was first positive and later negative, `r otm1_iat_lmer_contrasts$full_result$Positive_negative`.
-Vice versa, response time differences suggested more favorable evaluations after the second than after the first block when descriptions of Bob were first negative and later positive, `r otm1_iat_lmer_contrasts$full_result$Negative_positive`.
-Again, these results indicate that the self-reported evaluations and IAT scores were consistent.
+Also in line with the ANOVA analysis, we found that response time differences indicated *more* favorable evaluations after the first than after the second block when the behavioral information was first positive and later negative, `r otm1_iat_lmer_contrasts$full_result$Positive_negative`.
+Vice versa, response time differences indicated *less* favorable evaluations after the first than after the second block when descriptions of Bob were first negative and later positive, `r otm1_iat_lmer_contrasts$full_result$Negative_positive`.
+Again, these results indicate that the rating and IAT scores did not dissociate.
 
 Due to the significant four-way interaction, we additionally explored these contrasts separately for responses to pictures of Bob vs. non-Bobs and positive vs. negative words, Table \ \@ref(tab:otm1-lmer-emm-3-table).
 We found consistent changes in response mapping effects for both pictures and words, albeit the effects were larger for words. 
@@ -733,7 +684,7 @@ Most notably, as a direct consequence of the number MCMC samples the $\textrm{BF
 Bayesian model comparison by Bayes factors are by definition sensitive to the specified prior distributions.
 To ensure that our inference is not contigent on our choice of piors we conducted prior sensitivity analyses for our key results.
 
-#### Direct and indirect evaluations
+#### Directly and indirectly measured evaluations
 
 Our choice of piors for the simple effects of learning block for rating scores ($\alpha$) and IAT score ($\beta$) could be viewed as either overly optimistic or pessimistic.
 The prior on simple rating score effects places considerable probability mass on effects $d$ < 0.707 although the previously reported effects were very large.
@@ -841,15 +792,15 @@ for(i in 1:nrow(replication_rscales)) {
 ```
 
 We, therefore, varied the scale for the Cauchy priors on the simple effects in the ranges of $`r min(replication_rscales$rating)` < r_\alpha < `r max(replication_rscales$rating)`$ and $`r min(replication_rscales$iat)` < r_\beta < `r max(replication_rscales$iat)`$ for rating and IAT scores, respectively.
-Considering results previous studies, we limited our reanalysis to combinations where the prior scale was larger for rating than for IAT effects.
+In light of the results from previous studies, we limited our analysis to combinations where the prior scale was larger for rating than for IAT effects.
 The results of the prior sensitvity analysis reassure us that our inference is robust to a wide range and combination of scales of the default Cauchy priors, see Table\ \@ref(tab:otm1-prior-sensitivity-replication-table).
 The Bayes factors were not affected by the scale of the priors to any meaningful degree.
-This is because our data are informative enough to overwhelm the priors and because these Bayes factors primarily depend on the shape and location of the posterior distribution, not the prior distributions [@klugkist_bayesian_2005].
+This is because our data are informative enough to overwhelm the priors and because these Bayes factors primarily depend on the shape and location of the joint posterior distribution [@klugkist_bayesian_2005].
 
 
 (ref:otm1-prior-sensitivity-replication-table) Results of the prior sensitivity analysis for the Bayesian model comparisons of primary interest.
 
-(ref:otm1-prior-sensitivity-replication-table-note) The Bayes factor (BF) in favor of $\mathcal{M}_\textrm{One mind}$ relative to $\mathcal{M}_\textrm{Any effect}$ is bounded within the range of $[0, 4]$ (see footnote 1 in the main article).
+(ref:otm1-prior-sensitivity-replication-table-note) The Bayes factor (BF) in favor of $\mathcal{M}_\textrm{One mind}$ relative to $\mathcal{M}_\textrm{Any effect}$ is bounded within the range of $[0, 4]$.
 $r_\alpha$ and $r_\beta$ denote the scale for the Cauchy prior on the simple effects of learning block for rating scores ($\alpha$) and IAT scores ($\beta$), respectively (in units of standard deviations).
 
 ```{r otm1-prior-sensitivity-replication-table}
@@ -857,7 +808,7 @@ replication_rscales <- replication_rscales %>%
   printnum(format = c("f", "f", "e", "f")) %>%
   mutate(
     bf_one_mind_two_minds = papaja:::typeset_scientific(bf_one_mind_two_minds)
-    , bf_one_mind_two_minds = paste0("$", bf_one_mind_two_minds, "$")
+    # , bf_one_mind_two_minds = paste0("$", bf_one_mind_two_minds, "$")
   ) %>%
   select(rating, everything())
 
@@ -891,7 +842,8 @@ rec_bfs <- sapply(
 
 rec_bfs_res <- rec_bfs %>%
   printnum(digits = 2, format = "e") %>%
-  papaja:::typeset_scientific()
+  papaja:::typeset_scientific() %>%
+  papaja:::strip_math_tags()
 ```
 
 To test the robustness of our inference regarding participants recognition accuracy we varied the scale $r$ of the Cauchy prior in a wide interval of $[`r min(rec_rscales)`, `r max(rec_rscales)`]$.
@@ -899,7 +851,7 @@ The resulting Bayes factors were $`r rec_bfs_res[2]`< \textrm{BF}_{10} < `r rec_
 These results again reassure that our inference is robust to a wide range of scales of the default Cauchy prior.
 
 
-## Word recogniton and indirect evaluations
+## Word recogniton and IAT score differences
 
 (ref:otm1-rydell-recognition-plot) Black-rimmed points represent condition means, error bars represent 95% bootstrap confidence intervals based on 10,000 samples.
 Small points represent individual participants' accuracy.
@@ -910,8 +862,12 @@ otm1_mem %>%
   ggplot(aes(x = Location, y = Accuracy, shape = Location, fill = Location)) +
   geom_hline(yintercept = 0.5, color = grey(0.5)) +
   geom_violin(alpha = 0.3) +
+  # geom_point(position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.1)) +
   geom_sina(alpha = 0.5, size = 1) +
+  # stat_summary(fun.y = mean, aes(group = Location, linetype = ValenceBlock), geom = "line", position = position_dodge(0.1), color = "black") +
   stat_summary(fun.data = mean_cl_boot, color = "black", fun.args = list(B = 10000)) +
+  # scale_color_brewer(palette = "Set1", guide = otm1_results_legend) +
+  # scale_fill_brewer(palette = "Set1", guide = otm1_results_legend) +
   scale_shape_manual(values = c(21, 23, 24)) +
   scale_color_manual(values = c(RColorBrewer::brewer.pal(3, "Set1"), "#000000")) +
   scale_fill_manual(values = c(RColorBrewer::brewer.pal(3, "Set1"), "#000000")) +
@@ -922,13 +878,12 @@ otm1_mem %>%
   theme(legend.position = "none")
 ```
 
-In contrast to the original results reported by @rydell_two_2006, the recognition accuracy of briefly flashed words was above chance  in this study, Figure\ \@ref(fig:otm1-rydell-recognition-plot).
-Memory for these words may, thus, have interfered with the associative learning process and prevented the predicted reversal of the IAT score differences.
-We, therefore, performed an exploratory regression analysis of the recognition accuracy of briefly flashed words and the IAT score difference between blocks used in the Bayesian analysis above.
-Positive IAT score differences represent a more favorable evaluation after the block in which Bob was paired with positive behavioral information and briefly flashed negative words.
-Conversely, negative IAT score differences between blocks indicate that the IAT effects reflect the valence of the briefly flashed words.
+In contrast to the original results reported by @rydell_two_2006, the recognition accuracy of briefly flashed words was above chance in this study, Figure\ \@ref(fig:otm1-rydell-recognition-plot).
+Memory for these words may, thus, have interfered with the associative learning process and prevented the predicted reversal of IAT score differences between learning blocks.
+We, therefore, performed an exploratory regression analysis of IAT score difference and recognition accuracy of briefly flashed words.
+Positive IAT score differences indicate a more favorable evaluation after the block in which we presented positive behavioral information and briefly flashed negative words.
 If word recognition indeed obstructed the associative learning process, we would expect to observe a positive relationship between the recognition accuracy and IAT score differences between blocks:
-When the recognition for briefly flashed words is high, IAT score differences should reflect the valence of the behavioral information but not with the word valence.
+When the recognition for briefly flashed words is high, IAT score differences should be positive, that is reflect the valence of the behavioral information.
 We would expect to observe smaller and eventually negative IAT score differences as the recognition accuracy declines and associative learning takes over.
 To account for measurement error in the recognition accuracy of briefy flashed words we fit an errors-in-variable regression model [@Klauer_Draine_Greenwald_1998].
 Because the model assumes that predictor values are sampled from a Gaussian distribution truncated at 0, we probit-transformed the recognition accuracy.^[A standard linear regression analysis yielded the same results.]
@@ -948,6 +903,7 @@ otm1_iat_delta %>%
   geom_vline(xintercept = 0.5, linetype = "22") +
   geom_point(alpha = 0.5) +
   geom_smooth(method = "eiv_lm", color = "black") +
+  # geom_smooth(method = "lm", color = "black") +
   labs(
     x = bquote("Recognition accuracy ["~Phi^-1*(italic(p))~"]")
     , y = expression("IAT score difference"~group("[", Delta~italic(z)~score, "]"))
@@ -958,6 +914,19 @@ otm1_iat_delta %>%
 
 
 ```{r prime-recognition-iat-difference-regression, results = "asis"}
+# otm1_recognition_iat_lm_bf <- otm1_iat_delta %>%
+#   filter(Measure == "IATscore") %>%
+#   mutate(Accuracy = Accuracy - 0.5) %>%
+#   as.data.frame %>%
+#   lmBF(delta ~ Accuracy, data = .) %>%
+#   apa_print
+# 
+# otm1_iat_delta_lm_res <- otm1_iat_delta %>%
+#   filter(Measure == "IATscore") %>%
+#   mutate(Accuracy = Accuracy - 0.5) %>%
+#   lm(delta ~ Accuracy, data = .) %>% 
+#   apa_print
+
 otm1_iat_delta_eiv_lm_res <- otm1_iat_delta %>%
   filter(Measure == "IATscore") %>%
   mutate(Accuracy = qnorm(Accuracy)) %>%
@@ -968,284 +937,130 @@ otm1_iat_delta_eiv_lm_res <- otm1_iat_delta %>%
 
 We did not detect a relationship between the recognition accuracy of briefly preseted words and IAT score differences between learning blocks, `r otm1_iat_delta_eiv_lm_res$full_result$Accuracy`.
 Moreover, the positive intercept of the regression line indicates a positive IAT score difference despite at-chance word recognition accuracy, `r otm1_iat_delta_eiv_lm_res$full_result$Intercept`.
-Hence, even for participants who exhibited no memory for briefly flashed words, IAT score differences reflected the valence of the behavioral information, see Figure\ \@ref(fig:prime-recognition-iat-difference).
+Hence, even for participants who did not recognize the briefly flashed words, IAT score differences reflected the valence of the behavioral information, see Figure\ \@ref(fig:prime-recognition-iat-difference).
 These results provide no indication that the deviation of our findings from those reported by @rydell_two_2006 are attributable to the above-chance recognition of briefly flashed words in this study.
 
+<!--
+#### Prime valence memory
 
-# Experiment 2
+TODO TH: Is this supposed to be in the paper? 
+TH: No - maybe not even online supplement? 
 
-In the following we report the details of our a priori power analysis, provide details for the model specification used for the Bayesian model comparisons, and additional secondary analyses.
+```{r listPrimes, echo = FALSE, eval=FALSE}
 
-## Power analysis
+# correct names of primes
+eng_pos <- c("Flower",
+            "Friend",
+            "Gift",
+            "Happy",
+            "Puppy",
+            "Pretty",
+            "Party",
+            "Kiss",
+            "Kitten",
+            "Smile")
 
-As for Experiment 1, our power analyses focuses on this interaction and the theoretically relevant simple effects of *learning block*.
-We estimate the sensitivity of our design using the R-package *Superpower* [@R-Superpower] for the contrast analyes using the R-package *emmeans* [@R-emmeans].
-@rydell_two_2006 found the smallest learning block difference for IAT scores, $\hat\eta_p^2 = `r printp(rydell_pes)`$, $d_z \approx `r rydell_dz`$.
-The learning block differences reported by @heycke_two_2018 were of similar magnitude but with an opposite sign.
+eng_neg <- c("Corpse",
+            "Death",
+            "Hell",
+            "Pain",
+            "War",
+            "Hurt",
+            "Spider",
+            "Stink",
+            "Trash",
+            "Ugly")
 
-```{r otm2-omnibus-power, cache = TRUE}
-# Main effect block and three-way interaction
-otm2_power <- function(f, n, rm_cor = 0.5, alpha = 0.05) {
-  contrast_codes <- tibble::tibble(
-    time = rep(contr.treatment(2), 4)
-    , order = rep(rep(contr.sum(2), each = 2), 2)
-    , block = rep(contr.sum(2), each = 4)
-    , time_block = time * block
-    , time_order = time * order
-    , block_order = block * order
-    , time_block_order = time * block * order
-  )
-  
-  mu <- with(
-    contrast_codes
-    , -block_order * f +
-      -block * 0.5 * f +
-      time_block_order * f
-  )
-  
-  string <- "2w*2b*2b"
-  labelnames <- c("block", "1", "2", "order", "p-n", "n-p", "time", "13", "20")
-  
-  design_result <- ANOVA_design(
-    design = string
-    , n = n
-    , mu = mu
-    , sd = 1
-    , r = rm_cor
-    , labelnames = labelnames
-  )
-  
-  ANOVA_exact(
-    design_result
-    , alpha_level = alpha_level
-    , emm = FALSE
-    , verbose = FALSE
-  )
+nl_pos <- c("Bloem",
+            "Vriend",
+            "Geschenk",
+            "Blij",
+            "Puppy",
+            "Mooi",
+            "Feest",
+            "Kus",
+            "Katje",
+            "Glimlach")
+
+nl_neg <- c("Lijk",
+            "Dood",
+            "Hel",
+            "Pijn",
+            "Oorlog",
+            "Letsel",
+            "Spin",
+            "Stank",
+            "Afval",
+            "Lelijk")
+
+ger_pos <- c("Blume",
+            "Freund",
+            "Geschenk",
+            "GlÃ¼cklich",
+            "Welpe",
+            "HÃ¼bsch",
+            "Party",
+            "Kuss",
+            "KÃ¤tzchen",
+            "LÃ¤cheln")
+
+ger_neg <- c("Leiche",
+            "Tod",
+            "HÃ¶lle",
+            "Schmerz",
+            "Krieg",
+            "Verletzung",
+            "Spinne",
+            "Gestank",
+            "Abfall",
+            "HÃ¤sslich")
+
+
+# prep data frame to correspond with correct names
+
+otm1_mem$chosenItems <- gsub("\\r", "", otm1_mem$chosenItems, fixed = TRUE)
+otm1_mem$chosenItems <- gsub("u'", "", otm1_mem$chosenItems) 
+otm1_mem$chosenItems <- gsub("'", "", otm1_mem$chosenItems) 
+otm1_mem$chosenItems <- gsub("\\", "", otm1_mem$chosenItems, fixed = TRUE)
+otm1_mem$chosenItems <- gsub("Ã¯Â»Â¿", "", otm1_mem$chosenItems) 
+otm1_mem$chosenItems <- gsub("[", "", otm1_mem$chosenItems, fixed = TRUE) 
+otm1_mem$chosenItems <- gsub("]", "", otm1_mem$chosenItems, fixed = TRUE)
+
+otm1_mem$chosenItems <- gsub("xfc", "Ã¼", otm1_mem$chosenItems) 
+otm1_mem$chosenItems <- gsub("xe4", "Ã¤", otm1_mem$chosenItems) 
+otm1_mem$chosenItems <- gsub("xf6", "Ã¶", otm1_mem$chosenItems) 
+otm1_mem$chosenItems <- gsub("xdf", "ÃŸ", otm1_mem$chosenItems)
+
+otm1_mem <- separate(otm1_mem, 
+                     col = "chosenItems", 
+                     into = paste0("chosen", 1:20), 
+                     sep = ", ")
+
+pos <- c(eng_pos, nl_pos, ger_pos)
+neg <- c(eng_neg, nl_neg, ger_neg)
+otm1_mem$poscor <- 0
+otm1_mem$negcor <- 0
+
+
+for(i in 1:20){
+  otm1_mem$poscor <- ifelse(otm1_mem[, paste0("chosen", i)] %in% pos, otm1_mem$poscor + 1, otm1_mem$poscor + 0)
+  otm1_mem$negcor <- ifelse(otm1_mem[, paste0("chosen", i)] %in% neg, otm1_mem$negcor + 1, otm1_mem$negcor + 0)
 }
 
+aggregate(negcor ~ Location, data = otm1_mem, FUN = mean)
+aggregate(poscor ~ Location, data = otm1_mem, FUN = mean)
 
-otm2_n <- 320/4
+t.test(x = subset(otm1_mem, Location == "Ghent")$poscor, y = subset(otm1_mem, Location == "Ghent")$negcor, paired = TRUE)
+ttestBF(x = subset(otm1_mem, Location == "Ghent")$poscor, y = subset(otm1_mem, Location == "Ghent")$negcor, paired = TRUE)
 
-# 95% power
-otm2_pes <- 0.03973071
-otm2_dz <- pes_to_dz(otm2_pes, otm2_n, n_groups = 4)
-rho <- 0.5
-f <- dz_to_f(otm2_dz, rho)
+t.test(x = subset(otm1_mem, Location == "Cologne")$poscor, y = subset(otm1_mem, Location == "Cologne")$negcor, paired = TRUE)
+ttestBF(x = subset(otm1_mem, Location == "Cologne")$poscor, y = subset(otm1_mem, Location == "Cologne")$negcor, paired = TRUE)
 
+t.test(x = subset(otm1_mem, Location == "Harvard")$poscor, y = subset(otm1_mem, Location == "Harvard")$negcor, paired = TRUE)
+ttestBF(x = subset(otm1_mem, Location == "Harvard")$poscor, y = subset(otm1_mem, Location == "Harvard")$negcor, paired = TRUE)
 
-# otm2_time_power <- otm2_power(f = f, n = otm2_n, rm_cor = rho, alpha = 0.05)
-# otm2_time_power$main_result
-
-otm2_dz_block <- f_to_dz(0.5*f, rho = rho)
-otm2_pes_block <- dz_to_pes(otm2_dz_block, otm2_n, n_groups = 4)
-
-otm2_dz_int <- f_to_dz(f, rho = rho)
-otm2_pes_int <- dz_to_pes(otm2_dz_int, otm2_n, n_groups = 4)
 ```
-
-```{r otm2-contrast-power, cache = TRUE}
-otm2_power <- function(f, n, rm_cor = 0.5, alpha = 0.05) {
-  contrast_codes <- tibble::tibble(
-    time = rep(contr.treatment(2), 4)
-    , order = rep(rep(contr.sum(2), each = 2), 2)
-    , block = rep(contr.sum(2), each = 4)
-    , time_block = time * block
-    , time_order = time * order
-    , block_order = block * order
-    , time_block_order = time * block * order
-  )
-  
-  mu <- with(
-    contrast_codes
-    , -order * 0.25*f +
-      -block_order * f
-  )
-  
-  string <- "2w*2b*2b"
-  labelnames <- c("block", "1", "2", "order", "p-n", "n-p", "time", "13", "20")
-  
-  design_result <- ANOVA_design(
-    design = string
-    , n = n
-    , mu = mu
-    , sd = 1
-    , r = rm_cor
-    , labelnames = labelnames
-  )
-  
-  ANOVA_exact(
-    design_result
-    , alpha_level = alpha_level
-    , emm = TRUE
-    , verbose = FALSE
-    , contrast_type = "pairwise"
-    , emm_comp = "block | time * order"
-  )
-}
-
-
-# Learning block contrasts
-
-## Simple contrasts
-### 95% power
-otm2_pes <- 0.03973071
-otm2_dz <- pes_to_dz(otm2_pes, otm2_n, n_groups = 4)
-# rho <- 0.5
-# f <- dz_to_f(otm2_dz, rho)
-# 
-# otm2_contrast_power <- otm2_power(f = f, n = otm2_n, rm_cor = rho)$emmeans$contrasts %>%
-#   emmeans_power(alpha = 0.05) %>%
-#   .[1, ]
-# otm2_contrast_power
-
-
-### 80% power
-otm2_pes2 <- 0.0243813
-otm2_dz2 <- pes_to_dz(otm2_pes2, otm2_n, n_groups = 4)
-# f <- dz_to_f(otm2_dz2, rho)
-# 
-# otm2_contrast_power2 <- otm2_power(f = f, n = otm2_n, rm_cor = rho)$emmeans$contrasts %>%
-#   emmeans_power(alpha = 0.05) %>%
-#   .[1, ]
-# otm2_contrast_power2
-
-
-## Collapsed once
-### 95% power
-otm2_dz_between_collapsed <- f_to_dz(dz_to_f(otm2_dz, rho) / sqrt(2), rho)
-otm2_pes_between_collapsed <- dz_to_pes(otm2_dz_between_collapsed, otm2_n, n_groups = 4)
-# f <- dz_to_f(otm2_dz_between_collapsed, rho)
-# 
-# otm2_time_collapsed_contrast_power <- otm2_power(f = f, n = otm2_n, rm_cor = rho)$emmeans$emmeans %>%
-#   emmeans(specs = ~ block | order) %>%
-#   pairs %>%
-#   emmeans_power(alpha = 0.05) %>%
-#   .[1, ]
-# otm2_time_collapsed_contrast_power
-
-### 80% power
-otm2_dz2_between_collapsed <- f_to_dz(dz_to_f(otm2_dz2, rho) / sqrt(2), rho)
-otm2_pes2_between_collapsed <- dz_to_pes(otm2_dz2_between_collapsed, otm2_n, n_groups = 4)
-# f <- dz_to_f(otm2_dz2_between_collapsed, rho)
-# 
-# otm2_time_collapsed_contrast_power2 <- otm2_power(f = f, n = otm2_n, rm_cor = rho)$emmeans$emmeans %>%
-#   emmeans(specs = ~ block | order) %>%
-#   pairs %>%
-#   emmeans_power(alpha = 0.05) %>%
-#   .[1, ]
-# otm2_time_collapsed_contrast_power2
-
-
-## Collapsed twice
-### 95% power
-otm2_dz_collapsed <- f_to_dz(dz_to_f(otm2_dz, rho) / sqrt(4), rho)
-otm2_pes_collapsed <- dz_to_pes(otm2_dz_collapsed, otm2_n, n_groups = 4)
-# f <- dz_to_f(otm2_dz_collapsed, rho)
-# 
-# otm2_collapsed_contrast_power <- otm2_power(f = f, n = otm2_n, rm_cor = rho)$emmeans$emmeans %>%
-#   emmeans(specs = ~ block * order) %>%
-#   contrast(method = list(collapsed = c(-0.5, 0.5, 0.5, -0.5))) %>%
-#   emmeans_power(alpha_level = 0.05)
-# otm2_collapsed_contrast_power
-
-### 80% power
-otm2_dz2_collapsed <- f_to_dz(dz_to_f(otm2_dz2, rho) / sqrt(4), rho)
-otm2_pes2_collapsed <- dz_to_pes(otm2_dz2_collapsed, otm2_n, n_groups = 4)
-# f <- dz_to_f(otm2_dz2_collapsed, rho)
-# 
-# otm2_collapsed_contrast_power2 <- otm2_power(f = f, n = otm2_n, rm_cor = rho)$emmeans$emmeans %>%
-#   emmeans(specs = ~ block * order) %>%
-#   contrast(method = list(collapsed = c(-0.5, 0.5, 0.5, -0.5))) %>%
-#   emmeans_power(alpha_level = 0.05)
-# otm2_collapsed_contrast_power2
-```
-
-Across all locations we will recruit N = 320 participants (not including participants from the pilot study).
-To maximize the power of the planned contrasts, we will test whether valence order moderates the learning block contrasts by testing the main effect of learning block ($\alpha = \beta = .05$ for $\delta_z = `r otm2_dz_block`$ and $N = 320$).
-If we detect no main effect of learning block, we will pool participants across valence orders by reversing the learning block coding in one group (as in the Bayesian model comparison of Experiment 1).
-Similarly, if the different prime presentation durations do not moderate the learning block contrasts, we will pool participants across presentation durations ($\alpha = \beta = .05$ for $\delta_z = `r otm2_dz_int`$ and $N = 320$).
-This analysis plan results in four possible contrast analyses of the learning blocks: (1) 4 learning block contrasts by valence order and presentation duration, (2) 2 learning block contrasts collapsed across valence orders but separate for presentation durations, (3) 2 learning block contrasts collapsed across presentation durations but separate for valence orders, and (4) 1 learning block contrasts collapsed across valence orders and presentation durations.
-
-The data from all locations (N = 320, not including participants from the pilot study) provides 95% power to detect learning block differences as small as $\eta^2_p = `r printp(otm2_pes)`$ ($\delta_z = `r otm2_dz`$) or as small as $\eta^2_p = `r printp(otm2_pes_between_collapsed)`$ ($\delta_z = `r otm2_dz_between_collapsed`$) and $\eta^2_p = `r printp(otm2_pes_collapsed)`$ ($\delta_z = `r otm2_dz_collapsed`$) when pooling participants across one or both between-participant factors ($\alpha = .05$).
-Thus, our design is sufficiently sensitive to detect (or rule out) differences `r round((1 - otm2_dz/rydell_dz) * 100)`% smaller (`r round((1 - otm2_dz_between_collapsed/rydell_dz) * 100)`% or `r round((1 - otm2_dz_collapsed/rydell_dz) * 100)`% when pooling participants across one or both between-participant factors, respectively) than the smallest learning block difference reported by @rydell_two_2006.
-Figure\ \@ref(fig:otm2-power-curves) illustrates the implied sensitivity in units of Cohen's $\delta$ depending on the assumed repeated-measures correlation $\rho$.
-
-
-(ref:otm2-power-curves) Sensitivity curves for learning block contrasts in Experiment 2 depending on the assumed repeated measures correlation.
-Simple contrast are estimated within each *flashed word presentation duration*-*valence order* combination (not adjusted for multiple comparisons).
-Collapsed contrasts pool participants across one or both  of the between subject factors (i.e., *flashed word presentation duration* and *valence order*).
-$\delta_z$-values in the legend correspond to 95% and 80% power.
-The grey dashed line at the top represents the smallest estimate of the learning block difference reported by Rydell et al. [$d_z = 0.47$; -@rydell_two_2006].
-
-```{r otm2-power-curves, fig.width = 7, fig.height = 4, fig.cap = "(ref:otm2-power-curves)"}
-rydell_power_curve <- tibble(
-  rho = seq(-1, 1, length.out = 100)
-  , delta = c(
-    dz_to_f(rydell_dz, unique(rho)) * 2
-  )
-  , power = NA
-)
-
-otm1_power_curve <- tibble(
-  rho = rep(seq(-1, 1, length.out = 100), 2)
-  , delta = c(
-    dz_to_f(otm1_dz, unique(rho)) * 2
-    , dz_to_f(otm1_dz2, unique(rho)) * 2
-  )
-  , power = rep(c("0.95", "0.80"), each = length(rho)/2)
-)
-
-tibble(
-  rho = rep(seq(-1, 1, length.out = 100), 2)
-  , otm2_delta_simple = c(
-    dz_to_f(otm2_dz, unique(rho)) * 2
-    , dz_to_f(otm2_dz2, unique(rho)) * 2
-  )
-  , otm2_delta_between_collapsed = c(
-    dz_to_f(otm2_dz_between_collapsed, unique(rho)) * 2
-    , dz_to_f(otm2_dz2_between_collapsed, unique(rho)) * 2
-  )
-  , otm2_delta_collapsed = c(
-    dz_to_f(otm2_dz_collapsed, unique(rho)) * 2
-    , dz_to_f(otm2_dz2_collapsed, unique(rho)) * 2
-  )
-  , power = rep(c("0.95", "0.80"), each = length(rho)/2)
-) %>% 
-  pivot_longer(cols = matches("otm"), names_to = "contrast", values_to = "delta") %>%
-  mutate(
-    power = relevel(factor(power), "0.95")
-    , contrast = gsub("otm2_delta_", "", contrast)
-    , contrast = gsub("_", " ", contrast)
-    , contrast = factor(contrast, levels = c("simple", "between collapsed", "collapsed"))
-  ) %>% 
-  ggplot(aes(x = rho, y = delta, color = contrast, group = interaction(power, contrast), linetype = power)) +
-  geom_line(data = rydell_power_curve, aes(group = power), color = grey(0.8), linetype = "dashed") +
-  geom_line() +
-  scale_color_viridis_d(
-    end = 0.8
-    , labels = c(
-      bquote("Simple                 "~delta[z] %in% "{"*.(printnum(otm2_dz))*", "*.(printnum(otm2_dz2))*"}")
-      , bquote("Collapsed once   "~delta[z] %in% "{"*.(printnum(otm2_dz_between_collapsed))*", "*.(printnum(otm2_dz2_between_collapsed))*"}")
-      , bquote("Collapsed twice   "~delta[z] %in% "{"*.(printnum(otm2_dz_collapsed))*", "*.(printnum(otm2_dz2_collapsed))*"}")
-    )
-  ) +
-  ylim(c(0, 1)) +
-  labs(
-    x = bquote("Correlation between learning blocks ["*rho*"]")
-    , y = bquote("Learning block difference [Cohen's"~delta*"]")
-    , color = "Contrast"
-    , linetype = bquote("Power"~"["*1 - beta*"]")
-  ) +
-  ggtitle("", subtitle = bquote(list(alpha ==~".05", italic(N) == .(otm2_n*4)))) +
-  theme_apa(box = TRUE) + 
-  theme(
-    panel.grid.major.x = element_line()
-    , panel.grid.major.y = element_line()
-    , panel.grid.minor.x = element_line()
-    , panel.grid.minor.y = element_line()
-    , legend.justification = "top"
-  )
-```
+-->
 
 ```{r create_r-references}
 r_refs(file = "r-references.bib")

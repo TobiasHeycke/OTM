@@ -218,19 +218,19 @@ apa_print.eiv_lm <- function(
   
   ## Assemble regression table
   regression_table <- data.frame(tidy_x[, c("term", "estimate", "statistic", "p.value")], row.names = NULL)
-  regression_table$ci <- apply(
-    tidy_x[, utils::tail(names(tidy_x), 2)]
+  regression_table$conf.int <- apply(
+    ci
     , 1
     , function(y) do.call(function(...) papaja:::print_confint(x = y[utils::tail(names(y), 2)], ...), ellipsis) # Don't add "x% CI" to each line
   )
-  regression_table <- regression_table[, c("term", "estimate", "ci", "statistic", "p.value")] # Change order of columns
+  regression_table <- regression_table[, c("term", "estimate", "conf.int", "statistic", "p.value")] # Change order of columns
   regression_table$term <- papaja:::prettify_terms(regression_table$term, standardized = FALSE)
   
   regression_table$estimate <- do.call(function(...) papaja::printnum(regression_table$estimate, ...), ellipsis)
   regression_table$statistic <- papaja::printnum(regression_table$statistic, digits = 2)
   regression_table$p.value <- papaja::printp(regression_table$p.value)
   
-  colnames(regression_table) <- c("predictor", "estimate", "ci", "statistic", "p.value")
+  colnames(regression_table) <- c("term", "estimate", "conf.int", "statistic", "p.value")
   
   if(stat_name == "z") {
     test_statistic <- paste0("$", stat_name, "$")
@@ -239,9 +239,9 @@ apa_print.eiv_lm <- function(
   }
   
   papaja::variable_label(regression_table) <- c(
-    predictor = "Predictor"
+    term = "Predictor"
     , estimate = paste0("$", est_name, "$")
-    , ci = paste0(conf_level, "\\% CI")
+    , conf.int = paste0(conf_level, "\\% CI")
     , statistic = test_statistic
     , p.value = "$p$"
   )

@@ -7,29 +7,14 @@ Christoph Stahl, Christine A. Vitiello, & Jan De Houwer
 
 -----
 
-Findings of dissociations between implicit (i.e., automatic) and
-explicit (i.e., non-automatic) evaluations that are based on distinct
-associative (i.e., co-occurrence based) and propositional (i.e.,
-rule-based) learning procedures have fueled the dominance of
-dual-process theories of evaluative learning for decades. Arguably the
-most influential evidence has been found in a study by Rydell,
-McConnell, Mackie, and Strain (2006) in which participants learned about
-a person named Bob. It was observed that implicit evaluations reflected
-the valence of brief pairings of valenced words with the image of Bob
-whereas explicit evaluations reflected the (opposite) valence of the
-behavioral statements that were instructed to be characteristic of Bob.
-A recent study by Heycke and colleagues (2018) was unable to reproduce
-this data pattern independently. Given the theoretical importance of the
-findings by Rydell et al., we present a series of additional replication
-attempts conducted by an international collective of researchers
-including the first author of the original finding.
+Several dual-process theories of evaluative learning posit two distinct implicit (or automatic) and explicit (or controlled) evaluative learning processes. As such, one may like a person explicitly but simultaneously dislike them implicitly. Dissociations between direct measures (e.g., Likert scales), reflecting explicit evaluations, and indirect measures (e.g., Implicit Association Test), reflecting implicit evaluations, support this claim. Rydell et al. (2006) found a striking dissociation when they brief flashed either positive or negative words prior to presenting a photograph of a person was with behavioral information of the opposite valence was presented: IAT scores reflected the valence of the flashed words whereas rating scores reflected the opposite valence of the behavioral information. A recent study, however, suggests that this finding may not be replicable. Given its theoretical importance, we report two new replication attempts (n = 153 recruited in Belgium, Germany and the USA; n = TBD recruited in Hong Kong and the USA).
 
 -----
 
 This repository research products associated with the publication. We
 provide the experimental software and stimulus material that we are
 permitted to share in the `material` directories of each experiment
-(e.g. `otm1` or `otm2`). The R Markdown files in the `paper`
+(e.g. `otm1` or `otm2`). The R Markdown files in the `paper`
 directory contain details of how all the analyses reported in the paper
 were conducted, as well as instructions on how to rerun the analysis to
 reproduce the results. With the help of the R package `papaja` the files
@@ -41,15 +26,15 @@ is provided in `otm1/preregistration`.
 
 ## Data
 
-Data were collected collected at various locations (see paper) at the following
-times:
+Data were collected at various locations (see paper).
 
--  `otm1`: between 2014-05-13 and 2014-05-23
--  `otm2pilot`: between 2014-05-13 and 2014-05-23
--  `otm2pilot2`: between 2014-05-13 and 2014-05-23
+| Study        | Data collection period  |
+| ------------ | ----------------------- |
+| `otm1`       | 2014-05-13 - 2014-05-23 |
+| `otm2pilot`  | 2014-05-13 - 2014-05-23 |
+| `otm2pilot2` | 2014-05-13 - 2014-05-23 |
 
-For a description of all data sets and all variables, please see the file: 
-`codebook.md` in the same folder. 
+For a description of all data sets and all variables, please see the file `codebook.md` in this folder.
 
 ## Software requirements
 

@@ -4,22 +4,28 @@ shorttitle      : "Replication of Rydell et al."
 
 author: 
   - name          : Tobias Heycke
-    affiliation   : 1, 2
+    affiliation   : "1,2"
     corresponding : yes    
     address       : "P.O. 122155, 68072 Mannheim, Germany"
-    email         : "tobias.heycke@gesis.org"
+    email         : "tobias.heycke@gmail.com"
+    equal_contrib : yes
   - name          : Frederik Aust
-    affiliation   : 1
+    affiliation   : "1,9"
+    equal_contrib : yes
   - name          : Mahzarin R. Banaji
     affiliation   : 3
+  - name          : Jeremy Cone
+    affiliation   : 8
   - name          : Pieter Van Dessel
     affiliation   : 5
+  - name          : Melissa J. Ferguson
+    affiliation   : 10
   - name          : Xiaoqing Hu
     affiliation   : 6    
   - name          : Congjiao Jiang
     affiliation   : 4    
   - name          : Benedek Kurdi
-    affiliation   : 3    
+    affiliation   : "3,10"
   - name          : Robert Rydell
     affiliation   : 7
   - name          : Lisa Spitzer
@@ -30,7 +36,6 @@ author:
     affiliation   : 4
   - name          : Jan De Houwer
     affiliation   : 5
-   
 
 affiliation:
   - id            : 1
@@ -46,16 +51,23 @@ affiliation:
   - id            : 6
     institution   : The University of Hong Kong 
   - id            : 7
-    institution   : Indiana University 
-    
+    institution   : Indiana University
+  - id            : 8
+    institution   : Williams College
+  - id            : 9
+    institution   : University of Amsterdam
+  - id            : 10
+    institution   : Yale University
 
-abstract: |
-  Findings of dissociations between implicit (i.e., automatic) and explicit (i.e., non-automatic) evaluations that are based on distinct associative (i.e., co-occurrence based) and propositional (i.e., rule-based) learning procedures have fueled the dominance of dual-process theories of evaluative learning for decades.  Arguably the most influential evidence has been found in a study by Rydell, McConnell, Mackie, and Strain (2006) in which participants learned about a person named Bob. It was observed that implicit evaluations reflected the valence of brief pairings of valenced words with the image of Bob whereas explicit evaluations reflected the (opposite) valence of the behavioral statements that were instructed to be characteristic of Bob. A recent study by Heycke and colleagues (2018) was unable to reproduce this data pattern independently. Given the theoretical importance of the findings by Rydell and colleagues, we present a series of additional replication attempts conducted by an international collective of researchers including the first author of the original finding.
+abstract: "(ref:abstract)"
   
 authornote: |
-  All data, analysis scripts and materials can be found at https://osf.io/8m3xb/
-  
-keywords          : "evaluative conditioning, subliminal influence, implicit learning, replication"
+  All data, analysis scripts and materials are available at https://osf.io/8m3xb/; the supplementary online material (SOM) is available at https://osf.io/8w9bd/.
+
+note: |
+  \clearpage
+
+keywords          : "evaluative learning, subliminal influence, implicit learning, replication"
 #wordcount         : "X"
 
 bibliography      : ["references.bib", "r-references.bib"]
@@ -64,13 +76,18 @@ bibliography      : ["references.bib", "r-references.bib"]
 header-includes:
   - \interfootnotelinepenalty=10000
   
-floatsintext      : no
+floatsintext      : yes
 figurelist        : no
 tablelist         : no
 footnotelist      : no
 lineno            : yes
 mask              : no
 draft             : no
+quote_labels      : yes
+
+link-citations    : yes
+linkcolor         : blue
+urlcolor          : blue
 
 documentclass     : "apa6"
 classoption       : "man"
@@ -92,12 +109,16 @@ library("afex")
 library("emmeans")
 library("BayesFactor")
 library("MBESS")
+library("effectsize")
+library("Superpower")
 
 source("https://gist.githubusercontent.com/crsh/bd4d1f62d300462ea0c0f44b9ad38616/raw/edd9c74e24b68f42433c2526cafc888509b1b8bc/batch_download_github.R")
 source("https://gist.githubusercontent.com/crsh/357458c41fd3d554fb24/raw/f7725d5c4894a055a1b2e461dc5c39f3db23b2b8/batch_read.R")
 source("https://gist.githubusercontent.com/crsh/be88be19233f1df4542aca900501f0fb/raw/f258053d144681bd4a5b86ed0956da7dc3f380ee/gglegend.R")
 
 source("modal_frame_rate.R")
+source("effect_sizes.R")
+source("apa_print_ps.R")
 ```
 
 ```{r analysis-preferences}
@@ -128,11 +149,6 @@ emm_options(
 # Default ggplot theme
 theme_set(theme_apa())
 
-## Ugly hack to overcome bug in ggplot2, https://github.com/tidyverse/ggplot2/issues/2058
-# assignInNamespace("theme_nothing", function() {
-#     theme_void() + theme(axis.text.x = NULL, axis.text.y = NULL, axis.line.x = element_blank(), axis.line.y = element_blank())
-# }, "cowplot")
-
 # Number of MCMC samples for Bayesian analysis
 otm1_n_mcmc_samples <- 1e6
 ```
@@ -149,49 +165,71 @@ knitr::opts_chunk$set(cache.comments = FALSE)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
 
-<!--
-Guideline:
-Authors of a PDR must make a convincing case that the replication will make a valuable contribution to understanding a phenomenon and/or theory of broad current interest to psychologists. As with all Psychological Science submissions, the primary criterion is general theoretical significance. Direct replications should reproduce the original methods and procedures as closely as possible, with the goal of measuring the same effect under essentially (but not necessarily superficially) the same conditions as in the original study
+```{r load-sample-sizes}
+man_cache <- "manuscript_cache/latex/"
+otm1_n <- knitr::load_cache(label = "otm1-exclusion", object = "otm1_n", path = man_cache)
+otm2_n <- knitr::load_cache(label = "otm2-exclusion", object = "otm2_n", notfound = "TBD", path = man_cache)
+```
 
-Word limit: 
-Intro + Discussion + notes + acknowledgements + appendices = 1500
 
-Max Figures/tables:
-3
+(ref:abstract) Several dual-process theories of evaluative learning posit two distinct implicit (or automatic) and explicit (or controlled) evaluative learning processes. As such, one may like a person explicitly but simultaneously dislike them implicitly. Dissociations between direct measures (e.g., Likert scales), reflecting explicit evaluations, and indirect measures (e.g., Implicit Association Test), reflecting implicit evaluations, support this claim. Rydell et al. (2006) found a striking dissociation when they brief flashed either positive or negative words prior to presenting a photograph of a person was with behavioral information of the opposite valence was presented: IAT scores reflected the valence of the flashed words whereas rating scores reflected the opposite valence of the behavioral information. A recent study, however, suggests that this finding may not be replicable. Given its theoretical importance, we report two new replication attempts ($n = `r otm1_n`$ recruited in Belgium, Germany and the USA; $n = `r otm2_n`$ recruited in Hong Kong and the USA).
 
-Max references:
-30
--->
 
-Evaluative conditioning (EC) refers to the robust finding of a change in liking of a stimulus, referred to as conditioned stimulus (CS), that is due to its pairing with a stimulus of positive or negative valence, referred to as unconditioned stimulus (US) [@dehouwerConceptualTheoreticalAnalysis2007; @hofmannEvaluativeConditioningHumans2010]. 
-Dual-process theories postulate that EC can depend both on a mechanism via which co-occurrences between stimuli result in the automatic formation of mental associations as well as a second mechanism via which propositional beliefs are formed [e.g., @gawronskiAssociativePropositionalProcesses2006; @rydellUnderstandingImplicitExplicit2006].
-Though dual-process theories have had a huge impact, it has been argued that there is actually little evidence for automatic association formation as a distinct mechanism for EC [see @corneilleAssociativeAttitudeLearning2018a].
-This conclusion is in line with propositional single-process views [e.g., @mitchellPropositionalNatureHuman2009] which postulate that all associative (evaluative) learning (including EC) is based on propositional processes.
+<@~{#intro-paragraph}
 
-One finding, however, is particularly difficult to reconcile with propositional single-process accounts: 
-@rydell_two_2006 reported that participants exhibited conflicting explicit and implicit evaluations (e.g., positive explicit and negative implicit evaluations) of a single target person after the presentation of rapid stimulus-stimulus pairings and behavioral statements that implied the opposite valence. 
-In this study, participants engaged in a learning task about a person named Bob in which they determined whether Bob was a good or bad person by guessing whether positive and negative behavioral statements were characteristic of Bob. 
-They received feedback about the accuracy of each of their guesses.
-Unbeknownst to the participants, on each trial, a valent word (US) was presented briefly (25 ms) prior to the presentation of a picture of Bob and the behavioral statement. 
-Critically, the valence of the US words was always opposite to the behavioral information (e.g., USs were always positive when negative behavioral statements were characteristic of Bob).
-Following the learning task, explicit evaluations of Bob, assessed with a trait rating task, reflected the valence of the learned behavioral information, while implicit evaluations, assessed with an Implicit Association Test [IAT: @greenwaldMeasuringIndividualDifferences1998] reflected the valence of the USs.
-These results were conceptually replicated by the original authors using similar methods [@rydellConsequencesDiscrepantExplicit2008; @rydellUnderstandingImplicitExplicit2006].
-The @rydell_two_2006 article has been referred to as providing strong evidence for numerous dual-process theories [@gawronskiAssociativePropositionalEvaluation2011; @rydellUnderstandingImplicitExplicit2006] and has been cited more than 320 times overall (Google Scholar, 10.15.2019).
+Are our explicit and implicit evaluations of an object or person always consistent with one another?
+Or is it possible that we like a person explicitly but simultaneously dislike them implicitly?
+One way to investigate this question is to compare two families of evaluative measures: direct measures (e.g., Likert scales) that assumedly elicit relatively more explicit, conscious, effortful, and controllable evaluations (hereafter explicit evaluations), on the one hand, and indirect measures [such as the Implicit Association Test [IAT]; @greenwald_measuring_1998] that assumedly elicit relatively more implicit, unconscious, effortless, and uncontrollable evaluations (hereafter implicit evaluations), on the other hand.
+Indeed, several studies have shown dissociations between direct and indirect measures [see  @harmon-jones_what_2019]. 
+Such evidence has been critical in supporting dual-process theories positing that explicit and implicit evaluations reflect different sets of attitudes that are acquired via two distinct processes.[^attitude_definition]
 
-Judging from its impact, the reported effect is generally assumed to be robust and replicable.
-A recent study, composed of two experiments, however, could not replicate the dissociative effect [@heycke_two_2018].
-Instead, both implicit and explicit evaluations consistently reflected the valence of the learned behavioral information.
-At present, it remains unclear whether these unsuccessful attempts call into question the replicability of the original study or point towards boundary conditions.
-This ambiguity is due to the modifications made to the original materials and procedure in the replication studies: First, some words were replaced to ensure that no words presented in the learning phase served as distractors in the US memory assessment at the end of the study [see @heycke_two_2018].
-Second, one experiment used German translations of the verbal material (rather than the original English material).
-Third, the other experiment, while using the original material, was conducted with a modified procedure: Because  a subset of participants correctly identified USs after the learning task in the first experiment, the presentation duration of USs was reduced from 25 ms to 16 ms to ensure at-chance post-learning US recognition.
 
-In the current study we will rigorously test the replicability of the original findings reported by @rydell_two_2006 by closely adhering to the original procedure.
-To ensure its informativeness, the current replication attempt was a joint effort that involved researchers from different labs that all have expertise in studying evaluative conditioning and implicit measures.
-Moreover, both the first author of the original study and authors of the unsuccessful replication attempts collaborated on the studies presented here.
-To explore the generality of our results, data were collected in multiple countries and languages.
-In a first, already concluded,  experiment we have conducted a close replication in three different locations. 
-In a second experiment, for which the data has not been collected yet, we will use the knowledge gained from the first experiment to adjust the procedure to closely replicate the psychological conditions of the original study.
+[^attitude_definition]:
+By *attitude* we mean latent knowledge representations that underlie the behavioral expression of *evaluations* on direct and indirect measures [@cunningham_attitudes_2007].
+
+~@>
+
+An influential dual-process theory is the Systems of Evaluation Model [SEM; @mcconnell_systems_2014; @mcconnell_forming_2008; @rydellUnderstandingImplicitExplicit2006]. 
+This theory assumes that implicit evaluations emerge from mental associations that develop without conscious awareness or control, from the co-occurrence of stimuli with valenced events.
+For example, positive associations may develop simply because a person repeatedly wears a shirt in one’s favorite color.
+In contrast, explicit evaluations are thought to reflect propositional representations that emerge from conscious, attention-demanding reasoning processes.
+For example, negative propositions may develop as a result of learning that the person holds political opinions that clash with one’s own views.
+Hence, under this theory, a double dissociation between direct and indirect measures of evaluation is expected, with the former reflecting only consciously formed propositions and the latter reflecting only unconsciously formed associations.
+
+As a test of this model, @rydell_two_2006 contrasted two different learning pathways experimentally.
+In the experiment, participants learned about an unfamiliar person called Bob.
+Each trial started with a brief (25 ms) flash of a positive or negative word, not intended to be consciously registered by participants.
+Then a photograph of Bob was presented alone for 250 ms before a positive or negative behavioral statement was added to the display.
+The statement was clearly visible until participants made a guess as to whether the behavior was characteristic or uncharacteristic of Bob.
+Participants immediately received feedback, which implied that Bob was a good or bad person.
+Crucially, this behavioral information was always opposite in valence to the briefly flashed word.
+In line with the predictions of the SEM, explicit evaluations of Bob, measured via self-report, reflected predominantly the valence of the behavioral information.
+More intriguingly, implicit evaluations, measured via the IAT, reflected predominantly the valence of the words that had been briefly flashed prior to the photograph of Bob.
+
+This finding has been influential in support of the SEM and other dual-process theories [e.g., @gawronskiAssociativePropositionalEvaluation2011]. 
+However, beyond this prominent result, empirical evidence for dual evaluative learning processes remains weak overall [@corneilleAssociativeAttitudeLearning2018a]. 
+The absence of compelling evidence that implicit evaluations emerge from unconsciously formed associations has allowed for a different, more parsimonious, account to be popularized: that both implicit and explicit evaluations reflect propositional knowledge [e.g., @de_houwer_propositional_2018]. 
+Crucially, many prominent single-process propositional theories assume that propositional learning requires conscious awareness [@mitchellPropositionalNatureHuman2009]. 
+As such, the result reported by @rydell_two_2006, where implicit evaluations reflected predominantly unconsciously formed associations, is particularly difficult to reconcile with these accounts.
+Under most propositional theories, both direct (self-report) measures and indirect measures (such as the IAT) should reflect propositional knowledge that emerges from conscious, attention-demanding reasoning processes.
+
+Given the theoretical issues at stake, a replication of the double dissociation reported by  @rydell_two_2006 is critical. 
+If the double dissociation is replicated, such a result would lend credence to strong forms of dual-process theories positing that implicit and explicit evaluations reflect different types of (associative and propositional) representations that are acquired via different learning pathways.
+Moreover, such a finding would provide evidence in favor of subliminal associative learning, a phenomenon for which current evidence is weak at best [@corneilleAssociativeAttitudeLearning2018a]. 
+On the other hand, if the finding by @rydell_two_2006 does not replicate, and both direct and indirect measures are found to reflect the valence of the consciously processed behavioral information, such a result would strengthen confidence in single-process propositional theories of evaluation.
+After all, these theories argue that both implicit and explicit evaluations largely reflect the same consciously formed propositions.
+
+In two recent experiments, the double dissociation reported by @rydell_two_2006 did not replicate [@heycke_two_2018]. 
+Instead, both direct and indirect measures consistently reflected the valence of the behavioral information.
+At present, it is unclear whether these results point towards boundary conditions or call into question the replicability of the original study more generally.
+This ambiguity is due to the fact that materials were translated into German and stimuli were presented for a duration different from the original study.
+Here, we rigorously test the replicability of the double dissociation by closely adhering to the original procedure.
+To ensure its informativeness, the current replication attempt was conducted jointly by an international collective of experts on evaluative learning and implicit measures.
+Among the collaborators were the first author of the original study and authors of the previous replication attempts.
+To explore the generality of our results, we collected data in multiple countries and languages.
+A first, already concluded, experiment was conducted in Belgium, Germany and the USA.
+In a second experiment, for which the data is yet to be collected, we will use the insights from the first experiment to adjust the procedure to closely replicate the psychological conditions of the original study.
+
 
 # Experiment 1
 
@@ -254,7 +292,7 @@ if(process_rawdata) {
     mutate_at(vars(starts_with("Eval")), scale) %>%
     select(starts_with("Eval")) %>%
     rowwise %>%
-    do(data.frame(Eval = sum(unlist(.)))) %>% 
+    do(data.frame(Eval = mean(unlist(.)))) %>% 
     bind_cols(otm1_eval, .) %>%
     mutate(
       ParticipantNumber = factor(ParticipantNumber)
@@ -360,72 +398,123 @@ if(process_rawdata) {
 }
 ```
 
-As the results reported by @heycke_two_2018 could have been the result of the modifications to the experimental procedure, we conducted a replication study using the unmodified experimental procedure of the original study.
+Because the procedural modifications made by @heycke_two_2018 may have caused the diverging results, we conducted a replication study using the unmodified experimental procedure of the original study.
 
 ## Methods
 
-Materials and procedure were inspected by the first author of the original study to ensure that they closely corresponded to the original.
-The experiment was preregistered (https://osf.io/xe8au/) and data were collected in Germany, Belgium, and the United States.
-All data files, materials and analysis files are available at https://osf.io/8m3xb/.
-
+The first author of the original study verified that our materials and procedure faithfully reproduced the original.
+The experiment was preregistered (https://osf.io/xe8au/) and data were collected at the University of Cologne (Germany), Ghent University (Belgium), and Harvard University (USA).
+All data files, materials, and analysis scripts are available at https://osf.io/8m3xb/.
+To give a vivid impression of the experimental procedure, an examplary video recording is available at https://osf.io/hmcfg/.
 
 ### Material & Procedure
 
-The experimental procedure consisted of three components: learning task, evaluation task, and US recognition task.
+The experimental procedure consisted of three components: a learning task, evaluation task, and recognition task.
 
 As in the original study, the learning task was a modified version of the evaluative learning paradigm by @kerpelmanPartialReinforcementEffects1971. 
-We briefly presented a US followed by a longer presentation of a picture of Bob together with a statement that described the behavior of Bob.
-Presentation durations differed across labs due to the availability of different refresh rates of the CRT monitors (85 Hz in the United States and 75 Hz in Belgium and Germany).
+We briefly flashed a valent word followed by a longer presentation of a photograph of Bob together with a behavioral statement.
+Presentation durations differed across labs due to the availability of different refresh rates of the CRT monitors (85 Hz at Harvard and 75 Hz at Ghent and Cologne).
 In the following we will describe the setup of a trial with the presentation durations at a 75 Hz-refresh rate; deviating durations for a 85 Hz-refresh rate are given in brackets.
 
-On each trial, a central fixation cross was displayed for 200 ms followed by a US displayed for 27 ms (24 ms; 2 frames).
-USs were immediately replaced by the picture of Bob, which served as a backward mask.
-The picture of Bob was presented in the center of the screen for 253 ms (247 ms) before the behavioral information was added underneath.
-The screen background was black and text was colored white and set in Times New Roman font. 
-Participants’ task was to press the "c" (= "characteristic") or "u" (= "uncharacteristic") key to judge whether the behavioral information was characteristic or uncharacteristic of Bob, which was displayed on the screen during the judgment phase. 
-After every judgment, the image of Bob, the behavioral statement, and the key labels were replaced with either the word "Correct" displayed in green letters or the word "False" in red letters, displayed for 5000 ms. 
+On each trial, a central fixation cross was displayed for 200 ms followed by a valent word flashed for 27 ms (24 ms; 2 frames).
+The screen background was black and text was white and set in Times New Roman font. 
+The briefly flashed word was immediately replaced by the photograph of Bob, which served as a backward mask.
+Next, we provided behavioral information about Bob consisting of a behavioral statement and the additional information whether this behavior was characteristic or uncharacteristic of Bob.
+The photograph of Bob was presented in the center of the screen for 253 ms (247 ms) before a behavioral statement was added underneath.
+Participants’ task was to press the "c" (= "characteristic") or "u" (= "uncharacteristic") key to guess whether the behavioral statement was characteristic or uncharacteristic of Bob. 
+After every guess, the photograph of Bob, the behavioral statement, and the key labels were replaced with either the word "Correct" displayed in green letters or the word "False" in red letters, displayed for 5000 ms.
 Each trial ended with a blank screen presented for 1000 ms.
 
-As US valence was manipulated within participants, they completed two 100-trial-blocks of the learning task.
-Each block consisted of trials with either only positive or negative USs and the order of USs was randomized. 
-In blocks with positive USs, positive behavioral information was always uncharacteristic of Bob and negative information was characteristic. 
-These contingencies were reversed in the blocks with negative USs. 
-We used 10 positive and 10 negative words as USs each of which was presented 10 times. 
-For behavioral information, we used 100 positive and 100 negative statements. 
-50 positive and 50 negative statements were randomly selected for the first block, the remaining statements were assigned to the second block. 
-The order of USs and behavioral information was randomized for each participant anew, whereas the order of blocks was counterbalanced across participants. 
-A different picture of Bob was randomly selected from six pictures of white males for each participant. 
-The remaining five images were used in the implicit evaluation measure (see below). 
-All materials were taken from the original study, with the sole exception that US words, behavioral information, and instructions were translated to German and Dutch for use in Germany and Belgium.
+As the valence of briefly flashed words was manipulated within participants, they completed two 100-trial-blocks of the learning task.
+Each block consisted of trials with either only positive or negative words and the order of the blocks was randomized.
+The valence of the behavioral information was always opposite to the valence of the briefly flashed word.
+In blocks with positive words, positive behavioral statements were uncharacteristic of Bob and negative statements were characteristic.
+These contingencies were reversed in the blocks with negative words. 
+We used 10 positive and 10 negative words; each of which was presented 10 times. 
+For behavioral statements, we used 100 positive and 100 negative statements; 50 positive and 50 negative statements were randomly selected for the first block, the remaining statements were assigned to the second block. 
+The order of briefly flashed words and behavioral information was randomized for each participant anew, whereas the order of blocks was counterbalanced across participants. 
+A different photograph of Bob was randomly selected from six photographs of white males for each participant. 
+The remaining five images were used in the implicit association test (see below). 
+All materials were taken from the original study[^discrpaper], with the sole exception that briefly flashed words, behavioral statements, and instructions were translated to German and Dutch for use in Germany and Belgium.
 
-After each block, participants completed implicit and explicit evaluation measures. 
+
+[^discrpaper]:
+The original manuscript lists the words  "love", "party", "hate", and "death" as examples for briefly flashed words. The words "hate" and "love", however, were neither used as briefly flashed words in the original, nor our replication studies.
+
+
+After each block, we measured evaluations of Bob directly and indirectly using Likert-scale ratings and the IAT, respectively.
 As in the original study, the order of the measures was the same for both blocks but counterbalanced across participants.
 
-The explicit evaluation consisted of three parts, each presented on a single screen:
+As direct measure of evaluation, we used three rating scales:
 First, participants rated Bob's likableness on a 9-point slider with the anchors labelled *Very Unlikable* and *Very Likable*.
 Next, again using 9-point sliders, they judged Bob on the dimensions *Bad--Good*, *Mean--Pleasant*, *Disagreeable--Agreeable*, *Uncaring--Caring*, and *Cruel--Kind*. 
 Finally, they judged Bob on a 'feeling thermometer' by entering a number between 0 (*Extremely unfavorable*) and 100 (*Extremely favorable*).
-Deviating from the original protocol, we collected explicit evaluations as part of the computer task rather than using a paper-pencil questionnaire.
+Deviating from the original protocol, we collected rating scale responses as part of the computer task rather than using a paper-pencil questionnaire.
 
-We assessed the implicit evaluations using the IAT described by @rydell_two_2006. 
-Participants initially completed two types of training blocks with 20 trials each to familiarize themselves with the task. 
+As indirect measure of evaluation, we used an IAT. 
+Participants initially completed two types of training blocks with 20 trials each to familiarize themselves with the task.
 In one block, images of Bob and other white men had to be classified as Bob vs. not-Bob; in another block, positive and negative words had to be classified as positive vs. negative. 
 In a subsequent critical block with 40 trials we intermixed the two classification tasks: 
-Participants used one key to respond to both the images of Bob and negative words; they used another key to respond to images of other white men and positive words. 
+Participants used one key to respond to both the images of Bob and negative words; they used another key to respond to images of other white men and positive words.
 After the first critical block, participants completed another training block with 20 trials of Bob vs. not-Bob with reversed key position and afterwards a second critical block with 40 trials with the reversed key mapping compared to the first critical block. 
-It was counterbalanced whether participants completed the IAT with the key mappings described above or with key mappings in reversed order [for a detailed description see @heycke_two_2018, p. 1712].
+It was counterbalanced whether participants completed the IAT as described above or with key mappings in reversed order [for a detailed description see @heycke_two_2018, p. 1712].
+We instructed participants to respond quickly without making too many errors.
+In case of erroneous responses we displayed a red X as feedback and instructed participants to quickly correct their response to start the next trial.
 
-After completing the explicit and implicit evaluation measures, participants completed the second learning block and again completed implicit and explicit evaluations.
-Following the second set of evaluations, participants completed a surprise US recognition task.
+Following the first round of evaluations, participants completed the second learning block and again evaluated Bob directly and indirectly.
+After the second round of evaluations, participants completed a surprise recognition test for the briefly flashed words.
 We presented 40 words in random order on a computer screen.
-Half of the words were the briefly presented USs from the learning task, the other half were new distractor words.
-We informed participants that 20 words were presented briefly during the learning task, asked them to select the briefly presented words from the list, and encouraged them to guess if they did not know the correct answer.
+Half of the words were the briefly flashed words from the learning task, the other half were new distractor words.
+We informed participants that 20 words were flashed briefly during the learning task, asked them to select the briefly flashed words from the list, and encouraged them to guess if they did not know the correct answer.
 Participants could only proceed with the experiment once they had selected exactly 20 words.
 
 The experiment ended with a demographic questionnaire (age, field of study/profession, gender, goal of the experiment, and comments).
-Our procedure was identical to the original procedure, with the exception that participants completed explicit evaluation and US recognition tasks at the computer rather than using paper and pencil.
+Our procedure was identical to the original procedure, with the exception that participants completed self-reported evaluations and the recognition task at the computer rather than using paper and pencil.
 In Belgium and Germany, we furthermore used Dutch and German translations of the original material.
 The procedure took approximately 50 minutes to complete.
+
+### Data analysis {#data-analysis1}
+
+<@~{#score-calculation}
+
+In keeping with the original analysis strategy, we calculated composite rating scores and IAT scores as direct and indirect measures of evaluation.
+Rating scores were the average of the three $z$-standardized Likert-scale responses.
+To calculate IAT scores we logarithmized all response times after winsorizing responses faster than 300 ms or slower than 3,000 ms.
+IAT scores were the difference of mean transformed response times for blocks which combined Bob and negative words and blocks which combined Bob and positive words.
+Thus, for rating and IAT scores larger values indicate a more positive evaluation of Bob.
+
+~@>
+
+How to statistically assess the success of a replication attempt is subject of current debate [e.g., @fabrigar_conceptualizing_2016; @simonsohn_small_2013; @verhagen_bayesian_2014]. 
+Whether a pattern of results has been replicated is challenging to measure directly if the to-be-replicated pattern consists of more than two cells of a factorial design.
+One elegant approach is to instantiate a pattern of mean differences (i.e., the rank order of means), predicted by a theory or observed in a previous study, as order constraints in a statistical model [e.g., @hoijtink_informative_2012; @rouder_theories_2018].
+With the model in hand, replication success can be quantified as predictive accuracy of this model relative to a competing model, such as a null model or an encompassing unconstrained model [e.g., @rouder_theories_2018].
+
+Based on previously reported results, there are two competing predictions for the current paradigm:
+(1) @rydell_two_2006 reported that across both learning blocks ratings scores were congruent with the behavioral information about Bob, whereas IAT scores were incongruent with the behavioral information ($\mathcal{H}_\textrm{Two minds}$).
+(2) In contrast, @heycke_two_2018 observed a consistent pattern for rating scores and IAT scores; both measures were congruent with the behavioral information ($\mathcal{H}_\textrm{One mind}$).
+We considered two additional predictions: no effect of the manipulation ($\mathcal{H}_\textrm{No effect}$) and the all-encompassing prediction of any outcome ($\mathcal{H}_\textrm{Any effect}$).
+If, of all predictions considered, our results are best described by the prediction of no effect, our experimental manipulations failed.
+The prediction of any effect reflects the possibility that we may observe an entirely unexpected outcome that is neither in line with the results reported by @rydell_two_2006 or @heycke_two_2018.
+
+We implemented all predictions as order (or null) constraints in an ANOVA model with default (multivariate) Cauchy priors [$r = 0.5$ for fixed effects and $r = 1$ for random participant effects, see SOM for details; @rouder_default_2012; @rouder_theories_2018].
+To simplify the presentation of the Bayesian model comparison results, we collapsed data across valence orders such that we always contrasted blocks where the behavioral information was positive with those where it was negative.
+Thus, for both rating and IAT scores positive difference indicate that evaluations are congruent with the valence of the behavioral information, whereas negative values indicate that evaluations are congruent with the valence of the briefly flashed words.
+We assessed the relative predictive accuracy of these models by Bayesian model comparisons using Bayes factors.
+Note that comparisons of models where one model is a special order-constrained case of the other are asymmetric.
+Consider the example of $\mathcal{H}_\textrm{One mind}$, which is a special case of $\mathcal{H}_\textrm{Any effect}$.
+If the data are perfectly consistent with $\mathcal{M}_\textrm{One mind}$, they are inevitably also perfectly consistent with $\mathcal{M}_\textrm{Any effect}$.
+In this case $\mathcal{M}_\textrm{One mind}$ will be favored by the Bayes factor because $\mathcal{M}_\textrm{One mind}$ makes a more specific prediction---it predicts that 3/4 of the outcomes predicted by $\mathcal{M}_\textrm{Any effect}$ are impossible, Figure \ \@ref(fig:otm1-bayesian-replication-analysis-plot)A.
+The degree to which the order-constrained model is more specific (more parsimonious) places an upper bound on the Bayes factor in its favor.
+On the other hand, there is no such bound on the Bayes factor in favor of the unconstrained model if the data are inconsistent with the order constraint---that is, the data fall outside of the predictive space deemd possible by the order-constrained model.
+It follows that $\mathrm{BF}_{\mathcal{M}_\textrm{One mind}/\mathcal{M}_\textrm{Any effect}} \in [0, 4]$ because $\mathcal{M}_\textrm{One mind}$ limits its predictions to 1/4 of those of $\mathcal{M}_\textrm{Any effect}$.
+To guide their interpretation, we report the theoretical bounds on the reported Bayes factors alongside our results where applicable.
+Finally, we tested whether recognition memory accuracy using a one-tailed Bayesian $t$ test with default Cauchy prior [$r = \sqrt2/2$; @rouder_bayesian_2009].
+
+To facilitate comparisons with previously reported statistics, we also conducted the frequentist analyses described by @rydell_two_2006.
+To ensure that our conclusions about indirectly measured evaluations are robust to stimulus effects, we supplemented the ANOVA analysis of IAT scores by a frequentist linear mixed model analysis, see SOM.
+We used `r cite_r("r-references.bib", pkgs = c("papaja", "afex", "emmeans", "BayesFactor"), withhold = FALSE)` for all our analyses.
+
 
 ### Participants
 
@@ -501,47 +590,125 @@ saveRDS(otm1_mem, paste0(processed_data_path, "otm1_memory_cleaned.rds"))
 otm1_n <- as.integer(nlevels(otm1_attitudes$ParticipantNumber))
 ```
 
-We set out to collect $N = 50$ participants at each location [@rydell_two_2006].
-For each evaluation measure, the data from all three labs ($N = 150$) provides 95% power to observe two-way interaction effects as small as $f = 0.15$ ($d = 0.30$) and contrasts between blocks of the learning task as small as $d_z = 0.27$ [$\alpha = \beta = .05$, repeated-measures correlation $r = .5$, @nosek_implicit_2007].
-Our design was, thus, adequately powered to detect effects half the size of those reported by @rydell_two_2006.
-We recruited `r otm1_n + otm1_n_excluded` participants (aged `r paste(range(otm1_mem$Age), collapse = "-")` years, $M = `r mean(otm1_mem$Age)`$; `r sum(grepl("female", otm1_mem$Sex)) / nrow(otm1_mem) * 100`% female, `r printnum(sum(grepl("nonbinary", otm1_mem$Sex)) / nrow(otm1_mem) * 100)`% nonbinary; see supplementary online material (SOM) for details); `r printnum(otm1_n_excluded, numerals = otm1_n_excluded > 10, capitalize = TRUE)` participants were excluded due to technical failure<!-- or noncompliance with instructions-->.
-Hence, the following results are based on data from `r otm1_n` participants.
+We set out to collect $n = 50$ participants at each location (N = 150).
+We recruited `r otm1_n + otm1_n_excluded` participants (aged `r paste(range(otm1_mem$Age), collapse = "-")` years, $M = `r mean(otm1_mem$Age)`$; `r sum(grepl("female", otm1_mem$Sex)) / nrow(otm1_mem) * 100`% female, `r printnum(sum(grepl("nonbinary", otm1_mem$Sex)) / nrow(otm1_mem) * 100)`% nonbinary; see supplementary online material [SOM] for details); `r printnum(otm1_n_excluded, numerals = otm1_n_excluded > 10)` participants were excluded due to technical failures<!-- or noncompliance with instructions-->.
+Hence, the reported results are based on data from `r otm1_n` participants.
 We compensated all participants with either € 8/10 (Cologne/Ghent), or partial course credit (Cologne/Harvard).
 
-### Data analysis
+### Statistical power
 
-How to evaluate the success of a replication attempt statistically is subject of current debate [e.g., @fabrigar_conceptualizing_2016; @simonsohn_small_2013; @verhagen_bayesian_2014]. 
-Whether a pattern of results has been replicated is challenging to assess directly if the to-be-replicated pattern consists of more than two cells of a factorial design.
-One elegant approach is to instantiate a pattern of mean differences (i.e., the rank order of means), predicted by a theory or observed in a previous study, as order constraints in a statistical model [e.g., @hoijtink_informative_2012; @rouder_theories_2018].
-With the model in hand, replication success can be quantified as predictive accuracy of this model relative to a competing model, such as a null model or an encompassing unconstrained model [e.g., @rouder_theories_2018].
+```{r rydell-effects, cache = TRUE}
+rydell_pes <- 0.1
+rydell_f <- 4.78
+rydell_n <- 50
+rydell_dz <- pes_to_dz(rydell_pes, rydell_n, n_groups = 2)
 
-Based on previously reported results, there are two competing predictions for the current paradigm:
-(1) @rydell_two_2006 found that across both measurement times explicit ratings were congruent with the learned behavioral information about Bob, whereas IAT scores were incongruent with learned behavioral information ($\mathcal{H}_\textrm{Two minds}$).
-(2) In contrast, @heycke_two_2018 observed the same pattern for explicit ratings and IAT scores; across both measurement times both measures were congruent with the learned behavioral information ($\mathcal{H}_\textrm{One mind}$).
-We considered two additional predictions: no effect of the manipulation ($\mathcal{H}_\textrm{No effect}$) and the all-encompassing prediction of any outcome ($\mathcal{H}_\textrm{Any effect}$).
-If, of all predictions considered, our results are best described by the prediction of no effect, our experimental manipulations did not succeed.
-The prediction of any effects serves as a control and reflects the possibility that we may observe an entirely unexpected outcome that is neither in line with the results reported by @rydell_two_2006 or @heycke_two_2018.
+heycke_t <- c(2.54, 1.45)
+heycke_n <- c(28, 26)
+heycke_dz <- heycke_t / sqrt(heycke_n)
+heycke_pes <- dz_to_pes(heycke_dz, heycke_n, n_groups = 1)
+```
 
-We implemented all predictions as order (or null) constraints in an ANOVA model with default (multivariate) Cauchy priors [$r = 0.5$ for fixed effects and $r = 1$ for random participant effects, see SOM for details; @rouder_default_2012; @rouder_theories_2018].
-To evaluate the relative predictive accuracy of these models we performed Bayesian model comparison using Bayes factors.
-To test whether recognition memory performance was above chance we used a one-tailed Bayesian $t$ test with default Cauchy prior [$r = \sqrt2/2$; @rouder_bayesian_2009].
-We also report the results of the analyses described by @rydell_two_2006 to facilitate comparisons with previously reported statistics.
+```{r otm1-power, cache = TRUE}
+otm1_power <- function(f, rm_cor, n = 76, alpha = 0.05) {
+  contrast_code <- tibble::tibble(
+    a = rep(contr.sum(2), 2)
+    , b = rep(contr.sum(2), each = 2)
+    , x = a*b * -1
+  )
+  
+  mu <- with(
+    contrast_code
+    , f * x +
+      - 0.25 * a
+  )
 
-For both analyses, we processed the IAT response times as described in the original study [for details see @rydell_two_2006; @heycke_two_2018].
-To ensure that our conclusions are robust to stimulus effects, we additionally supplemented the ANOVA analysis of IAT scores by a frequentist linear mixed model analysis, see SOM.
-To simplify the presentation of the Bayesian model comparison results, we collapsed data across valence orders by reversing the coding of the blocks when learned behaviors were first negative and subsequently positive.
-Thus, for both explicit and implicit evaluation measures we contrasted the first with the second block, such that positive values represent a more positive evaluation following the block in which learned behaviors were positive and USs negative.
-We used `r cite_r("r-references.bib", pkgs = c("papaja", "afex", "emmeans", "BayesFactor"), withhold = FALSE)` for all our analyses.
+  cor_mat <- diag(4)
+  triangular <- c(0, 1, 0, 0, 1, 0)
+  cor_mat[upper.tri(cor_mat)] <- triangular * rm_cor
+  cor_mat[lower.tri(cor_mat)] <- triangular * rm_cor
+  
+  string <- "2w*2b"
+  labelnames <- c("block", "1", "2", "order", "n-p", "p-n")
+  
+  design_result <- ANOVA_design(
+    design = string
+    , n = n
+    , mu = mu
+    , sd = 1
+    , r = cor_mat
+    , labelnames = labelnames
+  )
+  
+  otm1_power <- ANOVA_exact(
+    design_result
+    , alpha_level = alpha
+    , emm = TRUE
+    , verbose = FALSE
+    , contrast_type = "pairwise"
+    , emm_comp = "block | order"
+  )
+  
+  otm1_power
+}
+
+otm1_n_power <- 76
+
+# 95% power
+otm1_pes <- 0.08068
+otm1_dz <- pes_to_dz(otm1_pes, otm1_n_power, n_groups = 2)
+# rho <- 0.5
+# f <- dz_to_f(otm1_dz, rho)
+# 
+# otm1_contrast_power <- otm1_power(f = f, n = otm1_n_power, rm_cor = rho)$emmeans$contrasts %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm1_contrast_power
+
+# 80% power
+otm1_pes2 <- 0.050336
+otm1_dz2 <- pes_to_dz(otm1_pes2, otm1_n_power, n_groups = 2)
+# f <- dz_to_f(otm1_dz2, rho)
+# 
+# otm1_contrast_power2 <- otm1_power(f = f, n = otm1_n_power, rm_cor = rho)$emmeans$contrasts %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm1_contrast_power2
+```
+
+<@~{#power1}
+
+The prediction, which is supported by all previous empirical reports, is a crossed disordinal interaction between the factor *learning block* and the control factor *valence order*.
+Our assessment of the statistical senstivitiy of our design focused on the tests of simple *learning block* effects, because they are of primary theoretical interest and less sensitive than the test of the interaction.
+We estimate the sensitivity for the frequentist analyses described by @rydell_two_2006 using the R-package *Superpower* [@R-Superpower].
+The smallest simple effect of learning block reported by @rydell_two_2006 was $d_z \approx `r rydell_dz`$ ($\hat\eta_p^2 = `r printp(rydell_pes)`$) for IAT scores.[^compareheycke]
+Across all locations, our planned contrasts had 95% power to detect learning block effects as small as $\delta_z = `r otm1_dz`$[^impliedd] ($\eta_p^2 = `r printp(otm1_pes)`$; $N = `r otm1_n_power * 2`$, $\alpha = .05$, two-sided tests).
+Thus, our design is sufficiently sensitive to detect (or rule out) differences 11% smaller than the smallest learning block difference reported in the original study.
+
+[^compareheycke]: The learning block differences reported by Heycke et al. (2018) were of similar magnitude but with an opposite sign.
+
+[^impliedd]: We report the implied sensitivity in units of Cohen's $\delta$ depending on the assumed repeated-measures correlation $\rho$ in the supplementary material.
+
+~@>
 
 ## Results
 
-In the following, *valence order* refers to the joint order of learned behaviors and briefly presented USs.
-Any time we refer to one valence order (e.g., positive-negative) we specify the order of the learned behavior; the corresponding briefly presented USs were always of the opposite valence.
+In the following, *valence order* refers to the joint order of briefly flashed words and behavioral information.
+Any time we refer to one valence order (e.g., positive-negative) we specify the order of the behavioral information; briefly flashed words were always of the opposite valence.
+
+<@~{#prediction-list}
+
+To reiterate, @rydell_two_2006 reported that across learning blocks ratings scores were congruent with the behavioral information about Bob, whereas IAT scores were incongruent with the behavioral information.
+This pattern of results implies (1) a three-way interaction of *measure of evaluation*, *valence order*, and *learning block* in a joint analysis of all evaluations, (2) two opposite crossed disordinal interactions of *valence order* and *learning block* for separate analyses of rating and IAT scores, (3) larger rating scores following learning blocks in which the behavioral information was positive compared to when it was negative, and, finally, (4) smaller IAT scores following learning blocks in which the behavioral information was positive compared to when it was negative.
+We first report the results of the frequentist analyses described by @rydell_two_2006.
+Busy readers interested in an integrative replicability assessment may wish to skip ahead to the [Bayesian model comparisons](#replicability-assessment1).
+
+~@>
 
 ```{r otm1-rating-plot, warning = FALSE}
 otm1_results_legend <- guide_legend(
     # title = "Valence order\nDescriptions of Bob\n(Briefly presented primes)"
-    title = expression(atop("Valence order", atop(scriptstyle("Learned behaviors"), scriptstyle("(Briefly presented USs)"))))
+    title = expression(atop("Valence order", atop(scriptstyle("Behavioral information"), scriptstyle("(Briefly flashed words)"))))
     , title.position = "top"
     , title.hjust = 0.5
     , reverse = TRUE
@@ -550,12 +717,16 @@ otm1_results_legend <- guide_legend(
 otm1_rating_plot <- otm1_attitudes %>%
   mutate(ValenceBlock = ifelse(ValenceBlock == "Positive-negative", " Positive-negative\n(Negative-positive)", " Negative-positive\n(Positive-negative)")) %>%
   ggplot(aes(x = Block, y = Eval, color = ValenceBlock, fill = ValenceBlock, shape = ValenceBlock)) +
+  # geom_hline(yintercept = 0, color = grey(0.7)) +
   geom_violin(position = position_dodge(0.1), alpha = 0.3) +
   # geom_point(position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.1)) +
   geom_sina(position = position_dodge(0.1), maxwidth = 0.35, alpha = 0.5, size = 0.5) +
   stat_summary(fun.y = mean, aes(group = ValenceBlock, linetype = ValenceBlock), geom = "line", position = position_dodge(0.1), color = "black") +
   stat_summary(fun.data = mean_cl_boot, position = position_dodge(0.1), color = "black", fun.args = list(B = 10000), geom = "pointrange", size = 0.6) +
-  scale_y_continuous(labels = scales::number_format(accuracy = 0.1)) +
+  scale_y_continuous(
+    labels = scales::number_format(accuracy = 0.1)
+    , sec.axis = sec_axis(~ scale(.), name = bquote(italic(z)~"score"))
+  ) +
   scale_color_viridis_d(option = "C", begin = 0.1, end = 0.9, guide = otm1_results_legend) +
   scale_fill_viridis_d(option = "C", begin = 0.1, end = 0.9, guide = otm1_results_legend) +
   scale_shape_manual(values = c(21, 23), guide = otm1_results_legend) +
@@ -576,11 +747,13 @@ otm1_rating_plot <- otm1_attitudes %>%
 otm1_iatscore_plot <- otm1_attitudes %>%
   mutate(ValenceBlock = ifelse(ValenceBlock == "Positive-negative", " Positive-negative\n(Negative-positive)", " Negative-positive\n(Positive-negative)")) %>%
   ggplot(aes(x = Block, y = IATscore, color = ValenceBlock, fill = ValenceBlock, shape = ValenceBlock)) +
+  # geom_hline(yintercept = 0, color = grey(0.7)) +
   geom_violin(position = position_dodge(0.1), alpha = 0.3) +
   # geom_point(position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.1)) +
   geom_sina(position = position_dodge(0.1), maxwidth = 0.35, alpha = 0.5, size = 0.5) +
   stat_summary(fun.y = mean, aes(group = ValenceBlock, linetype = ValenceBlock), geom = "line", position = position_dodge(0.1), color = "black") +
   stat_summary(fun.data = mean_cl_boot, position = position_dodge(0.1), color = "black", fun.args = list(B = 10000), geom = "pointrange", size = 0.6) +
+  scale_y_continuous(sec.axis = sec_axis(~ scale(.), name = bquote(italic(z)~"score"))) +
   scale_color_viridis_d(option = "C", begin = 0.1, end = 0.9, guide = otm1_results_legend) +
   scale_fill_viridis_d(option = "C", begin = 0.1, end = 0.9, guide = otm1_results_legend) +
   scale_shape_manual(values = c(21, 23)) +
@@ -593,8 +766,8 @@ otm1_iatscore_plot <- otm1_attitudes %>%
   theme(legend.position = "none")
 ```
 
-(ref:otm1-factorial-results-plot) Evaluative rating and IAT scores for Experiments 1 (**A**) and Experiment 2 (**B**).
-Black-rimmed points represent condition means, error bars represent 95% bootstrap confidence intervals based on 10,000 samples, small points represent individual participants' responses, and violins represent kernel density estimates of sample distributions.
+(ref:otm1-factorial-results-plot) Mean evaluative rating and IAT scores for Experiments 1 (**A**) and Experiment 2 (**B**) broken down by valence order, learning block, and lab location.
+Black-rimmed points represent condition means, error bars represent 95% bootstrap confidence intervals based on 10,000 samples, small points represent individual participant scores, and violins represent kernel density estimates of sample distributions.
 
 ```{r otm1-factorial-results-plot, fig.cap = "(ref:otm1-factorial-results-plot)", fig.height = 10, fig.width = 8, warning = FALSE}
 plot_grid(
@@ -632,6 +805,42 @@ plot_grid(
 )
 ```
 
+```{r eval = FALSE}
+print_mean_cl <- function(x) {
+  paste(printnum(x[1]), paste0("[", paste(printnum(x[2:3]), collapse = ", "), "]"))
+}
+
+otm1_descriptives <- otm1_attitudes %>% 
+  select(-ParticipantNumber) %>% 
+  group_by_if(is.factor) %>% 
+  do(
+    Eval = mean_cl_normal(.$Eval)
+    , IAT = mean_cl_normal(.$IATscore)
+  ) %>% 
+  mutate(
+    Eval = print_mean_cl(Eval)
+    , IAT = print_mean_cl(IAT)
+  ) %>% 
+  pivot_wider(names_from = "Block", values_from = c("Eval", "IAT")) %>% 
+  label_variables(
+    Eval_1 = "Learning block 1"
+    , Eval_2 = "Learning block 2"
+    , IAT_1 = "Learning block 1"
+    , IAT_2 = "Learning block 2"
+  )
+
+apa_table(
+  list(
+    Cologne = filter(otm1_descriptives, Location == "Cologne") %>% select(-Location)
+    , Ghent = filter(otm1_descriptives, Location == "Ghent") %>% select(-Location)
+    , Harvard = filter(otm1_descriptives, Location == "Harvard") %>% select(-Location)
+  )
+  , col_spanners = list("Rating score" = 2:3, "IAT score" = 4:5)
+  , caption = "(ref:otm1-descriptives)"
+  , align = c("lcccc")
+)
+```
+
 ```{r otm1-rydell-analysis-overall, results = "asis"}
 otm1_attitudes_aov <- otm1_attitudes %>%
   mutate(
@@ -649,8 +858,49 @@ otm1_attitudes_aov <- otm1_attitudes %>%
     , data = .
   )
 
-otm1_attitudes_aov_res <- otm1_attitudes_aov %>%
-  apa_print
+otm1_attitudes_aov_res <- apa_print_ps(otm1_attitudes_aov)
+  
+
+# otm1_attributes_aov_matrix <- expand.grid(
+#   contr.sum(2)
+#   , contr.sum(2)
+#   , contr.sum(2)
+# )[rep(1:8, 3), ]
+# 
+# otm1_attitudes_aov_grid <- otm1_attitudes_aov %>% 
+#   emmeans(specs = ~ Block * Measure * ValenceBlock * Location)
+# 
+# otm1_attitudes_aov_threeway_d <- otm1_attitudes_aov_grid %>% 
+#   contrast(
+#     list(
+#       three_way = mutate(otm1_attributes_aov_matrix, I = Var1 * Var2 * Var3) %>%
+#         {-.$I}
+#     )
+#   ) %>%
+#   {eff_size(
+#     .
+#     , sigma = (1/data.frame(.)$t * data.frame(.)$estimate) / sqrt(2 / (otm1_n/2))
+#     , edf = df.residual(otm1_attitudes_aov$lm)
+#     , method = "identity"
+#   )} %>% 
+#   apa_print(est_name = "d") %>% 
+#   {.$estimate$three_way}
+# 
+# otm1_attitudes_aov_twoway_d <- otm1_attitudes_aov_grid %>% 
+#   contrast(
+#     list(
+#       two_way = mutate(otm1_attributes_aov_matrix, I = Var2 * Var3) %>%
+#         {.$I}
+#     )
+#   ) %>%
+#   {eff_size(
+#     .
+#     , sigma = (1/data.frame(.)$t * data.frame(.)$estimate) / sqrt(2 / (otm1_n/2))
+#     , edf = df.residual(otm1_attitudes_aov$lm)
+#     , method = "identity"
+#   )} %>% 
+#   apa_print(est_name = "d") %>% 
+#   {.$estimate$two_way}
 
 
 # Split analyses by Location
@@ -658,15 +908,117 @@ otm1_attitudes_location_aov <- otm1_attitudes_aov %>%
   ref_grid %>% 
   joint_tests(by = "Location") %>%
   filter(`model term` == "ValenceBlock:Measure:Block")
+
+
+# For reviewers:
+## Differences between valence orders in learning block 2
+otm1_order_contrast_summary <- otm1_attitudes_aov %>%
+  emmeans(~ ValenceBlock | Block * Measure) %>%
+  pairs %>% 
+  as.data.frame %>% 
+  {paste0(
+    "$t(", unique(.$df), ") > ", printnum(min(abs(.$t.ratio)))
+    , "$, $p < ", printp(max(.$p.value)), "$"
+  )}
+
+## Difference between valence orders in learning block 2 vs 1
+# otm1_attitudes_aov %>%
+#   emmeans(~ Block * ValenceBlock * Measure) %>%
+#   # emmeans(~ Block * ValenceBlock * Measure | Location) %>%
+#   contrast(
+#     list(
+#       eval = c(-0.5, -0.5, 0.5, 0.5, 0, 0, 0, 0)
+#       , iat = c(0, 0, 0, 0, -0.5, -0.5, 0.5, 0.5)
+#     )
+#   ) %>%
+#   # test(side = ">")
+#   joint_tests()
 ```
 
-In the joint analysis of implicit and explicit evaluations, we found the three-way interaction between valence order, learning block, and evaluation measure, `r otm1_attitudes_aov_res$full_result$ValenceBlock_Block_Measure` previously reported by @rydell_two_2006 (Figure\ \@ref(fig:otm1-factorial-results-plot)).
-Moreover, we found that the three-way interaction was significant in each lab (all $F(`r unique(otm1_attitudes_location_aov$df1)`, `r unique(otm1_attitudes_location_aov$df2)`) > `r min(otm1_attitudes_location_aov$F.ratio)`$, $p `r printp(max(otm1_attitudes_location_aov$p.value))`$), but differed slightly in magnitude, `r otm1_attitudes_aov_res$full_result$ValenceBlock_Location_Block_Measure`. 
-The direction of the effect was consistent across labs.
-As in the original analysis we examined the significant three-way interaction with separate analyses of each evaluation measure.
+
+(ref:otm1-descriptives) Means and 95% confidence intervals of rating and IAT scores in Experiment 1 broken down by valence order, learning block, and lab location.
+
+```{r otm1-descriptives-table}
+print_mean_cl <- function(x) {
+  paste(printnum(x[1]), paste0("[", paste(printnum(x[2:3]), collapse = ", "), "]"))
+}
+
+# # z-standardized values we analyzed
+# emmeans(otm1_attitudes_aov, ~ Block * Measure * ValenceBlock * Location) %>%
+#   as_tibble %>%
+#   group_by_if(is.factor) %>%
+#   summarize(estimate = print_mean_cl(c(emmean, lower.CL, upper.CL))) %>%
+#   pivot_wider(names_from = c("Measure", "Block"), values_from = "estimate") %>%
+#   select(Location, everything()) %>%
+#   arrange(Location, ValenceBlock)
+
+otm1_eval_descriptives <- otm1_attitudes %>% aov_ez(
+    id = "ParticipantNumber"
+    , dv = "Eval"
+    , within = c("Block")
+    # , between = "ValenceBlock"
+    , between = c("ValenceBlock", "Location")
+    , data = .
+  ) %>% 
+    emmeans(., ~ Block * ValenceBlock * Location)
+
+otm1_iat_descriptives <- otm1_attitudes %>% aov_ez(
+    id = "ParticipantNumber"
+    , dv = "IATscore"
+    , within = c("Block")
+    # , between = "ValenceBlock"
+    , between = c("ValenceBlock", "Location")
+    , data = .
+  ) %>% 
+    emmeans(., ~ Block * ValenceBlock * Location)
+
+otm1_descriptives <- bind_rows(
+  Eval = as_tibble(otm1_eval_descriptives)
+  , IAT = as_tibble(otm1_iat_descriptives)
+  , .id = "Measure"
+) %>% 
+  mutate(Measure = factor(Measure)) %>% 
+  group_by_if(is.factor) %>%
+  summarize(estimate = print_mean_cl(c(emmean, lower.CL, upper.CL))) %>%
+  pivot_wider(names_from = c("Measure", "Block"), values_from = "estimate") %>% 
+  select(Location, everything()) %>% 
+  arrange(Location, ValenceBlock) %>% 
+  ungroup() %>% 
+  label_variables(
+    Eval_X1 = "Learning block 1"
+    , Eval_X2 = "Learning block 2"
+    , IAT_X1 = "Learning block 1"
+    , IAT_X2 = "Learning block 2"
+  )
+
+apa_table(
+  list(
+    Cologne = filter(otm1_descriptives, Location == "Cologne") %>% select(-Location)
+    , Ghent = filter(otm1_descriptives, Location == "Ghent") %>% select(-Location)
+    , Harvard = filter(otm1_descriptives, Location == "Harvard") %>% select(-Location)
+  )
+  , col_spanners = list("Rating score" = 2:3, "IAT score" = 4:5)
+  , caption = "(ref:otm1-descriptives)"
+  , align = c("lcccc")
+  , font_size = "small"
+)
+```
 
 
-### Explicit evaluation
+### Joint analysis of rating and IAT scores
+
+For a joint analysis, we separately $z$-standardized directly and indirectly measured evaluations and submitted them to a four-way ANOVA with the factors *measure of evaluation* (direct vs. indirect), *valence order* (positive or negative behavioral information first), *learning block* (first or second learning block), and *lab location* (Cologne, Ghent, Harvard).
+Table\ \@ref(tab:otm1-descriptives-table) summarizes the condition means.
+We found a significant three-way interaction between valence order, learning block, and measure of evaluation, `r otm1_attitudes_aov_res$full_result$ValenceBlock_Block_Measure`, Figure\ \@ref(fig:otm1-factorial-results-plot)[^fignalysis].
+Moreover, we observed a significant four-way interaction indicating that the three-way interaction differed between lab locations, `r otm1_attitudes_aov_res$full_result$ValenceBlock_Location_Block_Measure`.
+Follow-up tests indicated that the three-way interaction was significant in each lab (all $F(`r unique(otm1_attitudes_location_aov$df1)`, `r unique(otm1_attitudes_location_aov$df2)`) > `r min(otm1_attitudes_location_aov$F.ratio)`$, $p `r printp(max(otm1_attitudes_location_aov$p.value))`$) and the direction of the effect was consistent across labs.
+In line with the original analysis, we next examined the interaction between valence order, learning block, and lab location in separate analyses of rating and IAT scores.
+
+[^fignalysis]:
+Figure\ \@ref(fig:otm1-factorial-results-plot) may give the impression that the difference between valence orders was of similar magnitude at learning block 1 and 2 in rating scores but differed in IAT scores. 
+However, we found differences between valence orders at learning blocks 1 and 2 in both measures of evaluation (all `r otm1_order_contrast_summary`) and we did not find these differences between valence orders to vary between evaluative measures, `r otm1_attitudes_aov_res$full_result$ValenceBlock_Measure`.
+
+### Direct measure: Evaluative rating scores
 
 ```{r otm1-rydell-analysis-explicit, results = "asis"}
 otm1_explicit_aov <- aov_ez(
@@ -678,8 +1030,7 @@ otm1_explicit_aov <- aov_ez(
   , data = otm1_attitudes
 ) 
 
-otm1_explicit_aov_res <- otm1_explicit_aov %>%
-  apa_print
+otm1_explicit_aov_res <- apa_print_ps(otm1_explicit_aov)
 
 
 # Split analyses by Location
@@ -690,12 +1041,12 @@ otm1_explicit_location_aov <- otm1_explicit_aov %>%
 ```
 
 ```{r otm1-rydell-analysis-explicit2, results = "asis"}
-otm1_explicit_contrasts <- emmeans(otm1_explicit_aov, ~ Block | ValenceBlock) %>%
-  contrast(
-    method = list("Block 2 - Block 1" = c(-1, 1))
-    , adjust = "none"
-  ) %>%
-  apa_print
+# otm1_explicit_contrasts <- emmeans(otm1_explicit_aov, ~ Block | ValenceBlock) %>%
+#   contrast(
+#     method = list("Block 2 - Block 1" = c(-1, 1))
+#     , adjust = "none"
+#   ) %>%
+#   apa_print
 
 # Split analyses by Location
 otm1_explicit_location_contrasts <- emmeans(otm1_explicit_aov, ~ Block | ValenceBlock * Location) %>%
@@ -704,8 +1055,11 @@ otm1_explicit_location_contrasts <- emmeans(otm1_explicit_aov, ~ Block | Valence
     , adjust = "none"
   )
 
-otm1_explicit_location_contrasts_res <- otm1_explicit_location_contrasts %>%
-  apa_print
+otm1_explicit_location_contrasts_res <- apa_print_ps(
+  otm1_explicit_location_contrasts
+  , otm1_explicit_aov$lm
+  , est_name = "d_z"
+)
 
 otm1_explicit_location_contrasts <- otm1_explicit_location_contrasts %>%
   as.data.frame
@@ -717,23 +1071,23 @@ otm1_explicit_location_neg_pos_contrasts <- otm1_explicit_location_contrasts %>%
     filter(ValenceBlock == "Negative-positive")
 ```
 
-As in the previous studies, we found a two-way interaction between valence order and learning block, `r otm1_explicit_aov_res$full_result$ValenceBlock_Block`.
-This interaction was significant in each lab (all $F(`r unique(otm1_explicit_location_aov$df1)`, `r unique(otm1_explicit_location_aov$df2)`) > `r min(otm1_explicit_location_aov$F.ratio)`$, $p `r printp(max(otm1_explicit_location_aov$p.value))`$), but also differed between labs, `r otm1_explicit_aov_res$full_result$ValenceBlock_Location_Block`.
-In all labs, ratings of Bob were more favorable after the first than after the second block when learned behaviors were first positive and later negative, 
+As in the previous studies, for rating scores we found a two-way interaction between valence order and learning block, `r otm1_explicit_aov_res$full_result$ValenceBlock_Block`.
+This interaction was significant in each lab (all $F(`r unique(otm1_explicit_location_aov$df1)`, `r unique(otm1_explicit_location_aov$df2)`) > `r min(otm1_explicit_location_aov$F.ratio)`$, $p `r printp(max(otm1_explicit_location_aov$p.value))`$), but also differed in magnitude, `r otm1_explicit_aov_res$full_result$ValenceBlock_Location_Block`.
+In all labs, rating scores corresponded to the valence of the behavioral information.
+Rating scores indicated *more* favorable evaluations after the first than after the second block when behavioral information was first positive and later negative, 
 Cologne: `r otm1_explicit_location_contrasts_res$estimate$Positive_negative_Cologne_Block2_Block1`; 
 Ghent: `r otm1_explicit_location_contrasts_res$estimate$Positive_negative_Ghent_Block2_Block1`; 
 Harvard: `r otm1_explicit_location_contrasts_res$estimate$Positive_negative_Harvard_Block2_Block1`; 
 all $t(`r unique(otm1_explicit_location_pos_neg_contrasts$df)`) < `r max(otm1_explicit_location_pos_neg_contrasts$t.ratio)`$, $p$ `r printp(max(otm1_explicit_location_pos_neg_contrasts$p.value))`.
-Vice versa, in all labs, ratings of Bob were more favorable after the second than after the first block when learned behaviors were first negative and later positive, 
+Conversely, rating scores indicated *less* favorable evaluations after the first than after the second block when behavioral information was first negative and later positive, 
 Cologne: `r otm1_explicit_location_contrasts_res$estimate$Negative_positive_Cologne_Block2_Block1`; 
 Ghent: `r otm1_explicit_location_contrasts_res$estimate$Negative_positive_Ghent_Block2_Block1`; 
 Harvard: `r otm1_explicit_location_contrasts_res$estimate$Negative_positive_Harvard_Block2_Block1`; 
-all $t(`r unique(otm1_explicit_location_neg_pos_contrasts$df)`) < `r max(otm1_explicit_location_neg_pos_contrasts$t.ratio)`$, $p$ `r printp(max(otm1_explicit_location_neg_pos_contrasts$p.value))`.
-Hence, the predicted differences were consistently detectable in all labs but differed in magnitude.
-No other effects were significant.
+all $t(`r unique(otm1_explicit_location_neg_pos_contrasts$df)`) > `r min(otm1_explicit_location_neg_pos_contrasts$t.ratio)`$, $p$ `r printp(max(otm1_explicit_location_neg_pos_contrasts$p.value))`.
+Hence, in all labs directly measured evaluations corresponded to the valence of the behavioral information and were opposite to the valence of the briefly flashed words.
 
 
-### Implicit evaluation
+### Indirect measure: IAT scores
 
 ```{r otm1-rydell-analysis-implicit, results = "asis"}
 otm1_iat_aov <- aov_ez(
@@ -745,46 +1099,53 @@ otm1_iat_aov <- aov_ez(
   , data = otm1_attitudes
 )
 
-otm1_iat_aov_res <- otm1_iat_aov %>%
-  apa_print
+otm1_iat_aov_res <- apa_print_ps(otm1_iat_aov)
 ```
-
 
 ```{r otm1-rydell-analysis-implicit2, results = "asis"}
 otm1_implicit_contrasts <- emmeans(otm1_iat_aov, ~ Block | ValenceBlock) %>%
   contrast(
     method = list("Block 2 - Block 1" = c(-1, 1))
     , adjust = "none"
-  ) %>%
-  apa_print 
+  )
+
+otm1_implicit_contrasts <- apa_print_ps(
+  otm1_implicit_contrasts
+  , otm1_iat_aov$lm
+  , est_name = "d_z"
+)
 ```
 
-For IAT scores, we found a two-way interaction between valence order and learning block, `r otm1_iat_aov_res$full_result$ValenceBlock_Block`; in this case we detected no differences between labs, `r otm1_iat_aov_res$full_result$ValenceBlock_Location_Block`.
-IAT scores for Bob were larger, indicating a more favorable attitude, after the first than after the second block when learned behaviors were first positive and later negative, `r otm1_implicit_contrasts$full_result$Positive_negative_Block2_Block1`.
-Vice versa, IAT scores for Bob were larger after the second than after the first block when learned behaviors were first negative and later positive, `r otm1_implicit_contrasts$full_result$Negative_positive_Block2_Block1`.
-The results of the mixed model analysis were in line with the conclusions from the ANOVA analysis, see SOM.
-Hence, evaluations of Bob assessed with the IAT corresponded to the valence of the learned behaviors and contradicted the valence of the briefly presented USs.
-Explicit ratings and IAT scores did not dissociate.
+For IAT scores, we found a two-way interaction between valence order and learning block, `r otm1_iat_aov_res$full_result$ValenceBlock_Block`; in this case we detected no differences across labs, `r otm1_iat_aov_res$full_result$ValenceBlock_Location_Block`.
+In all labs, IAT scores corresponded to the valence of the behavioral information.
+IAT scores indicated *more* favorable evaluations after the first than after the second block when behavioral information was first positive and later negative, `r otm1_implicit_contrasts$full_result$Positive_negative_Block2_Block1`.
+Conversely, IAT scores indicated *less* favorable evaluations after the first than after the second block when behavioral information was first negative and later positive, `r otm1_implicit_contrasts$full_result$Negative_positive_Block2_Block1`.
+The results of the mixed model analysis corroborated the conclusions from the ANOVA analysis, see SOM.
+Hence, in all labs indirectly measured evaluations corresponded to the valence of the behavioral information and were opposite to the valence of the briefly flashed words.
+Directly and indirectly measured evaluations did not dissociate.
 
 
-### Differences between implicit and explicit evaluations
-
-As in the original study, we additionally compared participants' $z$ standardized evaluations toward Bob assessed by ratings and IAT scores.
+### Differences between rating and IAT scores
 
 ```{r otm1-rydell-attitude-differences, results = "asis"}
 otm1_attitudes_measure_contrasts <- otm1_attitudes_aov %>% 
   emmeans(~ Measure | ValenceBlock * Block) %>% 
-  pairs %>%
-  apa_print
+  pairs
+
+otm1_attitudes_measure_contrasts <- apa_print_ps(
+    otm1_attitudes_measure_contrasts
+    , otm1_attitudes_aov$lm
+    , est_name = "d_z"
+  )
 ```
 
-Evaluations assessed by rating and IAT scores differed in all conditions.
-Ratings of Bob were more favorable than IAT scores in the first block, `r otm1_attitudes_measure_contrasts$full_result$Positive_negative_X1_Eval_IATscore`, but less favorable in the second block when learned behaviors were first positive and later negative, `r otm1_attitudes_measure_contrasts$full_result$Positive_negative_X2_Eval_IATscore`.
-Conversely, ratings of Bob were less favorable than IAT scores in the first block, `r otm1_attitudes_measure_contrasts$full_result$Negative_positive_X1_Eval_IATscore`, but more favorable in the second block when learned behaviors were first positive and later negative, `r otm1_attitudes_measure_contrasts$full_result$Negative_positive_X2_Eval_IATscore`.
-Given that evaluations were consistent in valence across measures, these differences indicate that evaluations assessed by ratings were more extreme than those assessed by IAT scores.
+In keeping with our preregisted analysis plan, we also compared $z$-standardized directly and indirectly measured evaluations---despite the consistent pattern of results---and found that they differed across measures in every condition.
+When behavioral information was first positive and later negative, rating scores indicated a more favorable evaluation than IAT scores in the first block, `r otm1_attitudes_measure_contrasts$full_result$Positive_negative_X1_Eval_IATscore`, but a less favorable evaluation in the second block, `r otm1_attitudes_measure_contrasts$full_result$Positive_negative_X2_Eval_IATscore`.
+Conversely, when behavioral information was first negative and later positive rating scores indicated a less evaluation than IAT scores in the first block, `r otm1_attitudes_measure_contrasts$full_result$Negative_positive_X1_Eval_IATscore`, but a more favorable evaluation in the second block, `r otm1_attitudes_measure_contrasts$full_result$Negative_positive_X2_Eval_IATscore`. 
+These results, corroborate that directly and indirectly measured evaluations were consistent, but indicate that directly measured evaluations were more extreme than indirect measured evaluations.
 
 
-### Bayesian model comparisons
+### Bayesian model comparisons {#replicability-assessment1}
 
 ```{r otm1-bayesian-replication-restructure, cache = TRUE, warning=FALSE}
 # Collapse across ValcenceOrder
@@ -804,8 +1165,6 @@ otm1_random_participant_intercept_matrix <- BayesFactor:::oneDesignMatrix(
   , data = otm1_attitudes_collapsed
   , dataTypes = c("ParticipantNumber" = "random")
 ) %>% as.matrix
-
-colnames(otm1_random_participant_intercept_matrix) <- paste0("ParticipantNumber", levels(otm1_attitudes_collapsed$ParticipantNumber))
 
 # Fixed effects
 ## No main effect of attitude measure due to z standardization
@@ -1077,11 +1436,13 @@ otm1_no_lab_effect_bf_res <- papaja:::apa_print_bf.numeric(
 
 
 (ref:bayesian-replication-analysis-plot) Predictions of the four models of primary interest (**A**) and results of Experiment 1 and Experiment 2 (**B**).
-Black-rimmed points represent means of observed attitude differences between learning blocks with positive and negative learned behaviors.
-Positive values indicate that attitudes correspond to the valence of learned behaviors and contradict the valence of the briefly presented USs.
+Black-rimmed points represent mean differences in evaluations between the two learning blocks.
+To simplify the presentation of the results, we collapsed data across valence orders such that we always contrasted blocks where the behavioral information was positive with those where it was negative.
+Thus, for both rating and IAT scores positive difference indicate that evaluations correspond to the valence of the behavioral information, whereas negative values indicate that evaluations correspond to the valence of the briefly flashed words.
 Ellipses represent 95% Bayesian credible intervals based on the unconstrained model $\mathcal{M}_\textrm{Any effect}$.
+For comparison, the grey $\times$ represents the learning block differences reported in the original study.
 
-```{r otm1-effects-plot, cache = TRUE, warning=FALSE}
+```{r otm1-effects-plot, cache = TRUE, warning = FALSE}
 otm1_unconstrained_pp <- otm1_unconstrained_samples %>%
   as.data.frame %>%
   select(alpha:upsilon2) %>%
@@ -1127,6 +1488,23 @@ otm1_attitudes_delta_summary <- otm1_attitudes_delta %>%
   spread(Measure, delta) %>%
   rbind(cbind(Location = "Overall", otm1_attitudes_delta_summary))
 
+rydell_descriptives <- rbind(
+  cbind(read.csv2("rydell_explicit.csv", header = FALSE), Measure = "Eval")
+  , cbind(read.csv2("rydell_implicit.csv", header = FALSE), Measure = "IATscore")
+) %>% 
+  mutate(
+    valenceOrder = if_else(V1 < 3, "Positive-negative", "Negative-positive")
+    , Block = if_else((V1 < 1.5) | (V1 > 3 & V1 < 4.5), 1, 2)
+    , Block = if_else(valenceOrder == "Negative-positive", 3 - Block, Block)
+  ) %>% 
+  group_by(Measure, Block) %>% 
+  summarize(V2 = mean(V2)) %>% 
+  spread(Block, V2) %>% 
+  mutate(delta = `1` - `2`) %>% 
+  select(Measure, delta) %>% 
+  spread(Measure, delta) %>% 
+  mutate(Location = NA)
+
 # heycke_descriptives <- data.frame(
 #     Eval = c(0.99, -0.8, -0.85, 0.75)
 #     # Eval_mean = c(0.99, -0.8, -0.85, 0.75)
@@ -1162,6 +1540,7 @@ otm1_effects_plot <- otm1_attitudes_delta_summary %>%
     , level = 0.95
   ) +
   geom_point(size = 3, color = "black") +
+  geom_point(data = rydell_descriptives, shape = 4, color = grey(0.7), fill = NA, size = 3) +
   # geom_point(
   #   data = otm1_unconstrained_effect_fixed_pp %>%
   #     summarize(alpha = median(alpha), beta = median(beta))
@@ -1172,8 +1551,8 @@ otm1_effects_plot <- otm1_attitudes_delta_summary %>%
   # geom_point(size = 4, shape = 1, data = heycke_descriptives, aes(x = Eval, y = IATscore), inherit.aes = FALSE) +
   annotate(geom = "text", x = 1.17, y = 2, label = "One mind", hjust = 0.5, size = 4, color = "gray50") +
   annotate(geom = "text", x = 1.17, y = -2, label = "Two minds", hjust = 0.5, size = 4, color = "gray50") +
-  scale_color_viridis_d() +
-  scale_fill_viridis_d() +
+  scale_color_viridis_d(direction = -1) +
+  scale_fill_viridis_d(direction = -1) +
   scale_shape_manual(values = c(21, 23, 24, 22)) +
   labs(
     x = expression("Rating score difference"~group("[", Delta~italic(z)~score, "]"))
@@ -1227,31 +1606,19 @@ plot_grid(
 # )
 ```
 
-The direct comparison of predictive accuracy indicated that our data overwhelmingly favored the result patterns reported by @heycke_two_2018 over those reported by @rydell_two_2006, `r otm1_same_vs_opposite_direction_bf_res`, Table\ \@ref(tab:otm1-bayesian-replication-analysis-table).
-Additional comparisons with the control models confirmed that the experimental manipulations were effective (`r otm1_same_direction_bf_res`) and did not produce an unexpected result pattern (`r otm1_same_direction_vs_unconstrained_bf_res`, $\in [0, 4]$[^bf_range]).
+The direct comparison of predictive accuracy indicated that our data overwhelmingly favored the qualitative pattern reported by @heycke_two_2018 over that reported by @rydell_two_2006, `r otm1_same_vs_opposite_direction_bf_res`, Table\ \@ref(tab:otm1-bayesian-replication-analysis-table).
+Additional comparisons with the control models confirmed that the experimental manipulations were effective (`r otm1_same_direction_bf_res`) and did not produce an unexpected result, `r otm1_same_direction_vs_unconstrained_bf_res` $\in [0, 4]$.
 
-We additionally assessed whether all labs produced the same result pattern.
-We implemented a model that enforced the order constraint of $\mathcal{M}_\textrm{One mind}$ not only on the average block effects but on each lab's block effect.
-Our data provide strong evidence for consistent result patterns across labs relative to the less-constrained models, `r otm1_all_labs_same_vs_same_direction_bf_res` ($\in [0, 3]$) and `r otm1_all_labs_same_direction_vs_unconstrained_bf_res` ($\in [0, 12]$[^bf_range2]).
-Prior sensitivity analyses confirmed that the above results are robust to a wide range of priors, see SOM.
+We additionally assessed whether all labs consistently produced the same result pattern.
+We implemented a model that enforced the order-constraint of $\mathcal{M}_\textrm{One mind}$ not only on the average learning block effects but on each lab's learning block effect.
+Our data provide strong evidence for consistent result patterns across labs relative to the less-constrained models, `r otm1_all_labs_same_vs_same_direction_bf_res` $\in [0, 3]$ and `r otm1_all_labs_same_direction_vs_unconstrained_bf_res` $\in [0, 12]$.
+As noted in the [Data analysis](#data-analysis1) section, due to the upper bounds on the Bayes factors, we could not have obtained much stronger evidence in favor of $\mathcal{M}_\textrm{One mind everywhere}$.
+Prior sensitivity analyses confirmed that our results are robust to a wide range of priors, see SOM.
 
-[^bf_range]:
-The comparison of these models is asymmetric.
-If, as in this case, the data are perfectly consistent with $\mathcal{M}_\textrm{One mind}$, they are also consistent with $\mathcal{M}_\textrm{Any effect}$.
-The order restriction enforced by $\mathcal{M}_\textrm{One mind}$ limits the prediction of the model to 1/4 of the outcome space predicted by $\mathcal{M}_\textrm{Any effect}$ (i.e., the upper right quadrant of Figure \ \@ref(fig:otm1-bayesian-replication-analysis-plot)).
-This four-fold greater parsimony of $\mathcal{M}_\textrm{One mind}$ constitutes the upper bound for $\mathrm{BF}_{\mathcal{M}_\textrm{One mind}/\mathcal{M}_\textrm{Any effect}}$ (assuming all regions of the outcome space are equally likely a priori).
-Hence, for this model comparison we could not have obtained stronger evidence (given numerical imprecision of the MCMC sampling approach).
-Conversely, if the data had fallen outside the predicted outcome space of $\mathcal{M}_\textrm{One mind}$ there is no upper bound to the evidence in favor of $\mathcal{M}_\textrm{Any effect}$.
-
-[^bf_range2]:
-The additional order constraints enforced by $\mathcal{M}_\textrm{One mind everywhere}$ limits the prediction of the model to 1/12 of the outcome space predicted by the unconstrained model.
-Hence, for this model comparison the upper bound for $\mathrm{BF}_{\mathcal{M}_\textrm{One mind everywhere}/\mathcal{M}_\textrm{Any effect}}$ is 12 (assuming all regions of the outcome space are equally likely a priori).
-Baring the transitivity of Bayes factors in mind this implies that the upper bound for $\mathrm{BF}_{\mathcal{M}_\textrm{One mind everywhere}/\mathcal{M}_\textrm{One mind}}$ is 3.
-Hence, in both model comparisons we could not have obtained much stronger evidence in favor of $\mathcal{M}_\textrm{One mind everywhere}$.
 
 (ref:otm1-bayesian-replication-analysis-table-caption) Summary of Bayesian model comparisons.
 
-(ref:otm1-bayesian-replication-analysis-table-note) The Bayes factors (BF) in favor of $\mathcal{M}_\textrm{One mind}$ and $\mathcal{M}_\textrm{One mind everywhere}$ relative to $\mathcal{M}_\textrm{Any effect}$ are bounded within the range of $[0, 4]$^1^<!--[^bf_range]--> and $[0, 12]$^2^<!--[^bf_range2]-->, respectively.
+(ref:otm1-bayesian-replication-analysis-table-note) As noted in the [Data analysis](#data-analysis1) section, the Bayes factors (BF) in favor of $\mathcal{M}_\textrm{One mind}$ and $\mathcal{M}_\textrm{One mind everywhere}$ relative to $\mathcal{M}_\textrm{Any effect}$ are bounded within the range of $[0, 4]$ and $[0, 12]$, respectively.
 Hence, in both model comparisons we could not have obtained much stronger evidence against $\mathcal{M}_\textrm{Any effect}$.
 The direct comparison of the models of primary interest overwhelmingly favored $\mathcal{M}_\textrm{One mind}$ over $\mathcal{M}_\textrm{Two minds}$, `r otm1_same_vs_opposite_direction_bf_res`.
 The naive posterior probability (NPP) quantifies the probability of each model given the data assuming that all models are equally likely a priori.
@@ -1315,9 +1682,9 @@ bf_table %>%
 ```
 
 
-### Recognition task
+### Recognition of briefly presented words
 
-```{r otm1-rydell-recognition, results = "asis"}
+```{r otm1-rydell-recognition, warning = FALSE, results = "asis"}
 otm1_mem_ttest <- t.test(otm1_mem$Accuracy, mu = 0.5, alternative = "greater", rscale = "medium") %>%
   apa_print(gt1 = FALSE) %$%
   full_result
@@ -1332,15 +1699,15 @@ otm1_mem_aov <- otm1_mem %>%
     , data = .
     , anova_table = list(intercept = TRUE)
   ) %>%
-  apa_print(intercept = TRUE) %$%
-  full_result
+  apa_print_ps(intercept = TRUE) %$%
+  full_result %>% 
+  setNames(c("Intercept", "Location"))
 ```
 
 ```{r otm1-bayesian-recognition, warning = FALSE, message = FALSE}
 otm1_mem_bayesian_ttest <- ttestBF(otm1_mem$Accuracy - 0.5, mu = 0, rscale = "medium", nullInterval = c(0, Inf))[1] %>%
-  apa_print(gt1 = FALSE) %$%
-  full_result %>%
-  gsub("\\.0", ".5", .)
+  apa_print %$%
+  statistic
 
 otm1_mem_bayesian_aov <- otm1_mem %>%
   mutate(Accuracy = Accuracy - 0.5) %>%
@@ -1353,35 +1720,34 @@ otm1_mem_bayesian_aov <- otm1_mem %>%
   statistic
 ```
 
-Finally, we examined participants' recognition memory for the words that we presented briefly as USs during the learning procedure.
+Finally, we examined participants' recognition memory for the briefly flashed words at the end of the study.
 Recognition accuracy was better than chance, `r otm1_mem_ttest`, `r otm1_mem_bayesian_ttest`.
-Hence, we cannot assume that the stimulus presentation was subliminal.
-It remained unclear, however, whether recognition accuracy differed between labs, `r otm1_mem_aov$Location`, `r otm1_mem_bayesian_aov`.
+Hence, we cannot assume that the stimulus presentation was outside of participants' conscious awareness.
+It remains unclear whether recognition accuracy differed between labs, `r otm1_mem_aov$Location`, `r otm1_mem_bayesian_aov` (see SOM for details).
 
 
 ## Discussion
 
-We reproduced the procedure of @rydell_two_2006, using the original material and the first author of the original study approved the procedure.
-Despite all efforts to keep the procedure as close as possible to the original procedure, we did not replicate the original finding.
-In contrast to @rydell_two_2006, we observed that both implicit and explicit evaluations reflected the valence of the learned behavioral information.
-The briefly presented USs did not lead to contradicting implicit evaluations compared to explicit evaluations.
-In short, we found no evidence for an evaluative dissociation. 
+As confirmed by the first author of the original study, we faithfully reproduced the procedure of @rydell_two_2006, but the original results did not replicate.
+We observed that both directly and indirectly measured evaluations reflected the valence of the behavioral information; the briefly flashed words did not produce a reversal of the indirectly measured evaluations.
+In short, we found no dissociation between directly and indirectly measured evaluations. 
 Our findings mirror the results of the previous replication attempt by @heycke_two_2018.
-Moreover, the observed results were consistent across three languages and countries indicating that neither inaccurate translations nor differences in sampled populations are likely to have caused the deviation of the results from the original findings.
-Thus, our findings raise more doubts about the general replicability of the dissociative evaluative learning effect that was observed by @rydell_two_2006.
+Moreover, our results were consistent across three languages and countries indicating that neither inaccurate translations nor differences in sampled populations are likely to have caused the divergence from the original finding.
+Thus, our results raise more doubts about the replicability of the dissociative evaluative learning effect that was reported by @rydell_two_2006.
 
-There is, however, one objection these findings cannot entirely dispel: The close physical recreation of the original procedure may not have faithfully reproduced the psychological conditions of the original learning task.
-In the original study, US recognition accuracy was not significantly different from chance [@rydell_two_2006].
-However, like @heycke_two_2018 we did observe better-than-chance US recognition accuracy.
-We, therefore, have to assume that participants consciously perceived the briefly presented USs, which might have influenced our results.
-Hence, it is possible that the conscious perception of briefly presented USs constitutes a critical departure from the to-be-reproduced learning conditions.
-Although an exploratory analysis suggested that there was no relationship between US recognition accuracy and implicit evaluations (see SOM), we decided to repeat the experiment and reduced US visibility experimentally to more closely mimic the psychological conditions of the original learning task.
+There is, however, one objection our data cannot dispel: The close physical recreation of the original procedure does not guarantee a faithful reproduction of the psychological conditions of the original learning task.
+In the original study, recognition accuracy of the briefly flashed words was not significantly different from chance [@rydell_two_2006].
+Like @heycke_two_2018, however, we observed better-than-chance recognition accuracy.
+We have to assume that participants consciously perceived at least some of the briefly flashed words, which may have affected our results.
+Hence, it is possible that the conscious perception of briefly flashed words constitutes a critical departure from the to-be-reproduced learning conditions.
+Although an exploratory analysis suggested that there was no relationship between recognition accuracy and indirectly measured evaluations (see SOM), we decided to repeat the experiment and reduce the visibility of briefly flashed words to more closely mimic the psychological conditions of the original study.
+
 
 # Experiment 2
 
-To address the concern that our previous replication may have been unsuccessful because USs were consciously perceived (as indicated by above-chance US recognition accuracy), we will conduct a second study and reduce the presentation duration of USs during the learning task.
+To address the concern that our previous replication may have been unsuccessful because briefly flashed words were consciously perceived, we will conduct a second study and reduce the presentation duration of the briefly flashed words during the learning task.
 
-## Visibility pilot study
+## Pilot study
 
 ```{r otm2pilot2f-analysis-preferences}
 # Data location
@@ -1469,19 +1835,27 @@ otm2p2f_mem_ttest_two_sided <- t.test(otm2p2f_mem$Accuracy, mu = 0.5) %>%
   apa_print %$%
   estimate
 
-otm2p2f_mem_ttestBF <- ttestBF(otm2p2f_mem$Accuracy - 0.5
-                             , mu = 0, rscale = "medium"
-                             , nullInterval = c(0, Inf))[1] %>%
-  apa_print(gt1 = FALSE) %$%
-  full_result %>%
-  gsub("\\.0", ".5", .) %>%
-  gsub("\\$ ", "$, ", .)
+otm2p2f_mem_ttest_nonsuperiority <- lm(Accuracy - 0.5 ~ 1, otm2p2f_mem) %>%
+  emmeans(~ 1) %>%
+  summary(side = "<", delta = 0.03, infer = TRUE) %>% 
+  apa_print %$%
+  statistic %$%
+  overall
+
+otm2p2f_mem_ttestBF <- ttestBF(
+  otm2p2f_mem$Accuracy - 0.5
+  , mu = 0
+  , rscale = "medium"
+  , nullInterval = c(0, Inf)
+)[1] %>%
+  apa_print() %$%
+  statistic
 ```
 
 
-To identify a presentation duration that replicates the psychological conditions of the original learning task (i.e., at-chance recognition accuracy for briefly presented USs), we ran a pilot study with a reduced US presentation duration of 13 ms (one frame on a 75 Hz CRT monitor) [^pilots].
-Because all subsequent studies will be conducted in English, the pilot study used the English material and instructions and was conducted at the University of Florida.
-Except for the shorter US presentation the methods were the same as in Experiment 1.
+To identify a presentation duration that reproduces the psychological conditions of the original study (i.e., at-chance recognition accuracy for briefly flashed words), we ran a pilot study with a presentation duration reduced to 13 ms (one frame on a 75 Hz CRT monitor) [^pilots].
+Because all subsequent studies will be conducted in English, the pilot study used the English material and was conducted at the University of Florida.
+Except for the shorter presentation duration the methods were the same as in Experiment 1.
 For the pilot study, we recruited `r nrow(otm2p2f_demo)` participants (aged `r paste(range(otm2p2f_demo$Age), collapse = "-")` years, $M = `r mean(otm2p2f_demo$Age)`$; `r sum(grepl("female", otm2p2f_demo$Sex)) / nrow(otm2p2f_demo) * 100`% female). 
 
 ```{r rydell-recognition-effect, results = "hide"}
@@ -1500,46 +1874,265 @@ rydell_mem_bf <- paste0(
 )
 ```
 
-The US identification performance was not significantly better than chance, `r otm2p2f_mem_ttest`, however the data provide no evidence for at-chance accuracy `r otm2p2f_mem_ttestBF`. 
-Although these results do not formally confirm that the shortened presentation duration yielded at-chance US visibility, the estimates of US memory accuracy are very similar to those from @rydell_two_2006 (`r rydell_mem_ci_res`).
-Further reduction of the presentation duration may eventually yield conclusive evidence for at-chance visibility, but it could inadvertently cause stimuli to become practically invisible.
-We will, therefore, conduct the final studies using a US presentation duration of 13 ms. 
+Recognition accuracy for the briefly flashed words was not significantly better than chance, `r otm2p2f_mem_ttest`, but the Bayesian evidence for at-chance accuracy was inconclusive, `r otm2p2f_mem_ttestBF`. 
+Based on these results we cannot rule out that, even with the shortened presentation duration, briefly flashed words were recognized above chance. 
+To confirm that the recognition accuracy was comparable to the original study, we performed a nonsuperiority test. 
+We compared the observed accuracy to the smallest deviation from at-chance accuracy that could have been detected in the original study, i.e., $M = 0.53$.
+The test confirmed that the recognition accuracy was comparable to that observed by @rydell_two_2006, , `r rydell_mem_ci_res`, `r otm2p2f_mem_ttest_nonsuperiority`. 
+Thus, we conclude that the visibility of words flashed for 13 ms is likely to be functionally comparable to that of the original study. 
+Of course the presentation duration could be reduced further to obtain conclusive evidence for at-chance visibility, but this runs the risk of inadvertently causing stimuli to become practically invisible.
+To safeguard against the possibility that the 13 ms presentation duration is already too brief, we will add a second presentation duration and flash words for for 20 ms in some locations[^alllocations].
+This means that across both studies, briefly flashed words will have been presented for 13 ms, 20 ms 24 ms, and 27 ms.
 
 [^pilots]:
-We ran a series of pilot studies in Dutch, which also yielded above-chance US memory.
-These pilot studies employed a shortened procedure, used Dutch material, or were conducted immediately after an unrelated priming study, which also used briefly presented words.
-We, therefore, decided a posteriori, that above-chance performance in these studies may not be informative for our subsequent replication attempt, as we will use only English materials in the next studies.
+We ran a series of pilot studies in Dutch, which also yielded above-chance recognition of briefly flashed words.
+These pilot studies employed a shortened procedure, used Dutch material, or were conducted immediately after an unrelated priming study, which also used briefly flashed words.
+We, therefore, decided a posteriori, that above-chance accuracy in these studies may not be informative for our subsequent replication attempt, as we will use only English materials in the next studies.
+
+[^alllocations]:
+In case we can collect data in all five locations, the following sentence will be added to the manuscript: 
+Three locations flashe words for 20 ms; only two locations flashed words for 13 ms because we also included the data of pilot study (N = `r nrow(otm2p2f_demo)`) in the overall analysis, which also used a 13 ms presentation duration.
 
 
 ## Method
 
-### Participants
-
-We will run the experiment in Florida, Indiana, and Hong Kong.
-As in Experiment 1, 50 students will participate at each of three locations, yielding a total of $N = 150$ participants.
-All participants who sign up for the study before the intended $n = 50$ has been reached will be allowed to participate; hence, the final sample size could be slightly larger.
-We will exclude any participants from the analysis who abort the experiment or who ask us to remove their data (e.g., because they did not pay attention or did not follow the instructions).
-We will recruit additional participants to replace those excluded.
-<!--Participants will be compensated with xxxx.-->
-
 ### Material & Procedure
 
-We will employ the same material and procedure as in Experiment 1 but use the shortened US presentation duration of 13 ms.
-Furthermore, all labs will use the same python script to collect the data and only the English material will be used to match the official language at all three locations.
-All materials are available at https://osf.io/8m3xb/.
+We will use the same materials and procedure as in Experiment 1 but flash words for 13 ms or 20 ms.
+Furthermore, all labs will use the same Python script to collect the data and only the English material will be used to match the official language at all locations.
 
 ### Data analysis
 
-The new data[^pilot2data] from all locations will be jointly submitted to the same analyses as in Experiment 1.
-We will, again, perform the analyses reported in the original study, supplement the ANOVA analysis of IAT scores by a linear mixed model analysis, and assess the replication success by performing Bayesian model comparisons.
+<@~{#hongkong-exploration}
+
+The new data[^pilot2data] from all locations will be submitted to analyses analogous to those of Experiment 1. 
+We will, again, perform the analyses reported in the original study and assess replication success by performing Bayesian model comparisons. 
+In contrast to Experiment 1, all labs will use the same stimulus material and lab location will be partially confounded with the presentation duration of the briefly flashed words. 
+Thus, we will replace the lab location factor by presentation duration of the briefly flashed words in both analyses.
+Additionally, we will compare the data from Hong Kong to those from the American labs to explore whether our results are consistent across ethnicities and cultures.
+Given the consistent results in Experiment 1, we will omit the linear mixed model analysis of IAT response times.
+
+~@>
+
+To maximize the power of the planned contrasts in the frequentist ANOVA analyses, we will test whether valence order moderates the learning block contrasts by testing the main effect of learning block. 
+If we detect no main effect of learning block, we will pool participants across valence orders by reversing the learning block coding in one group (as in the Bayesian model comparison of Experiment 1). 
+Similarly, if the different presentation durations of flashed words do not moderate the learning block contrasts, we will pool participants across presentation durations.
 All data and analysis code will be made available in the OSF repository and linked to in the manuscript.
 
+[^pilot2data]: To ensure valid results, the pilot study for Experiment 2 employed the complete experimental procedure, that is, we also collected evaluative ratings and IAT responses. As of now, only the word recognition accuracy was analyzed; we have not looked at evaluative ratings and IAT responses. Once the data of the second, preregistered experiment are in, we will add the data from the pilot study to our final analyses.
 
-[^pilot2data]:
-To ensure representative results, the pilot study for Experiment 2 employed the complete experimental procedure, that is, we also collected evaluative ratings and IAT responses.
-As of now, only the US identification performance was analyzed; we have not looked at the explicit and implicit evaluation data.
-Once the data of the second, preregistered experiment are in, we will add the data from the pilot study to our final analyses.
+### Participants
 
+```{r otm2-omnibus-power, cache = TRUE}
+# Main effect block and three-way interaction
+otm2_power <- function(f, n, rm_cor = 0.5, alpha = 0.05) {
+  contrast_codes <- tibble::tibble(
+    time = rep(contr.treatment(2), 4)
+    , order = rep(rep(contr.sum(2), each = 2), 2)
+    , block = rep(contr.sum(2), each = 4)
+    , time_block = time * block
+    , time_order = time * order
+    , block_order = block * order
+    , time_block_order = time * block * order
+  )
+  
+  mu <- with(
+    contrast_codes
+    , #-order * 0.25*f +
+      -block_order * f +
+      -block * 0.5 * f +
+      time_block_order * f
+  )
+  
+  string <- "2w*2b*2b"
+  labelnames <- c("block", "1", "2", "order", "p-n", "n-p", "time", "13", "20")
+  
+  design_result <- ANOVA_design(
+    design = string
+    , n = n
+    , mu = mu
+    , sd = 1
+    , r = rm_cor
+    , labelnames = labelnames
+  )
+  
+  ANOVA_exact(
+    design_result
+    , alpha_level = alpha
+    , emm = FALSE
+    , verbose = FALSE
+  )
+}
+
+
+otm2_n_power <- 320/4
+
+# 95% power
+otm2_pes <- 0.039732
+otm2_dz <- pes_to_dz(otm2_pes, otm2_n_power, n_groups = 4)
+rho <- 0.5
+f <- dz_to_f(otm2_dz, rho)
+
+# otm2_time_power <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho, alpha = 0.05)
+# otm2_time_power$main_result
+
+# otm2_time_power$dataframe %>%
+#   mutate(
+#     order = ifelse(order == "order_n-p", "Negative-positive", "Positive-negative")
+#     , block = ifelse(block == "block_1", "1", "2")
+#     , time = ifelse(time == "time_13", "13 ms", "20 ms")
+#   ) %>%
+#   ggplot(aes(x = block, y = y, color = order, group = order)) +
+#   stat_summary(fun.y = mean, geom = "line") +
+#   stat_summary(fun.data = mean_cl_normal) +
+#   coord_cartesian(ylim = c(-0.6, 0.6)) +
+#   facet_grid(~ time) +
+#   guides(color = FALSE) +
+#   ggtitle("Assumed for power analysis") +
+#   labs(x = "Block", y = "Attitude") +
+#   theme_bw()
+
+otm2_dz_block <- f_to_dz(0.5*f, rho = rho)
+otm2_pes_block <- dz_to_pes(otm2_dz_block, otm2_n_power, n_groups = 4)
+
+otm2_dz_int <- f_to_dz(f, rho = rho)
+otm2_pes_int <- dz_to_pes(otm2_dz_int, otm2_n_power, n_groups = 4)
+```
+
+```{r otm2-contrast-power, cache = TRUE}
+otm2_power <- function(f, n, rm_cor = 0.5, alpha = 0.05) {
+  contrast_codes <- tibble::tibble(
+    time = rep(contr.treatment(2), 4)
+    , order = rep(rep(contr.sum(2), each = 2), 2)
+    , block = rep(contr.sum(2), each = 4)
+    , time_block = time * block
+    , time_order = time * order
+    , block_order = block * order
+    , time_block_order = time * block * order
+  )
+  
+  mu <- with(
+    contrast_codes
+    , -order * 0.25*f +
+      -block_order * f
+  )
+  
+  string <- "2w*2b*2b"
+  labelnames <- c("block", "1", "2", "order", "p-n", "n-p", "time", "13", "20")
+  
+  design_result <- ANOVA_design(
+    design = string
+    , n = n
+    , mu = mu
+    , sd = 1
+    , r = rm_cor
+    , labelnames = labelnames
+  )
+  
+  ANOVA_exact(
+    design_result
+    , alpha_level = alpha
+    , emm = TRUE
+    , verbose = FALSE
+    , contrast_type = "pairwise"
+    , emm_comp = "block | time * order"
+  )
+}
+
+
+# Learning block contrasts
+
+## Simple contrasts
+### 95% power
+otm2_pes <- 0.039732
+otm2_dz <- pes_to_dz(otm2_pes, otm2_n_power, n_groups = 4)
+# rho <- 0.5
+# f <- dz_to_f(otm2_dz, rho)
+# 
+# otm2_contrast_power <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$contrasts %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm2_contrast_power
+
+
+### 80% power
+otm2_pes2 <- 0.0243813
+otm2_dz2 <- pes_to_dz(otm2_pes2, otm2_n_power, n_groups = 4)
+# f <- dz_to_f(otm2_dz2, rho)
+# 
+# otm2_contrast_power2 <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$contrasts %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm2_contrast_power2
+
+
+## Collapsed once
+### 95% power
+otm2_dz_between_collapsed <- f_to_dz(dz_to_f(otm2_dz, rho) / sqrt(2), rho)
+otm2_pes_between_collapsed <- dz_to_pes(otm2_dz_between_collapsed, otm2_n_power, n_groups = 4)
+# f <- dz_to_f(otm2_dz_between_collapsed, rho)
+# 
+# otm2_time_collapsed_contrast_power <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$emmeans %>%
+#   emmeans(specs = ~ block | order) %>%
+#   pairs %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm2_time_collapsed_contrast_power
+
+### 80% power
+otm2_dz2_between_collapsed <- f_to_dz(dz_to_f(otm2_dz2, rho) / sqrt(2), rho)
+otm2_pes2_between_collapsed <- dz_to_pes(otm2_dz2_between_collapsed, otm2_n_power, n_groups = 4)
+# f <- dz_to_f(otm2_dz2_between_collapsed, rho)
+# 
+# otm2_time_collapsed_contrast_power2 <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$emmeans %>%
+#   emmeans(specs = ~ block | order) %>%
+#   pairs %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm2_time_collapsed_contrast_power2
+
+
+## Collapsed twice
+### 95% power
+otm2_dz_collapsed <- f_to_dz(dz_to_f(otm2_dz, rho) / sqrt(4), rho)
+otm2_pes_collapsed <- dz_to_pes(otm2_dz_collapsed, otm2_n_power, n_groups = 4)
+# f <- dz_to_f(otm2_dz_collapsed, rho)
+# 
+# otm2_collapsed_contrast_power <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$emmeans %>%
+#   emmeans(specs = ~ block * order) %>%
+#   contrast(method = list(collapsed = c(-0.5, 0.5, 0.5, -0.5))) %>%
+#   emmeans_power(alpha_level = 0.05)
+# otm2_collapsed_contrast_power
+
+### 80% power
+otm2_dz2_collapsed <- f_to_dz(dz_to_f(otm2_dz2, rho) / sqrt(4), rho)
+otm2_pes2_collapsed <- dz_to_pes(otm2_dz2_collapsed, otm2_n_power, n_groups = 4)
+# f <- dz_to_f(otm2_dz2_collapsed, rho)
+# 
+# otm2_collapsed_contrast_power2 <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$emmeans %>%
+#   emmeans(specs = ~ block * order) %>%
+#   contrast(method = list(collapsed = c(-0.5, 0.5, 0.5, -0.5))) %>%
+#   emmeans_power(alpha_level = 0.05)
+# otm2_collapsed_contrast_power2
+```
+
+
+If the current SARS-CoV-2 pandemic premits, we will recruit `r otm2_n_power` participants at Yale University, the University of Florida, the University of Hong Kong, Indiana University Bloomington, and Williams College, but in no less than four of these locations.
+As in Experiment 1, all participants who sign up, before the planned sample size has been reached will be allowed to participate. 
+We will, again, recruit additional participants to replace those excluded, unless data removal is requested after completion of the data collection.
+
+### Statistical power
+
+<@~{#power2}
+
+As for Experiment 1, our assessment of the statistical senstivitiy of our design focused on the tests of simple *learning block* effects.
+Across the minimum of four locations, our planned contrasts will have 95% power to detect learning block effects as small as $\delta_z = `r otm2_dz`$ ($\eta_p^2 = `r printp(otm2_pes)`$) or as small as $\delta_z = `r otm2_dz_between_collapsed`$ ($\eta_p^2 = `r printp(otm2_pes_between_collapsed)`$) and $\delta_z = `r otm2_dz_collapsed`$ ($\eta_p^2 = `r printp(otm2_pes_collapsed)`$) when pooling participants across one or both between-participant factors ($N = `r otm2_n_power * 4`$, $\alpha = .05$, two-sided tests).[^impliedd]
+The tests of the main effect of learning block and the three-way interaction, on which we will base our decision to pool participants across the between-subject conditions, will have 95% power to detect effecs as small as  $\delta_z = `r otm2_dz_block`$ ($\eta_p^2 = `r printp(otm2_pes_block)`$) and
+$\delta_z = `r otm2_dz_int`$ ($\eta_p^2 = `r printp(otm2_pes_int)`$), respectively ($N = `r otm2_n_power * 4`$, $\alpha = .05$, two-sided tests).
+Thus, our design is sufficiently sensitive to detect (or rule out) differences 13% smaller (39% or 57% when pooling participants across one or both between-participant factors, respectively) than the smallest learning block difference reported by @rydell_two_2006.
+Note that these are conservative estimates as they do not take into account the additional `r nrow(otm2p2f_demo)` participants from our pilot study that we will include in the analysis and because we may collect data in five rather than four locations.
+
+~@>
 
 
 \newpage
