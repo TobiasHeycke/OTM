@@ -65,6 +65,7 @@ authornote: |
   All data, analysis scripts and materials are available at https://osf.io/8m3xb/; the supplementary online material (SOM) is available at https://osf.io/8w9bd/.
 
 note: |
+  This manuscript has been accepted in-principle as a registered report at *Psychological Science*. Data for Experiment 2 will be collected when the SARS-CoV-2 pandemic permits.
   \clearpage
 
 keywords          : "evaluative learning, subliminal influence, implicit learning, replication"
