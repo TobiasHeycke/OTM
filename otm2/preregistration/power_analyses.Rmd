@@ -1,0 +1,1063 @@
+---
+title             : "Power analyses for OTM2"
+author            : "Frederik Aust"
+date              : "`r format(Sys.time(), '%d %B, %Y')`"
+
+output:
+  bookdown::html_document2:
+    theme         : "spacelab"
+    df_print      : "kable"
+    code_folding  : "hide"
+    toc           : true
+    toc_float     : true
+---
+
+```{r setup, include = FALSE}
+library("tidyr")
+library("dplyr")
+library("ggplot2")
+library("cowplot")
+library("papaja")
+
+library("pwr")
+library("emmeans")
+
+# devtools::install_github("arcaldwell49/Superpower")
+library("Superpower")
+
+source("../../analysis_and_paper/effect_sizes.R")
+```
+
+
+Because it grants greater flexibility for ANOVA designs, I here used the in-development R package `Superpower`.
+The make sure I'm doing this right, I first reproduced the power analyses done in G*Power for OTM1.
+
+
+# OTM 1
+
+The following gives the interaction power for the effect size estimated in the G*Power sensitivity analysis
+
+```{r}
+contrast_code <- tibble::tibble(
+  a = rep(contr.sum(2), 2)
+  , b = rep(contr.sum(2), each = 2)
+  , x = a*b * -1
+)$x
+
+f <- 0.1481313
+mu <- f * contrast_code
+n <- 75
+r <- 0.5
+alpha_level <- 0.05
+
+string <- "2w*2b"
+labelnames <- c("block", "1", "2", "order", "n-p", "p-n")
+
+design_result <- ANOVA_design(
+  design = string
+  , n = n
+  , mu = mu
+  , sd = 1
+  , r = r
+  , labelnames = labelnames
+)
+
+otm1_power <- ANOVA_exact(
+  design_result
+  , alpha_level = alpha_level
+  , emm = TRUE
+  , verbose = FALSE
+  , contrast_type = "pairwise"
+  , emm_comp = "block | order"
+)
+
+otm1_power$main_results
+```
+
+as well as the power for the block contrasts
+
+```{r}
+otm1_power$emm_results
+```
+
+
+However, this doesn't give the result for the desired contrast that collapses over the counterbalancing factor, nor for a directional test.
+I contributed a pull request to `Superpower` to enable power analyses for contrasts specified with `emmeans`.
+The following gives the result for the collapsed contrast
+
+```{r}
+custom_contrast <- contrast(
+  emmeans(
+    otm1_power$emmeans$emmeans
+    , specs = ~ order * block
+  )
+  , list(block_effect = c(0.5, -0.5, -0.5, 0.5))
+)
+
+emmeans_power(custom_contrast, alpha_level = 0.05)
+```
+
+
+which is the same as doing a within-subject t-test in this case.
+
+```{r}
+pwr.t.test(n = 150, d = 2*f, sig.level = 0.05, type = "paired")
+```
+
+To get the power for the directional test, I can increase the alpha level as needed, which shows that this contrast is the same as the within-subject t-test collapsing data across groups.
+
+```{r}
+emmeans_power(custom_contrast, alpha_level = 0.1)
+pwr.t.test(150, sig.level = 0.05, d = 2*f, type = "paired", alternative = "greater")
+```
+
+This now also allows me to get the power for the one-sided tests of the uncollapsed contrasts
+
+```{r}
+emmeans_power(otm1_power$emmeans$contrasts, alpha_level = 0.1)
+```
+
+Anyway, the following reproduces the G*Power sensitivity analysis for the collapsed contrast.
+
+```{r}
+pwr.t.test(150, sig.level = 0.05, power = 0.95, type = "paired", alternative = "greater")
+```
+
+<!--
+
+```{r}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+
+## More elaborate considerations of repeated-measure correlations
+
+The following is a table of repeated measure correlations from OTM1 across locations.
+
+```{r}
+readRDS("../../otm1/results/data_processed/otm1_attitudes_cleaned.rds") %>%
+  mutate(
+      Eval = scale(Eval) %>% as.numeric
+      , IATscore = scale(IATscore) %>% as.numeric
+  ) %>%
+  gather("Measure", "Attitude", Eval, IATscore) %>%
+  mutate(Measure = factor(Measure)) %>%
+  pivot_wider(names_from = c("Block", "Measure"), values_from = "Attitude") %>%
+  select_if(is.numeric) %>%
+  psych::corr.test()
+```
+
+```{r}
+otm1_power <- function(f, rm_cor, n = 76, alpha = 0.05) {
+  contrast_code <- tibble::tibble(
+    a = rep(contr.sum(2), 2)
+    , b = rep(contr.sum(2), each = 2)
+    , x = a*b * -1
+  )$x
+  
+  mu <- f * contrast_code
+
+  cor_mat <- diag(4)
+  triangular <- c(0, 1, 0, 0, 1, 0)
+  cor_mat[upper.tri(cor_mat)] <- triangular * rm_cor
+  cor_mat[lower.tri(cor_mat)] <- triangular * rm_cor
+  
+  string <- "2w*2b"
+  labelnames <- c("block", "1", "2", "order", "n-p", "p-n")
+  
+  design_result <- ANOVA_design(
+    design = string
+    , n = n
+    , mu = mu
+    , sd = 1
+    , r = cor_mat
+    , labelnames = labelnames
+  )
+  
+  otm1_power <- ANOVA_exact(
+    design_result
+    , alpha_level = alpha
+    , emm = TRUE
+    , verbose = FALSE
+    , contrast_type = "pairwise"
+    , emm_comp = "block | order"
+  )
+  
+  otm1_power
+}
+```
+
+
+### Evaluative ratings
+
+```{r}
+eval_rm_cor <- -0.8
+otm1_f_eval_anova <- 0.27918
+
+otm1_power_eval_anova <- otm1_power(f = otm1_f_eval_anova, rm_cor = eval_rm_cor)
+otm1_power_eval_anova_int <- otm1_power_eval_anova$main_result
+
+otm1_power_eval_anova_int$generalized_eta_squared <- afex::aov_4(
+  y ~ block * order + (block | subject)
+  , data = otm1_power_eval_anova$dataframe
+)$anova_table$ges
+otm1_power_eval_anova_int
+```
+
+Without Bonferroni-correction for the order-wise two-sided contrasts
+
+```{r}
+otm1_f_eval_contrast <- 0.39482
+emmeans_power(otm1_power(f = otm1_f_eval_contrast, rm_cor = eval_rm_cor)$emmeans$contrasts, alpha_level = 0.05)
+```
+
+For the collapsed two-sided contrasts
+
+```{r}
+otm1_power(f = 0.2543, rm_cor = eval_rm_cor)$emmeans$emmeans %>%
+  emmeans(specs = ~ block * order) %>%
+  contrast(method = list(collapsed = c(-0.5, 0.5, 0.5, -0.5))) %>% 
+  emmeans_power(alpha_level = 0.1)
+```
+
+
+
+### IAT scores
+
+```{r}
+iat_rm_cor <- -0.6 * sqrt(0.5^2)
+otm1_f_iat_anova <- 0.23726
+
+otm1_power_iat_anova <- otm1_power(f = otm1_f_iat_anova, rm_cor = iat_rm_cor)
+otm1_power_iat_anova_int <- otm1_power_iat_anova$main_result
+
+otm1_power_iat_anova_int$generalized_eta_squared <- afex::aov_4(
+  y ~ block * order + (block | subject)
+  , data = otm1_power_iat_anova$dataframe
+)$anova_table$ges
+otm1_power_iat_anova_int
+```
+
+Without Bonferroni-correction for the order-wise two-sided contrasts
+
+```{r}
+otm1_f_iat_contrast <- 0.335535
+emmeans_power(otm1_power(f = otm1_f_iat_contrast, rm_cor = iat_rm_cor)$emmeans$contrasts, alpha_level = 0.05)
+```
+
+For the collapsed one-sided contrasts
+
+```{r}
+otm1_power(f = 0.21611, rm_cor = iat_rm_cor)$emmeans$emmeans %>%
+  emmeans(specs = ~ block * order) %>%
+  contrast(method = list(collapsed = c(-0.5, 0.5, 0.5, -0.5))) %>% 
+  emmeans_power(alpha_level = 0.1)
+```
+
+```{r eval = TRUE}
+knitr::opts_chunk$set(eval = TRUE)
+```
+
+## Simplified again
+
+-->
+
+## With implicit repeated measures correlation
+
+```{r}
+rydell_pes <- 0.1
+rydell_f <- 4.78
+rydell_n <- 50
+rydell_dz <- pes_to_dz(rydell_pes, rydell_n, n_groups = 2)
+
+
+heycke_t <- c(2.54, 1.45)
+heycke_n <- c(28, 26)
+heycke_dz <- heycke_t / sqrt(heycke_n)
+heycke_pes <- dz_to_pes(heycke_dz, heycke_n, n_groups = 1)
+# heycke_pes <- (heycke_dz^2 * heycke_n) / (heycke_dz^2 * heycke_n + heycke_n - 1) # pes
+
+# mean(c(heycke_dz, rydell_dz))
+# mean(c(heycke_pes, rydell_pes))
+```
+
+To simplify this, I will focus on the power for what we'd expect to be the smallest effect: The *learning block* contrast within each *valence order* group in IAT scores.
+Rydell et al. report the smallest contrast as $\eta_p^2 = `r rydell_pes`$ ($d_z \approx `r rydell_dz`$), which is comparable in magnitude (but not direction) to the corresponding effect sizes reported by Heycke et al.
+
+```{r}
+otm1_power <- function(f, rm_cor, n = 76, alpha = 0.05) {
+  contrast_code <- tibble::tibble(
+    a = rep(contr.sum(2), 2)
+    , b = rep(contr.sum(2), each = 2)
+    , x = a*b * -1
+  )
+  
+  mu <- with(
+    contrast_code
+    , f * x +
+      - 0.25 * a
+  )
+
+  cor_mat <- diag(4)
+  triangular <- c(0, 1, 0, 0, 1, 0)
+  cor_mat[upper.tri(cor_mat)] <- triangular * rm_cor
+  cor_mat[lower.tri(cor_mat)] <- triangular * rm_cor
+  
+  string <- "2w*2b"
+  labelnames <- c("block", "1", "2", "order", "n-p", "p-n")
+  
+  design_result <- ANOVA_design(
+    design = string
+    , n = n
+    , mu = mu
+    , sd = 1
+    , r = cor_mat
+    , labelnames = labelnames
+  )
+  
+  otm1_power <- ANOVA_exact(
+    design_result
+    , alpha_level = alpha
+    , emm = TRUE
+    , verbose = FALSE
+    , contrast_type = "pairwise"
+    , emm_comp = "block | order"
+  )
+  
+  otm1_power
+}
+```
+
+
+```{r}
+otm1_n <- 76
+
+# 95% power
+otm1_pes <- 0.08068
+otm1_dz <- pes_to_dz(otm1_pes, otm1_n, n_groups = 2)
+# rho <- 0.5
+# f <- dz_to_f(otm1_dz, rho)
+# 
+# otm1_contrast_power <- otm1_power(f = f, n = otm1_n, rm_cor = rho)$emmeans$contrasts %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm1_contrast_power
+
+# 80% power
+otm1_pes2 <- 0.050336
+otm1_dz2 <- pes_to_dz(otm1_pes2, otm1_n, n_groups = 2)
+# f <- dz_to_f(otm1_dz2, rho)
+# 
+# otm1_contrast_power2 <- otm1_power(f = f, n = otm1_n, rm_cor = rho)$emmeans$contrasts %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm1_contrast_power2
+```
+
+Across all labs, our experimental design has 95% power to detect effects as small as $\eta^2_p = `r printp(otm1_pes)`$ ($\delta_z = `r otm1_dz`$) and 80% power to detect effects as small as $\eta^2_p = `r printp(otm1_pes2)`$ ($\delta_z = `r otm1_dz2`$).
+Figure\ \@ref(fig:pes-plot) illustrates the implied Cohen's $\delta$ depending on the assumed repeated-measures correlation $\rho$. 
+That is, we have sufficient power to find (or rule out) effects approximately 20% smaller than the typical effects reported for the weakest contrast.
+
+```{r pes-plot, fig.width = 5, fig.height = 4, fig.cap = "Sensitivity curve for OTM1"}
+tibble(
+  rho = rep(seq(-1, 1, length.out = 100), 2)
+  , delta = c(
+    dz_to_f(otm1_dz, unique(rho)) * 2
+    , dz_to_f(otm1_dz2, unique(rho)) * 2
+  )
+  , power = rep(c("0.95", "0.80"), each = length(rho)/2)
+) %>% 
+  mutate(power = relevel(factor(power), "0.95")) %>% 
+  ggplot(aes(x = rho, y = delta, color = power, group = power)) +
+  geom_line() +
+  scale_color_viridis_d(end = 0.8) +
+  labs(
+    x = bquote("Correlation between learning blocks ["*rho*"]")
+    , y = bquote("Cohen's"~delta)
+    , color = bquote("Power"~"["*1 - beta*"]")
+  ) +
+  theme_apa(box = TRUE) + 
+  theme(
+    panel.grid.major.x = element_line()
+    , panel.grid.major.y = element_line()
+    , panel.grid.minor.x = element_line()
+    , panel.grid.minor.y = element_line()
+    , legend.position = c(0.99, 0.99)
+    , legend.justification = c(1, 1)
+    , legend.background = element_rect(fill = scales::alpha("white", 0.5))
+  )
+```
+
+
+# OTM 2
+
+<!--
+
+```{r}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+The following gives the senseitivity analyses for the three-way interaction.
+Because `superpower` only allows for power analyses, I manually estimated the effect size that yields approximately 95% power.
+
+```{r}
+contrast_codes <- tibble::tibble(
+  a = rep(contr.sum(2), 4)
+  , b = rep(rep(contr.sum(2), each = 2), 2)
+  , c = rep(contr.sum(2), each = 4)
+  , x2 = a*c * -1
+  , x3 = a*b*c * -1
+)
+
+f <- 0.0807625
+mu <- contrast_codes$x3 * f
+n <- 125
+sd <- 1
+r <- 0.5
+alpha_level <- 0.05
+
+string = "2w*2b*2b"
+labelnames <- c("block", "1", "2", "order", "p-n", "n-p", "time", "13", "20")
+
+design_result <- ANOVA_design(
+  design = string
+  , n = n
+  , mu = mu
+  , sd = 1
+  , r = r
+  , labelnames = labelnames
+)
+
+otm2_power <- ANOVA_exact(
+  design_result
+  , alpha_level = alpha_level
+  , emm = TRUE
+  , verbose = FALSE
+  , contrast_type = "pairwise"
+  , emm_comp = "block | time * order"
+)
+
+otm2_power$main_results
+```
+
+Thus, we have 95% power to detect a three-way interaction between *order*, *block*, and *presentation time* of $f = `r round(f, 2)`$ ($d = `r round(2*f, 2)`$).
+
+The two-way interaction contrasts the same number of cells and participants and, thus, we have the same power here.
+
+```{r}
+f <- 0.0807625
+mu <- contrast_codes$x2 * f
+
+design_result <- ANOVA_design(
+  design = string
+  , n = n
+  , mu = mu
+  , sd = 1
+  , r = r
+  , labelnames = labelnames
+)
+
+otm2_power <- ANOVA_exact(
+  design_result
+  , alpha_level = alpha_level
+  , emm = TRUE
+  , verbose = FALSE
+  , contrast_type = "pairwise"
+  , emm_comp = "block | time"
+)
+
+otm2_power$main_results
+```
+
+For example, we have 95% power to detect a two-way interaction between *block*, and *presentation time* of $f = `r round(f, 2)`$ ($d = `r round(2*f, 2)`$).
+
+If we want to test the *block* effects (collapsed across *order*) separately for each presentation time, we get different sensitivities depending on whether we perform correction for multiple comparisons.
+
+```{r}
+f <- 0.104169
+mu <- contrast_codes$x2 * f
+
+design_result <- ANOVA_design(
+  design = string
+  , n = n
+  , mu = mu
+  , sd = 1
+  , r = r
+  , labelnames = labelnames
+)
+
+otm2_power <- ANOVA_exact(
+  design_result
+  , alpha_level = alpha_level
+  , emm = TRUE
+  , verbose = FALSE
+  , contrast_type = "pairwise"
+  , emm_comp = "block | time"
+)
+
+emmeans_power(otm2_power$emmeans$contrasts, alpha_level = 0.1)
+```
+
+Without correction, we have 95% power to detect a block effect within *presentation times* of $f = `r round(f, 2)`$ ($d = `r round(2*f, 2)`$).
+
+```{r}
+f <- 0.1142145
+mu <- contrast_codes$x2 * f
+
+design_result <- ANOVA_design(
+  design = string
+  , n = n
+  , mu = mu
+  , sd = 1
+  , r = r
+  , labelnames = labelnames
+)
+
+otm2_power <- ANOVA_exact(
+  design_result
+  , alpha_level = alpha_level
+  , emm = TRUE
+  , verbose = FALSE
+  , contrast_type = "pairwise"
+  , emm_comp = "block | time"
+)
+
+emmeans_power(otm2_power$emmeans$contrasts, alpha_level = 0.05)
+```
+
+With bonferroni correction, we have 95% power to detect a block effect within *presentation times* of $f = `r round(f, 2)`$ ($d = `r round(2*f, 2)`$).
+
+In case presentation time has no effect, we can collapse across presentation durations.
+
+```{r}
+f <- 0.0736605
+mu <- contrast_codes$x2 * f
+
+design_result <- ANOVA_design(
+  design = string
+  , n = n
+  , mu = mu
+  , sd = 1
+  , r = r
+  , labelnames = labelnames
+)
+
+otm2_power <- ANOVA_exact(
+  design_result
+  , alpha_level = alpha_level
+  , emm = TRUE
+  , verbose = FALSE
+  , contrast_type = "pairwise"
+  , emm_comp = "block | time"
+)
+
+custom_contrast <- contrast(
+  emmeans(
+      otm2_power$emmeans$emmeans
+      , specs = ~ time * block
+  )
+  , list(block_effect = c(-0.5, 0.5, 0.5, -0.5))
+)
+
+emmeans_power(custom_contrast, alpha_level = 0.1)
+```
+
+Here, we have 95% power to detect a block effect of $f = `r round(f, 2)`$ ($d = `r round(2*f, 2)`$).
+
+
+## Time x Measure x Block
+
+Because `superpower` only allows for power analyses, I manually determined the sample size that yields approximately 95% power.
+The following assumes that we are not interested in the effect of the counterbalancing factor *order*.
+
+```{r fig.width = 7, fig.height = 7}
+contrast_codes <- tibble::tibble(
+  time = rep(contr.sum(2), 4)
+  , block = rep(rep(contr.sum(2), each = 2), 2)
+  , measure = rep(contr.sum(2), each = 4)
+  , time_block = time * block
+  , time_measure = time * measure
+  , block_measure = block * measure
+  , time_block_measure = time * block * measure
+)
+
+f <- 0.5
+mu <- with(
+  contrast_codes
+  , block * f +
+    block_measure * f + 
+    -time_block * 0.25*f + 
+    time_block_measure * 0.25*f
+)
+n <- 68
+# r <- 0.5
+alpha_level <- 0.05
+
+eval_reliability <- 0.8
+iat_reliability <- 0.5
+measure_cor <- 0.8 * sqrt(eval_reliability * iat_reliability)
+
+string <- "2w*2w*2b"
+labelnames <- c("measure", "eval", "iat", "block", "1", "2", "time", "13", "20")
+
+eval_cor_mat <- iat_cor_mat <- inter_cor_mat <- diag(4)
+triangular <- c(0, 1, 0, 0, 1, 0)
+
+eval_cor_mat[upper.tri(eval_cor_mat)] <- triangular * -eval_reliability
+eval_cor_mat[lower.tri(eval_cor_mat)] <- triangular * -eval_reliability
+iat_cor_mat[upper.tri(eval_cor_mat)] <- triangular * -iat_reliability
+iat_cor_mat[lower.tri(eval_cor_mat)] <- triangular * -iat_reliability
+
+inter_cor_mat <- inter_cor_mat * measure_cor
+inter_cor_mat[upper.tri(eval_cor_mat)] <- triangular * -measure_cor
+inter_cor_mat[lower.tri(eval_cor_mat)] <- triangular * -measure_cor
+
+cor_mat <- rbind(cbind(eval_cor_mat, inter_cor_mat), cbind(inter_cor_mat, iat_cor_mat))
+
+design_result <- ANOVA_design(
+  design = string
+  , n = n
+  , mu = mu
+  , sd = 1
+  , r = 0.5
+  , labelnames = labelnames
+)
+dimnames(cor_mat) <- dimnames(design_result$cor_mat)
+
+design_result <- ANOVA_design(
+  design = string
+  , n = n
+  , mu = mu
+  , sd = 1
+  , r = cor_mat
+  , labelnames = labelnames
+)
+
+otm2_power <- ANOVA_exact(
+  design_result
+  , alpha_level = alpha_level
+  , emm = TRUE
+  , verbose = FALSE
+  , contrast_type = "pairwise"
+  , emm_comp = "block | time * measure"
+)
+
+otm1_observed_plot <- readRDS("../../otm1/results/data_processed/otm1_attitudes_cleaned.rds") %>%
+    mutate(
+      Block = ifelse(ValenceBlock == "Negative-positive", 3 - as.numeric(as.character(Block)), Block) %>% factor
+    ) %>%
+    select(-ValenceBlock) %>%
+    mutate(Rating = scale(Eval) %>% as.vector, `IAT score` = scale(IATscore) %>% as.vector) %>%
+    gather("Measure", "Attitude", Rating, `IAT score`) %>% 
+    mutate(Measure = factor(Measure)) %>%
+    ggplot(aes(x = Block, y = Attitude)) +
+      stat_summary(fun.data = mean_cl_normal) +
+      facet_grid("" ~ Measure) +
+      coord_cartesian(ylim = c(-1.25, 1.25)) +
+      theme_bw() +
+      ggtitle("Results of Experiment 1")
+
+otm2_expected_plot <- otm2_power$dataframe %>% 
+  mutate(
+    measure = ifelse(measure == "measure_eval", "Rating", "IAT score")
+    , block = ifelse(block == "block_1", "1", "2")
+    , time = ifelse(time == "time_13", "13 ms", "20 ms")
+  ) %>%
+  ggplot(aes(x = block, y = y)) +
+    stat_summary(fun.data = mean_cl_normal) +
+    facet_grid(time ~ measure) +
+    coord_cartesian(ylim = c(-1.25, 1.25)) +
+    theme_bw() +
+    ggtitle("Assumed for power analysis") +
+    labs(x = "Block", y = "Attitude")
+
+plot_grid(
+  otm1_observed_plot
+  , otm2_expected_plot
+  , ncol = 1
+  , rel_heights = c(1, 1.5)
+)
+
+otm2_power$main_results
+```
+
+Thus, we have 95% power to detect a three-way interaction between *measure*, *block*, and *presentation time* of $f = `r round(0.25*f, 2)`$ ($d = `r round(2*0.25*f, 2)`$) and more than 95% power to detect a two-way interaction between *measure*, *block* of $f = `r round(f, 2)`$ ($d = `r round(f, 2)`$) for $n = `r n`$ ($N = `r 2*n`$).
+These results are, of course, contigent on the assumed reliabilities of the rating measure ($r = `r #round(eval_reliability, 2)`$), the IAT score ($r = `r #round(iat_reliability, 2)`$), and the correlation among the two measures ($r = `r #round(measure_cor, 2)`$; $r = 0.8$ unattenuated).
+
+If we want to test the *block* effects (collapsed across *order*) separately for each presentation time and measure, we get different sensitivities depending on whether we perform correction for multiple comparisons.
+
+Without Bonferroni-correction:
+
+```{r}
+otm2_power$emmeans$contrasts
+
+emmeans_power(otm2_power$emmeans$contrasts, alpha_level = 0.1)
+```
+
+If we want 80% power for the IAT effect here, we would need $n = 75$ ($N = 150$).
+For 95% we need $n = 131$ ($N = 262$).
+
+With Bonferroni-correction
+
+```{r}
+emmeans_power(otm2_power$emmeans$contrasts, alpha_level = 0.05)
+```
+
+If we want 80% power for the IAT effect here, we would need $n = 96$ ($N = 192$).
+For 95% we need $n = 157$ ($N = 314$).
+
+In case presentation time has no effect, we can collapse across presentation times:
+
+```{r}
+custom_contrast <- contrast(
+  emmeans(
+      otm2_power$emmeans$emmeans
+      , specs = ~ time * measure * block
+  )
+  , list(
+      eval_block_effect = c(0.5, 0.5, 0, 0, -0.5, -0.5, 0, 0)
+      , iat_block_effect = c(0, 0, -0.5, 0.5, 0, 0, 0.5, -0.5)
+  )
+)
+
+emmeans_power(custom_contrast, alpha_level = 0.1)
+```
+
+
+## Time x Order x Block
+
+```{r eval = TRUE}
+knitr::opts_chunk$set(eval = TRUE)
+```
+
+-->
+
+## By measure
+
+Because `Superpower` only allows for power analyses, I manually determined the sample size that yields approximately 95% power.
+The following assumes that we are not interested in the effect of the counterbalancing factor *order*.
+
+```{r}
+otm2_power <- function(f, n, rm_cor = 0.5, alpha = 0.05) {
+  contrast_codes <- tibble::tibble(
+    time = rep(contr.treatment(2), 4)
+    , order = rep(rep(contr.sum(2), each = 2), 2)
+    , block = rep(contr.sum(2), each = 4)
+    , time_block = time * block
+    , time_order = time * order
+    , block_order = block * order
+    , time_block_order = time * block * order
+  )
+  
+  mu <- with(
+    contrast_codes
+    , -order * 0.25*f +
+      -block_order * f
+  )
+  
+  string <- "2w*2b*2b"
+  labelnames <- c("block", "1", "2", "order", "p-n", "n-p", "time", "13", "20")
+  
+  design_result <- ANOVA_design(
+    design = string
+    , n = n
+    , mu = mu
+    , sd = 1
+    , r = rm_cor
+    , labelnames = labelnames
+  )
+  
+  ANOVA_exact(
+    design_result
+    , alpha_level = alpha_level
+    , emm = TRUE
+    , verbose = FALSE
+    , contrast_type = "pairwise"
+    , emm_comp = "block | time * order"
+  )
+}
+
+
+otm2_n <- 320/4
+
+# 95% power
+otm2_pes <- 0.02027
+otm2_dz <- pes_to_dz(otm2_pes, otm2_n, n_groups = 4)
+rho <- 0.5
+f <- dz_to_f(otm2_dz, rho)
+
+
+otm2_int_power <- otm2_power(f = f, n = otm2_n, rm_cor = rho, alpha = 0.05)
+
+otm1_observed <- readRDS("../../otm1/results/data_processed/otm1_attitudes_cleaned.rds") %>%
+    mutate(`IAT score` = scale(IATscore) %>% as.vector)
+
+otm1_observed_iat_plot <- otm1_observed %>%
+  ggplot(aes(x = Block, y = `IAT score`, color = ValenceBlock, group = ValenceBlock)) +
+    stat_summary(fun.y = mean, geom = "line") +
+    stat_summary(fun.data = mean_cl_normal) +
+    facet_grid(~ "24/27ms") +
+    theme_bw() +
+    ggtitle("Results of Experiment 1")
+
+otm2_expected_plot <- otm2_int_power$dataframe %>%
+  mutate(
+    order = ifelse(order == "order_n-p", "Negative-positive", "Positive-negative")
+    , block = ifelse(block == "block_1", "1", "2")
+    , time = ifelse(time == "time_13", "13 ms", "20 ms")
+  ) %>%
+  ggplot(aes(x = block, y = y, color = order, group = order)) +
+    stat_summary(fun.y = mean, geom = "line") +
+    stat_summary(fun.data = mean_cl_normal) +
+    coord_cartesian(ylim = c(-0.6, 0.6)) +
+    facet_grid(~ time) +
+    guides(color = FALSE) +
+    ggtitle("Assumed for power analysis") +
+    labs(x = "Block", y = "Attitude") +
+    theme_bw()
+
+plot_grid(
+  otm1_observed_iat_plot
+  , otm2_expected_plot
+  , ncol = 2
+)
+```
+
+```{r}
+# 95% power
+otm2_pes <- 0.03973071
+otm2_dz <- pes_to_dz(otm2_pes, otm2_n, n_groups = 4)
+# rho <- 0.5
+# f <- dz_to_f(otm2_dz, rho)
+# 
+# otm2_contrast_power <- otm2_power(f = f, n = otm2_n, rm_cor = rho)$emmeans$contrasts %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm2_contrast_power
+
+
+# 80% power
+otm2_pes2 <- 0.0243813
+otm2_dz2 <- pes_to_dz(otm2_pes2, otm2_n, n_groups = 4)
+# f <- dz_to_f(otm2_dz2, rho)
+# 
+# otm2_contrast_power2 <- otm2_power(f = f, n = otm2_n, rm_cor = rho)$emmeans$contrasts %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm2_contrast_power2
+```
+
+
+```{r}
+# 95% power
+otm2_dz_between_collapsed <- f_to_dz(dz_to_f(otm2_dz, rho) / sqrt(2), rho)
+otm2_pes_between_collapsed <- dz_to_pes(otm2_dz_between_collapsed, otm2_n, n_groups = 4)
+# f <- dz_to_f(otm2_dz_between_collapsed, rho)
+# 
+# otm2_time_collapsed_contrast_power <- otm2_power(f = f, n = otm2_n, rm_cor = rho)$emmeans$emmeans %>%
+#   emmeans(specs = ~ block | order) %>%
+#   pairs %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm2_time_collapsed_contrast_power
+
+# 80% power
+otm2_dz2_between_collapsed <- f_to_dz(dz_to_f(otm2_dz2, rho) / sqrt(2), rho)
+otm2_pes2_between_collapsed <- dz_to_pes(otm2_dz2_between_collapsed, otm2_n, n_groups = 4)
+# f <- dz_to_f(otm2_dz2_between_collapsed, rho)
+# 
+# otm2_time_collapsed_contrast_power2 <- otm2_power(f = f, n = otm2_n, rm_cor = rho)$emmeans$emmeans %>%
+#   emmeans(specs = ~ block | order) %>%
+#   pairs %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm2_time_collapsed_contrast_power2
+```
+
+
+```{r}
+# (Same results apply to two-way and three-way interaction)
+
+# 95% power
+otm2_dz_collapsed <- f_to_dz(dz_to_f(otm2_dz, rho) / sqrt(4), rho)
+otm2_pes_collapsed <- dz_to_pes(otm2_dz_collapsed, otm2_n, n_groups = 4)
+# f <- dz_to_f(otm2_dz_collapsed, rho)
+# 
+# otm2_collapsed_contrast_power <- otm2_power(f = f, n = otm2_n, rm_cor = rho)$emmeans$emmeans %>%
+#   emmeans(specs = ~ block * order) %>%
+#   contrast(method = list(collapsed = c(-0.5, 0.5, 0.5, -0.5))) %>%
+#   emmeans_power(alpha_level = 0.05)
+# otm2_collapsed_contrast_power
+
+# 80% power
+otm2_dz2_collapsed <- f_to_dz(dz_to_f(otm2_dz2, rho) / sqrt(4), rho)
+otm2_pes2_collapsed <- dz_to_pes(otm2_dz2_collapsed, otm2_n, n_groups = 4)
+# f <- dz_to_f(otm2_dz2_collapsed, rho)
+# 
+# otm2_collapsed_contrast_power2 <- otm2_power(f = f, n = otm2_n, rm_cor = rho)$emmeans$emmeans %>%
+#   emmeans(specs = ~ block * order) %>%
+#   contrast(method = list(collapsed = c(-0.5, 0.5, 0.5, -0.5))) %>%
+#   emmeans_power(alpha_level = 0.05)
+# otm2_collapsed_contrast_power2
+```
+
+(ref:otm2-pes-plot) Sensitivity curves for OTM2.
+The simple contrast is the comparison of the two learning blocks within each *presentation duration*-*valence order* combination (not adjusted for multiple comparisons).
+Collapsed sensitivity curves apply to contrasts where data are pooled across either *presentation duration* or *valence order* (valence orders are pooled by reverse coding one order).
+$\eta^2_p$-values in the represent effect sizes corresponding to 95% and 80% power.
+The grey dashed line at the top represents the smallest *learning block* difference reported by Rydell et al. (2006).
+<!-- The power to detect a two-way or three-way interaction is the same as the collapsed once contrast. -->
+
+```{r otm2-pes-plot, fig.width = 7, fig.height = 4, fig.cap = ""}
+rydell_power_curve <- tibble(
+  rho = seq(-1, 1, length.out = 100)
+  , delta = c(
+    dz_to_f(rydell_dz, unique(rho)) * 2
+    # dz_to_f(mean(heycke_dz), unique(rho)) * 2
+  )
+  , power = NA
+)
+
+otm1_power_curve <- tibble(
+  rho = rep(seq(-1, 1, length.out = 100), 2)
+  , delta = c(
+    dz_to_f(otm1_dz, unique(rho)) * 2
+    , dz_to_f(otm1_dz2, unique(rho)) * 2
+  )
+  , power = rep(c("0.95", "0.80"), each = length(rho)/2)
+)
+
+tibble(
+  rho = rep(seq(-1, 1, length.out = 100), 2)
+  , otm2_delta_simple = c(
+    dz_to_f(otm2_dz, unique(rho)) * 2
+    , dz_to_f(otm2_dz2, unique(rho)) * 2
+  )
+  , otm2_delta_between_collapsed = c(
+    dz_to_f(otm2_dz_between_collapsed, unique(rho)) * 2
+    , dz_to_f(otm2_dz2_between_collapsed, unique(rho)) * 2
+  )
+  , otm2_delta_collapsed = c(
+    dz_to_f(otm2_dz_collapsed, unique(rho)) * 2
+    , dz_to_f(otm2_dz2_collapsed, unique(rho)) * 2
+  )
+  , power = rep(c("0.95", "0.80"), each = length(rho)/2)
+) %>% 
+  pivot_longer(cols = matches("otm"), names_to = "contrast", values_to = "delta") %>%
+  mutate(
+    power = relevel(factor(power), "0.95")
+    , contrast = gsub("otm2_delta_", "", contrast)
+    , contrast = gsub("_", " ", contrast)
+    , contrast = factor(contrast, levels = c("simple", "between collapsed", "collapsed"))
+  ) %>% 
+  ggplot(aes(x = rho, y = delta, color = contrast, group = interaction(power, contrast), linetype = power)) +
+  # ggplot(aes(x = rho, y = delta, color = power, group = power)) +
+  # geom_line(data = otm1_power_curve, aes(group = power, linetype = power, color = "simple"), alpha = 0.3) +
+  geom_line(data = rydell_power_curve, aes(group = power), color = grey(0.8), linetype = "dashed") +
+  geom_line() +
+  scale_color_viridis_d(
+    end = 0.8
+    , labels = c(
+      bquote("Simple                 "~delta[z] %in% "{"*.(printnum(otm2_dz))*", "*.(printnum(otm2_dz2))*"}")
+      , bquote("Collapsed once   "~delta[z] %in% "{"*.(printnum(otm2_dz_between_collapsed))*", "*.(printnum(otm2_dz2_between_collapsed))*"}")
+      , bquote("Collapsed twice   "~delta[z] %in% "{"*.(printnum(otm2_dz_collapsed))*", "*.(printnum(otm2_dz2_collapsed))*"}")
+    )
+  ) +
+  ylim(c(0, 1)) +
+  labs(
+    x = bquote("Correlation between learning blocks ["*rho*"]")
+    , y = bquote("Learning block difference [Cohen's"~delta*"]")
+    , color = "Contrast"
+    , linetype = bquote("Power"~"["*1 - beta*"]")
+  ) +
+  theme_apa(box = TRUE) + 
+  theme(
+    panel.grid.major.x = element_line()
+    , panel.grid.major.y = element_line()
+    , panel.grid.minor.x = element_line()
+    , panel.grid.minor.y = element_line()
+    # , legend.position = c(0.99, 0.99)
+    # , legend.justification = c(1, 1)
+    # , legend.background = element_rect(fill = scales::alpha("white", 0.5))
+  )
+```
+
+### Sensitivty for omnibus-tests
+
+```{r}
+# Main effect block and three-way interaction
+otm2_power <- function(f, n, rm_cor = 0.5, alpha = 0.05) {
+  contrast_codes <- tibble::tibble(
+    time = rep(contr.treatment(2), 4)
+    , order = rep(rep(contr.sum(2), each = 2), 2)
+    , block = rep(contr.sum(2), each = 4)
+    , time_block = time * block
+    , time_order = time * order
+    , block_order = block * order
+    , time_block_order = time * block * order
+  )
+  
+  mu <- with(
+    contrast_codes
+    , #-order * 0.25*f +
+      -block_order * f +
+      -block * 0.5 * f +
+      time_block_order * f
+  )
+  
+  string <- "2w*2b*2b"
+  labelnames <- c("block", "1", "2", "order", "p-n", "n-p", "time", "13", "20")
+  
+  design_result <- ANOVA_design(
+    design = string
+    , n = n
+    , mu = mu
+    , sd = 1
+    , r = rm_cor
+    , labelnames = labelnames
+  )
+  
+  ANOVA_exact(
+    design_result
+    , alpha_level = alpha_level
+    , emm = FALSE
+    , verbose = FALSE
+  )
+}
+
+
+otm2_n <- 320/4
+
+# 95% power
+otm2_pes <- 0.03973071
+otm2_dz <- pes_to_dz(otm2_pes, otm2_n, n_groups = 4)
+rho <- 0.5
+f <- dz_to_f(otm2_dz, rho)
+
+
+otm2_time_power <- otm2_power(f = f, n = otm2_n, rm_cor = rho, alpha = 0.05)
+otm2_time_power$main_result
+
+# otm2_time_power$dataframe %>%
+#   mutate(
+#     order = ifelse(order == "order_n-p", "Negative-positive", "Positive-negative")
+#     , block = ifelse(block == "block_1", "1", "2")
+#     , time = ifelse(time == "time_13", "13 ms", "20 ms")
+#   ) %>%
+#   ggplot(aes(x = block, y = y, color = order, group = order)) +
+#   stat_summary(fun.y = mean, geom = "line") +
+#   stat_summary(fun.data = mean_cl_normal) +
+#   coord_cartesian(ylim = c(-0.6, 0.6)) +
+#   facet_grid(~ time) +
+#   guides(color = FALSE) +
+#   ggtitle("Assumed for power analysis") +
+#   labs(x = "Block", y = "Attitude") +
+#   theme_bw()
+
+otm2_dz_block <- f_to_dz(0.5*f, rho = 0.5)
+otm2_pes_block <- dz_to_pes(otm2_dz_block, otm2_n, n_groups = 4)
+
+otm2_dz_int <- f_to_dz(f, rho = 0.5)
+otm2_pes_int <- dz_to_pes(otm2_dz_int, otm2_n, n_groups = 4)
+```
+

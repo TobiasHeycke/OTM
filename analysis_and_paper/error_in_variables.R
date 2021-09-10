@@ -20,7 +20,7 @@
 # library("numDeriv")
 
 ## only needed for simulations:
-#library("parallel")
+# library("parallel")
 
 ### Log-likelihood function on p. 258
 eiv_loglik <- function(par, dv, iv, const=1e20) {
@@ -288,19 +288,23 @@ gen <- function(n, par){
 }
 
 ### Replication function for simulation
-replication <- function(i){
+replication <- function(i) {
   sim <- gen(n, par)
-  mod <- eiv_lm(sim, par)
-  mod$estimate
+  eiv_mod <- eiv_lm(y ~ x, data = sim, start = par)
+  lm_mod <- lm(y ~ x, data = sim)
+  rbind(
+    cbind(mod = "eiv", i = i, summary(eiv_mod)[, c("term", "estimate", "p.value")])
+    , cbind(mod = "lm", i = i, broom::tidy(lm_mod)[, c("term", "estimate", "p.value")])
+  )
 }
 
-################################################################################
-# 
-# ### Example in Klauer (1998, Table 1)
+# ################################################################################
+# # 
+# # ### Example in Klauer (1998, Table 1)
 # n <- 1431
 # par <- c(mu=-.2, sigma=1.67, sx=.8, sy=.27, beta=.02, alpha=.000)
 # sim <- gen(n, par)
-
+# 
 # # Check summary statistics on p. 259
 # mean(sim$y)
 # sd(sim$y)
@@ -315,24 +319,44 @@ replication <- function(i){
 # mod <- eiv_lm(y ~ x, sim, par)
 # 
 # # Check Table 1
-# cbind(true=par, est=mod$est, se=mod$se,
-#       lm=c(NA, NA, NA, NA, coef(reg)))
-
-################################################################################
+# cbind(true=par, est=mod$est, se=mod$std.err,
+#       lm.est=c(NA, NA, NA, NA, coef(reg)), lm.se = c(NA, NA, NA, NA, summary(reg)$coefficients[, 2]))
+# 
+# ###############################################################################
 # 
 # ### Simulation in Klauer (1998, Table 2)
-# cl <- makeCluster(8)
-# tmp <- clusterEvalQ(cl, {library("minqa"); library("numDeriv")})
-# clusterExport(cl, c("fit", "gen", "eiv_loglik", "n", "par"))
-# simulation <- parSapply(cl, 1:300, replication)
+# n_sim <- 50000 / detectCores()
+# 
+# cl <- makeCluster(detectCores())
+# tmp <- clusterEvalQ(cl, {library("minqa"); library("numDeriv"); library("broom")})
+# clusterExport(cl, c("eiv_lm", "eiv_loglik", "summary.eiv_lm", "gen", "n", "par"))
+# simulation <- parLapply(cl, 1:n_sim, replication)
 # stopCluster(cl)
 # 
+# simulation <- do.call("rbind", simulation)
+# 
 # # Check Table 2 (values are multiplied by 100)
-# cbind("true"=par*100,
-#       "mean"=rowMeans(simulation)*100,
-#       "MSE"=rowMeans(((simulation-par)*100)^2))
-
-
-
-
-
+# library("dplyr")
+# 
+# simulation %>% 
+#   mutate(true = rep(par[c("alpha", "beta")], 2*n_sim)) %>% 
+#   group_by(mod, term) %>% 
+#   summarize(true = mean(true) * 100, mean = mean(estimate, na.rm = TRUE) *100, mse = mean(((estimate*100-true))^2, na.rm = TRUE), sig = mean(p.value < 0.05, na.rm = TRUE), na = mean(is.na(p.value)))
+# 
+# 
+# 
+# # Smaller sample size
+# n <- 100
+# 
+# cl <- makeCluster(detectCores())
+# tmp <- clusterEvalQ(cl, {library("minqa"); library("numDeriv"); library("broom")})
+# clusterExport(cl, c("eiv_lm", "eiv_loglik", "summary.eiv_lm", "gen", "n", "par"))
+# simulation <- parLapply(cl, 1:n_sim, replication)
+# stopCluster(cl)
+# 
+# simulation <- do.call("rbind", simulation)
+# 
+# simulation %>% 
+#   mutate(true = rep(par[c("alpha", "beta")], 2*n_sim)) %>% 
+#   group_by(mod, term) %>% 
+#   summarize(true = mean(true) * 100, mean = mean(estimate, na.rm = TRUE) *100, mse = mean(((estimate*100-true))^2, na.rm = TRUE), sig = mean(p.value < 0.05, na.rm = TRUE), na = mean(is.na(p.value)))

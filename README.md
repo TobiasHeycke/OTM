@@ -1,7 +1,7 @@
 
 # Of Two Minds: A registered replication
 
-Tobias Heycke<sup>†,1,2</sup>, Frederik Aust<sup>†,1,9</sup>, Mahzarin
+Frederik Aust<sup>†,1,9</sup>, Tobias Heycke<sup>†,1,2</sup>, Mahzarin
 R. Banaji<sup>3</sup>, Jeremy Cone<sup>8</sup>, Pieter Van
 Dessel<sup>5</sup>, Melissa J. Ferguson<sup>10</sup>, Xiaoqing
 Hu<sup>6</sup>, Congjiao Jiang<sup>4</sup>, Benedek
@@ -16,12 +16,10 @@ Institute for the Social Sciences <sup>3</sup> Harvard University
 <sup>8</sup> Williams College <sup>9</sup> University of Amsterdam
 <sup>10</sup> Yale University
 
-<sup>†</sup> Tobias Heycke and Frederik Aust contributed equally to this
+<sup>†</sup> Frederik Aust and Tobias Heycke contributed equally to this
 work.
 
------
-
-## Abstract
+------------------------------------------------------------------------
 
 Several dual-process theories of evaluative learning posit two distinct
 implicit (or automatic) and explicit (or controlled) evaluative learning
@@ -39,7 +37,7 @@ this finding may not be replicable. Given its theoretical importance, we
 report two new replication attempts (n = 153 recruited in Belgium,
 Germany and the USA; n = TBD recruited in Hong Kong and the USA).
 
------
+------------------------------------------------------------------------
 
 This repository research products associated with the publication. We
 provide the experimental software and stimulus material that we are
@@ -58,11 +56,11 @@ is provided in `otm1/preregistration`.
 
 Data were collected at various locations (see paper).
 
-| Study        | Data collection period  |
-| ------------ | ----------------------- |
-| `otm1`       | 2014-05-13 - 2014-05-23 |
-| `otm2pilot`  | 2014-05-13 - 2014-05-23 |
-| `otm2pilot2` | 2014-05-13 - 2014-05-23 |
+| Study        | Data collection period |
+|--------------|------------------------|
+| `otm1`       |                        |
+| `otm2pilot`  |                        |
+| `otm2pilot2` |                        |
 
 For a description of all data sets and all variables, please see the
 file `codebook.md` in this folder.
@@ -81,12 +79,12 @@ in the same folder as the python script to run the experiment.
 ### Screen recordings
 
 To give a vivid impression of the experimental procedure, an examplary
-screen recording of the procedure is available under `otm1` \>
+screen recording of the procedure is available under `otm1` &gt;
 `screen-recordings`.
 
-  - otm\_1\_sr\_complete.mp4: An example of the full procedure (please
+-   otm\_1\_sr\_complete.mp4: An example of the full procedure (please
     note that this is not a recording of any of the participants)
-  - otm\_1\_sr\_overview.mp4: A shorted version of the video to give a
+-   otm\_1\_sr\_overview.mp4: A shorted version of the video to give a
     brief overview of all parts of the procedure (please note that the
     video does not reflect the actual procedure)
 
@@ -117,17 +115,19 @@ Data: [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)
 
 Material:
 
-  - Experimental software:
+-   Experimental software:
     [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)
-  - Stimulus material:
+-   Stimulus material:
     [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/)
 
 ## Contact
 
-Tobias Heycke
+Frederik Aust
 
-P.O. 122155
+Herbert-Lewin-Str. 2
 
-68072 Mannheim Germany
+50931 Cologne
 
-E-mail: <tobias.heycke@gesis.org> / <tobias.heycke@gmail.com>
+Germany
+
+E-mail: <frederik.aust@uni-koeln.de>

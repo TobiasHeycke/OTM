@@ -43,7 +43,7 @@ def getList (listname):
     wordList = []
     for eachLine in range(len(listname)) :
         currentWord = listname[eachLine][:-1]
-        wordList.append(currentWord) 
+        wordList.append(currentWord)
     return wordList
 
 # Function reading txt files and saves each line as one element in list (able to use all utf 8 symbols)
@@ -56,7 +56,7 @@ def ReadTxt(File, remove):
     l = []
     for eachLine in range(len(tL[0])) :
         currentWord = tL[0][eachLine][:remove]
-        l.append(currentWord) 
+        l.append(currentWord)
     return(l)
 
 #function used for instruction: disyplays text on a page and continues when space is pressed
@@ -111,7 +111,7 @@ def trial(prime, bob, bobName, behavior, Valence):
     instruction_key_d.draw()
     instruction_key_k.draw()
     window.flip()
-    timer.reset() 
+    timer.reset()
     response = event.waitKeys(keyList = ('c', 'u', "1")) #, timeStamped=clock
     responseNumber = response[0][0]
     TrialRT = timer.getTime()
@@ -119,9 +119,9 @@ def trial(prime, bob, bobName, behavior, Valence):
     #check if experiment should be aborted
     if responseNumber == "1":
         outputFile = open('./data/AbortMassage_OTM_'+str(ParticipantNumber)+'.dat', 'a') #Save create a txt and participantnumber in it
-        outputFile.write("%s\t%s" % ("This participant pressed the 1 key during the learning phase", timeStamp)) 
+        outputFile.write("%s\t%s" % ("This participant pressed the 1 key during the learning phase", timeStamp))
         outputFile.close()
-        core.quit() 
+        core.quit()
     #now check if answer was correct and give feedback
     if Block == 1 and ValenceBlock == 1 and Valence == "pos" and responseNumber == "c":
         posFeedback()
@@ -150,7 +150,7 @@ def trial(prime, bob, bobName, behavior, Valence):
 def liking1(InstructionLiking1):
     myRatingScale = visual.RatingScale(window, low= 1, high=9, skipKeys=None, stretch = 1.4, scale = ('Very Unlikable                             \t\t\t\t\t\t\t\t                           Very Likable'), \
     textSize = 0.4, size = 1.55, textColor = 'white', lineColor = 'white', showValue=False, pos=[0,-30], \
-    tickMarks=[1, 2, 3, 4, 5, 6, 7, 8, 9], labels=["1", "2", "3", "4", "5", "6", "7", "8", "9"], acceptPreText  = "Please, click on the line", acceptText = "Accept", acceptSize = 2.2, mouseOnly = True) 
+    tickMarks=[1, 2, 3, 4, 5, 6, 7, 8, 9], labels=["1", "2", "3", "4", "5", "6", "7", "8", "9"], acceptPreText  = "Please, click on the line", acceptText = "Accept", acceptSize = 2.2, mouseOnly = True)
     instr = visual.TextStim(window, text=InstructionLiking1, pos = (0, 50), color = 'white')
     while myRatingScale.noResponse:
         instr.draw()
@@ -166,26 +166,26 @@ def liking1(InstructionLiking1):
 def liking2(InstructionLiking2):
     myRatingScale1 = visual.RatingScale(window, low= 1, high=9, skipKeys=None, scale = ("Bad \t\t\t\t\t\t\t\t\t\t Good"), stretch = 1.4, textSize = 0.4, size = 1.2, textColor = 'white', \
     lineColor = 'white', showValue=False, pos=[0,260], tickMarks=[1, 2, 3, 4, 5, 6, 7, 8, 9], labels=["1", "2", "3", "4", "5", "6", "7", "8", "9"], acceptPreText  = "Please, click on the line", acceptText = "Accept", \
-    acceptSize = 2.2, mouseOnly = True, name='gutschlecht') 
-    
+    acceptSize = 2.2, mouseOnly = True, name='gutschlecht')
+
     myRatingScale2 = visual.RatingScale(window, low= 1, high=9, skipKeys=None, scale = ("Mean \t\t\t\t\t\t\t\t\t\t Pleasant"), stretch = 1.4, textSize = 0.4, size = 1.2, textColor = 'white', \
     lineColor = 'white', showValue=False, pos=[0,115], tickMarks=[1, 2, 3, 4, 5, 6, 7, 8, 9], labels=["1", "2", "3", "4", "5", "6", "7", "8", "9"], acceptPreText  = "Please, click on the line", acceptText = "Accept", \
     acceptSize = 2.2, mouseOnly = True, name='freundlichgemein')
-    
+
     myRatingScale3 = visual.RatingScale(window, low= 1, high=9, skipKeys=None, scale = (u"Disagreeable \t\t\t\t\t\t\t\t\t\t Agreeable"), stretch = 1.4, textSize = 0.4, size = 1.2, textColor = 'white', \
     lineColor = 'white', showValue=False, pos=[0,-30], tickMarks=[1, 2, 3, 4, 5, 6, 7, 8, 9], labels=["1", "2", "3", "4", "5", "6", "7", "8", "9"], acceptPreText  = "Please, click on the line", acceptText = "Accept", \
-    acceptSize = 2.2, mouseOnly = True, name='disagreeable') 
-    
+    acceptSize = 2.2, mouseOnly = True, name='disagreeable')
+
     myRatingScale4 = visual.RatingScale(window, low= 1, high=9, skipKeys=None, scale = (u"Uncaring \t\t\t\t\t\t\t\t\t\t Caring"), stretch = 1.4, textSize = 0.4, size = 1.2, textColor = 'white', \
     lineColor = 'white', showValue=False, pos=[0,-175], tickMarks=[1, 2, 3, 4, 5, 6, 7, 8, 9], labels=["1", "2", "3", "4", "5", "6", "7", "8", "9"], acceptPreText  = "Please, click on the line", acceptText = "Accept", \
-    acceptSize = 2.2, mouseOnly = True, name='uncaring') 
-    
+    acceptSize = 2.2, mouseOnly = True, name='uncaring')
+
     myRatingScale5 = visual.RatingScale(window, low= 1, high=9, skipKeys=None, scale = (u"Cruel \t\t\t\t\t\t\t\t\t\t Kind"), stretch = 1.4, textSize = 0.4, size = 1.2, textColor = 'white', \
     lineColor = 'white', showValue=False, pos=[0,-320], tickMarks=[1, 2, 3, 4, 5, 6, 7, 8, 9], labels=["1", "2", "3", "4", "5", "6", "7", "8", "9"], acceptPreText  = "Please, click on the line", acceptText = "Accept", \
-    acceptSize = 2.2, mouseOnly = True, name='cruelkind') 
-    
+    acceptSize = 2.2, mouseOnly = True, name='cruelkind')
+
     instr = visual.TextStim(window, text=InstructionLiking2, pos = (0, 350), color = 'white')
-    
+
     event.clearEvents()
     while myRatingScale1.noResponse or myRatingScale2.noResponse or myRatingScale3.noResponse or myRatingScale4.noResponse or myRatingScale5.noResponse:
         myRatingScale1.draw()
@@ -196,8 +196,8 @@ def liking2(InstructionLiking2):
         instr.draw()
         window.flip()
     return(myRatingScale1.getRating(), myRatingScale2.getRating(), myRatingScale3.getRating(), myRatingScale4.getRating(), myRatingScale5.getRating())
-        
-        
+
+
 # feeling thermomenter question use in explicit ratings
 def liking3(InstructionLiking3):
     Question = visual.TextStim(window, pos=(0, -250), text=InstructionLiking3, color = 'white')
@@ -240,8 +240,8 @@ def liking3(InstructionLiking3):
                 Question.draw()
                 Instruction.draw()
                 window.flip()
-    
-#explicit evaluation block 
+
+#explicit evaluation block
 def likingBlock():
     instructionPage(u"Please answer the following questions about your impressions of Bob on the scales provided on the next pages. \
 We realize that you may not feel completely certain about some of these responses: simply answer them as best as you can. \
@@ -353,9 +353,9 @@ def MemoryTest():
                         if i in memTestDis:
                             c = "falseIdent"
                         cList.append(c)
-                    
+
                     break
-                else: 
+                else:
                     NumberText = visual.TextStim(window, text = u"Please select 20 words! You currently have selected "+str(redCounter)+u" words.", pos = (0, -340), color = "red", height = 12, italic=True)
                     for i, eachWord in enumerate(wordList):
                         word.setPos(CoordinatesList[i])
@@ -423,7 +423,7 @@ def IATTrial(Stim, Cat, Type, key, Instr, B):
     leftInstr.draw()
     rightInstr.draw()
     window.flip()
-    timer.reset() 
+    timer.reset()
     keyPress = event.waitKeys(keyList = ('d', 'k'))
     RT2 = 0
     RT = timer.getTime()
@@ -474,14 +474,14 @@ Press the right key when you see "+IATInstr34[3]+u" word. \n\nAgain, in case you
 Press the left key when a picture of "+IATInstr5[2]+u" appears and the right key when an image of "+IATInstr5[3]+u" appears. \n\n\n*Press space to continue...*")
     instructionPage(u"Please place your index fingers on the *d* and *k* keys and press space to start the task...")
     for SB5, CB5, TB5, kB5 in IATB5:
-        IATTrial(SB5, CB5, TB5, kB5, IATInstr5, 5) 
+        IATTrial(SB5, CB5, TB5, kB5, IATInstr5, 5)
     instructionPage(u"Now you will be asked to work on another double task. In each trial you will either see a picture of a person or a word.\nPlease press the left key when you see "+IATInstr67[2]+u" word. \
 Please press the right key when you see "+IATInstr67[3]+u" word. \n\nAgain, in case you make an error a red *X* appears and you are asked to press the correct key as quickly as possible.\
 \n\n\n*Press space to continue...*")
     instructionPage(u"Please place your index fingers on the *d* and *k* keys and press space to start the task...")
     for SB67, CB67, TB67, kB67 in IATB67:
         IATTrial(SB67, CB67, TB67, kB67, IATInstr67, 67)
-    
+
 #open response function for demographic questions
 def openendedResponse(question, OutputName, bgstim1=None, bgstim2=None):
     #make unders to indicate participants can type and instruction to save answer by pressing return
@@ -498,14 +498,14 @@ def openendedResponse(question, OutputName, bgstim1=None, bgstim2=None):
         for i in range(len(bgstim1)):
             bgstim1[i].draw()
     if bgstim2 != None:
-        for i in range(len(bgstim2)):    
+        for i in range(len(bgstim2)):
             bgstim2[i].draw()
     window.flip()
     #response loop
     response = ''
     lastKey = ''
     keyboardTranslation = {
-    'space' : (' ', ' '), 
+    'space' : (' ', ' '),
     'comma' : (',', '<'),
     'period' : ('.', '>'),
     'slash' : ('/', '?'),
@@ -562,9 +562,9 @@ def openendedResponse(question, OutputName, bgstim1=None, bgstim2=None):
     outputFile = codecs.open('./data/'+OutputName+str(ParticipantNumber)+'.dat', 'a', 'utf-8') #make a separate text document for each participant that saves their responses to the questionnaire
     #typingResponse = True
     while True:
-        
+
         lastKey = event.waitKeys() #save last key participant entered in variable lastKey.
-        
+
         if lastKey[0] == 'lshift' or lastKey[0] == 'rshift':
             shift = True
         elif lastKey[0] == 'backspace':
@@ -582,7 +582,7 @@ def openendedResponse(question, OutputName, bgstim1=None, bgstim2=None):
                 break
         else:
             response = response
-            
+
         #update screen so participants see what they type
         underscore.setText(response + '_')
         openFilmQuestions.draw()
@@ -592,7 +592,7 @@ def openendedResponse(question, OutputName, bgstim1=None, bgstim2=None):
             for i in range(len(bgstim1)):
                 bgstim1[i].draw()
         if bgstim2 != None:
-            for i in range(len(bgstim2)):    
+            for i in range(len(bgstim2)):
                 bgstim2[i].draw()
         window.flip()
 
@@ -676,8 +676,8 @@ BobImageTrials += 100*[BobImage]
 # load lists of behaviors
 # ###########################################################################################################################
 
-negBehav = ReadTxt(File = "negative_behavior.txt", remove = -2)
-posBehav = ReadTxt(File = "positive_behavior.txt", remove = -2)
+negBehav = ReadTxt(File = "negative_behavior.txt", remove = -1)
+posBehav = ReadTxt(File = "positive_behavior.txt", remove = -1)
 
 # shuffle pos and neg list. first 50 elements of both lists are taken as behavior for block 1 - other 50 are taken for block 2
 shuffle(negBehav)
@@ -702,14 +702,14 @@ ValenceTrials += 50*["neg"]+50*["pos"]
 # load lists of primes
 # ###########################################################################################################################
 
-negPrime = ReadTxt(File = "negative_primes.txt", remove = -2)
+negPrime = ReadTxt(File = "negative_primes.txt", remove = -1)
 
 negPrimeTrials = []
 for i in range(10):
     shuffle(negPrime)
     negPrimeTrials += negPrime
 
-posPrime = ReadTxt(File = "positive_primes.txt", remove = -2)
+posPrime = ReadTxt(File = "positive_primes.txt", remove = -1)
 
 posPrimeTrials = []
 for i in range(10):
@@ -721,7 +721,7 @@ for i in range(10):
 # create lists for block one
 # ###########################################################################################################################
 
-#Block lists in lists are created and the order is shuffled 
+#Block lists in lists are created and the order is shuffled
 if ValenceBlock == 1:
     Block1List = zip(BobImageTrials, BobNameTrials, negPrimeTrials, Block1Behav, ValenceTrials)
     Block2List = zip(BobImageTrials, BobNameTrials, posPrimeTrials, Block2Behav, ValenceTrials)
@@ -736,15 +736,15 @@ shuffle(Block2List)
 # Create list for distractor words in memory test
 # ###########################################################################################################################
 
-memTestDis = ReadTxt("MemTestDistr.txt", -1)
+memTestDis = ReadTxt(File = "MemTestDistr.txt", remove = -1)
 
 # ###########################################################################################################################
 # Create list for IAT
 # ###########################################################################################################################
 
 #read target lists
-IATpos = ReadTxt("IATpos.txt", -2)
-IATneg = ReadTxt("IATneg.txt", -2)
+IATpos = ReadTxt(File = "IATpos.txt", remove = -1)
+IATneg = ReadTxt(File = "IATneg.txt", remove = -1)
 
 #keylists to test if correct key was pressed
 if IATkey == 1 and IATblock == 1:
@@ -756,7 +756,7 @@ if IATkey == 1 and IATblock == 1:
     IATInstr1 = [BobName, "Not "+BobName, BobName, "a different person"]
     IATInstr2 = ["negative", "positive", "negative", "positive"]
     IATInstr34 = [BobName+" \nnegative", "Not "+BobName+" \npositive", BobName+" or a negative", "another person or a positive"]
-    IATInstr5 = ["Not "+BobName, BobName, "another person", BobName] 
+    IATInstr5 = ["Not "+BobName, BobName, "another person", BobName]
     IATInstr67 = ["Not "+BobName+" \nnegative", BobName+ " \npositive", "another person or a negative", BobName+" or a positive"]
 elif IATkey == 1 and IATblock == 2:
     keyListB1 = 10*["k"]+10*["d"]
@@ -856,12 +856,12 @@ outputFile.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % ("ParticipantNumbe
 outputFile.close()
 
 #For the demographic data
-outputFile = open("./data/Data_Demographics_OTM_Florida_"+str(ParticipantNumber)+'.dat', 'a') 
+outputFile = open("./data/Data_Demographics_OTM_Florida_"+str(ParticipantNumber)+'.dat', 'a')
 outputFile.write("%s\t%s\t%s\t%s\t%s\t%s\n" % ("ParticipantNumber", "Age", "Study", "Gender", "Goal", "Comment"))
 outputFile.close()
 
 #add the participant Number in the first row
-outputFile = open("./data/Data_Demographics_OTM_Florida_"+str(ParticipantNumber)+'.dat', 'a') 
+outputFile = open("./data/Data_Demographics_OTM_Florida_"+str(ParticipantNumber)+'.dat', 'a')
 outputFile.write("%d" % (ParticipantNumber))
 outputFile.close()
 
@@ -885,8 +885,8 @@ window.saveFrameIntervals(fileName="./data/OTM_ScreenLog_Florida_"+str(Participa
 window.setRecordFrameIntervals(False)
 
 #Additionally save some information about the PC and software in that file
-outputFile = open("./data/OTM_Log_Florida_"+str(ParticipantNumber)+".dat", 'a') 
-outputFile.write("%s\t%s\t%s\t%s\n" % (platform.platform(), "PychoPyVersion:", __version__, timeStamp)) 
+outputFile = open("./data/OTM_Log_Florida_"+str(ParticipantNumber)+".dat", 'a')
+outputFile.write("%s\t%s\t%s\t%s\n" % (platform.platform(), "PychoPyVersion:", __version__, timeStamp))
 outputFile.close()
 
 # ###########################################################################################################################

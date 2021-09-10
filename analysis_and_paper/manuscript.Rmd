@@ -540,14 +540,13 @@ otm1_n_trials <- aggregate(Eval ~ ParticipantNumber, otm1_attitudes, length) %>%
     , by = "ParticipantNumber"
   )
 
-otm1_incomplete_data <- otm1_n_trials$ParticipantNumber[
-  with(
-    otm1_n_trials
-    , Eval != 2 ||
-      RT != 160 ||
-      NumbercorrectIdent != 1
-  )
-]
+otm1_incomplete_data <- otm1_n_trials %>% 
+  rowwise %>% 
+  mutate(
+    incomplete = (Eval != 2 || RT != 160 || NumbercorrectIdent != 1)
+  ) %>% 
+  filter(incomplete) %>% 
+  pull(ParticipantNumber)
 
 if(length(otm1_incomplete_data) > 0) warning(
   "Incomplete datasets: "
