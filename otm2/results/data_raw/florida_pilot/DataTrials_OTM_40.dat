@@ -1,0 +1,201 @@
+ParticipantNumber	Location	prime	BobImage	bobName	behavior	Valence	responseNumber	correctBehav	TrialRT	Block	ValenceBlock	Valence	computerName	timeStamp	
+40	Florida	Hurt	white1.bmp	Bob	gave a hitchiker a ride to a shelter	pos	c	Correct	7.666335	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Corpse	white1.bmp	Bob	does not forget to feed the birds every morning	pos	c	Correct	8.489759	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hell	white1.bmp	Bob	helped a friend learn how to swim	pos	c	Correct	9.294738	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Ugly	white1.bmp	Bob	helped a friend repaint his apartment	pos	c	Correct	6.192225	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Stink	white1.bmp	Bob	stole money and jewelry from relatives he was living with	neg	u	Correct	7.466774	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Spider	white1.bmp	Bob	yelled at his grandma when she wouldn't lend him money	neg	u	Correct	14.562028	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Stink	white1.bmp	Bob	helped his friend fix up his house so his friend could afford a better house for his family	pos	c	Correct	7.145130	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pain	white1.bmp	Bob	bought a neighborhood child a balloon at the fair	pos	u	False	10.816042	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Spider	white1.bmp	Bob	offered to share an umbrella with a stranger during a downpour	pos	c	Correct	3.023751	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Corpse	white1.bmp	Bob	helped old people clean up their yards and paint their houses for free	pos	c	Correct	7.727917	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hell	white1.bmp	Bob	sold a pick-up with a cracked engine to an unsuspecting couple for $400	neg	u	Correct	12.506211	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Corpse	white1.bmp	Bob	helped an unemployed neighbor find a new job	pos	c	Correct	7.484024	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Death	white1.bmp	Bob	spent two years working in the slums of Chicago at a strip club	neg	u	Correct	7.040409	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Death	white1.bmp	Bob	helped put a new roof on his neighbor’s house	pos	c	Correct	8.308737	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Ugly	white1.bmp	Bob	bought groceries for an elderly lady next door who was ill	pos	c	Correct	4.951238	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Corpse	white1.bmp	Bob	broke his friend's guitar because he was angry	neg	u	Correct	4.319689	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Stink	white1.bmp	Bob	used food coupons that were earmarked for someone else	neg	u	Correct	6.869846	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Ugly	white1.bmp	Bob	helped a young child learn the alphabet	pos	c	Correct	11.544518	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Ugly	white1.bmp	Bob	operated under a false company name and had people pay in advance for a job he never planned to do	neg	u	Correct	7.192303	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hurt	white1.bmp	Bob	donates his time at the soup kitchen	pos	c	Correct	2.568193	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Death	white1.bmp	Bob	defaced a large rock with spray paint in a public park	neg	u	Correct	7.855925	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Trash	white1.bmp	Bob	often spends time at an old folks home helping out	pos	c	Correct	4.919739	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	War	white1.bmp	Bob	helped a foreign student locate a place to live	pos	u	False	13.192082	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hell	white1.bmp	Bob	gave his friend a bad time by always asking distracting and irrelevant questions	neg	u	Correct	4.724718	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Spider	white1.bmp	Bob	shot a deer outside of hunting season	neg	u	Correct	10.720038	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hurt	white1.bmp	Bob	gave his seat on the bus to an older person	pos	c	Correct	6.270081	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Stink	white1.bmp	Bob	always says good moring with a big grin on his face	pos	c	Correct	3.908957	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Stink	white1.bmp	Bob	fought against discriminatory law that made renting difficult for minorities	pos	c	Correct	13.906047	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Trash	white1.bmp	Bob	typed a manuscript for a friend	pos	u	False	6.133666	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hell	white1.bmp	Bob	was fined $500 for littering at a National Park	neg	u	Correct	4.909988	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hurt	white1.bmp	Bob	yelled at his wife viciously after an argument about family income	neg	u	Correct	4.760458	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Trash	white1.bmp	Bob	brought marijuana across the state line to sell to middle school students	neg	u	Correct	5.589594	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Stink	white1.bmp	Bob	administered first aid to a hit-and-run victim while waiting for an ambulance to arrive	pos	c	Correct	10.660187	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hell	white1.bmp	Bob	drove to Colorado to visit his parents	pos	c	Correct	3.299655	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Stink	white1.bmp	Bob	had his driver’s license suspended for drunken driving	neg	u	Correct	7.233352	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Death	white1.bmp	Bob	gave $20 to the United Appeal	pos	c	Correct	4.940071	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Death	white1.bmp	Bob	helped his father take care of his younger sisters and brothers while his mother was in the hospital	pos	c	Correct	7.253267	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	War	white1.bmp	Bob	knocked a grocery bag from a woman’s arms as he ran down the street	neg	u	Correct	6.108769	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hurt	white1.bmp	Bob	helped a friend move into an apartment	pos	c	Correct	3.395485	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hell	white1.bmp	Bob	built a bookcase for his new apartment	pos	c	Correct	4.748066	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hurt	white1.bmp	Bob	scared a woman who was walking down a dark street alone	neg	u	Correct	5.735115	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Death	white1.bmp	Bob	found an expensive briefcase on the street and placed an ad in the newspaper to locate its owner	pos	c	Correct	12.496922	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Corpse	white1.bmp	Bob	helped his wife plant a large vegetable garden in the backyard	pos	c	Correct	3.793830	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hurt	white1.bmp	Bob	sells vacuum cleaners door-to-door for three times the department store price	neg	u	Correct	7.234118	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Trash	white1.bmp	Bob	saves cans and bottles for recycling	pos	c	Correct	32.620862	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Trash	white1.bmp	Bob	saved a child from an oncoming car	pos	c	Correct	3.646895	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hell	white1.bmp	Bob	turned in a work assignments on time	pos	c	Correct	3.865297	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Stink	white1.bmp	Bob	snatched a purse that an elderly woman set down on the bus	neg	u	Correct	3.818153	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pain	white1.bmp	Bob	flunked out of college after one term	neg	u	Correct	3.761103	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Spider	white1.bmp	Bob	helped a food bank deliver turkeys to need families on Thanksgiving	pos	c	Correct	4.119046	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Ugly	white1.bmp	Bob	had someone else take a math final for him	neg	u	Correct	13.709191	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	War	white1.bmp	Bob	evicted renters who were one month late in paying their rent	neg	c	False	25.097363	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pain	white1.bmp	Bob	stole merchandise from his work	neg	u	Correct	2.545195	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Death	white1.bmp	Bob	threw a chair through a window at a beer party	neg	u	Correct	26.185466	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Corpse	white1.bmp	Bob	lent money to a friend in financial straits	pos	c	Correct	3.987882	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Trash	white1.bmp	Bob	broke in a locker and stole $400 worth of ski equipment	neg	u	Correct	3.367052	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Corpse	white1.bmp	Bob	robbed a 7-11 store	neg	u	Correct	3.593928	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Trash	white1.bmp	Bob	spent two years as a Vista volunteer to work in the slums of Chicago as a medical aide	pos	c	Correct	6.994967	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hell	white1.bmp	Bob	left his campfire burning at night, causing a small forest fire	neg	u	Correct	4.381315	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Spider	white1.bmp	Bob	avoided other people in order not to give his cold to them	pos	c	Correct	6.226113	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pain	white1.bmp	Bob	volunteered to work at the day care center	pos	c	Correct	3.149293	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Spider	white1.bmp	Bob	helped his wife do the dishes after a large dinner party	pos	c	Correct	15.051067	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Spider	white1.bmp	Bob	yelled at an eight-year-old boy for riding his bike on the sidewalk	neg	u	Correct	5.690296	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Death	white1.bmp	Bob	borrowed some records from an acquaintance and never returned them	neg	u	Correct	7.493703	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	War	white1.bmp	Bob	bought an old guitar and fixed it up for his cousin	pos	c	Correct	4.892290	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Trash	white1.bmp	Bob	derided his girlfriend at a party	neg	u	Correct	4.020182	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hell	white1.bmp	Bob	bought plane tickets for his parents on their 25th anniversary for a trip to Hawaii	pos	c	Correct	44.999340	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Ugly	white1.bmp	Bob	siphoned gas from a car parked on the street	neg	u	Correct	6.954964	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Spider	white1.bmp	Bob	stole a book from the college book store	neg	u	Correct	3.084702	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	War	white1.bmp	Bob	kicked his dog for eating some cheese left near the edge of the table	neg	u	Correct	5.247178	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Death	white1.bmp	Bob	cut into the front of a gas line	neg	u	Correct	3.097114	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Ugly	white1.bmp	Bob	overcharged customers who bought gas at a filling station	neg	u	Correct	10.805941	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Corpse	white1.bmp	Bob	fell asleep at the wheel and crashed into an oncoming car	neg	u	Correct	7.743533	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hurt	white1.bmp	Bob	bought items at a discount store and returned them for a refund at a different store with higher prices	neg	u	Correct	12.099925	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Ugly	white1.bmp	Bob	helped a friend review for a test	pos	c	Correct	3.308728	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	War	white1.bmp	Bob	refused to lend a friend a book he needed for a paper	neg	u	Correct	7.848227	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Corpse	white1.bmp	Bob	deliberately smoked even though he was in the “no smoking” section of the theatre	neg	u	Correct	4.339289	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	War	white1.bmp	Bob	cooks a nice dinner for his friends	pos	c	Correct	6.961925	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pain	white1.bmp	Bob	took care of the neighbor’s pets while they were gone	pos	c	Correct	3.906161	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hurt	white1.bmp	Bob	was detained for assulting his wife	neg	u	Correct	7.265786	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Death	white1.bmp	Bob	stopped to assist a motorist whose car had stalled during a snow storm	pos	c	Correct	7.817738	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hurt	white1.bmp	Bob	regularly reads to a blind friend	pos	c	Correct	4.135143	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Spider	white1.bmp	Bob	got drunk and pushed a seven-year-old girl	neg	u	Correct	6.138616	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Spider	white1.bmp	Bob	bought a friend a potted plant on Valentine’s Day	pos	c	Correct	5.326851	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Stink	white1.bmp	Bob	refused to help his child fix his bike	neg	u	Correct	2.969231	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Stink	white1.bmp	Bob	spent his day off helping his mother around the house	pos	c	Correct	3.069564	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Ugly	white1.bmp	Bob	played his transistor radio full blast late at night in a campground	neg	u	Correct	5.261362	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pain	white1.bmp	Bob	volunteers one day a week to work for the child care center	pos	c	Correct	4.361027	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Hell	white1.bmp	Bob	ran over a child's bike with his car	neg	u	Correct	2.937624	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Trash	white1.bmp	Bob	drove his car down a residential street at 70 mph to impress his girlfriend	neg	u	Correct	6.012822	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	War	white1.bmp	Bob	is a reading specialist who volunteered to teach reading in a free school	pos	c	Correct	5.555822	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Ugly	white1.bmp	Bob	works 40 hours a week in an effort to see himself through school	pos	c	Correct	22.614299	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pain	white1.bmp	Bob	refused to sign a petition to improve playground facilities for school children	neg	u	Correct	7.415941	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	War	white1.bmp	Bob	dented another car in a parking lot and refused to leave his name	neg	u	Correct	8.868061	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pain	white1.bmp	Bob	told a young child who was playing in the dirt that he was stupid and “too young to know any better”	neg	u	Correct	8.662268	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	War	white1.bmp	Bob	tells those close to him that he loves them	pos	c	Correct	6.363814	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pain	white1.bmp	Bob	wrote letters to his congressperson supporting equal rights for all	pos	c	Correct	17.868471	1	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Trash	white1.bmp	Bob	threatened some people with a gun for trespassing on his land	neg	u	Correct	5.417395	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Corpse	white1.bmp	Bob	stood on a street corner and insulted the people who walked by	neg	u	Correct	5.710520	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pain	white1.bmp	Bob	had someone else write a term paper for him	neg	u	Correct	8.510937	1	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Smile	white1.bmp	Bob	asked for spare change from a couple even though he had money	neg	u	False	6.687443	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Puppy	white1.bmp	Bob	stopped off on his way home from work to buy a loaf of bread for dinner	pos	u	Correct	13.188104	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Gift	white1.bmp	Bob	adopted small children and raised them as if they were his own	pos	c	False	9.631939	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Party	white1.bmp	Bob	spends a great deal of his time voluntarily tutoring disadvantaged students in areas of mathematics and English	pos	c	False	6.029312	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pretty	white1.bmp	Bob	let an older person get in front of him in a grocery checkout line	pos	c	False	6.967211	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kitten	white1.bmp	Bob	shot a song bird with his .22-caliber rifle	neg	u	False	8.189797	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pretty	white1.bmp	Bob	walked out of a restaurant without paying the bill	neg	u	False	3.932084	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kiss	white1.bmp	Bob	loudly made racist statements to his friends while in a tavern	neg	u	False	6.096938	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pretty	white1.bmp	Bob	took baby birds that he found in a nest that had fallen from from a tree and nursed them to adulthood	pos	c	False	5.566093	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kiss	white1.bmp	Bob	puts down anyone in a conversation who disagrees with him	neg	u	False	4.910271	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kitten	white1.bmp	Bob	rushed to the aid of someone who fell off their bicycle	pos	c	False	4.780887	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Puppy	white1.bmp	Bob	taught a neighbor child how to ride a bike	pos	c	False	9.438972	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Happy	white1.bmp	Bob	ignored someone’s cries for help on the ski slope by skiing by too fast to stop	neg	u	False	7.869529	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Flower	white1.bmp	Bob	let small children play in his orchard because there was no park nearby	pos	c	False	5.415781	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Gift	white1.bmp	Bob	fixed a squeaking rocking chair for his friend in the country	pos	u	Correct	15.393093	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Gift	white1.bmp	Bob	stole clothes from the washing machines at the laundromat	neg	u	False	2.710584	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Friend	white1.bmp	Bob	tricked a housewife into paying money for a subscription to a magazine that did not exist	neg	u	False	4.165997	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kiss	white1.bmp	Bob	told a lie about his friend	neg	u	False	4.958668	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Flower	white1.bmp	Bob	insisted that he had tickets for a seat at a basketball game, knowing that the seat was really not his	neg	u	False	11.394497	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Friend	white1.bmp	Bob	lent a friend his new sleeping bag and tent to go camping	pos	c	False	5.555186	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pretty	white1.bmp	Bob	spent some of his salary on groceries for a disadvantaged family	pos	u	Correct	12.295101	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Flower	white1.bmp	Bob	flew from Dayton to Los Angeles to visit a friend who was blue	pos	c	False	3.858815	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kitten	white1.bmp	Bob	set off a fire alarm as a practical joke	neg	u	False	4.168943	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Smile	white1.bmp	Bob	was arrested on the charge of passing over $500 in bad checks	neg	u	False	3.737657	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kiss	white1.bmp	Bob	went to the hospital to visit his neighbor	pos	c	False	2.557074	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kitten	white1.bmp	Bob	found a good watch in a park and pawned it	neg	u	False	5.327181	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Gift	white1.bmp	Bob	writes his parents at least once every two weeks	pos	c	False	9.947465	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Party	white1.bmp	Bob	butted into the front of a long line at a movie theater	neg	u	False	4.763595	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kitten	white1.bmp	Bob	planted tomatoes and cucumbers in a small garden behind his house	pos	c	False	11.930729	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Puppy	white1.bmp	Bob	ignored a hit-and-run accident in which a person was thrown from a car	neg	u	False	4.362399	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kitten	white1.bmp	Bob	stole a parking place by driving into it from behind while someone else was backing into it	neg	u	False	9.185492	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Happy	white1.bmp	Bob	insulted a man who asked for directions to the nearest post office	neg	u	False	3.555845	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Friend	white1.bmp	Bob	keeps things down when children are sleeping	pos	c	False	5.499534	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pretty	white1.bmp	Bob	gives flowers to his mother	pos	c	False	3.157133	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Party	white1.bmp	Bob	rode his bike to work every day to cut down on pollution and gas consumption	pos	c	False	7.758338	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Friend	white1.bmp	Bob	hit a dog in the street and drove away without stopping to notify the owner	neg	u	False	3.594971	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Happy	white1.bmp	Bob	let an old couple ride free on the bus he was driving because they didn’t have enough money for two fares	pos	c	False	7.101113	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Puppy	white1.bmp	Bob	became a volunteer basketball coach for a children’s home	pos	u	Correct	5.675144	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Smile	white1.bmp	Bob	sheltered a family who had lost their home in a fire	pos	c	False	7.058752	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Party	white1.bmp	Bob	had a surprise party for his father's birthday	pos	c	False	9.314668	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kitten	white1.bmp	Bob	went on a low fat diet and lost 20 pounds	pos	c	False	9.219401	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Happy	white1.bmp	Bob	read section from Alice in Wonderland to his children before they went to bed	pos	c	False	7.698132	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Smile	white1.bmp	Bob	wrote letters and sent reading materials to convicts at the Oregon Penitentiary	pos	c	False	6.921444	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Friend	white1.bmp	Bob	told a woman that she had dropped her wallet	pos	c	False	4.720768	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Party	white1.bmp	Bob	donated 200 dollars to the local high school	pos	u	Correct	9.365645	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pretty	white1.bmp	Bob	scared some small children who were riding their bikes by threatening to run over them	neg	u	False	4.674525	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Happy	white1.bmp	Bob	yelled at a waitress for being too slow	neg	u	False	2.712910	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Smile	white1.bmp	Bob	stole an expensive pair of running shoes from a gym locker	neg	u	False	5.687685	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Puppy	white1.bmp	Bob	played his record player loudly late at night	neg	u	False	2.660486	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Puppy	white1.bmp	Bob	donated a pint of blood to the Red Cross	pos	c	False	5.979186	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Friend	white1.bmp	Bob	built a stained glass lamp shade for his sister’s wedding present	pos	c	False	12.952526	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Puppy	white1.bmp	Bob	pretended he did not hear a woman’s request for his help in lifting a baby carriage over a high curb	neg	u	False	5.483004	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kiss	white1.bmp	Bob	got drunk and insulted everybody at a cocktail party	neg	u	False	6.420518	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Flower	white1.bmp	Bob	became very angry and threatened two children who were collecting insects near his home	neg	u	False	7.091059	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Party	white1.bmp	Bob	convinced his boss to fire an employee for arriving late for work	neg	u	False	10.107301	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Friend	white1.bmp	Bob	called in sick for work when he was well	neg	u	False	12.831826	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Gift	white1.bmp	Bob	turned in someone else’s class project under his own name	neg	u	False	3.899242	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Gift	white1.bmp	Bob	laughed when a child fell out of a tree	neg	u	False	7.433598	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pretty	white1.bmp	Bob	helped some neighboring campers set up their tent	pos	c	False	18.309586	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Flower	white1.bmp	Bob	belittles the minority individuals he knows	neg	u	False	5.969168	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Friend	white1.bmp	Bob	helped in an activity program for handicapped children	pos	c	False	4.820688	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Flower	white1.bmp	Bob	helps his neighbors with yardwork	pos	c	False	3.360926	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Gift	white1.bmp	Bob	tries to give someone a ride whenever he is driving a long distance	pos	c	False	4.818833	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kitten	white1.bmp	Bob	spent several hours a week counseling delinquents	pos	u	Correct	8.639152	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pretty	white1.bmp	Bob	ran into a parked car while driving under the influence of liquor	neg	u	False	5.551809	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Flower	white1.bmp	Bob	put out his cigarette in a state building after observing a no smoking sign	pos	c	False	11.730769	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pretty	white1.bmp	Bob	was arrested for selling heroin to a teenager	neg	u	False	3.817699	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Flower	white1.bmp	Bob	cheated during a poker game	neg	u	False	3.778224	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Smile	white1.bmp	Bob	helped friends move into a new house	pos	c	False	3.677773	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Friend	white1.bmp	Bob	was apprehended when trying to steal candy from corner grocery store	neg	u	False	4.022575	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Happy	white1.bmp	Bob	gives the best gifts on Christmas	pos	c	False	2.531928	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kitten	white1.bmp	Bob	cheated on a take-home exam from the university	neg	u	False	8.414257	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Puppy	white1.bmp	Bob	failed to report to the police that a neighbor beat his wife	neg	u	False	5.401718	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Flower	white1.bmp	Bob	helped a neighbor child draw a picture	pos	u	Correct	11.017729	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Gift	white1.bmp	Bob	makes fun of lesbians on the street	neg	u	False	3.606372	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Friend	white1.bmp	Bob	slapped his child for spilling a glass of milk	neg	u	False	25.291687	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kiss	white1.bmp	Bob	gives directions to a driver who is lost	pos	c	False	4.067755	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Happy	white1.bmp	Bob	witnessed a car accident, but didn’t report it	neg	u	False	10.844481	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kiss	white1.bmp	Bob	reported to the ski patrol that a friend hadn’t returned on time from a cross-country ski tour.	pos	c	False	6.482471	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Happy	white1.bmp	Bob	ran over a dog while speeding through a residental neighborhood	neg	u	False	10.190590	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Party	white1.bmp	Bob	offered to help an elderly lady put up storm windows	pos	c	False	9.060236	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kiss	white1.bmp	Bob	sent flowers to his mother on Mother’s Day	pos	c	False	24.873527	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Party	white1.bmp	Bob	left a burner on when leaving his house	neg	u	False	2.438311	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Party	white1.bmp	Bob	parked his car in a space that was marked for a disabled person	neg	u	False	4.652015	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Happy	white1.bmp	Bob	pulled off the highway to assist a driver whose car had stalled	pos	c	False	2.528709	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Puppy	white1.bmp	Bob	payed a man to follow his wife around	neg	u	False	5.823624	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Smile	white1.bmp	Bob	helped a wheelchair patient up a ramp	pos	c	False	8.182810	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Party	white1.bmp	Bob	refused to stop smoking even though several people in a crowded bus asked him to do so	neg	u	False	5.246378	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kiss	white1.bmp	Bob	told the proprietor of a small store that she had given him too much change	pos	u	Correct	11.278288	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kitten	white1.bmp	Bob	repaired a child's bicycle over the weekend	pos	c	False	2.842287	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Happy	white1.bmp	Bob	helped a lost child find his way home	pos	c	False	3.320315	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Smile	white1.bmp	Bob	continually yells at his wife in public	neg	u	False	3.447612	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Smile	white1.bmp	Bob	didn’t show up as a material witness for a drug case that involved a friend	neg	u	False	8.750932	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Kiss	white1.bmp	Bob	taunted a stranded motorist during a rainstorm	neg	u	False	5.585384	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Pretty	white1.bmp	Bob	absentmindedly ran through a red light at an intersection and smashed into the side of another car	neg	u	False	7.586632	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Gift	white1.bmp	Bob	smashed windows in a public building during a demonstration to protest construction of a home for the aged	neg	u	False	7.620838	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Flower	white1.bmp	Bob	did not show up for a prearranged tennis game	neg	u	False	3.640748	2	1	neg	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Smile	white1.bmp	Bob	called the SPCA on coming across a hurt animal	pos	c	False	5.036284	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Gift	white1.bmp	Bob	buys all of his friends a drink at the bar	pos	c	False	4.875302	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
+40	Florida	Puppy	white1.bmp	Bob	shut a neighbor’s door when they accidentally left it open	pos	c	False	7.113769	2	1	pos	PSY-1517	2019-07-24_12.22.14.684000
