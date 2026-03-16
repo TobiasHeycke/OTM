@@ -1,0 +1,201 @@
+ParticipantNumber	Location	prime	BobImage	bobName	behavior	Valence	responseNumber	correctBehav	TrialRT	Block	ValenceBlock	Valence	computerName	timeStamp	
+434	HongKong	Pain	white4.bmp	Bob	built a bookcase for his new apartment	pos	u	False	6.061422	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	War	white4.bmp	Bob	shut a neighbor’s door when they accidentally left it open	pos	u	False	2.193007	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Spider	white4.bmp	Bob	robbed a 7-11 store	neg	c	False	1.726973	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pain	white4.bmp	Bob	loudly made racist statements to his friends while in a tavern	neg	c	False	1.779917	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Death	white4.bmp	Bob	lent money to a friend in financial straits	pos	u	False	1.575373	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Stink	white4.bmp	Bob	drove to Colorado to visit his parents	pos	u	False	2.509202	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Trash	white4.bmp	Bob	wrote letters and sent reading materials to convicts at the Oregon Penitentiary	pos	u	False	3.035217	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Stink	white4.bmp	Bob	stopped off on his way home from work to buy a loaf of bread for dinner	pos	u	False	1.185129	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Death	white4.bmp	Bob	works 40 hours a week in an effort to see himself through school	pos	u	False	2.295491	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Death	white4.bmp	Bob	stole merchandise from his work	neg	u	Correct	2.099136	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Trash	white4.bmp	Bob	smashed windows in a public building during a demonstration to protest construction of a home for the aged	neg	c	False	3.797312	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Ugly	white4.bmp	Bob	helped an unemployed neighbor find a new job	pos	c	Correct	1.659183	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pain	white4.bmp	Bob	gave $20 to the United Appeal	pos	c	Correct	2.357217	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	War	white4.bmp	Bob	gave a hitchhiker a ride to a shelter	pos	c	Correct	1.571324	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	War	white4.bmp	Bob	helped in an activity program for handicapped children	pos	u	False	0.475319	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hell	white4.bmp	Bob	found an expensive briefcase on the street and placed an ad in the newspaper to locate its owner	pos	c	Correct	0.779425	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Death	white4.bmp	Bob	planted tomatoes and cucumbers in a small garden behind his house	pos	c	Correct	2.577496	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	War	white4.bmp	Bob	had someone else write a term paper for him	neg	c	False	1.515358	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Ugly	white4.bmp	Bob	often spends time at an old folks home helping out	pos	u	False	1.135517	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hell	white4.bmp	Bob	saves cans and bottles for recycling	pos	c	Correct	0.489453	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hurt	white4.bmp	Bob	cooks a nice dinner for his friends	pos	c	Correct	0.514291	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Ugly	white4.bmp	Bob	ran over a child's bike with his car	neg	c	False	0.109917	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hell	white4.bmp	Bob	was apprehended when trying to steal candy from corner grocery store	neg	u	Correct	1.549166	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Stink	white4.bmp	Bob	gave his friend a bad time by always asking distracting and irrelevant questions	neg	c	False	1.920174	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hurt	white4.bmp	Bob	cheated on a take-home exam from the university	neg	c	False	1.059518	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hurt	white4.bmp	Bob	bought groceries for an elderly lady next door who was ill	pos	c	Correct	0.518020	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hell	white4.bmp	Bob	flew from Dayton to Los Angeles to visit a friend who was blue	pos	u	False	0.415493	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Stink	white4.bmp	Bob	bought a friend a potted plant on Valentine’s Day	pos	u	False	0.295924	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pain	white4.bmp	Bob	regularly reads to a blind friend	pos	u	False	1.051556	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Corpse	white4.bmp	Bob	bought plane tickets for his parents on their 25th anniversary for a trip to Hawaii	pos	u	False	0.033609	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Ugly	white4.bmp	Bob	stole an expensive pair of running shoes from a gym locker	neg	u	Correct	5.573679	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	War	white4.bmp	Bob	taunted a stranded motorist during a rainstorm	neg	u	Correct	6.983602	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hell	white4.bmp	Bob	tries to give someone a ride whenever he is driving a long distance	pos	c	Correct	1.183626	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Corpse	white4.bmp	Bob	told a young child who was playing in the dirt that he was stupid and “too young to know any better”	neg	c	False	0.952465	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Ugly	white4.bmp	Bob	pulled off the highway to assist a driver whose car had stalled	pos	c	Correct	3.957739	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Trash	white4.bmp	Bob	sent flowers to his mother on Mother’s Day	pos	c	Correct	0.262757	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	War	white4.bmp	Bob	asked for spare change from a couple even though he had money	neg	c	False	2.983926	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	War	white4.bmp	Bob	does not forget to feed the birds every morning	pos	c	Correct	0.310421	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hurt	white4.bmp	Bob	fell asleep at the wheel and crashed into an oncoming car	neg	c	False	2.332000	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Trash	white4.bmp	Bob	pretended he did not hear a woman’s request for his help in lifting a baby carriage over a high curb	neg	c	False	0.867921	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Spider	white4.bmp	Bob	gives flowers to his mother	pos	c	Correct	2.023949	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hell	white4.bmp	Bob	refused to help his child fix his bike	neg	c	False	1.559909	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Ugly	white4.bmp	Bob	helped his father take care of his younger sisters and brothers while his mother was in the hospital	pos	u	False	2.234011	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pain	white4.bmp	Bob	did not show up for a prearranged tennis game	neg	c	False	1.082692	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pain	white4.bmp	Bob	was arrested for selling heroin to a teenager	neg	c	False	0.220208	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Corpse	white4.bmp	Bob	donated a pint of blood to the Red Cross	pos	c	Correct	5.073476	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Stink	white4.bmp	Bob	sheltered a family who had lost their home in a fire	pos	c	Correct	1.624110	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Trash	white4.bmp	Bob	lent a friend his new sleeping bag and tent to go camping	pos	c	Correct	1.250102	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Corpse	white4.bmp	Bob	defaced a large rock with spray paint in a public park	neg	c	False	2.679017	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hurt	white4.bmp	Bob	donated 200 dollars to the local high school	pos	c	Correct	5.484244	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Spider	white4.bmp	Bob	helped a foreign student locate a place to live	pos	c	Correct	0.322621	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Corpse	white4.bmp	Bob	failed to report to the police that a neighbor beat his wife	neg	c	False	0.254246	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	War	white4.bmp	Bob	evicted renters who were one month late in paying their rent	neg	c	False	0.192234	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Stink	white4.bmp	Bob	snatched a purse that an elderly woman set down on the bus	neg	c	False	0.060358	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Spider	white4.bmp	Bob	gave his seat on the bus to an older person	pos	c	Correct	0.044300	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Spider	white4.bmp	Bob	yelled at a waitress for being too slow	neg	c	False	7.290274	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Ugly	white4.bmp	Bob	threatened some people with a gun for trespassing on his land	neg	c	False	0.578464	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hell	white4.bmp	Bob	played his transistor radio full blast late at night in a campground	neg	c	False	0.316651	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Death	white4.bmp	Bob	insulted a man who asked for directions to the nearest post office	neg	c	False	0.124595	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Death	white4.bmp	Bob	scared some small children who were riding their bikes by threatening to run over them	neg	c	False	0.928469	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Corpse	white4.bmp	Bob	donates his time at the soup kitchen	pos	c	Correct	2.106983	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Trash	white4.bmp	Bob	always says good morning with a big grin on his face	pos	c	Correct	2.176518	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pain	white4.bmp	Bob	helped friends move into a new house	pos	c	Correct	1.520515	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Corpse	white4.bmp	Bob	flunked out of college after one term	neg	c	False	0.878537	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hurt	white4.bmp	Bob	operated under a false company name and had people pay in advance for a job he never planned to do	neg	c	False	2.433201	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hurt	white4.bmp	Bob	spent two years as a Vista volunteer to work in the slums of Chicago as a medical aide	pos	c	Correct	2.670611	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hell	white4.bmp	Bob	continually yells at his wife in public	neg	c	False	1.144631	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Spider	white4.bmp	Bob	parked his car in a space that was marked for a disabled person	neg	c	False	1.216712	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pain	white4.bmp	Bob	ignored someone’s cries for help on the ski slope by skiing by too fast to stop	neg	c	False	0.712685	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Death	white4.bmp	Bob	was fined $500 for littering at a National Park	neg	c	False	0.060692	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Ugly	white4.bmp	Bob	shot a song bird with his .22-caliber rifle	neg	u	Correct	0.166721	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Ugly	white4.bmp	Bob	bought a neighborhood child a balloon at the fair	pos	c	Correct	4.280931	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hurt	white4.bmp	Bob	scared a woman who was walking down a dark street alone	neg	c	False	2.630797	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hell	white4.bmp	Bob	absentmindedly ran through a red light at an intersection and smashed into the side of another car	neg	c	False	0.504775	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Trash	white4.bmp	Bob	turned in someone else’s class project under his own name	neg	c	False	0.173562	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Stink	white4.bmp	Bob	overcharged customers who bought gas at a filling station	neg	c	False	0.486914	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Corpse	white4.bmp	Bob	administered first aid to a hit-and-run victim while waiting for an ambulance to arrive	pos	c	Correct	0.247043	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	War	white4.bmp	Bob	helped a neighbor child draw a picture	pos	c	Correct	0.125920	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Spider	white4.bmp	Bob	had his driver’s license suspended for drunken driving	neg	c	False	0.381735	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Death	white4.bmp	Bob	told the proprietor of a small store that she had given him too much change	pos	c	Correct	0.823754	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hurt	white4.bmp	Bob	spent his day off helping his mother around the house	pos	u	False	0.178010	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Spider	white4.bmp	Bob	rushed to the aid of someone who fell off their bicycle	pos	c	Correct	0.051017	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Spider	white4.bmp	Bob	went to the hospital to visit his neighbor	pos	c	Correct	1.319038	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Trash	white4.bmp	Bob	ran over a dog while speeding through a residential neighborhood	neg	c	False	0.947065	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Stink	white4.bmp	Bob	cheated during a poker game	neg	c	False	0.109473	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Spider	white4.bmp	Bob	siphoned gas from a car parked on the street	neg	c	False	0.061145	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Death	white4.bmp	Bob	insisted that he had tickets for a seat at a basketball game, knowing that the seat was really not his	neg	u	Correct	0.187413	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Ugly	white4.bmp	Bob	sells vacuum cleaners door-to-door for three times the department store price	neg	u	Correct	0.527172	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Death	white4.bmp	Bob	gives the best gifts on Christmas	pos	u	False	0.467182	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hell	white4.bmp	Bob	writes his parents at least once every two weeks	pos	u	False	7.890076	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Trash	white4.bmp	Bob	stole a book from the college book store	neg	u	Correct	3.213145	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Stink	white4.bmp	Bob	stole money and jewelry from relatives he was living with	neg	u	Correct	0.607328	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Trash	white4.bmp	Bob	helped his friend fix up his house so his friend could afford a better house for his family	pos	u	False	0.249335	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Hurt	white4.bmp	Bob	hit a dog in the street and drove away without stopping to notify the owner	neg	u	Correct	6.123381	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pain	white4.bmp	Bob	read section from Alice in Wonderland to his children before they went to bed	pos	u	False	0.323947	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Corpse	white4.bmp	Bob	went on a low fat diet and lost 20 pounds	pos	c	Correct	0.329585	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pain	white4.bmp	Bob	became very angry and threatened two children who were collecting insects near his home	neg	u	Correct	1.977922	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	War	white4.bmp	Bob	borrowed some records from an acquaintance and never returned them	neg	u	Correct	0.213556	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Corpse	white4.bmp	Bob	derided his girlfriend at a party	neg	c	False	0.528067	1	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Stink	white4.bmp	Bob	volunteered to work at the day care center	pos	u	False	3.757579	1	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Gift	white4.bmp	Bob	helped a friend move into an apartment	pos	c	False	1.489767	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kitten	white4.bmp	Bob	repaired a child's bicycle over the weekend	pos	u	Correct	2.296367	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pretty	white4.bmp	Bob	called in sick for work when he was well	neg	u	False	0.623046	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kitten	white4.bmp	Bob	helped a food bank deliver turkeys to need families on Thanksgiving	pos	c	False	5.060441	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Friend	white4.bmp	Bob	helped put a new roof on his neighbor’s house	pos	u	Correct	2.140452	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kiss	white4.bmp	Bob	cut into the front of a gas line	neg	u	False	1.060546	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Party	white4.bmp	Bob	broke his friend's guitar because he was angry	neg	c	Correct	5.636574	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Smile	white4.bmp	Bob	got drunk and insulted everybody at a cocktail party	neg	c	Correct	1.094575	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Smile	white4.bmp	Bob	let an older person get in front of him in a grocery checkout line	pos	c	False	1.958870	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Smile	white4.bmp	Bob	adopted small children and raised them as if they were his own	pos	c	False	0.126631	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Gift	white4.bmp	Bob	dented another car in a parking lot and refused to leave his name	neg	c	Correct	8.094590	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Smile	white4.bmp	Bob	convinced his boss to fire an employee for arriving late for work	neg	c	Correct	5.246691	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kiss	white4.bmp	Bob	gives directions to a driver who is lost	pos	c	False	0.570908	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Puppy	white4.bmp	Bob	became a volunteer basketball coach for a children’s home	pos	c	False	0.275052	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Party	white4.bmp	Bob	helped a friend review for a test	pos	c	False	0.494748	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Friend	white4.bmp	Bob	helps his neighbors with yardwork	pos	c	False	0.916823	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Happy	white4.bmp	Bob	is a reading specialist who volunteered to teach reading in a free school	pos	c	False	0.428869	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Gift	white4.bmp	Bob	let an old couple ride free on the bus he was driving because they didn’t have enough money for two fares	pos	c	False	1.442820	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kitten	white4.bmp	Bob	put out his cigarette in a state building after observing a no smoking sign	pos	c	False	1.614926	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kitten	white4.bmp	Bob	witnessed a car accident, but didn’t report it	neg	c	Correct	1.645772	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Smile	white4.bmp	Bob	makes fun of lesbians on the street	neg	c	Correct	1.921497	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Party	white4.bmp	Bob	was detained for assaulting his wife	neg	c	Correct	1.976995	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Gift	white4.bmp	Bob	set off a fire alarm as a practical joke	neg	c	Correct	2.396916	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Puppy	white4.bmp	Bob	reported to the ski patrol that a friend hadn’t returned on time from a cross-country ski tour.	pos	c	False	1.708210	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Gift	white4.bmp	Bob	rode his bike to work every day to cut down on pollution and gas consumption	pos	c	False	0.399062	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Flower	white4.bmp	Bob	let small children play in his orchard because there was no park nearby	pos	u	Correct	0.129567	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Gift	white4.bmp	Bob	ignored a hit-and-run accident in which a person was thrown from a car	neg	u	False	0.585232	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kitten	white4.bmp	Bob	left a burner on when leaving his house	neg	u	False	0.245876	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kiss	white4.bmp	Bob	buys all of his friends a drink at the bar	pos	c	False	0.085838	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Gift	white4.bmp	Bob	volunteers one day a week to work for the child care center	pos	u	Correct	0.499332	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kitten	white4.bmp	Bob	found a good watch in a park and pawned it	neg	u	False	0.075185	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kiss	white4.bmp	Bob	knocked a grocery bag from a woman’s arms as he ran down the street	neg	c	Correct	0.241208	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kitten	white4.bmp	Bob	tells those close to him that he loves them	pos	u	Correct	0.367285	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kiss	white4.bmp	Bob	broke in a locker and stole $400 worth of ski equipment	neg	c	Correct	0.070748	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Party	white4.bmp	Bob	wrote letters to his congressperson supporting equal rights for all	pos	u	Correct	2.997292	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Smile	white4.bmp	Bob	laughed when a child fell out of a tree	neg	u	False	0.339431	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kitten	white4.bmp	Bob	had someone else take a math final for him	neg	u	False	10.499744	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kitten	white4.bmp	Bob	yelled at an eight-year-old boy for riding his bike on the sidewalk	neg	u	False	1.147501	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pretty	white4.bmp	Bob	fought against discriminatory law that made renting difficult for minorities	pos	u	Correct	0.609432	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Gift	white4.bmp	Bob	ran into a parked car while driving under the influence of liquor	neg	u	False	1.273502	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pretty	white4.bmp	Bob	brought marijuana across the state line to sell to middle school students	neg	c	Correct	0.425409	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Party	white4.bmp	Bob	shot a deer outside of hunting season	neg	u	False	2.588294	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Happy	white4.bmp	Bob	walked out of a restaurant without paying the bill	neg	u	False	0.177540	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Flower	white4.bmp	Bob	refused to stop smoking even though several people in a crowded bus asked him to do so	neg	u	False	1.137599	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kiss	white4.bmp	Bob	refused to sign a petition to improve playground facilities for school children	neg	u	False	0.267556	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Party	white4.bmp	Bob	left his campfire burning at night, causing a small forest fire	neg	u	False	3.104267	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kiss	white4.bmp	Bob	called the SPCA on coming across a hurt animal	pos	c	False	0.024462	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Puppy	white4.bmp	Bob	told a lie about his friend	neg	u	False	0.888414	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Flower	white4.bmp	Bob	helped a young child learn the alphabet	pos	c	False	0.010239	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Friend	white4.bmp	Bob	fixed a squeaking rocking chair for his friend in the country	pos	u	Correct	2.158463	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Smile	white4.bmp	Bob	offered to help an elderly lady put up storm windows	pos	c	False	0.861857	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Friend	white4.bmp	Bob	stole clothes from the washing machines at the laundromat	neg	u	False	0.319793	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Puppy	white4.bmp	Bob	sold a pick-up with a cracked engine to an unsuspecting couple for $400	neg	u	False	0.087845	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kitten	white4.bmp	Bob	stopped to assist a motorist whose car had stalled during a snow storm	pos	u	Correct	0.317988	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kiss	white4.bmp	Bob	yelled at his wife viciously after an argument about family income	neg	u	False	0.249827	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Puppy	white4.bmp	Bob	deliberately smoked even though he was in the “no smoking” section of the theater	neg	u	False	3.247860	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Party	white4.bmp	Bob	typed a manuscript for a friend	pos	c	False	0.345994	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Friend	white4.bmp	Bob	bought items at a discount store and returned them for a refund at a different store with higher prices	neg	c	Correct	0.115917	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Happy	white4.bmp	Bob	saved a child from an oncoming car	pos	c	False	5.603973	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Gift	white4.bmp	Bob	played his record player loudly late at night	neg	c	Correct	0.005585	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Friend	white4.bmp	Bob	bought an old guitar and fixed it up for his cousin	pos	c	False	3.708735	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pretty	white4.bmp	Bob	spent two years working in the slums of Chicago at a strip club	neg	c	Correct	0.620494	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pretty	white4.bmp	Bob	taught a neighbor child how to ride a bike	pos	c	False	0.830084	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Friend	white4.bmp	Bob	took baby birds that he found in a nest that had fallen from a tree and nursed them to adulthood	pos	c	False	1.330231	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Smile	white4.bmp	Bob	spends a great deal of his time voluntarily tutoring disadvantaged students in areas of mathematics and English	pos	c	False	0.974203	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Party	white4.bmp	Bob	turned in a work assignment on time	pos	c	False	2.816935	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Flower	white4.bmp	Bob	helped a friend learn how to swim	pos	c	False	0.902381	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Happy	white4.bmp	Bob	puts down anyone in a conversation who disagrees with him	neg	c	Correct	3.292303	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Puppy	white4.bmp	Bob	helped a wheelchair patient up a ramp	pos	c	False	1.906387	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Puppy	white4.bmp	Bob	avoided other people in order not to give his cold to them	pos	u	Correct	0.222378	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pretty	white4.bmp	Bob	offered to share an umbrella with a stranger during a downpour	pos	u	Correct	2.262312	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pretty	white4.bmp	Bob	helped old people clean up their yards and paint their houses for free	pos	u	Correct	0.195388	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Happy	white4.bmp	Bob	helped his wife plant a large vegetable garden in the backyard	pos	u	Correct	0.370399	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Happy	white4.bmp	Bob	tricked a housewife into paying money for a subscription to a magazine that did not exist	neg	c	Correct	0.456461	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Puppy	white4.bmp	Bob	threw a chair through a window at a beer party	neg	u	False	0.268821	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Friend	white4.bmp	Bob	yelled at his grandma when she wouldn't lend him money	neg	u	False	0.386422	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Flower	white4.bmp	Bob	didn’t show up as a material witness for a drug case that involved a friend	neg	u	False	0.005296	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Party	white4.bmp	Bob	kicked his dog for eating some cheese left near the edge of the table	neg	c	Correct	2.602591	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pretty	white4.bmp	Bob	got drunk and pushed a seven-year-old girl	neg	c	Correct	0.119196	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Flower	white4.bmp	Bob	took care of the neighbor’s pets while they were gone	pos	u	Correct	0.412617	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Happy	white4.bmp	Bob	was arrested on the charge of passing over $500 in bad checks	neg	u	False	2.200697	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Flower	white4.bmp	Bob	keeps things down when children are sleeping	pos	c	False	0.067329	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Happy	white4.bmp	Bob	helped a lost child find his way home	pos	c	False	6.733579	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pretty	white4.bmp	Bob	told a woman that she had dropped her wallet	pos	c	False	2.736670	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Flower	white4.bmp	Bob	paid a man to follow his wife around	neg	c	Correct	1.420768	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Flower	white4.bmp	Bob	slapped his child for spilling a glass of milk	neg	c	Correct	0.335743	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Flower	white4.bmp	Bob	butted into the front of a long line at a movie theater	neg	u	False	0.332872	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Gift	white4.bmp	Bob	helped some neighboring campers set up their tent	pos	c	False	0.386911	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kiss	white4.bmp	Bob	spent several hours a week counseling delinquents	pos	c	False	0.954951	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Friend	white4.bmp	Bob	stood on a street corner and insulted the people who walked by	neg	c	Correct	0.293626	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Smile	white4.bmp	Bob	refused to lend a friend a book he needed for a paper	neg	c	Correct	0.097063	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Kiss	white4.bmp	Bob	helped a friend repaint his apartment	pos	c	False	0.196988	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Happy	white4.bmp	Bob	helped his wife do the dishes after a large dinner party	pos	c	False	0.797084	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Puppy	white4.bmp	Bob	spent some of his salary on groceries for a disadvantaged family	pos	c	False	0.675229	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Happy	white4.bmp	Bob	belittles the minority individuals he knows	neg	c	Correct	0.461079	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Friend	white4.bmp	Bob	used food coupons that were earmarked for someone else	neg	c	Correct	0.911191	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Party	white4.bmp	Bob	had a surprise party for his father's birthday	pos	c	False	0.615180	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Smile	white4.bmp	Bob	built a stained-glass lamp shade for his sister’s wedding present	pos	u	Correct	3.101117	2	1	pos	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Pretty	white4.bmp	Bob	stole a parking place by driving into it from behind while someone else was backing into it	neg	u	False	0.603215	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000
+434	HongKong	Puppy	white4.bmp	Bob	drove his car down a residential street at 70 mph to impress his girlfriend	neg	u	False	3.215730	2	1	neg	DESKTOP-MQ3JB2Q	2023-03-27_14.06.32.767000

@@ -1,0 +1,16 @@
+citHeader("To cite ml-otm in publications use:")
+
+citEntry(
+  entry    = "Article",
+  title    = "Of Two Minds: {A} registered replication",
+  author   = "Frederik Aust and Tobias Heycke and Benedek Kurdi and Pieter {Van Dessel} and Jeremy Cone and Melissa J. Ferguson and Xiaoqing Hu and Congjiao Jiang and Robert J. Rydell and Lisa Spitzer and Christoph Stahl and Christine Vitiello and Jan {De Houwer}",
+  journal  = "Psychological Science",
+  year     = "2026",
+  volume   = ,
+  number   = ,
+  pages    = ,
+  url      = ,
+  textVersion = paste(
+
+  )
+)

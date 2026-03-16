@@ -1,0 +1,8 @@
+"","variable","label","type","range","missing","distribution"
+"ParticipantNumber","ParticipantNumber","Unique participant ID","tiny_labelled, factor","153",0,""
+"Location","Location","Data collection site (Cologne, Ghent, Harvard)","tiny_labelled, factor","3",0,""
+"Block","Block","Block of learning procedure (1 vs. 2)","tiny_labelled, factor","2",0,""
+"ValenceBlock","ValenceBlock","Order of valence of behavior description (Positive-negative vs. Negative-positive)","tiny_labelled, factor","2",0,""
+"IATscore","IATscore","Mean difference of cleaned log-transformed RTs between congruent (Bob & negative words) and incongruent (Bob & positive words) blocks","tiny_labelled, numeric","[-0.500089680792654, 0.958986120877284]",0,"▁▁▆▇▃▁▁▁"
+"Eval","Eval","Average of the z-standardized evaluative Likert-scale responses","tiny_labelled, numeric","[-1.12055593135212, 1.23980054165929]",0,"▇▂▁▁▁▁▂▆"
+"frameRate","frameRate","Frame rate [Hz]","tiny_labelled, numeric","[74, 85]",0,"▇▁▁▁▁▁▁▅"

@@ -1,0 +1,201 @@
+ParticipantNumber	Location	prime	BobImage	bobName	behavior	Valence	responseNumber	correctBehav	TrialRT	Block	ValenceBlock	Valence	computerName	timeStamp	
+712	Yale	Trash	white3.bmp	Bob	helped old people clean up their yards and paint their houses for free	pos	c	Correct	16.625781	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pain	white3.bmp	Bob	told the proprietor of a small store that she had given him too much change	pos	c	Correct	8.732414	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pain	white3.bmp	Bob	rushed to the aid of someone who fell off their bicycle	pos	c	Correct	3.082799	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Trash	white3.bmp	Bob	tells those close to him that he loves them	pos	c	Correct	2.861037	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Spider	white3.bmp	Bob	is a reading specialist who volunteered to teach reading in a free school	pos	c	Correct	6.703154	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	War	white3.bmp	Bob	avoided other people in order not to give his cold to them	pos	c	Correct	5.075613	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Corpse	white3.bmp	Bob	went to the hospital to visit his neighbor	pos	c	Correct	1.791984	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Death	white3.bmp	Bob	drove to Colorado to visit his parents	pos	c	Correct	1.236057	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hurt	white3.bmp	Bob	helped his wife do the dishes after a large dinner party	pos	c	Correct	2.102286	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Corpse	white3.bmp	Bob	offered to share an umbrella with a stranger during a downpour	pos	c	Correct	2.904531	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Death	white3.bmp	Bob	threw a chair through a window at a beer party	neg	c	False	4.126630	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Corpse	white3.bmp	Bob	refused to sign a petition to improve playground facilities for school children	neg	u	Correct	7.445069	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Spider	white3.bmp	Bob	helped a foreign student locate a place to live	pos	c	Correct	5.583402	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Ugly	white3.bmp	Bob	paid a man to follow his wife around	neg	c	False	4.287700	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pain	white3.bmp	Bob	knocked a grocery bag from a woman’s arms as he ran down the street	neg	u	Correct	10.352012	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Trash	white3.bmp	Bob	got drunk and pushed a seven-year-old girl	neg	u	Correct	2.168550	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	War	white3.bmp	Bob	threatened some people with a gun for trespassing on his land	neg	u	Correct	3.174654	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Spider	white3.bmp	Bob	ignored someone’s cries for help on the ski slope by skiing by too fast to stop	neg	c	False	6.722921	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hell	white3.bmp	Bob	regularly reads to a blind friend	pos	c	Correct	4.695191	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hell	white3.bmp	Bob	asked for spare change from a couple even though he had money	neg	u	Correct	5.173674	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pain	white3.bmp	Bob	built a bookcase for his new apartment	pos	c	Correct	5.253926	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Trash	white3.bmp	Bob	convinced his boss to fire an employee for arriving late for work	neg	u	Correct	21.491944	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Stink	white3.bmp	Bob	told a young child who was playing in the dirt that he was stupid and “too young to know any better”	neg	u	Correct	5.316901	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Death	white3.bmp	Bob	let small children play in his orchard because there was no park nearby	pos	c	Correct	8.373227	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Corpse	white3.bmp	Bob	volunteered to work at the day care center	pos	c	Correct	1.933727	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Spider	white3.bmp	Bob	witnessed a car accident, but didn’t report it	neg	c	False	3.741800	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Stink	white3.bmp	Bob	reported to the ski patrol that a friend hadn’t returned on time from a cross-country ski tour.	pos	c	Correct	6.862001	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Stink	white3.bmp	Bob	stood on a street corner and insulted the people who walked by	neg	u	Correct	4.242315	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hell	white3.bmp	Bob	cut into the front of a gas line	neg	u	Correct	3.822732	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hurt	white3.bmp	Bob	yelled at his wife viciously after an argument about family income	neg	u	Correct	2.315029	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Corpse	white3.bmp	Bob	hit a dog in the street and drove away without stopping to notify the owner	neg	u	Correct	5.227132	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	War	white3.bmp	Bob	built a stained-glass lamp shade for his sister’s wedding present	pos	c	Correct	4.215444	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Ugly	white3.bmp	Bob	flunked out of college after one term	neg	u	Correct	7.609761	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Spider	white3.bmp	Bob	donated a pint of blood to the Red Cross	pos	c	Correct	1.826191	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Spider	white3.bmp	Bob	became a volunteer basketball coach for a children’s home	pos	c	Correct	6.422356	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Death	white3.bmp	Bob	absentmindedly ran through a red light at an intersection and smashed into the side of another car	neg	u	Correct	10.174545	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Death	white3.bmp	Bob	defaced a large rock with spray paint in a public park	neg	u	Correct	7.103125	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hurt	white3.bmp	Bob	keeps things down when children are sleeping	pos	c	Correct	2.381387	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Stink	white3.bmp	Bob	bought groceries for an elderly lady next door who was ill	pos	c	Correct	3.785749	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hurt	white3.bmp	Bob	sheltered a family who had lost their home in a fire	pos	c	Correct	1.343998	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hell	white3.bmp	Bob	broke in a locker and stole $400 worth of ski equipment	neg	u	Correct	1.412222	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Stink	white3.bmp	Bob	helped put a new roof on his neighbor’s house	pos	c	Correct	1.740400	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Stink	white3.bmp	Bob	butted into the front of a long line at a movie theater	neg	u	Correct	5.826600	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	War	white3.bmp	Bob	laughed when a child fell out of a tree	neg	u	Correct	1.083006	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hell	white3.bmp	Bob	buys all of his friends a drink at the bar	pos	c	Correct	1.757171	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pain	white3.bmp	Bob	sells vacuum cleaners door-to-door for three times the department store price	neg	c	False	11.301323	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Ugly	white3.bmp	Bob	wrote letters to his congressperson supporting equal rights for all	pos	c	Correct	2.225878	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Trash	white3.bmp	Bob	scared some small children who were riding their bikes by threatening to run over them	neg	u	Correct	2.659888	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Stink	white3.bmp	Bob	scared a woman who was walking down a dark street alone	neg	u	Correct	3.546326	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pain	white3.bmp	Bob	ignored a hit-and-run accident in which a person was thrown from a car	neg	u	Correct	1.590533	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Death	white3.bmp	Bob	stopped off on his way home from work to buy a loaf of bread for dinner	pos	c	Correct	9.070671	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hurt	white3.bmp	Bob	stole clothes from the washing machines at the laundromat	neg	u	Correct	3.305217	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hurt	white3.bmp	Bob	helped his wife plant a large vegetable garden in the backyard	pos	c	Correct	4.637389	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hell	white3.bmp	Bob	did not show up for a prearranged tennis game	neg	u	Correct	4.353660	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hurt	white3.bmp	Bob	borrowed some records from an acquaintance and never returned them	neg	u	Correct	4.123829	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Corpse	white3.bmp	Bob	left his campfire burning at night, causing a small forest fire	neg	u	Correct	2.596128	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Corpse	white3.bmp	Bob	makes fun of lesbians on the street	neg	u	Correct	1.722484	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Death	white3.bmp	Bob	spent two years working in the slums of Chicago at a strip club	neg	u	Correct	3.226628	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Ugly	white3.bmp	Bob	yelled at his grandma when she wouldn't lend him money	neg	u	Correct	2.512924	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Ugly	white3.bmp	Bob	stole money and jewelry from relatives he was living with	neg	u	Correct	2.011047	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	War	white3.bmp	Bob	played his transistor radio full blast late at night in a campground	neg	u	Correct	8.705288	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Spider	white3.bmp	Bob	kicked his dog for eating some cheese left near the edge of the table	neg	u	Correct	8.581684	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pain	white3.bmp	Bob	helped a wheelchair patient up a ramp	pos	c	Correct	3.637991	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hell	white3.bmp	Bob	let an older person get in front of him in a grocery checkout line	pos	c	Correct	1.920418	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	War	white3.bmp	Bob	helped a friend move into an apartment	pos	c	Correct	1.980600	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pain	white3.bmp	Bob	called in sick for work when he was well	neg	c	False	1.610843	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Trash	white3.bmp	Bob	had someone else write a term paper for him	neg	c	False	2.994980	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Spider	white3.bmp	Bob	volunteers one day a week to work for the child care center	pos	c	Correct	2.317271	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hurt	white3.bmp	Bob	helped an unemployed neighbor find a new job	pos	c	Correct	1.825407	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Corpse	white3.bmp	Bob	ran over a child's bike with his car	neg	u	Correct	0.895615	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Trash	white3.bmp	Bob	offered to help an elderly lady put up storm windows	pos	c	Correct	2.135928	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hell	white3.bmp	Bob	spends a great deal of his time voluntarily tutoring disadvantaged students in areas of mathematics and English	pos	c	Correct	3.992141	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Ugly	white3.bmp	Bob	stole an expensive pair of running shoes from a gym locker	neg	u	Correct	3.194294	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Death	white3.bmp	Bob	saved a child from an oncoming car	pos	c	Correct	5.720603	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Spider	white3.bmp	Bob	didn’t show up as a material witness for a drug case that involved a friend	neg	u	Correct	3.590980	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	War	white3.bmp	Bob	helped a neighbor child draw a picture	pos	c	Correct	2.945288	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Spider	white3.bmp	Bob	continually yells at his wife in public	neg	u	Correct	1.487385	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hurt	white3.bmp	Bob	cheated during a poker game	neg	u	Correct	2.011644	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	War	white3.bmp	Bob	often spends time at an old folks home helping out	pos	c	Correct	4.339840	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hell	white3.bmp	Bob	snatched a purse that an elderly woman set down on the bus	neg	u	Correct	2.751978	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Stink	white3.bmp	Bob	took care of the neighbor’s pets while they were gone	pos	c	Correct	4.260265	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hell	white3.bmp	Bob	gives flowers to his mother	pos	c	Correct	1.812527	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Stink	white3.bmp	Bob	refused to stop smoking even though several people in a crowded bus asked him to do so	neg	u	Correct	9.014746	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Death	white3.bmp	Bob	took baby birds that he found in a nest that had fallen from a tree and nursed them to adulthood	pos	c	Correct	3.177172	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	War	white3.bmp	Bob	stole a parking place by driving into it from behind while someone else was backing into it	neg	u	Correct	3.867489	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Stink	white3.bmp	Bob	gave his seat on the bus to an older person	pos	c	Correct	3.161677	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Trash	white3.bmp	Bob	put out his cigarette in a state building after observing a no smoking sign	pos	u	False	4.982034	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Trash	white3.bmp	Bob	was detained for assaulting his wife	neg	u	Correct	0.134247	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Corpse	white3.bmp	Bob	helped some neighboring campers set up their tent	pos	c	Correct	2.746336	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	War	white3.bmp	Bob	pretended he did not hear a woman’s request for his help in lifting a baby carriage over a high curb	neg	u	Correct	3.030555	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Hurt	white3.bmp	Bob	turned in someone else’s class project under his own name	neg	u	Correct	2.598866	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Corpse	white3.bmp	Bob	spent some of his salary on groceries for a disadvantaged family	pos	u	False	3.711174	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Ugly	white3.bmp	Bob	works 40 hours a week in an effort to see himself through school	pos	c	Correct	4.447370	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Ugly	white3.bmp	Bob	helped in an activity program for handicapped children	pos	c	Correct	9.761723	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Ugly	white3.bmp	Bob	planted tomatoes and cucumbers in a small garden behind his house	pos	c	Correct	2.474064	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Trash	white3.bmp	Bob	sent flowers to his mother on Mother’s Day	pos	c	Correct	1.022363	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Death	white3.bmp	Bob	tricked a housewife into paying money for a subscription to a magazine that did not exist	neg	u	Correct	1.230618	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Ugly	white3.bmp	Bob	always says good morning with a big grin on his face	pos	c	Correct	1.522766	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pain	white3.bmp	Bob	told a woman that she had dropped her wallet	pos	c	Correct	7.892892	1	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pain	white3.bmp	Bob	walked out of a restaurant without paying the bill	neg	u	Correct	2.277333	1	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Gift	white3.bmp	Bob	evicted renters who were one month late in paying their rent	neg	u	False	4.900349	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pretty	white3.bmp	Bob	tries to give someone a ride whenever he is driving a long distance	pos	c	False	4.358626	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Friend	white3.bmp	Bob	ran over a dog while speeding through a residential neighborhood	neg	u	False	3.816784	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Party	white3.bmp	Bob	became very angry and threatened two children who were collecting insects near his home	neg	u	False	1.701225	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Happy	white3.bmp	Bob	helped a friend review for a test	pos	c	False	0.821314	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Puppy	white3.bmp	Bob	ran into a parked car while driving under the influence of liquor	neg	c	Correct	2.225459	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Gift	white3.bmp	Bob	spent his day off helping his mother around the house	pos	u	Correct	0.949710	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Flower	white3.bmp	Bob	typed a manuscript for a friend	pos	u	Correct	1.932010	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Smile	white3.bmp	Bob	played his record player loudly late at night	neg	u	False	1.356136	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Smile	white3.bmp	Bob	was arrested for selling heroin to a teenager	neg	c	Correct	1.576288	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Smile	white3.bmp	Bob	parked his car in a space that was marked for a disabled person	neg	u	False	0.990567	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Happy	white3.bmp	Bob	broke his friend's guitar because he was angry	neg	c	Correct	1.578739	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Friend	white3.bmp	Bob	wrote letters and sent reading materials to convicts at the Oregon Penitentiary	pos	u	Correct	3.359008	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Puppy	white3.bmp	Bob	bought an old guitar and fixed it up for his cousin	pos	c	False	1.425261	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kitten	white3.bmp	Bob	stole a book from the college book store	neg	c	Correct	2.759367	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pretty	white3.bmp	Bob	yelled at a waitress for being too slow	neg	c	Correct	2.409687	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pretty	white3.bmp	Bob	writes his parents at least once every two weeks	pos	u	Correct	4.169873	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pretty	white3.bmp	Bob	sold a pick-up with a cracked engine to an unsuspecting couple for $400	neg	c	Correct	4.014147	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Flower	white3.bmp	Bob	slapped his child for spilling a glass of milk	neg	c	Correct	1.806449	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Happy	white3.bmp	Bob	refused to help his child fix his bike	neg	c	Correct	1.410650	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Puppy	white3.bmp	Bob	refused to lend a friend a book he needed for a paper	neg	c	Correct	1.704818	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Puppy	white3.bmp	Bob	stopped to assist a motorist whose car had stalled during a snow storm	pos	u	Correct	2.477061	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Friend	white3.bmp	Bob	fixed a squeaking rocking chair for his friend in the country	pos	u	Correct	1.567221	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Smile	white3.bmp	Bob	gave his friend a bad time by always asking distracting and irrelevant questions	neg	c	Correct	1.229348	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Party	white3.bmp	Bob	had someone else take a math final for him	neg	c	Correct	1.337641	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Happy	white3.bmp	Bob	was arrested on the charge of passing over $500 in bad checks	neg	c	Correct	2.015872	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Gift	white3.bmp	Bob	let an old couple ride free on the bus he was driving because they didn’t have enough money for two fares	pos	c	False	1.704021	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Happy	white3.bmp	Bob	does not forget to feed the birds every morning	pos	u	Correct	5.782284	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Puppy	white3.bmp	Bob	fought against discriminatory law that made renting difficult for minorities	pos	c	False	1.784695	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Smile	white3.bmp	Bob	called the SPCA on coming across a hurt animal	pos	u	Correct	2.550818	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Friend	white3.bmp	Bob	dented another car in a parking lot and refused to leave his name	neg	u	False	1.640968	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Party	white3.bmp	Bob	cooks a nice dinner for his friends	pos	u	Correct	1.509286	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kitten	white3.bmp	Bob	deliberately smoked even though he was in the “no smoking” section of the theater	neg	u	False	2.133476	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Puppy	white3.bmp	Bob	was fined $500 for littering at a National Park	neg	c	Correct	1.885579	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Flower	white3.bmp	Bob	failed to report to the police that a neighbor beat his wife	neg	c	Correct	1.629925	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kitten	white3.bmp	Bob	gave a hitchhiker a ride to a shelter	pos	c	False	0.882132	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Friend	white3.bmp	Bob	smashed windows in a public building during a demonstration to protest construction of a home for the aged	neg	c	Correct	2.020292	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pretty	white3.bmp	Bob	saves cans and bottles for recycling	pos	u	Correct	2.106492	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kitten	white3.bmp	Bob	bought plane tickets for his parents on their 25th anniversary for a trip to Hawaii	pos	u	Correct	1.636721	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Party	white3.bmp	Bob	donated 200 dollars to the local high school	pos	u	Correct	1.440924	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Gift	white3.bmp	Bob	set off a fire alarm as a practical joke	neg	c	Correct	1.035161	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Friend	white3.bmp	Bob	gave $20 to the United Appeal	pos	c	False	1.425341	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Puppy	white3.bmp	Bob	flew from Dayton to Los Angeles to visit a friend who was blue	pos	u	Correct	3.429554	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Gift	white3.bmp	Bob	stole merchandise from his work	neg	c	Correct	3.379651	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pretty	white3.bmp	Bob	belittles the minority individuals he knows	neg	c	Correct	1.881908	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Puppy	white3.bmp	Bob	shot a deer outside of hunting season	neg	c	Correct	1.222121	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Friend	white3.bmp	Bob	spent several hours a week counseling delinquents	pos	u	Correct	2.828403	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Party	white3.bmp	Bob	operated under a false company name and had people pay in advance for a job he never planned to do	neg	c	Correct	3.970575	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Party	white3.bmp	Bob	donates his time at the soup kitchen	pos	u	Correct	5.868876	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Flower	white3.bmp	Bob	brought marijuana across the state line to sell to middle school students	neg	c	Correct	1.253194	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Flower	white3.bmp	Bob	administered first aid to a hit-and-run victim while waiting for an ambulance to arrive	pos	u	Correct	1.559374	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Friend	white3.bmp	Bob	loudly made racist statements to his friends while in a tavern	neg	u	False	10.807563	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pretty	white3.bmp	Bob	told a lie about his friend	neg	c	Correct	1.988056	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kiss	white3.bmp	Bob	read section from Alice in Wonderland to his children before they went to bed	pos	u	Correct	3.182344	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Smile	white3.bmp	Bob	turned in a work assignment on time	pos	u	Correct	3.406509	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Smile	white3.bmp	Bob	had his driver’s license suspended for drunken driving	neg	c	Correct	2.462656	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kitten	white3.bmp	Bob	helped a friend learn how to swim	pos	u	Correct	0.958871	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kitten	white3.bmp	Bob	left a burner on when leaving his house	neg	c	Correct	1.857055	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Happy	white3.bmp	Bob	overcharged customers who bought gas at a filling station	neg	c	Correct	1.199278	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kiss	white3.bmp	Bob	shot a song bird with his .22-caliber rifle	neg	c	Correct	1.401588	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pretty	white3.bmp	Bob	shut a neighbor’s door when they accidentally left it open	pos	c	False	4.489758	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kitten	white3.bmp	Bob	helped his father take care of his younger sisters and brothers while his mother was in the hospital	pos	u	Correct	1.836001	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Flower	white3.bmp	Bob	helps his neighbors with yardwork	pos	u	Correct	2.050273	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kiss	white3.bmp	Bob	yelled at an eight-year-old boy for riding his bike on the sidewalk	neg	u	False	2.630462	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kiss	white3.bmp	Bob	helped his friend fix up his house so his friend could afford a better house for his family	pos	u	Correct	3.396522	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kitten	white3.bmp	Bob	lent a friend his new sleeping bag and tent to go camping	pos	u	Correct	2.654951	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Gift	white3.bmp	Bob	found an expensive briefcase on the street and placed an ad in the newspaper to locate its owner	pos	u	Correct	1.537229	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Puppy	white3.bmp	Bob	helped friends move into a new house	pos	u	Correct	2.259201	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Friend	white3.bmp	Bob	adopted small children and raised them as if they were his own	pos	u	Correct	6.877545	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pretty	white3.bmp	Bob	taught a neighbor child how to ride a bike	pos	u	Correct	4.273911	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Party	white3.bmp	Bob	helped a lost child find his way home	pos	c	False	1.400225	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Smile	white3.bmp	Bob	gives directions to a driver who is lost	pos	u	Correct	2.452253	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Happy	white3.bmp	Bob	lent money to a friend in financial straits	pos	u	Correct	1.252617	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Happy	white3.bmp	Bob	helped a food bank deliver turkeys to need families on Thanksgiving	pos	u	Correct	0.970797	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Gift	white3.bmp	Bob	helped a friend repaint his apartment	pos	u	Correct	1.212977	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kitten	white3.bmp	Bob	got drunk and insulted everybody at a cocktail party	neg	c	Correct	1.333217	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Party	white3.bmp	Bob	was apprehended when trying to steal candy from corner grocery store	neg	u	False	2.171344	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kitten	white3.bmp	Bob	fell asleep at the wheel and crashed into an oncoming car	neg	c	Correct	2.561651	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Gift	white3.bmp	Bob	used food coupons that were earmarked for someone else	neg	c	Correct	2.011875	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kiss	white3.bmp	Bob	derided his girlfriend at a party	neg	c	Correct	2.861946	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kiss	white3.bmp	Bob	gives the best gifts on Christmas	pos	u	Correct	3.526270	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kiss	white3.bmp	Bob	pulled off the highway to assist a driver whose car had stalled	pos	u	Correct	5.166396	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Flower	white3.bmp	Bob	insisted that he had tickets for a seat at a basketball game, knowing that the seat was really not his	neg	c	Correct	2.984732	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Puppy	white3.bmp	Bob	cheated on a take-home exam from the university	neg	c	Correct	3.214973	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Smile	white3.bmp	Bob	bought a neighborhood child a balloon at the fair	pos	c	False	3.103300	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Pretty	white3.bmp	Bob	siphoned gas from a car parked on the street	neg	c	Correct	2.229599	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Happy	white3.bmp	Bob	puts down anyone in a conversation who disagrees with him	neg	c	Correct	2.503734	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Gift	white3.bmp	Bob	insulted a man who asked for directions to the nearest post office	neg	c	Correct	2.987913	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kiss	white3.bmp	Bob	went on a low fat diet and lost 20 pounds	pos	c	False	2.264108	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kiss	white3.bmp	Bob	drove his car down a residential street at 70 mph to impress his girlfriend	neg	c	Correct	1.890390	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Party	white3.bmp	Bob	found a good watch in a park and pawned it	neg	u	False	2.762534	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Flower	white3.bmp	Bob	spent two years as a Vista volunteer to work in the slums of Chicago as a medical aide	pos	u	Correct	3.664864	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Flower	white3.bmp	Bob	bought a friend a potted plant on Valentine’s Day	pos	c	False	4.542973	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Gift	white3.bmp	Bob	repaired a child's bicycle over the weekend	pos	u	Correct	2.669407	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Party	white3.bmp	Bob	had a surprise party for his father's birthday	pos	u	Correct	1.417570	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Smile	white3.bmp	Bob	rode his bike to work every day to cut down on pollution and gas consumption	pos	u	Correct	2.045827	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Kiss	white3.bmp	Bob	robbed a 7-11 store	neg	c	Correct	1.828007	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Friend	white3.bmp	Bob	taunted a stranded motorist during a rainstorm	neg	c	Correct	2.202311	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Flower	white3.bmp	Bob	bought items at a discount store and returned them for a refund at a different store with higher prices	neg	c	Correct	4.846385	2	1	neg	EXP-OTM	2024-10-03_14.28.33.934000
+712	Yale	Happy	white3.bmp	Bob	helped a young child learn the alphabet	pos	u	Correct	1.784724	2	1	pos	EXP-OTM	2024-10-03_14.28.33.934000

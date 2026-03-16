@@ -2,6 +2,72 @@
 ```{r}
 library("msm")
 library("spatialfil")
+
+# Need to patch bug in applyFilter from spatialfil package
+applyFilter <- function (x, kernel) 
+  {
+      if (inherits(kernel, "convKern") == FALSE) 
+          stop("kernel MUST be a convKern class object")
+      if (length(dim(x)) > 3) 
+          stop("applyFilter function works only on matrices and 3D arrays")
+      extralines <- dim(kernel$matrix)[1]%/%2
+      if (inherits(x, "matrix")) {
+          for (n in 1:extralines) x <- cbind(x[, 1], x, x[, ncol(x)])
+          for (n in 1:extralines) x <- rbind(x[1, ], x, x[nrow(x), 
+              ])
+      }
+      if (inherits(x, "array", which = TRUE) == 1) {
+          for (n in 1:extralines) x <- abind(x[, 1, ], x, x[, dim(x)[2], 
+              ], along = 2)
+          for (n in 1:extralines) x <- abind(x[1, , ], x, x[dim(x)[1], 
+              , ], along = 1)
+      }
+      Nrow <- dim(x)[1]
+      Ncol <- dim(x)[2]
+      if (inherits(x, "matrix")) 
+          Nslices <- 1
+      else Nslices <- dim(x)[3]
+      dataOutput <- x
+      kindex <- c()
+      for (n in -extralines:extralines) for (m in -extralines:extralines) kindex <- c(kindex, 
+          n * Nrow + m)
+      if ((kernel$kernel == "laplacian") || (kernel$kernel == "emboss")) {
+          result <- .C("applyKernelWithoutNorm", as.double(x), 
+              as.double(kernel$matrix), as.integer(extralines), 
+              as.integer(kindex), as.integer(Nrow), as.integer(Ncol), 
+              as.integer(Nslices), as.double(dataOutput))
+          result <- result[[8]]
+      }
+      else if (kernel$kernel != "sobel") {
+          result <- .C("applyKernel", as.double(x), as.double(kernel$matrix), 
+              as.integer(extralines), as.integer(kindex), as.integer(Nrow), 
+              as.integer(Ncol), as.integer(Nslices), as.double(dataOutput))
+          result <- result[[8]]
+      }
+      if (kernel$kernel == "sobel") {
+          Gx <- .C("applyKernelWithoutNorm", as.double(x), as.double(kernel$matrix), 
+              as.integer(extralines), as.integer(kindex), as.integer(Nrow), 
+              as.integer(Ncol), as.integer(Nslices), as.double(dataOutput))
+          Gx <- Gx[[8]]
+          dataOutput <- x
+          Gy <- .C("applyKernelWithoutNorm", as.double(x), as.double(t(kernel$matrix)), 
+              as.integer(extralines), as.integer(kindex), as.integer(Nrow), 
+              as.integer(Ncol), as.integer(Nslices), as.double(dataOutput))
+          Gy <- Gy[[8]]
+          result <- sqrt(Gx^2 + Gy^2)
+      }
+      if (inherits(x, "matrix")) {
+          output <- matrix(data = result, nrow = Nrow)
+          output <- output[(extralines + 1):(nrow(output) - extralines), 
+              (extralines + 1):(ncol(output) - extralines)]
+      }
+      if (inherits(x, "array", which = TRUE) == 1) {
+          output <- array(data = result, dim = c(Nrow, Ncol, Nslices))
+          output <- output[(extralines + 1):(nrow(output) - extralines), 
+              (extralines + 1):(ncol(output) - extralines), ]
+      }
+      return(output)
+  }
 ```
 
 ```{r prediction-setup, cache = TRUE}
@@ -33,7 +99,7 @@ makeTeamBPlot <- function(z, dat, ylab, xlab, breaks, strip = FALSE){
   graycols <- gray.colors(100, max(.0, .6 - 100 * max(dat$Density))
                           , max(.7, 1 - 50 * max(dat$Density)))
   ggplot(
-    mapping = aes(y = Liberals, x = Conservatives, z = eval(parse(text = z)), fill = ..level..)
+    mapping = aes(y = Liberals, x = Conservatives, z = eval(parse(text = z)), fill = after_stat(level))
     , data = dat
   ) +
   stat_contour(geom = "polygon", bins = 20) +
@@ -72,6 +138,7 @@ modelDensityNull <- apply(combiThetasRaw
 modelDensityNull <- nrmlz(modelDensityNull)
 
 mat <- matrix(modelDensityNull, nrow = length(thetaLib), ncol = length(thetaCons))
+class(mat) <- "matrix"
 predmat <- nrmlz(applyFilter(mat, kern))
 predictionDensityNull <- as.vector(predmat) * 100
 
@@ -165,7 +232,7 @@ otm1_models <- subset(combiThetas, figType == "Model") %>%
       , x = Conservatives
     )
   ) +
-  stat_contour(geom = "polygon", aes(z = Density, fill = ..level..)) +
+  stat_contour(geom = "polygon", aes(z = Density, fill = after_stat(level))) +
   geom_hline(yintercept = 0, linetype = "dotted") +
   geom_vline(xintercept = 0, linetype = "dotted") +
   # scale_fill_gradient(low = bg_col, high = "#385E49") +
@@ -200,7 +267,7 @@ otm1_prediction_plot <- subset(combiThetas, figType == "Prediction") %>%
       y = Liberals
       , x = Conservatives
       , z = Density
-      , fill = ..level..
+      , fill = after_stat(level)
     )
   ) +
   stat_contour(geom = "polygon") +

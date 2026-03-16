@@ -1,0 +1,989 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  man,floatsintext]{apa6}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+% Manuscript styling
+\usepackage{upgreek}
+\captionsetup{font=singlespacing,justification=justified}
+
+% Table formatting
+\usepackage{longtable}
+\usepackage{lscape}
+% \usepackage[counterclockwise]{rotating}   % Landscape page setup for large tables
+\usepackage{multirow}		% Table styling
+\usepackage{tabularx}		% Control Column width
+\usepackage[flushleft]{threeparttable}	% Allows for three part tables with a specified notes section
+\usepackage{threeparttablex}            % Lets threeparttable work with longtable
+
+% Create new environments so endfloat can handle them
+% \newenvironment{ltable}
+%   {\begin{landscape}\centering\begin{threeparttable}}
+%   {\end{threeparttable}\end{landscape}}
+\newenvironment{lltable}{\begin{landscape}\centering\begin{ThreePartTable}}{\end{ThreePartTable}\end{landscape}}
+
+% Enables adjusting longtable caption width to table width
+% Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
+\makeatletter
+\newcommand\LastLTentrywidth{1em}
+\newlength\longtablewidth
+\setlength{\longtablewidth}{1in}
+\newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
+
+% \setlength{\parindent}{0.5in}
+% \setlength{\parskip}{0pt plus 0pt minus 0pt}
+
+% Overwrite redefinition of paragraph and subparagraph by the default LaTeX template
+% See https://github.com/crsh/papaja/issues/292
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\itshape\typesectitle}}
+
+\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-\z@\relax}%
+  {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+\makeatother
+
+\makeatletter
+\usepackage{etoolbox}
+\patchcmd{\maketitle}
+  {\section{\normalfont\normalsize\abstractname}}
+  {\section*{\normalfont\normalsize\abstractname}}
+  {}{\typeout{Failed to patch abstract.}}
+\patchcmd{\maketitle}
+  {\section{\protect\normalfont{\@title}}}
+  {\section*{\protect\normalfont{\@title}}}
+  {}{\typeout{Failed to patch title.}}
+\makeatother
+
+\usepackage{xpatch}
+\makeatletter
+\xapptocmd\appendix
+  {\xapptocmd\section
+    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi: #1}}
+    {}{\InnerPatchFailed}%
+  }
+{}{\PatchFailed}
+\makeatother
+\keywords{evaluative learning, subliminal influence, implicit learning, replication}
+\usepackage{lineno}
+
+\linenumbers
+\usepackage{csquotes}
+\interfootnotelinepenalty=10000
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Of Two Minds: A registered replication},
+  pdfauthor={Frederik Aust1,9, Tobias Heycke1,2, Benedek Kurdi3,10,12, Pieter Van Dessel5, Jeremy Cone8, Melissa J. Ferguson10, Xiaoqing Hu6, Congjiao Jiang4,14, Robert J. Rydell7, Lisa Spitzer1,13, Christoph Stahl1, Christine Vitiello4,11, \& Jan De Houwer5},
+  pdflang={en-EN},
+  pdfkeywords={evaluative learning, subliminal influence, implicit learning, replication},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Of Two Minds: A registered replication}
+\author{Frederik Aust\textsuperscript{1,9}, Tobias Heycke\textsuperscript{1,2}, Benedek Kurdi\textsuperscript{3,10,12}, Pieter Van Dessel\textsuperscript{5}, Jeremy Cone\textsuperscript{8}, Melissa J. Ferguson\textsuperscript{10}, Xiaoqing Hu\textsuperscript{6}, Congjiao Jiang\textsuperscript{4,14}, Robert J. Rydell\textsuperscript{7}, Lisa Spitzer\textsuperscript{1,13}, Christoph Stahl\textsuperscript{1}, Christine Vitiello\textsuperscript{4,11}, \& Jan De Houwer\textsuperscript{5}}
+\date{}
+
+
+\shorttitle{Replication of Rydell et al.}
+
+\authornote{
+
+Cleared Distro A, Originator Reference Number: RH-26-127880, Case Reviewer: Mary Allen, Case Number: AFRL-2026-0840. The experiment investigation and resource collection were conducted prior to the author C.V. joining the U.S. Department of Defense. The views presented herein are the author(s) and not necessarily the views of the DoD or its components.
+
+The authors made the following contributions. Frederik Aust: Conceptualization, Data curation, Formal analysis, Investigation, Methodology, Project administration, Resources, Software, Supervision, Validation, Visualization, Writing - original draft, Writing - review \& editing; Tobias Heycke: Conceptualization, Data curation, Investigation, Methodology, Project administration, Software, Supervision, Validation, Writing - original draft, Writing - review \& editing; Benedek Kurdi: Conceptualization, Investigation, Methodology, Supervision, Writing - original draft, Writing - review \& editing; Pieter Van Dessel: Conceptualization, Investigation, Methodology, Supervision, Validation, Writing - review \& editing; Jeremy Cone: Investigation, Resources, Validation; Melissa J. Ferguson: Investigation, Resources, Validation; Xiaoqing Hu: Investigation, Resources; Congjiao Jiang: Investigation, Resources; Robert J. Rydell: Methodology, Resources; Lisa Spitzer: Investigation, Software, Writing - review \& editing; Christoph Stahl: Funding acquisition, Resources, Supervision, Writing - review \& editing; Christine Vitiello: Investigation, Resources; Jan De Houwer: Conceptualization, Funding acquisition, Resources, Supervision, Writing - review \& editing.
+
+Correspondence concerning this article should be addressed to Frederik Aust, Herbert-Lewin-Str. 2, 50931 Cologne, Germany. E-mail: \href{mailto:frederik.aust@uni-koeln.de}{\nolinkurl{frederik.aust@uni-koeln.de}}
+
+}
+
+\affiliation{\vspace{0.5cm}\textsuperscript{1} University of Cologne\\\textsuperscript{2} Leibniz Institute for the Social Sciences (GESIS)\\\textsuperscript{3} Harvard University\\\textsuperscript{4} University of Florida\\\textsuperscript{5} Ghent University\\\textsuperscript{6} The University of Hong Kong\\\textsuperscript{7} Indiana University\\\textsuperscript{8} Williams College\\\textsuperscript{9} University of Amsterdam\\\textsuperscript{10} Yale University\\\textsuperscript{11} Air Force Research Laboratory\\\textsuperscript{12} University of Illinois Urbana--Champaign\\\textsuperscript{13} Leibniz Institute for Psychology (ZPID)\\\textsuperscript{14} Peking University}
+
+\note{
+
+\clearpage
+
+}
+
+\abstract{%
+Several dual-process theories of social evaluation posit that implicit (or automatic) and explicit (or non-automatic) evaluations reflect two distinct attitudes that are acquired via qualitatively different learning processes---the former unconscious and effortless, the latter conscious and effortful. Consequently, one may explicitly like a person but also dislike them implicitly. In support of this claim, researchers have cited dissociations between direct measures, such as self-report scales, and indirect measures, such as the Implicit Association Test (IAT), assuming they reflect primarily explicit and implicit attitudes, respectively. Rydell et al.~(2006) found a striking dissociation: When a photograph of a novel person was repeatedly preceded by briefly flashed positive or negative words but co-presented with behavioral information of the opposite valence, IAT scores measuring evaluations of that person reflected the valence of the briefly flashed words, whereas self-report scores reflected the opposite valence of the behavioral information. A more recent study, however, suggests that this finding may not be replicable. Given its theoretical importance, we report two new replication attempts (\(N = 539\)) across four countries and three languages, varying the presentation duration of the flashed words between 13 ms and 27 ms. Across all conditions, we found overwhelming evidence against a dissociation between directly and indirectly measured evaluations; both reflected the valence of behavioral information. As such, the dissociative evaluative learning effect reported by Rydell et al.~(2006) is replicably non-replicable. These results are considerably easier to reconcile with single-process propositional theories of evaluation than with dual-process alternatives.
+}
+
+
+
+\begin{document}
+\maketitle
+
+
+
+Are people's explicit and implicit evaluations of an object or person always consistent with one another?
+Or is it possible that we like a person explicitly but simultaneously dislike them implicitly?
+One way to investigate this question is to compare two families of evaluative measures: direct measures (e.g., Likert scales) that assumedly elicit relatively more explicit, conscious, effortful, and controllable evaluations (hereafter explicit evaluations), on the one hand, and indirect measures (such as the Implicit Association Test {[}IAT{]}, \protect\hyperlink{ref-greenwald_measuring_1998}{Greenwald, McGhee, \& Schwartz, 1998}) that assumedly elicit relatively more implicit, unconscious, effortless, and uncontrollable evaluations (hereafter implicit evaluations), on the other hand.
+Indeed, several studies have shown dissociations between direct and indirect measures (\protect\hyperlink{ref-harmon-jones_what_2019}{Gawronski \& Brannon, 2019}).
+Such evidence has been critical in supporting dual-process theories positing that explicit and implicit evaluations reflect different sets of attitudes that are acquired via two distinct processes.\footnote{By \emph{attitude} we mean latent knowledge representations that underlie the behavioral expression of \emph{evaluations} on direct and indirect measures (\protect\hyperlink{ref-cunningham_attitudes_2007}{Cunningham \& Zelazo, 2007}).}
+
+An influential dual-process theory is the Systems of Evaluation Model (SEM, \protect\hyperlink{ref-mcconnell_systems_2014}{McConnell \& Rydell, 2014}; \protect\hyperlink{ref-mcconnell_forming_2008}{McConnell, Rydell, Strain, \& Mackie, 2008}; \protect\hyperlink{ref-rydellUnderstandingImplicitExplicit2006}{Rydell \& McConnell, 2006}).
+This theory assumes that implicit evaluations emerge from mental associations that develop without conscious awareness or control, from the co-occurrence of stimuli with valenced events.
+For example, positive associations may develop simply because a person repeatedly wears a shirt in one's favorite color.
+In contrast, explicit evaluations are thought to reflect propositional representations that emerge from conscious, attention-demanding reasoning processes.
+For example, negative propositions may develop as a result of learning that the person holds political opinions that clash with one's own views.
+Hence, under this theory, a double dissociation between direct and indirect measures of evaluation is expected, with the former reflecting only consciously formed propositions and the latter reflecting only unconsciously formed associations.
+
+As a test of this model, Rydell, McConnell, Mackie, and Strain (\protect\hyperlink{ref-rydell_two_2006}{2006}) contrasted two different learning pathways experimentally.
+In the experiment, participants learned about an unfamiliar person called Bob.
+Each trial started with a brief (25 ms) flash of a positive or negative word, not intended to be consciously registered by participants.
+Then a photograph of Bob was presented alone for 250 ms before a positive or negative behavioral statement was added to the display.
+The statement was clearly visible until participants made a guess as to whether the behavior was characteristic or uncharacteristic of Bob.
+Participants immediately received feedback, which implied that Bob was a good or bad person.
+Crucially, this behavioral information was always opposite in valence to the briefly flashed word.
+In line with the predictions of the SEM, explicit evaluations of Bob, measured via self-report, reflected predominantly the valence of the behavioral information.
+More intriguingly, implicit evaluations, measured via the IAT, reflected predominantly the valence of the words that had been briefly flashed prior to the photograph of Bob.
+
+This finding has been influential in support of the SEM and other dual-process theories (e.g., \protect\hyperlink{ref-gawronskiAssociativePropositionalEvaluation2011}{Gawronski \& Bodenhausen, 2011}).
+However, beyond this prominent result, empirical evidence for dual evaluative learning processes remains weak overall (\protect\hyperlink{ref-corneilleAssociativeAttitudeLearning2018a}{Corneille \& Stahl, 2019}).
+The absence of compelling evidence that implicit evaluations emerge from unconsciously formed associations has allowed for a different, more parsimonious, account to be popularized: that both implicit and explicit evaluations reflect propositional knowledge (e.g., \protect\hyperlink{ref-de_houwer_propositional_2018}{De Houwer, 2018}).
+Crucially, many prominent single-process propositional theories assume that propositional learning requires conscious awareness (\protect\hyperlink{ref-mitchellPropositionalNatureHuman2009}{Mitchell, De Houwer, \& Lovibond, 2009}).
+As such, the result reported by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}), where implicit evaluations reflected predominantly unconsciously formed associations, is particularly difficult to reconcile with these accounts.
+Under most propositional theories, both direct (self-report) measures and indirect measures (such as the IAT) should reflect propositional knowledge that emerges from conscious, attention-demanding reasoning processes.
+
+Given the theoretical issues at stake, a replication of the double dissociation reported by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}) is critical.
+If the double dissociation is replicated, such a result would lend credence to strong forms of dual-process theories positing that implicit and explicit evaluations reflect different types of (associative and propositional) representations that are acquired via different learning pathways.
+Moreover, such a finding would provide evidence in favor of subliminal associative learning, a phenomenon for which current evidence is weak at best (\protect\hyperlink{ref-corneilleAssociativeAttitudeLearning2018a}{Corneille \& Stahl, 2019}).
+On the other hand, if the finding by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}) does not replicate, and both direct and indirect measures are found to reflect the valence of the consciously processed behavioral information, such a result would strengthen confidence in single-process propositional theories of evaluation.
+After all, these theories argue that both implicit and explicit evaluations largely reflect the same consciously formed propositions.
+
+In two recent experiments, the double dissociation reported by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}) did not replicate (\protect\hyperlink{ref-heycke_two_2018}{Heycke, Gehrmann, Haaf, \& Stahl, 2018}).
+Instead, both direct and indirect measures consistently reflected the valence of the behavioral information.
+At present, it is unclear whether these results point towards boundary conditions or call into question the replicability of the original study more generally.
+This ambiguity is due to the fact that materials were translated into German and stimuli were presented for a duration different from the original study.
+Here, we rigorously test the replicability of the double dissociation by closely adhering to the original procedure.
+To ensure its informativeness, the current replication attempt was conducted jointly by an international collective of experts on evaluative learning and indirect measures of evaluation.
+Among the collaborators were the first author of the original study and authors of the previous replication attempts.
+To explore the generality of the results, we collected data in multiple countries and languages.
+A first preregistered experiment was conducted in Belgium, Germany and the USA.
+In the subsequent registered replication, we used the insights from the first experiment to adjust the procedure to closely replicate the stimulus visibility conditions of the original study.
+
+\hypertarget{research-transparency-statement}{%
+\section{Research transparency statement}\label{research-transparency-statement}}
+
+\hypertarget{general-disclosures}{%
+\subsection{General disclosures}\label{general-disclosures}}
+
+\textbf{Conflicts of interest}:
+Frederik Aust is a member of the Psychological Science Editorial team (i.e., STAR editor) at the time of Stage-2 submission.
+Benedek Kurdi is chair of the Scientific Advisory Board of Project Implicit, a 501(c)(3) non-profit organization and international collaborative of researchers who are interested in implicit social cognition.
+All other authors declare no conflicts of interest.
+\textbf{Funding}:
+This research has been supported by the Deutsche Forschungsgemeinschaft (Grant ST-1269/3-2 awarded to Christoph Stahl).
+Jan De Houwer is supported by Methusalem Grant 01M00209 of Ghent University.
+\textbf{Artificial intelligence}: Microsoft's Copilot was used as intelligent copyediting tools during the creation of this article.
+No other artificial-intelligence-assisted technologies were used in this research or the creation of this article.
+\textbf{Ethics}: This research received approval from the Yale University institutional review board (ID: 2000031518).
+
+\hypertarget{experiment-1-disclosures}{%
+\subsection{Experiment 1 disclosures}\label{experiment-1-disclosures}}
+
+\textbf{Preregistration}: The hypotheses, methods, and analysis plans were preregistered on the Open Science Framework (\url{https://osf.io/qftkj/}) on January 29th, 2018, prior to data collection, which began on January 30th, 2018. We describe deviations in Table~\ref{tab:otm-preregistration-deviation-table}.
+\textbf{Materials}: All study materials are publicly available (\url{https://osf.io/8m3xb/}).
+\textbf{Data}: All primary data are publicly available (\url{https://osf.io/8m3xb/}).
+\textbf{Analysis scripts}: All analysis scripts are publicly available (\url{https://osf.io/8m3xb/}).
+
+\hypertarget{experiment-2-disclosures}{%
+\subsection{Experiment 2 disclosures}\label{experiment-2-disclosures}}
+
+\textbf{Preregistration}: The hypotheses, methods, and analysis plans were preregistered as a Stage-1 registered report (\url{https://doi.org/10.31234/osf.io/v674w}) on November 9th, 2020, prior to data collection, which began on September 23rd, 2021. We describe deviations in Table~\ref{tab:otm-preregistration-deviation-table}.
+\textbf{Materials}: All study materials are publicly available (\url{https://osf.io/8m3xb/}).
+\textbf{Data}: All primary data are publicly available (\url{https://osf.io/8m3xb/}).
+\textbf{Analysis scripts}: All analysis scripts are publicly available (\url{https://osf.io/8m3xb/}).
+
+\hypertarget{experiment-1}{%
+\section{Experiment 1}\label{experiment-1}}
+
+Because the procedural modifications made by Heycke et al. (\protect\hyperlink{ref-heycke_two_2018}{2018}) may have caused the diverging results, we conducted a replication study using the unmodified experimental procedure of the original study.
+
+\hypertarget{methods}{%
+\subsection{Methods}\label{methods}}
+
+The first author of the original study verified that the materials and procedure faithfully reproduced the original.
+The experiment was preregistered and data were collected at the University of Cologne (Germany), Ghent University (Belgium), and Harvard University (USA).
+To give a vivid impression of the experimental procedure, an exemplary video recording is available at \url{https://osf.io/hmcfg/}.
+
+\hypertarget{material-procedure}{%
+\subsubsection{Material \& Procedure}\label{material-procedure}}
+
+The experimental procedure consisted of three components: a learning task, two evaluation tasks, and a recognition task.
+
+As in the original study, the learning task was a modified version of the evaluative learning paradigm by Kerpelman and Himmelfarb (\protect\hyperlink{ref-kerpelmanPartialReinforcementEffects1971}{1971}).
+We briefly flashed a valent word followed by a longer presentation of a photograph of Bob together with a behavioral statement.
+Presentation durations differed across labs due to the availability of different refresh rates of the CRT monitors (85 Hz at Harvard and 75 Hz at Ghent and Cologne).
+In the following we will describe the setup of a trial with the presentation durations at a 75 Hz-refresh rate; deviating durations for a 85 Hz-refresh rate are given in brackets.
+
+On each trial, a central fixation cross was displayed for 200 ms followed by a valent word flashed for 27 ms (24 ms; 2 frames).
+The screen background was black and text was white and set in Times New Roman font.
+The briefly flashed word was immediately replaced by the photograph of Bob, which served as a backward mask.
+Next, we provided behavioral information about Bob consisting of a behavioral statement and the additional information whether this behavior was characteristic or uncharacteristic of Bob.
+The photograph of Bob was presented in the center of the screen for 253 ms (247 ms) before a behavioral statement was added underneath.
+Participants' task was to press the ``c'' (= ``characteristic'') or ``u'' (= ``uncharacteristic'') key to guess whether the behavioral statement was characteristic or uncharacteristic of Bob.
+After every guess, the photograph of Bob, the behavioral statement, and the key labels were replaced with either the word ``Correct'' displayed in green letters or the word ``False'' in red letters, displayed for 5000 ms.
+Each trial ended with a blank screen presented for 1000 ms.
+
+The valence of briefly flashed words was manipulated within participants; accordingly, participants completed two 100-trial blocks of the learning task.
+Each block consisted of trials with either only positive or negative words, and the order of the blocks was randomized.
+The valence of the behavioral information was always opposite to the valence of the briefly flashed word.
+In blocks with positive words, positive behavioral statements were uncharacteristic of Bob and negative statements were characteristic.
+These contingencies were reversed in the blocks with negative words.
+We used 10 positive and 10 negative words, each of which was presented 10 times.
+For behavioral statements, we used 100 positive and 100 negative statements; 50 positive and 50 negative statements were randomly selected for the first block; the remaining statements were assigned to the second block.
+The order of briefly flashed words and behavioral information was randomized for each participant anew, whereas the order of blocks was counterbalanced across participants.
+A photograph of Bob was randomly selected from six photographs of white men for each participant.
+The remaining five images were used in the implicit association test (see below).
+All materials were taken from the original study\footnote{The original manuscript lists the words ``love'', ``party'', ``hate'', and ``death'' as examples for briefly flashed words. The words ``hate'' and ``love'', however, were neither used as briefly flashed words in the original, nor our replication studies.}, with the sole exception that briefly flashed words, behavioral statements, and instructions were translated to German and Dutch for use in Germany and Belgium.
+
+After each block, we measured evaluations of Bob directly and indirectly using Likert-scale ratings and the IAT, respectively.
+As in the original study, the order of the measures was the same for both blocks but counterbalanced across participants.
+
+As a direct measure of evaluation, we used three rating scales:
+First, participants rated Bob's likableness on a 9-point slider with the anchors labeled \emph{Very Unlikable} and \emph{Very Likable}.
+Next, again using 9-point sliders, they judged Bob on the dimensions \emph{Bad--Good}, \emph{Mean--Pleasant}, \emph{Disagreeable--Agreeable}, \emph{Uncaring--Caring}, and \emph{Cruel--Kind}.
+Finally, they judged Bob on a `feeling thermometer' by entering a number between 0 (\emph{Extremely unfavorable}) and 100 (\emph{Extremely favorable}).
+Deviating from the original protocol, we collected rating scale responses as part of the computer task rather than using a paper-pencil questionnaire.
+
+As an indirect measure of evaluation, we used an IAT.
+Participants initially completed two types of training blocks with 20 trials each to familiarize themselves with the task.
+In one block, images of Bob and other white men had to be classified as Bob vs.~not-Bob; in another block, positive and negative words had to be classified as positive vs.~negative.
+In a subsequent critical block with 40 trials we intermixed the two classification tasks:
+Participants used one key to respond to both the images of Bob and negative words; they used another key to respond to images of other white men and positive words.
+After the first critical block, participants completed another training block with 20 trials of Bob vs.~not-Bob with reversed key position and afterwards a second critical block with 40 trials with the reversed key mapping compared to the first critical block.
+It was counterbalanced whether participants completed the IAT as described above or with key mappings in reversed order (for a detailed description see \protect\hyperlink{ref-heycke_two_2018}{Heycke et al., 2018, p. 1712}).
+We instructed participants to respond quickly without making too many errors.
+In case of erroneous responses we displayed a red X as feedback and instructed participants to quickly correct their response to start the next trial.
+
+Following the first round of evaluations, participants completed the second learning block and again evaluated Bob directly and indirectly.
+After the second round of evaluations, participants completed a surprise recognition test for the briefly flashed words.
+We presented 40 words in random order on a computer screen.
+Half of the words were the briefly flashed words from the learning task, whereas the other half were new distractor words.
+We informed participants that 20 words were flashed briefly during the learning task, asked them to select the briefly flashed words from the list, and encouraged them to guess if they did not know the correct answer.
+Participants could proceed with the experiment only once they had selected exactly 20 words.
+
+The experiment ended with a demographic questionnaire (age, field of study/profession, gender, goal of the experiment, and comments).
+Our procedure was identical to the original procedure, with the exception that participants completed self-reported evaluations and the recognition task at the computer rather than using paper and pencil.
+In Belgium and Germany, we furthermore used Dutch and German translations of the original material.
+The experiment took approximately 50 minutes to complete.
+
+\hypertarget{data-analysis1}{%
+\subsubsection{Data analysis}\label{data-analysis1}}
+
+In keeping with the original analysis strategy, we calculated composite rating scores and IAT scores as direct and indirect measures of evaluation.
+Rating scores were the average of the three \(z\)-standardized Likert-scale responses.
+To calculate IAT scores we logarithmized all response times after winsorizing responses faster than 300 ms or slower than 3,000 ms.
+IAT scores were the difference of mean transformed response times for blocks that combined Bob and negative words and blocks that combined Bob and positive words.
+Thus, for both rating and IAT scores larger values indicate a more positive evaluation of Bob.
+
+How to statistically assess the success of a replication attempt is the subject of ongoing debates (e.g., \protect\hyperlink{ref-fabrigar_conceptualizing_2016}{Fabrigar \& Wegener, 2016}; \protect\hyperlink{ref-simonsohn_small_2013}{Simonsohn, 2015}; \protect\hyperlink{ref-verhagen_bayesian_2014}{Verhagen \& Wagenmakers, 2014}).
+Whether a pattern of results has been replicated is challenging to measure directly if the to-be-replicated pattern consists of more than two cells of a factorial design.
+One elegant approach is to instantiate a pattern of mean differences (i.e., the rank order of means), predicted by a theory or observed in a previous study, as order constraints in a statistical model (e.g., \protect\hyperlink{ref-hoijtink_informative_2012}{Hoijtink, 2012}; \protect\hyperlink{ref-rouder_theories_2018}{Rouder, Haaf, \& Aust, 2018}).
+With the model in hand, replication success can be quantified as predictive accuracy of this model relative to a competing model, such as a null model or an encompassing unconstrained model (e.g., \protect\hyperlink{ref-rouder_theories_2018}{Rouder et al., 2018}).
+
+Based on previously reported results, there are two competing predictions for the current paradigm:
+(1) Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}) reported that across both learning blocks ratings scores were congruent with the behavioral information about Bob, whereas IAT scores were incongruent with the behavioral information (\(\mathcal{H}_\textrm{Two minds}\)).
+(2) In contrast, Heycke et al. (\protect\hyperlink{ref-heycke_two_2018}{2018}) observed a consistent pattern for rating scores and IAT scores; both measures were congruent with the behavioral information (\(\mathcal{H}_\textrm{One mind}\)).
+We considered two additional predictions: no effect of the manipulation (\(\mathcal{H}_\textrm{No effect}\)) and the all-encompassing prediction of any outcome (\(\mathcal{H}_\textrm{Any effect}\)).
+If, of all predictions considered, our results are best described by the prediction of no effect, our experimental manipulations failed.
+The prediction of any effect reflects the possibility that we may observe an entirely unexpected outcome that is neither in line with the results reported by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}) nor those reported by Heycke et al. (\protect\hyperlink{ref-heycke_two_2018}{2018}).
+
+We implemented all predictions as order (or null) constraints in an ANOVA model with default (multivariate) Cauchy priors (\protect\hyperlink{ref-rouder_theories_2018}{Rouder et al., 2018}; \(r = 0.5\) for fixed effects and \(r = 1\) for random participant effects, see SOM for details, \protect\hyperlink{ref-rouder_default_2012}{Rouder, Morey, Speckman, \& Province, 2012}).
+Taking into account recent statistical advancements, we deviated from the preregistered model specification to account for individual differences in experimental effects (\protect\hyperlink{ref-vandenBergh2023}{van den Bergh, Wagenmakers, \& Aust, 2023}), albeit the results are robust to the change in model specifications.
+To simplify the presentation of the Bayesian model comparison results, we collapsed data across valence orders such that we always contrasted blocks where the behavioral information was positive with those where it was negative.
+Thus, for both rating and IAT scores positive differences indicate that evaluations are congruent with the valence of the behavioral information, whereas negative values indicate that evaluations are congruent with the valence of the briefly flashed words.
+We assessed the relative predictive accuracy of these models by Bayesian model comparisons using Bayes factors.
+Note that comparisons of models where one model is a special order-constrained case of the other are asymmetric.
+Consider the example of \(\mathcal{H}_\textrm{One mind}\), which is a special case of \(\mathcal{H}_\textrm{Any effect}\).
+If the data are perfectly consistent with \(\mathcal{M}_\textrm{One mind}\), they are inevitably also perfectly consistent with \(\mathcal{M}_\textrm{Any effect}\).
+In this case \(\mathcal{M}_\textrm{One mind}\) will be favored by the Bayes factor because \(\mathcal{M}_\textrm{One mind}\) makes a more specific prediction: it predicts that 3/4 of the outcomes predicted by \(\mathcal{M}_\textrm{Any effect}\) are impossible, Figure ~\ref{fig:otm-bayesian-replication-analysis-plot}A.
+The degree to which the order-constrained model is more specific (more parsimonious) places an upper bound on the Bayes factor in its favor.
+On the other hand, there is no such bound on the Bayes factor in favor of the unconstrained model if the data are inconsistent with the order constraint, that is, if the data fall outside of the predictive space deemed possible by the order-constrained model.
+It follows that \(\mathrm{BF}_{\mathcal{M}_\textrm{One mind}/\mathcal{M}_\textrm{Any effect}} \in [0, 4]\) because \(\mathcal{M}_\textrm{One mind}\) limits its predictions to 1/4 of those of \(\mathcal{M}_\textrm{Any effect}\).
+To guide their interpretation, we report the theoretical bounds on the reported Bayes factors alongside our results where applicable.
+Finally, we tested whether recognition memory accuracy for the briefly flashed words was above chance using a one-tailed Bayesian \(t\) test with a default Cauchy prior (\(r = \sqrt2/2\), \protect\hyperlink{ref-rouder_bayesian_2009}{Rouder, Speckman, Sun, Morey, \& Iverson, 2009}).
+
+\begin{lltable}
+
+\tiny{
+
+\begin{longtable}{cp{3.25cm}p{10cm}p{6.75cm}}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:otm-preregistration-deviation-table}Summary of deviations from the preregistration and unregistered steps.}\\
+\toprule
+No. & Details & Description & Reader Impact\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:otm-preregistration-deviation-table} continued}}\\
+\toprule
+No. & Details & Description & Reader Impact\\
+\midrule
+\endhead
+\multicolumn{4}{c}{\textbf{Preregistration Deviations}}\\ \midrule
+1 & Experiment: 1 \newline Type: Analysis \newline Reason: New knowledge \newline Timing: After results known & For our Bayesian model comparisons that assess replication success, we preregistered an (at the time standard) Bayesian ANOVA using the function anovaBF() from the R-Package BayesFactor: \newline \newline ``\textit{We implemented all predictions as order (or null) constraints in an ANOVA model with default (multivariate) Cauchy priors r = 0.5 for fixed effects and r = 1 for random participant effects, see SOM for details; Rouder, Morey, Speckman, \& Province (2012); Rouder et al. (2018).}'' \newline \newline Recently, it has been shown that this model specification assumes the absence of individual differences in effects of within-subject manipulations and can lead to biased estimates of Bayes factors (van den Berg, Aust, \& Wagenmakers, 2023). Hence, we decided to change the model specification to the updated methodology---in essence, this entails the inclusion of random effects for lower order within-subject effects. & Given the potential negative consequences of using the preregistered model specification, we believe that this deviation should increase readers' confidence in the reported results. Also, we compared the results from both model specifications and found that our conclusions remain unchanged (\url{https://osf.io/preprints/psyarxiv/v674w_v1}).\\ \midrule
+2 & Experiment: 2 \newline Type: Sample \newline Reason: Plan not possible \newline Timing: After data access & We preregistered the following sampling plan: \newline \newline  ``\textit{If the current SARS-CoV-2 pandemic permits, we will recruit 80 participants at Yale University, the University of Florida, the University of Hong Kong, Indiana University Bloomington, and Williams College, but in no less than four of these locations.}'' \newline \newline For an initial sample of 68 participants collected at Yale University, we could not verify that stimuli were presented at the desired frame rate. Therefore, we excluded these participants. Due to resource constraints, it was not possible to recruit a new sample of 80 participants. To nonetheless ensure that our study was adequately powered, we instead recruited 40 new participants at Yale University and supplemented them with 40 participants recruited at the University of Illinois. & As we have found our results to be consistent across languages, countries, and locations within the USA, we believe this deviation to be consequential for our conclusions.\\ \midrule
+ &  & \phantom{a} \newline \phantom{a} \newline\phantom{a} \newline\phantom{a} \newline\phantom{a} \newline & \\
+\multicolumn{4}{c}{\textbf{Unregistered Steps}}\\ \midrule
+1 & Type: Analysis \newline Timing: After data access & The concern that motivated Experiment 2 was that there was reason to believe that some participants consciously perceived some briefly flashed words in Experiment 1, which may have affected our results. The shortened presentation durations in Experiment 2 did not substantiate this concern. To dispel this concern more conclusively, we performed an additional non-preregistered analysis of the data from both experiments: We examined whether individual differences in recognition accuracy of the briefly flashed words moderated the effect of briefly flashed words on indirectly measured evaluations. In an error-in-variables regression analysis, we predicted pooled learning block differences in IAT scores from recognition accuracy of briefly flashed words (Klauer, Draine, \& Greenwald, 1998). & Although not preregistered, we had already performed this analysis for Experiment 1 at the time of preregistering Experiment 2---the results mentioned in our accepted Stage-1 registered report and were published on OSF, (\url{https://osf.io/8m3xb/files/fzaed}). Hence, this analysis was not prompted by the results from Experiment 2. We did not consciously decide to not preregister this analysis. We believe the correlational individual differences perspective is a useful complement to our experimental results.\\
+\bottomrule
+\end{longtable}
+
+}
+
+\end{lltable}
+
+To facilitate comparisons with previously reported statistics, we also conducted the frequentist analyses described by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}).
+To ensure that our conclusions about indirectly measured evaluations are robust to stimulus effects, we supplemented the ANOVA analysis of IAT scores by a frequentist linear mixed model analysis, see SOM.
+We used R (Version 4.5.0; \protect\hyperlink{ref-R-base}{R Core Team, 2018}) and the R-packages \emph{afex} (Version 1.4.1; \protect\hyperlink{ref-R-afex}{Singmann, Bolker, Westfall, \& Aust, 2018}), \emph{BayesFactor} (Version 0.9.12.4.7; \protect\hyperlink{ref-R-BayesFactor}{Morey \& Rouder, 2018}), \emph{emmeans} (Version 2.0.1; \protect\hyperlink{ref-R-emmeans}{Lenth, 2018}), and \emph{papaja} (Version 0.1.4; \protect\hyperlink{ref-R-papaja}{Aust \& Barth, 2018}) for all our analyses.
+
+\hypertarget{participants}{%
+\subsubsection{Participants}\label{participants}}
+
+We set out to collect \(n = 50\) participants at each location (N = 150).
+We recruited 155 participants (aged 17--64 years, \(M = 22.02\); 27.45\% male, 71.24\% female, 1.31\% nonbinary; see SOM for details); two participants were excluded due to technical failures.
+Hence, the reported results are based on data from 153 participants.
+We compensated all participants with either € 8/10 (Cologne/Ghent), or partial course credit (Cologne/Harvard).
+
+\hypertarget{statistical-power}{%
+\subsubsection{Statistical power}\label{statistical-power}}
+
+The prediction, which is supported by all previous empirical reports, is a crossed disordinal interaction between the factor \emph{learning block} and the control factor \emph{valence order}.
+Our assessment of the statistical sensitivitiy of our design focused on the tests of simple \emph{learning block} effects, because they are of primary theoretical interest and less sensitive than the test of the interaction.
+We estimate the sensitivity for the frequentist analyses described by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}) using the R-package \emph{Superpower} (\protect\hyperlink{ref-R-Superpower}{Caldwell, Lakens, Parlett-Pelleriti, Prochilo, \& Aust, 2022}).
+The smallest simple effect of learning block reported by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}) was \(d_z \approx 0.47\) (\(\hat\eta_p^2 = .100\)) for IAT scores.\footnote{The learning block differences reported by Heycke et al.~(2018) were of similar magnitude but with an opposite sign.}
+Across all locations, the planned contrasts had 95\% power to detect learning block effects as small as \(\delta_z = 0.42\)\footnote{We report the implied sensitivity in units of Cohen's \(\delta\) depending on the assumed repeated-measures correlation \(\rho\) in the supplementary material.} (\(\eta_p^2 = .081\); \(N = 152\), \(\alpha = .05\), two-sided tests).
+Thus, our design is sufficiently sensitive to detect (or rule out) differences 11\% smaller than the smallest learning block difference reported in the original study.
+
+\hypertarget{results}{%
+\subsection{Results}\label{results}}
+
+In the following, \emph{valence order} refers to the joint order of briefly flashed words and behavioral information.
+Any time we refer to one valence order (e.g., positive--negative) we specify the order of the behavioral information; briefly flashed words were always of the opposite valence.
+
+To reiterate, Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}) reported that across learning blocks ratings scores were congruent with the behavioral information about Bob, whereas IAT scores were incongruent with the behavioral information.
+This pattern of results implies (1) a three-way interaction of \emph{measure of evaluation}, \emph{valence order}, and \emph{learning block} in a joint analysis of all evaluations, (2) two opposite crossed disordinal interactions of \emph{valence order} and \emph{learning block} for separate analyses of rating and IAT scores, (3) larger rating scores following learning blocks in which the behavioral information was positive compared to when it was negative, and, finally, (4) smaller IAT scores following learning blocks in which the behavioral information was positive compared to when it was negative.
+We first report the results of the frequentist analyses described by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}).
+Busy readers interested in an integrative replicability assessment may wish to skip ahead to the \protect\hyperlink{replicability-assessment1}{Bayesian model comparisons}.
+
+
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/otm-factorial-results-plot-1.pdf}
+\caption{\label{fig:otm-factorial-results-plot}Mean evaluative rating and IAT scores for Experiments 1 (\textbf{A}) and Experiment 2 (\textbf{B}) broken down by valence order, learning block, and lab location. Black-rimmed points represent condition means, error bars represent 95\% bootstrap confidence intervals based on 10,000 samples, small points represent individual participant scores, and violins represent kernel density estimates of sample distributions.}
+\end{figure}
+
+
+
+\begin{lltable}
+
+\footnotesize{
+
+\begin{longtable}{lcccccc}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:otm-descriptives-table}Means and 95\% confidence intervals of rating and IAT scores in Experiment 1 and 2 broken down by lab location, duration of briefly flashed words, valence order, and learning block.}\\
+\toprule
+ &  &  & \multicolumn{2}{c}{Rating score} & \multicolumn{2}{c}{IAT score} \\
+\cmidrule(r){4-5} \cmidrule(r){6-7}
+Location & \multicolumn{1}{c}{Word flash} & \multicolumn{1}{c}{Valence order} & \multicolumn{1}{c}{Learning block 1} & \multicolumn{1}{c}{Learning block 2} & \multicolumn{1}{c}{Learning block 1} & \multicolumn{1}{c}{Learning block 2}\\
+\midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:otm-descriptives-table} continued}}\\
+\toprule
+ &  &  & \multicolumn{2}{c}{Rating score} & \multicolumn{2}{c}{IAT score} \\
+\cmidrule(r){4-5} \cmidrule(r){6-7}
+Location & \multicolumn{1}{c}{Word flash} & \multicolumn{1}{c}{Valence order} & \multicolumn{1}{c}{Learning block 1} & \multicolumn{1}{c}{Learning block 2} & \multicolumn{1}{c}{Learning block 1} & \multicolumn{1}{c}{Learning block 2}\\
+\midrule
+\endhead
+\multicolumn{7}{c}{Experiment 1}\\ \midrule
+Cologne & 27 ms & negative $\to$ positive & -0.89 [-1.02, -0.76] & 0.72 [0.56, 0.87] & 0.02 [-0.05, 0.10] & 0.15 [0.09, 0.21]\\
+ &  & positive $\to$ negative & 0.97 [0.85, 1.09] & -0.82 [-0.97, -0.67] & 0.18 [0.11, 0.25] & 0.06 [0.00, 0.11]\\
+Ghent & 27 ms & negative $\to$ positive & -0.81 [-0.94, -0.69] & 0.91 [0.77, 1.06] & 0.06 [-0.01, 0.13] & 0.15 [0.09, 0.20]\\
+ &  & positive $\to$ negative & 0.81 [0.68, 0.93] & -0.80 [-0.96, -0.65] & 0.20 [0.12, 0.27] & 0.11 [0.05, 0.17]\\
+Harvard & 24 ms & negative $\to$ positive & -1.03 [-1.16, -0.91] & 0.93 [0.78, 1.08] & 0.03 [-0.04, 0.10] & 0.10 [0.05, 0.16]\\
+ &  & positive $\to$ negative & 0.99 [0.86, 1.11] & -0.95 [-1.10, -0.80] & 0.12 [0.05, 0.19] & 0.05 [0.00, 0.11]\\ \midrule
+\multicolumn{7}{c}{Experiment 2}\\ \midrule
+Florida, Williams & 20 ms & negative $\to$ positive & -0.87 [-0.96, -0.78] & 0.79 [0.69, 0.89] & 0.05 [0.02, 0.09] & 0.11 [0.08, 0.14]\\
+ &  & positive $\to$ negative & 0.90 [0.81, 0.99] & -0.87 [-0.97, -0.77] & 0.24 [0.20, 0.27] & 0.09 [0.06, 0.12]\\
+Hong Kong, Illinois, Yale & 13 ms & negative $\to$ positive & -0.90 [-0.98, -0.83] & 0.82 [0.74, 0.91] & 0.06 [0.03, 0.09] & 0.10 [0.08, 0.13]\\
+ &  & positive $\to$ negative & 0.90 [0.83, 0.98] & -0.81 [-0.90, -0.73] & 0.21 [0.18, 0.25] & 0.09 [0.06, 0.12]\\
+\bottomrule
+\end{longtable}
+
+}
+
+\end{lltable}
+
+\hypertarget{joint-analysis-of-rating-and-iat-scores}{%
+\subsubsection{Joint analysis of rating and IAT scores}\label{joint-analysis-of-rating-and-iat-scores}}
+
+For a joint analysis, we separately \(z\)-standardized directly and indirectly measured evaluations and submitted them to a four-way ANOVA with the factors \emph{measure of evaluation} (direct vs.~indirect), \emph{valence order} (positive or negative behavioral information first), \emph{learning block} (first or second learning block), and \emph{lab location} (Cologne, Ghent, Harvard).
+Table~\ref{tab:otm-descriptives-table} summarizes the condition means.
+We found a significant three-way interaction between valence order, learning block, and measure of evaluation, \(d = 0.16\), 90\% \([1.97, 2.82]\), \(F(1, 147) = 210.82\), \(\mathit{MSE} = 0.31\), \(p < .001\), Figure~\ref{fig:otm-factorial-results-plot}A\footnote{Figure~\ref{fig:otm-factorial-results-plot} may give the impression that the difference between valence orders was of similar magnitude at learning block 1 and 2 in rating scores but differed in IAT scores.
+  However, we found differences between valence orders at learning blocks 1 and 2 in both measures of evaluation (all \(t(147) > 2.51\), \(p < .013\)) and we did not find these differences between valence orders to vary between evaluative measures, \(d_z = 0.02\), 90\% \([-0.16, 0.17]\), \(F(1, 147) = 0.94\), \(\mathit{MSE} = 0.76\), \(p = .334\).}.
+Moreover, we observed a significant four-way interaction indicating that the three-way interaction differed between lab locations, \(\hat\eta^2_p = .002\), 90\% \([.000, .012]\), \(F(2, 147) = 3.48\), \(\mathit{MSE} = 0.31\), \(p = .033\).
+Follow-up tests indicated that the three-way interaction was individually significant in each lab (all \(F(1, 147) > 46.62\), \(p < .001\)), and the direction of the effect was consistent across labs.
+In line with the original analysis, we next examined the interaction between valence order, learning block, and lab location in separate analyses of rating and IAT scores.
+
+\hypertarget{direct-measure-evaluative-rating-scores}{%
+\subsubsection{Direct measure: Evaluative rating scores}\label{direct-measure-evaluative-rating-scores}}
+
+As in the previous studies, for rating scores we found a two-way interaction between valence order and learning block, \(d = 6.51\), 90\% \([5.69, 7.31]\), \(F(1, 147) = 1,556.14\), \(\mathit{MSE} = 0.15\), \(p < .001\).
+This interaction was significant in each lab (all \(F(1, 147) > 450.58\), \(p < .001\)), but also differed in magnitude, \(\hat\eta^2_p = .082\), 90\% \([.020, .155]\), \(F(2, 147) = 4.05\), \(\mathit{MSE} = 0.15\), \(p = .019\).
+In all labs, rating scores corresponded to the valence of the behavioral information.
+Rating scores indicated \emph{more} favorable evaluations after the first than after the second block when behavioral information was first positive and later negative,
+Cologne: \(d_z = -1.34\), 95\% CI \([-1.56, -1.12]\);
+Ghent: \(d_z = -1.21\), 95\% CI \([-1.42, -0.99]\);
+Harvard: \(d_z = -1.45\), 95\% CI \([-1.69, -1.22]\);
+all \(t(147) < -14.19\), \(p\) \textless{} .001.
+Conversely, rating scores indicated \emph{less} favorable evaluations after the first than after the second block when behavioral information was first negative and later positive,
+Cologne: \(d_z = 1.21\), 95\% CI \([0.99, 1.42]\);
+Ghent: \(d_z = 1.29\), 95\% CI \([1.08, 1.51]\);
+Harvard: \(d_z = 1.47\), 95\% CI \([1.24, 1.71]\);
+all \(t(147) > 14.19\), \(p\) \textless{} .001.
+Hence, in all labs directly measured evaluations corresponded to the valence of the behavioral information and were opposite to the valence of the briefly flashed words.
+
+\hypertarget{indirect-measure-iat-scores}{%
+\subsubsection{Indirect measure: IAT scores}\label{indirect-measure-iat-scores}}
+
+For IAT scores, we found a two-way interaction between valence order and learning block, \(d = 1.10\), 90\% \([0.75, 1.45]\), \(F(1, 147) = 44.68\), \(\mathit{MSE} = 0.01\), \(p < .001\); in this case we detected no differences across labs, \(\hat\eta^2_p = .006\), 90\% \([.000, .032]\), \(F(2, 147) = 1.19\), \(\mathit{MSE} = 0.01\), \(p = .308\).
+In all labs, IAT scores also corresponded to the valence of the behavioral information.
+IAT scores indicated \emph{more} favorable evaluations after the first than after the second block when behavioral information was first positive and later negative, \(d_z = -0.38\), 95\% CI \([-0.55, -0.21]\), \(t(147) = -4.64\), \(p < .001\).
+Conversely, IAT scores indicated \emph{less} favorable evaluations after the first than after the second block when behavioral information was first negative and later positive, \(d_z = 0.40\), 95\% CI \([0.23, 0.57]\), \(t(147) = 4.81\), \(p < .001\).
+The results of the mixed model analysis corroborated the conclusions from the ANOVA analysis, see SOM.
+Hence, in all labs indirectly measured evaluations corresponded to the valence of the behavioral information and were opposite to the valence of the briefly flashed words.
+Directly and indirectly measured evaluations did not dissociate.
+
+\hypertarget{differences-between-rating-and-iat-scores}{%
+\subsubsection{Differences between rating and IAT scores}\label{differences-between-rating-and-iat-scores}}
+
+As preregistered, we also compared \(z\)-standardized directly and indirectly measured evaluations---despite the consistent pattern of results---and found that they differed across measures in every condition.
+When behavioral information was first positive and later negative, rating scores indicated a more favorable evaluation than IAT scores in the first block, \(d_z = 0.41\), 95\% CI \([0.23, 0.59]\), \(t(147) = 4.64\), \(p < .001\), but a less favorable evaluation in the second block, \(d_z = -0.51\), 95\% CI \([-0.67, -0.35]\), \(t(147) = -6.79\), \(p < .001\).
+Conversely, when behavioral information was first negative and later positive rating scores indicated a less evaluation than IAT scores in the first block, \(d_z = -0.40\), 95\% CI \([-0.59, -0.22]\), \(t(147) = -4.54\), \(p < .001\), but a more favorable evaluation in the second block, \(d_z = 0.49\), 95\% CI \([0.33, 0.65]\), \(t(147) = 6.52\), \(p < .001\).
+Hence, directly and indirectly measured evaluations were consistent, but directly measured evaluations were more extreme than indirect measured evaluations.
+
+\hypertarget{replicability-assessment1}{%
+\subsubsection{Bayesian model comparisons}\label{replicability-assessment1}}
+
+
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/otm-bayesian-replication-analysis-plot-1.pdf}
+\caption{\label{fig:otm-bayesian-replication-analysis-plot}Predictions of the four models of primary interest (\textbf{A}) and results of Experiment 1 and Experiment 2 (\textbf{B}). White-rimmed points represent mean differences in evaluations between the two learning blocks. To simplify the presentation of the results, we collapsed data across valence orders such that we always contrasted blocks where the behavioral information was positive with those where it was negative. Thus, for both rating and IAT scores positive difference indicate that evaluations correspond to the valence of the behavioral information, whereas negative values indicate that evaluations correspond to the valence of the briefly flashed words. Ellipses represent 95\% Bayesian credible intervals based on the unconstrained model \(\mathcal{M}_\textrm{Any effect}\). For comparison, the grey \(\times\) represents the learning block differences reported in the original study.}
+\end{figure}
+
+The direct comparison of prior predictive accuracy indicated that the data overwhelmingly favored the qualitative pattern reported by Heycke et al. (\protect\hyperlink{ref-heycke_two_2018}{2018}) over that reported by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}), \(\mathrm{BF}_{\textrm{One mind}/\textrm{Two minds}} = 2.50 \times 10^{6}\), Figure~\ref{fig:otm-bayesian-replication-analysis-plot}B and Table~\ref{tab:otm-bayesian-replication-analysis-table}.
+Additional comparisons with the control models confirmed that the experimental manipulations were effective (\(\mathrm{BF}_{\textrm{One mind}/\textrm{No effect}} = 5.27 \times 10^{66}\)) and did not produce an unexpected result, \(\mathrm{BF}_{\textrm{One mind}/\textrm{Any effect}} = 4.00\) \(\in [0, 4]\).
+
+We additionally assessed whether all labs consistently produced the same pattern of results.
+We implemented a model that enforced the order-constraint of \(\mathcal{M}_\textrm{One mind}\) not only on the average learning block effects but on each lab's learning block effect.
+Our data provide strong evidence for consistent result patterns across labs relative to the less-constrained models, \(\mathrm{BF}_{\textrm{One mind everywhere}/\textrm{One mind}} = 3.00\) \(\in [0, 3]\) and \(\mathrm{BF}_{\textrm{One mind everywhere}/\textrm{Any effect}} = 11.98\) \(\in [0, 12]\).
+As noted in the \protect\hyperlink{data-analysis1}{Data analysis} section, due to the upper bounds on the Bayes factors, we could not have obtained much stronger evidence in favor of \(\mathcal{M}_\textrm{One mind everywhere}\).
+Prior sensitivity analyses confirmed that the results are robust to a wide range of priors, see SOM.
+
+
+
+
+
+\begin{table}[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:otm-bayesian-replication-analysis-table}Summary of Bayesian model comparisons.}
+
+\begin{tabular}{lcccc}
+\toprule
+ & \multicolumn{2}{c}{Experiment 1} & \multicolumn{2}{c}{Experiment 2} \\
+\cmidrule(r){2-3} \cmidrule(r){4-5}
+Model ($i$) & \multicolumn{1}{c}{$\textrm{BF}_{i/{\textrm{Any effect}}}$} & \multicolumn{1}{c}{NPP} & \multicolumn{1}{c}{$\textrm{BF}_{i/{\textrm{Any effect}}}$} & \multicolumn{1}{c}{NPP}\\
+\midrule
+No effect & 0.00 & .00 & 0.00 & .00\\ \midrule
+One mind & 4.00 & .24 & 4.00 & .31\\
+\ \ \ ... everywhere & 11.98 & .71 &  & \\
+\ \ \ ... at all durations &  &  & 8.00 & .62\\ \midrule
+Two minds & 0.00 & .00 & 0.00 & .00\\
+\ \ \ ... everywhere & 0.00 & .00 &  & \\
+\ \ \ ... at all durations &  &  & 0.00 & .00\\ \midrule
+Any effect & 1.00 & .06 & 1.00 & .08\\
+\bottomrule
+\addlinespace
+\end{tabular}
+
+\begin{tablenotes}[para]
+\normalsize{\textit{Note.} As noted in the \protect\hyperlink{data-analysis1}{Data analysis} section, in Experiment 1 the Bayes factors (BF) in favor of \(\mathcal{M}_\textrm{One mind}\) and \(\mathcal{M}_\textrm{One mind everywhere}\) are bounded within the range of \([0, 4]\) and \([0, 12]\), respectively. Similarly, in Experiment 2 the BF in favor of \(\mathcal{M}_\textrm{One mind}\) and \(\mathcal{M}_\textrm{One mind at all durations}\) are bounded within the range of \([0, 4]\) and \([0, 8]\), respectively. The naive posterior probability (NPP) quantifies the probability of each model given the data assuming that all models are equally likely a priori.}
+\end{tablenotes}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
+\hypertarget{recognition-of-briefly-flashed-words}{%
+\subsubsection{Recognition of briefly flashed words}\label{recognition-of-briefly-flashed-words}}
+
+Finally, we examined participants' recognition memory for the briefly flashed words at the end of the study.
+Recognition accuracy was better than chance, \(M = .56\), 95\% CI \([.55, \infty]\), \(t(152) = 6.24\), \(p < .001\), \(\mathrm{BF}_{\textrm{10}} = 4.59 \times 10^{6}\).
+Hence, we cannot assume that the stimulus presentation was outside of participants' conscious awareness.
+It remains unclear whether recognition accuracy differed between labs, \(\hat\eta^2_p = .038\), 90\% \([.000, .093]\), \(F(2, 150) = 2.94\), \(\mathit{MSE} = 0.01\), \(p = .056\), \(\mathrm{BF}_{\textrm{10}} = 0.79\), see SOM for details.
+
+\hypertarget{discussion}{%
+\subsection{Discussion}\label{discussion}}
+
+As confirmed by the first author of the original study, we faithfully reproduced the procedure of Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}), but the original results did not replicate.
+We observed that both directly and indirectly measured evaluations reflected the valence of the behavioral information; the briefly flashed words did not produce a reversal of the indirectly measured evaluations.
+In short, we found no dissociation between directly and indirectly measured evaluations.
+Our findings mirror the results of the previous replication attempt by Heycke et al. (\protect\hyperlink{ref-heycke_two_2018}{2018}).
+Moreover, our results were consistent across three languages and countries indicating that neither inaccurate translations nor differences in sampled populations are likely to have caused the divergence from the original finding.
+Thus, our results raise further doubt about the replicability of the dissociative evaluative learning effect that was reported by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}).
+
+There is, however, one objection that the present data cannot dispel: The close physical recreation of the original procedure does not guarantee a faithful reproduction of the stimulus visibility conditions of the original learning task.
+In the original study, recognition accuracy of the briefly flashed words was not significantly different from chance (\protect\hyperlink{ref-rydell_two_2006}{Rydell et al., 2006}).
+Like Heycke et al. (\protect\hyperlink{ref-heycke_two_2018}{2018}), however, we observed better-than-chance recognition accuracy.
+We have to assume that participants consciously perceived at least some of the briefly flashed words, which may have affected our results.
+Hence, it is possible that the conscious perception of briefly flashed words constitutes a critical departure from the to-be-reproduced learning conditions.
+Although an exploratory analysis suggested that there was no relationship between recognition accuracy and indirectly measured evaluations (see SOM), we decided to repeat the experiment and reduce the visibility of briefly flashed words to more closely mimic the stimulus visibility of the original study.
+
+\hypertarget{experiment-2-registered-replication}{%
+\section{Experiment 2: Registered replication}\label{experiment-2-registered-replication}}
+
+To address the concern that our initial replication attempt in Experiment 1 may have been unsuccessful because briefly flashed words were consciously perceived by participants, we conducted a second experiment and reduced the presentation duration of the briefly flashed words during the learning task.
+
+\hypertarget{pilot-study}{%
+\subsection{Pilot study}\label{pilot-study}}
+
+To identify a presentation duration that reproduces the stimulus visibility conditions of the original study (i.e., at-chance recognition accuracy for briefly flashed words), we conducted a pilot study with a presentation duration reduced to 13 ms (one frame on a 75 Hz CRT monitor) from 27 ms in Experiment 1\footnote{We ran a series of pilot studies in Dutch, which also yielded above-chance recognition of briefly flashed words.
+  These pilot studies employed a shortened procedure, used Dutch material, or were conducted immediately after an unrelated priming study, which also used briefly flashed words.
+  We, therefore, decided a posteriori, that above-chance accuracy in these studies may not be informative for our subsequent replication attempt, as we used only English materials in the studies presented here.}.
+Because Experiment 2 was planned to be conducted in English, the pilot study used the English material and was performed at the University of Florida.
+Except for the shorter presentation duration the methods were the same as in Experiment 1.
+For the pilot study, we recruited 60 participants (aged 18-21 years, \(M = 18.38\); 41.67\% male, 58.33\% female, 0.00\% nonbinary.
+
+Recognition accuracy for the briefly flashed words was not significantly better than chance, \(M = 0.51\), 95\% CI \([0.50, \infty]\), \(t(59) = 1.31\), \(p = .098\), but the Bayesian evidence for at-chance accuracy was inconclusive, \(\mathrm{BF}_{\textrm{01}} = 1.76\).
+Based on these results we cannot rule out that, even with the shortened presentation duration, briefly flashed words were recognized above chance.
+To confirm that the recognition accuracy was comparable to the original study, we performed a nonsuperiority test.
+Specifically, we compared observed accuracy to the smallest deviation from at-chance accuracy that could have been detected in the original study, i.e., \(M = 0.53\).
+The test confirmed that the recognition accuracy was comparable to that observed by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}) (\(M = .48\), 95\% CI \([.45\), \(.51]\)), \(t(59) = -2.05\), \(p = .022\).
+Thus, we conclude that the visibility of words flashed for 13 ms is likely to be functionally comparable to that of the original study.
+Of course, the presentation duration could be reduced further to obtain conclusive evidence for at-chance visibility, but such reductions would run the risk of inadvertently causing stimuli to become practically invisible.
+To safeguard against the possibility that the 13 ms presentation duration is already too brief, we added a second presentation duration and flashed words for 20 ms in some locations.
+To summarize, across both studies, words were briefly flashed for 13 ms, 20 ms 24 ms, or 27 ms, Table~\ref{tab:otm-descriptives-table}.
+
+\hypertarget{method}{%
+\subsection{Method}\label{method}}
+
+\hypertarget{material-procedure-1}{%
+\subsubsection{Material \& Procedure}\label{material-procedure-1}}
+
+We used the same materials and procedure as in Experiment 1 but flashed words for 13 ms or 20 ms.
+Furthermore, all labs used the same Python script to collect the data, and only the English material was used to match the official language at all locations.
+
+\hypertarget{data-analysis}{%
+\subsubsection{Data analysis}\label{data-analysis}}
+
+We submitted the new data from all locations to analyses analogous to those of Experiment 1.
+We, again, performed the analyses reported in the original study and assessed replication success by performing Bayesian model comparisons.
+In contrast to Experiment 1, all labs used the same stimulus material, and lab location was partially confounded with the presentation duration of the briefly flashed words.
+Thus, we replaced the lab location factor by presentation duration of the briefly flashed words in both analyses.
+Additionally, we compared the data from Hong Kong to those from the U.S. labs to explore whether the results are consistent across ethnicities and cultures.
+Given the consistent results in Experiment 1, we omitted the linear mixed model analysis of IAT response times.
+
+To maximize the power of the planned contrasts in the frequentist ANOVA analyses, we tested whether valence order moderates the learning block contrasts by testing the main effect of learning block.
+We preregistered to pool participants across valence orders by reversing the learning block coding in one group (as in the Bayesian model comparison of Experiment 1), if we detected no main effect of learning block.
+Similarly, we preregistered to pool participants across presentation durations if the different presentation durations of flashed words did not moderate the learning block contrasts.
+
+\hypertarget{participants-1}{%
+\subsubsection{Participants}\label{participants-1}}
+
+Due to uncertainties surrounding the Covid-19 pandemic, we preregistered to recruit 80 participants at no less than four out of five locations: Yale University, the University of Florida, the University of Hong Kong, Indiana University Bloomington, and Williams College.
+We again recruited additional participants to replace those excluded.
+We did not collect data at Indiana University Bloomington.
+We excluded an initial sample of 68 participants collected at Yale University because we could not verify that the stimuli were presented at the desired frame rate.
+The log files were unreliable.
+Due to resource constraints, we recruited new participants in equal parts at Yale University and the University of Illinois.
+This constitutes a deviation from our preregistration.
+As in Experiment 1, all participants who signed up, before the planned sample size had been reached were allowed to participate, resulting in slightly larger sample sizes than preregistered (University of Florida: \(n = 83\); University of Hong Kong: \(n = 85\); University of Illinois: \(n = 42\); Williams College: \(n = 122\); Yale University: \(n = 40\)).
+In total, we recruited 372 participants (aged 18-29 years, \(M = 19.10\); 31.61\% male, 67.36\% female, 1.04\% nonbinary; see SOM for details).
+One participant was excluded due to noncompliance with instructions, 44 because the logs indicated that stimuli were presented at a lower frame rate than intended, and one due to other technical failures.
+Hence, we report results based on a sample of \(N = 386\) participants, including participants from the pilot study\footnote{To ensure valid results, the pilot study for Experiment 2 employed the complete experimental procedure, that is, we also collected evaluative ratings and IAT responses. Prior to running Experiment 2, we only analyzed the word recognition accuracy; we had not looked at evaluative ratings and IAT responses. We therefore added the data from the pilot study to the final analyses.}.
+
+\hypertarget{statistical-power-1}{%
+\subsubsection{Statistical power}\label{statistical-power-1}}
+
+As for Experiment 1, our preregistered assessment of the statistical sensitivity of our design focused on the tests of simple \emph{learning block} effects.
+With the preregistered minimum of \(N = 320\) participants, the planned contrasts have 95\% power to detect learning block effects as small as \(\delta_z = 0.40\) (\(\eta_p^2 = .040\)) or as small as \(\delta_z = 0.29\) (\(\eta_p^2 = .020\)) and \(\delta_z = 0.20\) (\(\eta_p^2 = .010\)) when pooling participants across one or both between-participant factors (\(\alpha = .05\), two-sided tests).\footnote{We report the implied sensitivity in units of Cohen's \(\delta\) depending on the assumed repeated-measures correlation \(\rho\) in the supplementary material.}
+The tests of the main effect of learning block and the three-way interaction, on which we base our decision to pool participants across the between-subject conditions, have 95\% power to detect effects as small as \(\delta_z = 0.20\) (\(\eta_p^2 = .010\)) and
+\(\delta_z = 0.40\) (\(\eta_p^2 = .040\)), respectively (\(\alpha = .05\), two-sided tests).
+Thus, the design is sufficiently sensitive to detect (or rule out) differences---at least---13\% smaller (39\% or 57\% when pooling participants across one or both between-participant factors, respectively) than the smallest learning block difference reported by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}).
+Note that these are conservative estimates because we analyzed a sample size of \(N = 386\).
+
+\hypertarget{results-1}{%
+\subsection{Results}\label{results-1}}
+
+As before, we first report the results of the standard frequentist analyses before turning to an integrative replicability assessment by \protect\hyperlink{replicability-assessment2}{Bayesian model comparisons}.
+
+Figure~\ref{fig:otm-factorial-results-plot}B shows the results of the attitude ratings and IAT scores for the two presentation durations.
+Clearly, the shortened presentation durations did not affect the close correspondence between direct and indirect measures of evaluation.
+The observed pattern of results is highly consistent with those from Experiment 1.
+As before, we first report the standard frequentist analyses before turning to an integrative replicability assessment via Bayesian model comparisons.
+To anticipate the results, we replicated the results of Experiment 1 regardless of presentation duration of briefly flashed words.
+
+\hypertarget{joint-analysis-of-rating-and-iat-scores-1}{%
+\subsubsection{Joint analysis of rating and IAT scores}\label{joint-analysis-of-rating-and-iat-scores-1}}
+
+We, again, separately \(z\)-standardized directly and indirectly measured evaluations and submitted them to a four-way ANOVA with the factors \emph{measure of evaluation} (direct vs.~indirect), \emph{valence order} (positive or negative behavioral information first), \emph{learning block} (first or second learning block), and \emph{presentation duration} (20 ms vs.~13 ms).
+Table~\ref{tab:otm-descriptives-table} summarizes the condition means.
+We found a significant three-way interaction between valence order, learning block, and measure of evaluation, \(d = 0.50\), 90\% \([1.77, 2.26]\), \(F(1, 382) = 387.10\), \(\mathit{MSE} = 0.37\), \(p < .001\), Figure~\ref{fig:otm-factorial-results-plot}B.
+However, we did not observe a significant four-way interaction including presentation duration, \(d = 0.03\), 90\% \([-0.11, 0.29]\), \(F(1, 382) = 0.75\), \(\mathit{MSE} = 0.37\), \(p = .388\).
+To explore whether the results are consistent across ethnicities and cultures, we conducted a second four-way ANOVA replacing presentation duration by \emph{country} (Hong Kong vs.~USA).
+We were unable to detect any significant effect involving country, all \(p \geq .209\).
+In an analogous analysis, we were unable to detect any significant effect involving lab location, all \(p \geq .420\).
+In line with the original analysis, we next examined the interaction between valence order and learning block in separate analyses of rating and IAT scores.
+
+\hypertarget{direct-measure-evaluative-rating-scores-1}{%
+\subsubsection{Direct measure: Evaluative rating scores}\label{direct-measure-evaluative-rating-scores-1}}
+
+For rating scores, we replicated the two-way interaction between valence order and learning block obtained in Experiment 1, \(d = 5.14\), 90\% \([4.72, 5.55]\), \(F(1, 384) = 2,534.91\), \(\mathit{MSE} = 0.23\), \(p < .001\).
+We were unable to detect a main effect of learning block, \(d_z = 0.03\), 90\% \([-0.07, 0.13]\), \(F(1, 384) = 0.34\), \(\mathit{MSE} = 0.23\), \(p = .561\), justifying the preregistered pooling of participants across valence orders for the learning block contrasts\footnote{Rating scores indicated \emph{more} favorable evaluations after the first than after the second block when behavioral information was first positive and later negative, \(d_z = -1.84\), 95\% CI \([-2.00, -1.67]\), \(t(384) = -35.74\), \(p < .001\).
+  Conversely, rating scores indicated \emph{less} favorable evaluations after the first than after the second block when behavioral information was first negative and later positive, \(d_z = 1.80\), 95\% CI \([1.63, 1.96]\), \(t(384) = 35.47\), \(p < .001\).}.
+The pooled rating scores indicated more favorable evaluations after blocks with positive behavioral information than after blocks with negative behavioral information, \(d_z = 2.57\), 95\% CI \([2.36, 2.78]\), \(t(384) = 50.35\), \(p < .001\).
+Hence, directly measured evaluations corresponded to the valence of the behavioral information and were opposite to the valence of the briefly flashed words.
+
+\hypertarget{indirect-measure-iat-scores-1}{%
+\subsubsection{Indirect measure: IAT scores}\label{indirect-measure-iat-scores-1}}
+
+For IAT scores, we also replicated the two-way interaction between valence order and learning block obtained in Experiment 1, \(d = 1.04\), 90\% \([0.83, 1.25]\), \(F(1, 384) = 103.89\), \(\mathit{MSE} = 0.02\), \(p < .001\).
+The learning block difference in IAT scores differed between valence orders, \(d_z = 0.03\), 90\% \([-0.07, 0.13]\), \(F(1, 384) = 0.34\), \(\mathit{MSE} = 0.23\), \(p = .561\); hence, we tested the learning block contrasts separately for each valence order.
+In both cases, we found that, like rating scores, IAT scores corresponded to the valence of the behavioral information.
+IAT scores indicated \emph{more} favorable evaluations after the first than after the second block when behavioral information was first positive and later negative, \(d_z = -0.54\), 95\% CI \([-0.65, -0.43]\), \(t(384) = -10.53\), \(p < .001\).
+Conversely, IAT scores indicated \emph{less} favorable evaluations after the first than after the second block when behavioral information was first negative and later positive, \(d_z = 0.19\), 95\% CI \([0.09, 0.29]\), \(t(384) = 3.83\), \(p < .001\).
+As in Experiment 1, indirectly measured evaluations corresponded to the valence of the behavioral information and were opposite to the valence of the briefly flashed words.
+Of limited theoretical interest, this effect was slightly larger when negative behavioral information was provided first.
+Hence, directly and indirectly measured evaluations, again, did not dissociate.
+
+\hypertarget{differences-between-rating-and-iat-scores-1}{%
+\subsubsection{Differences between rating and IAT scores}\label{differences-between-rating-and-iat-scores-1}}
+
+As preregisted, despite the consistent pattern of results, we also compared \(z\)-standardized directly and indirectly measured evaluations, and found that they differed across measures in every condition.
+Specifically, we again replicated the pattern of differences observed in Experiment 1.
+When behavioral information was first positive and later negative, rating scores indicated a more favorable evaluation than IAT scores in the first block, \(d_z = 0.22\), 95\% CI \([0.10, 0.33]\), \(t(382) = 3.83\), \(p < .001\), but a less favorable evaluation in the second block, \(d_z = -0.50\), 95\% CI \([-0.60, -0.41]\), \(t(382) = -10.92\), \(p < .001\).
+Conversely, when behavioral information was first negative and later positive rating scores indicated a less favorable evaluation than IAT scores in the first block, \(d_z = -0.39\), 95\% CI \([-0.51, -0.28]\), \(t(382) = -7.05\), \(p < .001\), but a more favorable evaluation in the second block, \(d_z = 0.66\), 95\% CI \([0.56, 0.76]\), \(t(382) = 14.53\), \(p < .001\).
+Hence, directly and indirectly measured evaluations were directionally consistent with each other, but directly measured evaluations were more extreme than indirect measured evaluations.
+
+\hypertarget{replicability-assessment2}{%
+\subsubsection{Bayesian model comparisons}\label{replicability-assessment2}}
+
+As in Experiment 1, the direct comparison of prior predictive accuracy indicated that the data overwhelmingly favored the qualitative pattern reported by Heycke et al. (\protect\hyperlink{ref-heycke_two_2018}{2018}) over that reported by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}), \(\mathrm{BF}_{\textrm{One mind}/\textrm{Two minds}} = 1.00 \times 10^{6}\), Figure~\ref{fig:otm-bayesian-replication-analysis-plot}B and Table~\ref{tab:otm-bayesian-replication-analysis-table}.
+Additional comparisons with the control models confirmed that the experimental manipulations were effective (\(\mathrm{BF}_{\textrm{One mind}/\textrm{No effect}} = 3.54 \times 10^{162}\)) and did not produce an unexpected result, \(\mathrm{BF}_{\textrm{One mind}/\textrm{Any effect}} = 4.00\) \(\in [0, 4]\).
+
+We also assessed whether both durations of briefly flashed words consistently produced the same result pattern.
+The data provide strong evidence for consistent result patterns across presentation durations, \(\mathrm{BF}_{\textrm{One mind at all durations}/\textrm{One mind}} = 2.00\) \(\in [0, 2]\) and \(\mathrm{BF}_{\textrm{One mind at all durations}/\textrm{Any effect}} = 8.00\) \(\in [0, 8]\).
+As noted in the \protect\hyperlink{data-analysis1}{Data analysis} section, due to the upper bounds on the Bayes factors, we could not have obtained stronger evidence in favor of \(\mathcal{M}_\textrm{One mind at all durations}\).
+Prior sensitivity analyses confirmed that the results are robust to a wide range of priors, see SOM.
+
+\hypertarget{recognition-of-briefly-flashed-words-1}{%
+\subsubsection{Recognition of briefly flashed words}\label{recognition-of-briefly-flashed-words-1}}
+
+At 13 ms, we were unable to detect above-chance recognition accuracy for briefly flashed words, \(M = 0.50\), 95\% CI \([0.49, \infty]\), \(t(384) = -0.03\), \(p = .513\), and we found strong Bayesian evidence for at-chance accuracy, \(\mathrm{BF}_{\textrm{01}} = 13.77\).
+Replicating the result from our pilot study, a non-superiority test confirmed that the recognition accuracy was comparable to that observed by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}), \(t(384) = -4.24\), \(p < .001\).
+A comparison of recognition accuracy between the two presentation durations indicated that recognition accuracy was higher at 20 ms than at 13 ms, \(M = 0.06\), 95\% CI \([0.04, \infty]\), \(t(384) = 5.30\), \(p < .001\).
+
+\hypertarget{discussion-1}{%
+\subsection{Discussion}\label{discussion-1}}
+
+In Experiment 2, we replicated our findings of Experiment 1 while using shorter presentation durations for the briefly flashed words.
+To address the concern that the briefly flashed words were consciously perceived, we reduced the presentation duration to 13 ms and 20 ms.
+At 13 ms, recognition accuracy for briefly flashed words was at chance level and comparable to that observed by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}).
+At 20 ms, recognition accuracy was above chance and comparable to Experiment 1.
+Again, both directly and indirectly measured evaluations reflected the valence of the behavioral information; the briefly flashed words did not produce a reversal of the indirectly measured evaluations.
+Directly and indirectly measured evaluations did not dissociate at either presentation duration.
+Our Bayesian model comparisons confirmed that the data overwhelmingly support the qualitative pattern reported by Heycke et al. (\protect\hyperlink{ref-heycke_two_2018}{2018}) (one mind) over that reported by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}) (two minds), Table~\ref{tab:otm-bayesian-replication-analysis-table}.
+
+\hypertarget{exploratory-analysis-joint-analysis-of-experiments-1-and-2}{%
+\section{Exploratory analysis: Joint analysis of Experiments 1 and 2}\label{exploratory-analysis-joint-analysis-of-experiments-1-and-2}}
+
+
+
+\begin{figure}
+\centering
+\includegraphics{manuscript_files/figure-latex/otm-joint-eiv-regression-plot-1.pdf}
+\caption{\label{fig:otm-joint-eiv-regression-plot}Scatterplot with marginal histograms showing results from error-in-variables regression analysis (\protect\hyperlink{ref-Klauer_Draine_Greenwald_1998}{Klauer, Draine, \& Greenwald, 1998}) predicting pooled learning block differences in IAT scores from recognition accuracy of briefly flashed words.}
+\end{figure}
+
+The concern that motivated Experiment 2 was that there was reason to believe that some participants consciously perceived some briefly flashed words in Experiment 1, which may have affected the results.
+The shortened presentation durations in Experiment 2 did not substantiate this concern.
+To dispel this concern more conclusively, we performed an additional non-preregistered analysis of the data from both experiments:
+We examined whether individual differences in recognition accuracy of the briefly flashed words moderated the effect of briefly flashed words on indirectly measured evaluations.
+In an error-in-variables regression analysis, we predicted pooled learning block differences in IAT scores from recognition accuracy of briefly flashed words (\protect\hyperlink{ref-Klauer_Draine_Greenwald_1998}{Klauer et al., 1998}), Figure~\ref{fig:otm-joint-eiv-regression-plot}.
+However, even at the individual level we were unable to detect an association between recognition accuracy of briefly flashed words and IAT score differences, \(b = -0.18\), 95\% CI \(95\% CI [-0.51, 0.14]\), \(z = -1.11\), \(p = .266\).
+Critically, even individuals with recognition accuracy at or around chance level (0.5) did not show the reversal of IAT score differences indicative of learning from the briefly flashed words.
+
+\hypertarget{general-discussion}{%
+\section{General Discussion}\label{general-discussion}}
+
+Twenty years ago, Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}) reported an influential double dissociation between directly measured evaluations (ratings scales) and indirectly measured evaluations (IAT) of the same novel target: Evaluative ratings reflected the valence of behavioral statements about the target, whereas IAT scores reflected the opposite valence of briefly flashed words co-occurring with the target.
+This finding has been influential in support of the SEM and other dual-process theories of evaluation (e.g., \protect\hyperlink{ref-gawronskiAssociativePropositionalEvaluation2011}{Gawronski \& Bodenhausen, 2011}).
+However, Heycke et al. (\protect\hyperlink{ref-heycke_two_2018}{2018}) reported two experiments in which this double dissociation did not replicate.
+Here, we investigated if this failure to replicate points towards boundary conditions or instead calls into question the replicability of the original study more generally.
+
+We conducted a large-scale replication effort involving an international collective of researchers with expertise in evaluative learning and indirect measures of evaluation, including the first author of the original study and the authors of previous replication attempts.
+Across two laboratory experiments, we collected a large sample of a total of \(N = 539\) participants from multiple countries (Belgium, Germany, Hong Kong, and USA) and in multiple languages (Dutch, English, and German).
+Additionally, we varied the presentation duration of the briefly flashed words (13 ms, 20 ms, 24 ms, and 27 ms) to not only exactly replicate the original procedure but also ensure that we closely mimic the stimulus visibility conditions of the original learning task (specifically, approximately at-chance recognition of the briefly flashed words at the end of the experiment).
+Across all conditions and experiments, we found strong evidence against a dissociation between directly and indirectly measured evaluations.
+Instead, both measures reflected the valence of behavioral statements, although the self-report measure consistently produced stronger effects than the IAT, presumably due to differences in psychometric properties.
+Moreover, individual differences in recognition accuracy of the briefly flashed words did not moderate indirectly measured evaluations, thus providing further evidence that a dissociation is not to be expected for other presentation durations.
+
+Theoretical implications should be drawn with appropriate caution.
+The present findings provide strong evidence against a key empirical finding predicted by the SEM and taken to support related dual-process theories.
+Thus, the results obtained here further weaken the already limited evidential base of these theories (\protect\hyperlink{ref-corneilleAssociativeAttitudeLearning2018a}{Corneille \& Stahl, 2019}).
+Conversely, the findings remove an important challenge to the more parsimonious single-process propositional theories (e.g., \protect\hyperlink{ref-Houwer2014}{Houwer, 2014}; \protect\hyperlink{ref-mitchellPropositionalNatureHuman2009}{Mitchell et al., 2009}).
+However, these experiments should not be viewed as conclusive tests of single- versus dual-process theories of evaluative learning.
+Notably, we cannot rule out the possibility that dissociations between implicit and explicit evaluations could be observed in other experimental designs---including studies that similarly pit learning effects resulting from stimuli with brief versus longer presentation durations.
+
+On this note, we recommend that relevant future research adhere to current standards for research on unconscious processing (\protect\hyperlink{ref-Schmidt2026}{Schmidt, Wolkersdorfer, Lee, \& Jubran, 2026}; \protect\hyperlink{ref-Stockart2025}{Stockart et al., 2025}).
+First, researchers should be mindful that neither direct measures nor indirect measures of evaluation are process pure (\protect\hyperlink{ref-Conrey2005}{Conrey, Sherman, Gawronski, Hugenberg, \& Groom, 2005}; \protect\hyperlink{ref-Jacoby1991}{Jacoby, 1991}) and dissociations between them may reflect factors other than distinct automatic and non-automatic processes.
+Second, retrospective measures of stimulus awareness are imperfect proxies of awareness during the learning task and their use requires careful consideration (e.g., \protect\hyperlink{ref-Gawronski2012}{Gawronski \& Walther, 2012}; \protect\hyperlink{ref-Shanks1994}{Shanks \& St. John, 1994}; \protect\hyperlink{ref-Stockart2025}{Stockart et al., 2025}).
+For example, assessments of awareness should distinguish between valence and identity awareness (\protect\hyperlink{ref-Stahl2009}{Stahl, Unkelbach, \& Corneille, 2009}).
+Third, future research may benefit from calibrating stimulus presentation to individual differences in thresholds for conscious perception (e.g., \protect\hyperlink{ref-Chen2025}{Chen, Harris, \& Hassin, 2025}; \protect\hyperlink{ref-Greenwald1989}{Greenwald, Klinger, \& Liu, 1989}).
+
+To conclude, across two high-powered experiments conducted across multiple countries and languages, we found overwhelming evidence against the dissociative evaluative learning effect originally reported by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}).
+Together with results from previous replication attempts by Heycke et al. (\protect\hyperlink{ref-heycke_two_2018}{2018}) these results show that this effect is replicably non-replicable and should no longer be treated as evidence in support of dual-process theories of evaluative learning.
+
+\newpage
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\begingroup
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-R-papaja}{}}%
+Aust, F., \& Barth, M. (2018). \emph{{papaja}: {Create} {APA} manuscripts with {R Markdown}}. Retrieved from \url{https://github.com/crsh/papaja}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-Superpower}{}}%
+Caldwell, A. R., Lakens, D., Parlett-Pelleriti, C. M., Prochilo, G., \& Aust, F. (2022). \emph{Power analysis with superpower}. Retrieved from \url{https://arcaldwell49.github.io/SuperpowerBook}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Chen2025}{}}%
+Chen, G. R., Harris, Y., \& Hassin, R. R. (2025). Individual differences in prioritization for consciousness and the conscious detection of changes. \emph{Consciousness and Cognition}, \emph{129}, 103831. \url{https://doi.org/10.1016/j.concog.2025.103831}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Conrey2005}{}}%
+Conrey, F. R., Sherman, J. W., Gawronski, B., Hugenberg, K., \& Groom, C. J. (2005). Separating multiple processes in implicit social cognition: The quad model of implicit task performance. \emph{Journal of Personality and Social Psychology}, \emph{89}(4), 469--487. \url{https://doi.org/10.1037/0022-3514.89.4.469}
+
+\leavevmode\vadjust pre{\hypertarget{ref-corneilleAssociativeAttitudeLearning2018a}{}}%
+Corneille, O., \& Stahl, C. (2019). Associative {Attitude Learning}: {A Closer Look} at {Evidence} and {How It Relates} to {Attitude Models}. \emph{Personality and Social Psychology Review}, \emph{23}(2), 161--198. \url{https://doi.org/10.1177/1088868318763261}
+
+\leavevmode\vadjust pre{\hypertarget{ref-cunningham_attitudes_2007}{}}%
+Cunningham, W. A., \& Zelazo, P. D. (2007). Attitudes and evaluations: A social cognitive neuroscience perspective. \emph{Trends in Cognitive Sciences}, \emph{11}(3), 97--104. \url{https://doi.org/10.1016/j.tics.2006.12.005}
+
+\leavevmode\vadjust pre{\hypertarget{ref-de_houwer_propositional_2018}{}}%
+De Houwer, J. (2018). Propositional models of evaluative conditioning. \emph{Social Psychological Bulletin}, \emph{13}(3). \url{https://doi.org/10.5964/spb.v13i3.28046}
+
+\leavevmode\vadjust pre{\hypertarget{ref-fabrigar_conceptualizing_2016}{}}%
+Fabrigar, L. R., \& Wegener, D. T. (2016). Conceptualizing and evaluating the replication of research results. \emph{Journal of Experimental Social Psychology}, \emph{66}, 68--80. \url{https://doi.org/10.1016/j.jesp.2015.07.009}
+
+\leavevmode\vadjust pre{\hypertarget{ref-gawronskiAssociativePropositionalEvaluation2011}{}}%
+Gawronski, B., \& Bodenhausen, G. V. (2011). The {Associative}\textendash{{Propositional Evaluation Model}}: {Theory}, {Evidence}, and {Open Questions}. \emph{Advances in Experimental Social Psychology}, \emph{44}, 59--128.
+
+\leavevmode\vadjust pre{\hypertarget{ref-harmon-jones_what_2019}{}}%
+Gawronski, B., \& Brannon, S. M. (2019). What is cognitive consistency, and why does it matter? In E. Harmon-Jones (Ed.), \emph{Cognitive dissonance: Reexamining a pivotal theory in psychology (2nd ed.).} (pp. 91--116). Washington: American Psychological Association. \url{https://doi.org/10.1037/0000135-005}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Gawronski2012}{}}%
+Gawronski, B., \& Walther, E. (2012). What do memory data tell us about the role of contingency awareness in evaluative conditioning? \emph{Journal of Experimental Social Psychology}, \emph{48}(3), 617--623. \url{https://doi.org/10.1016/j.jesp.2012.01.002}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Greenwald1989}{}}%
+Greenwald, A. G., Klinger, M. R., \& Liu, T. J. (1989). Unconscious processing of dichoptically masked words. \emph{Memory \& Cognition}, \emph{17}(1), 35--47. \url{https://doi.org/10.3758/bf03199555}
+
+\leavevmode\vadjust pre{\hypertarget{ref-greenwald_measuring_1998}{}}%
+Greenwald, A. G., McGhee, D. E., \& Schwartz, J. L. K. (1998). Measuring individual differences in implicit cognition: The implicit association test. \emph{Journal of Personality and Social Psychology}, \emph{74}(6), 1464--1480. \url{https://doi.org/10.1037/0022-3514.74.6.1464}
+
+\leavevmode\vadjust pre{\hypertarget{ref-heycke_two_2018}{}}%
+Heycke, T., Gehrmann, S., Haaf, J. M., \& Stahl, C. (2018). Of two minds or one? {A} registered replication of {Rydell} et al. (2006). \emph{Cognition and Emotion}, \emph{32}(8), 1708--1727. \url{https://doi.org/10.1080/02699931.2018.1429389}
+
+\leavevmode\vadjust pre{\hypertarget{ref-hoijtink_informative_2012}{}}%
+Hoijtink, H. (2012). \emph{Informative hypotheses: {Theory} and practice for behavioral and social scientists}. Boca Raton: {CRC}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Houwer2014}{}}%
+Houwer, J. D. (2014). A propositional model of implicit evaluation. \emph{Social and Personality Psychology Compass}, \emph{8}(7), 342--353. \url{https://doi.org/10.1111/spc3.12111}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Jacoby1991}{}}%
+Jacoby, L. L. (1991). A process dissociation framework: Separating automatic from intentional uses of memory. \emph{Journal of Memory and Language}, \emph{30}(5), 513--541. \url{https://doi.org/10.1016/0749-596x(91)90025-f}
+
+\leavevmode\vadjust pre{\hypertarget{ref-kerpelmanPartialReinforcementEffects1971}{}}%
+Kerpelman, J. P., \& Himmelfarb, S. (1971). Partial reinforcement effects in attitude acquisition and counterconditioning. \emph{Journal of Personality and Social Psychology}, \emph{19}(3), 301--305. \url{https://doi.org/10.1037/h0031447}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Klauer_Draine_Greenwald_1998}{}}%
+Klauer, K. C., Draine, S. C., \& Greenwald, A. G. (1998). An unbiased errors-in-variables approach to detecting unconscious cognition. \emph{British Journal of Mathematical and Statistical Psychology}, \emph{51}(2), 253--267. \url{https://doi.org/10.1111/j.2044-8317.1998.tb00680.x}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-emmeans}{}}%
+Lenth, R. (2018). \emph{Emmeans: Estimated marginal means, aka least-squares means}. Retrieved from \url{https://CRAN.R-project.org/package=emmeans}
+
+\leavevmode\vadjust pre{\hypertarget{ref-mcconnell_systems_2014}{}}%
+McConnell, A. R., \& Rydell, R. J. (2014). The systems of evaluation model: A dual-systems approach to attitudes. In J. W. Sherman, B. Gawronski, \& Y. Trope (Eds.), \emph{Dual-process theories of the social mind} (pp. 204--218). The Guilford Press.
+
+\leavevmode\vadjust pre{\hypertarget{ref-mcconnell_forming_2008}{}}%
+McConnell, A. R., Rydell, R. J., Strain, L. M., \& Mackie, D. M. (2008). Forming implicit and explicit attitudes toward individuals: Social group association cues. \emph{Journal of Personality and Social Psychology}, \emph{94}(5), 792--807. \url{https://doi.org/10.1037/0022-3514.94.5.792}
+
+\leavevmode\vadjust pre{\hypertarget{ref-mitchellPropositionalNatureHuman2009}{}}%
+Mitchell, C. J., De Houwer, J., \& Lovibond, P. F. (2009). The propositional nature of human associative learning. \emph{Behavioral and Brain Sciences}, \emph{32}(02), 183. \url{https://doi.org/10.1017/S0140525X09000855}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-BayesFactor}{}}%
+Morey, R. D., \& Rouder, J. N. (2018). \emph{BayesFactor: Computation of bayes factors for common designs}. Retrieved from \url{https://CRAN.R-project.org/package=BayesFactor}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-base}{}}%
+R Core Team. (2018). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}
+
+\leavevmode\vadjust pre{\hypertarget{ref-rouder_theories_2018}{}}%
+Rouder, J. N., Haaf, J. M., \& Aust, F. (2018). From theories to models to predictions: {A Bayesian} model comparison approach. \emph{Communication Monographs}, \emph{85}(1), 41--56. \url{https://doi.org/10.1080/03637751.2017.1394581}
+
+\leavevmode\vadjust pre{\hypertarget{ref-rouder_default_2012}{}}%
+Rouder, J. N., Morey, R. D., Speckman, P. L., \& Province, J. M. (2012). Default {Bayes} factors for {ANOVA} designs. \emph{Journal of Mathematical Psychology}, \emph{56}(5), 356--374. \url{https://doi.org/10.1016/j.jmp.2012.08.001}
+
+\leavevmode\vadjust pre{\hypertarget{ref-rouder_bayesian_2009}{}}%
+Rouder, J. N., Speckman, P. L., Sun, D., Morey, R. D., \& Iverson, G. (2009). Bayesian t tests for accepting and rejecting the null hypothesis. \emph{Psychonomic Bulletin \& Review}, \emph{16}(2), 225--237. \url{https://doi.org/10.3758/PBR.16.2.225}
+
+\leavevmode\vadjust pre{\hypertarget{ref-rydellUnderstandingImplicitExplicit2006}{}}%
+Rydell, R. J., \& McConnell, A. R. (2006). Understanding implicit and explicit attitude change: {A} systems of reasoning analysis. \emph{Journal of Personality and Social Psychology}, \emph{91}(6), 995--1008. \url{https://doi.org/10.1037/0022-3514.91.6.995}
+
+\leavevmode\vadjust pre{\hypertarget{ref-rydell_two_2006}{}}%
+Rydell, R. J., McConnell, A. R., Mackie, D. M., \& Strain, L. M. (2006). Of {Two Minds}: {Forming} and {Changing Valence}-{Inconsistent Implicit} and {Explicit Attitudes}. \emph{Psychological Science}, \emph{17}(11), 954--958. \url{https://doi.org/10.1111/j.1467-9280.2006.01811.x}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Schmidt2026}{}}%
+Schmidt, T., Wolkersdorfer, M. P., Lee, X. Y., \& Jubran, O. (2026). Unconscious cognition without post hoc selection artifacts: From selective analysis to functional dissociations. \emph{Behavior Research Methods}, \emph{58}(2). \url{https://doi.org/10.3758/s13428-025-02926-6}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Shanks1994}{}}%
+Shanks, D. R., \& St. John, M. F. (1994). Characteristics of dissociable human learning systems. \emph{Behavioral and Brain Sciences}, \emph{17}(3), 367--395. \url{https://doi.org/10.1017/s0140525x00035032}
+
+\leavevmode\vadjust pre{\hypertarget{ref-simonsohn_small_2013}{}}%
+Simonsohn, U. (2015). Small telescopes: Detectability and the evaluation of replication results. \emph{Psychological Science}, \emph{26}(5), 559--569. \url{https://doi.org/10.1177/0956797614567341}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-afex}{}}%
+Singmann, H., Bolker, B., Westfall, J., \& Aust, F. (2018). \emph{Afex: Analysis of factorial experiments}. Retrieved from \url{https://CRAN.R-project.org/package=afex}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Stahl2009}{}}%
+Stahl, C., Unkelbach, C., \& Corneille, O. (2009). On the respective contributions of awareness of unconditioned stimulus valence and unconditioned stimulus identity in attitude formation through evaluative conditioning. \emph{Journal of Personality and Social Psychology}, \emph{97}(3), 404--420. \url{https://doi.org/10.1037/a0016196}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Stockart2025}{}}%
+Stockart, F., Schreiber, M., Amerio, P., Carmel, D., Cleeremans, A., Deouell, L. Y., \ldots{} Mudrik, L. (2025). Studying unconscious processing: Contention and consensus. \emph{Behavioral and Brain Sciences}, 1--77. \url{https://doi.org/10.1017/s0140525x25101489}
+
+\leavevmode\vadjust pre{\hypertarget{ref-vandenBergh2023}{}}%
+van den Bergh, D., Wagenmakers, E.-J., \& Aust, F. (2023). Bayesian repeated-measures analysis of variance: An updated methodology implemented in JASP. \emph{Advances in Methods and Practices in Psychological Science}, \emph{6}(2). \url{https://doi.org/10.1177/25152459231168024}
+
+\leavevmode\vadjust pre{\hypertarget{ref-verhagen_bayesian_2014}{}}%
+Verhagen, J., \& Wagenmakers, E.-J. (2014). Bayesian tests to quantify the result of a replication attempt. \emph{Journal of Experimental Psychology: General}, \emph{143}(4), 1457--1475. \url{https://doi.org/10.1037/a0036731}
+
+\end{CSLReferences}
+
+\endgroup
+
+
+\end{document}

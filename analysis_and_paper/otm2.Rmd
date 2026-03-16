@@ -1,0 +1,924 @@
+# Experiment 2: Registered replication
+
+To address the concern that our initial replication attempt in Experiment 1 may have been unsuccessful because briefly flashed words were consciously perceived by participants, we conducted a second experiment and reduced the presentation duration of the briefly flashed words during the learning task.
+
+## Pilot study
+
+```{r}
+#| label: otm2pilot2f-analysis-preferences
+#| cache: true
+
+# Fixed in development version crsh/papaja@6496c48
+apa_print.summary_emm <- 
+function (x, contrast_names = NULL, est_name = "\\hat{\\theta}", 
+    in_paren = FALSE, ...) 
+{
+    if (class(x)[1] != "summary.ref.grid") 
+        papaja:::validate(x, check_class = "summary_emm", check_NA = FALSE)
+    if (!is.null(est_name)) 
+        papaja:::validate(est_name, check_class = "character")
+    papaja:::validate(in_paren, check_class = "logical", check_length = 1)
+    if (!is.null(contrast_names)) 
+        papaja:::validate(contrast_names, check_class = "character")
+    if (isTRUE(attr(x, "estName") == "F.ratio")) {
+        apa_res <- apa_print_summary_emm_joint_tests(x, in_paren = in_paren, 
+            ...)
+        return(apa_res)
+    }
+    null.value <- x$null.value
+    if (is.null(null.value)) {
+        null.value <- 0
+    }
+    object_messages <- attr(x, "mesg")
+    if (!is.null(object_messages)) {
+        family_size_mesg <- papaja:::.str_extract_first(object_messages, 
+            "for (\\d+) (estimates|tests)")
+        family_size_mesg <- family_size_mesg[!length(family_size_mesg) == 
+            0]
+        if (length(family_size_mesg) > 0) {
+            fam_size <- as.numeric(papaja:::.str_extract_first(family_size_mesg, 
+                "\\d+"))
+            attr(x, "famSize") <- unique(fam_size)
+        }
+    }
+    adjust <- papaja:::parse_adjust_name(attr(x, "adjust"), attr(x, "famSize"), 
+        object_messages)
+    tidy_x <- data.frame(broom::tidy(x, null.value = null.value))
+    tidy_x <- papaja:::rename_column(tidy_x, c("prob", "rate", "ratio", 
+        "odds.ratio", "asymp.LCL", "asymp.UCL", "z.ratio"), c("estimate", 
+        "estimate", "estimate", "estimate", "conf.low", "conf.high", 
+        "statistic"))
+    conf_level <- papaja:::get_emm_conf_level(x)
+    ci_supplied <- !length(conf_level) == 0
+    p_supplied <- "p.value" %in% colnames(x)
+    if (!ci_supplied) {
+        if (p_supplied) {
+            warning("Object 'x' does not include confidence intervals. APA guidelines recommend to routinely report confidence intervals for all estimates.")
+        }
+        conf_level <- NULL
+    }
+    else {
+        if (conf_level < 1) 
+            conf_level <- conf_level * 100
+        if (is.null(adjust)) {
+            conf_level <- paste0(conf_level, "\\% CI")
+        }
+        else {
+            conf_level <- paste0("$", conf_level, "\\%\\ \\mathrm{CI}_\\mathrm{\\scriptstyle ", 
+                adjust["conf.int"], "}$")
+        }
+    }
+    if (!p_supplied) {
+        df_colname <- NULL
+        stat_colnames <- NULL
+    }
+    else {
+        df_colname <- names(tidy_x)[grepl("df\\.*", names(tidy_x))]
+        multiple_df <- !isTRUE(all.equal(min(tidy_x[[df_colname]]), 
+            max(tidy_x[[df_colname]])))
+        p_value <- names(tidy_x)[grepl("p.value", names(tidy_x), 
+            fixed = TRUE)]
+        stat_colnames <- c("statistic", df_colname, p_value)
+    }
+    split_by <- attr(x, "by.vars")
+    pri_vars <- attr(x, "pri.vars")
+    if (is.null(split_by)) {
+        split_by <- unlist(attr(x, "misc")[c("by.vars")])
+    }
+    if (is.null(pri_vars)) {
+        pri_vars <- unlist(attr(x, "misc")[c("pri.vars")])
+    }
+    factors <- unique(c(pri_vars, split_by))
+    factors[factors == "1"] <- "Intercept"
+    if("Intercept" %in% factors) tidy_x <- papaja:::rename_column(tidy_x, "X1", "Intercept")
+    keep_original_terms <- tidy_x[, factors, drop = FALSE]
+    tidy_x[, factors] <- beautify_terms(tidy_x[, factors], ...)
+    tidy_x$estimate <- apa_num(tidy_x$estimate, ...)
+    if (ci_supplied) {
+        tidy_x$conf.int <- unlist(apa_confint(tidy_x[, c("conf.low", 
+            "conf.high")], use_math = FALSE), ...)
+    }
+    if (p_supplied) {
+        if (all(tidy_x$null.value == 0)) 
+            tidy_x$null.value <- NULL
+        tidy_x$statistic <- apa_num(tidy_x$statistic)
+        tidy_x$df <- apa_df(tidy_x$df)
+        tidy_x[[p_value]] <- apa_p(tidy_x[[p_value]])
+    }
+    if (!is.null(contrast_names)) 
+        tidy_x$contrast <- contrast_names
+    tidy_x <- cbind(tidy_x[, 1:which(colnames(tidy_x) == "estimate")], 
+        tidy_x[which(colnames(tidy_x) == "conf.int")], tidy_x[which(colnames(tidy_x) == 
+            "null.value")], tidy_x[, stat_colnames])
+    tidy_x_labels <- c(estimate = paste0("$", est_name, "$"))
+    if ("contrast" %in% factors) {
+        tidy_x_labels <- c(tidy_x_labels, contrast = "Contrast")
+    }
+    if (ci_supplied) {
+        tidy_x_labels <- c(tidy_x_labels, conf.int = conf_level)
+    }
+    if (p_supplied) {
+        if (all(tidy_x$df == "$\\infty$")) {
+            test_stat <- "z"
+            tidy_x$df <- NULL
+        }
+        else {
+            test_stat <- "t"
+            tidy_x_labels <- c(tidy_x_labels, df = "$\\mathit{df}$")
+        }
+        tidy_x_labels <- c(tidy_x_labels, statistic = paste0("$", 
+            test_stat, "$"))
+        if ("null.value" %in% names(tidy_x)) {
+            tidy_x_labels <- c(tidy_x_labels, null.value = "$\\theta_0$")
+        }
+        variable_labels(tidy_x[[p_value]]) <- switch(p_value, 
+            p.value = "$p$", adj.p.value = paste0("$p_\\mathrm{\\scriptstyle ", 
+                adjust["p.value"], "}$"))
+    }
+    variable_labels(tidy_x) <- tidy_x_labels
+    tidy_x <- papaja:::default_label.data.frame(tidy_x)
+    if (length(factors) > 0) {
+        cols <- c(factors[which(factors != "contrast")], factors[which(factors == 
+            "contrast")])
+        contrast_row_names <- papaja:::paste_list(tidy_x[, cols, drop = FALSE])
+        terms_sanitized <- sanitize_terms(papaja:::paste_list(keep_original_terms[, 
+            cols, drop = FALSE]))
+    }
+    else {
+        stop("Could not determine names to address each result by.")
+    }
+    if (!is.null(attr(x, "famSize"))) {
+        if (!is.null(split_by)) {
+            family_mark <- letters[as.numeric(interaction(tidy_x[, 
+                split_by]))]
+        }
+        else if (!attr(x, "famSize") < nrow(tidy_x)) {
+            family_mark <- letters[1:nrow(tidy_x)]
+        }
+        else {
+            adjust <- NULL
+        }
+    }
+    else {
+        adjust <- NULL
+    }
+    if (length(factors) > 1 && !any(tidy_x[, factors] == ".")) {
+        factors[-which(factors == "contrast")] <- rev(factors[-which(factors == 
+            "contrast")])
+        str_factors <- rev(c(pri_vars[-1], split_by))
+        str_cols <- tidy_x[, str_factors, drop = FALSE]
+        for (i in seq_along(str_factors)) {
+            if (i > 1) {
+                tmp <- apply(tidy_x[, str_factors[1:i]], 1, paste, 
+                  collapse = "_")
+            }
+            else {
+                tmp <- tidy_x[, str_factors[i]]
+            }
+            str_cols[, str_factors[i]] <- as.character(tidy_x[, 
+                str_factors[i]])
+            str_cols[duplicated(tmp), str_factors[i]] <- ""
+        }
+        tidy_x[, str_factors] <- str_cols[, str_factors]
+        str_col_order <- c(str_factors, colnames(tidy_x)[!colnames(tidy_x) %in% 
+            str_factors])
+        tidy_x <- tidy_x[, str_col_order]
+        tidy_x[, pri_vars[1]] <- as.character(tidy_x[, pri_vars[1]])
+    }
+    if (any(tidy_x[, factors] == ".")) {
+        tidy_x[, factors] <- apply(tidy_x[, factors], 2, gsub, 
+            pattern = ".", replacement = "", fixed = TRUE)
+    }
+    class(tidy_x) <- c("apa_results_table", "data.frame")
+    apa_res <- glue_apa_results(tidy_x, est_glue = papaja:::est_glue(tidy_x), 
+        stat_glue = papaja:::stat_glue(tidy_x), in_paren = in_paren, term_names = make.names(terms_sanitized))
+    if (!is.null(adjust)) {
+        if (ci_supplied) {
+            ci_label <- variable_label(apa_res$table$conf.int)
+            apa_res$table$conf.int <- paste0(apa_res$table$conf.int, 
+                "${}^", family_mark, "$")
+            variable_label(apa_res$table$conf.int) <- ci_label
+        }
+        if (p_supplied) {
+            p_label <- variable_label(apa_res$table[[p_value]])
+            apa_res$table[[p_value]] <- paste0(apa_res$table[[p_value]], 
+                "${}^", family_mark, "$")
+            variable_label(apa_res$table[[p_value]]) <- p_label
+        }
+    }
+    apa_res
+}
+
+process_rawdata <- TRUE
+
+# Data location
+raw_data_path <- "../otm2pilot2/results/data_raw/florida/"
+processed_data_path <- "../otm2pilot2/results/data_processed/florida/"
+```
+
+```{r}
+#| label: otm2pilot2f-load-data
+#| cache: true
+#| dependson: otm2pilot2f-analysis-preferences
+#| warning: false
+
+# Process raw data
+if(process_rawdata) {
+  source("https://gist.githubusercontent.com/crsh/357458c41fd3d554fb24/raw/f7725d5c4894a055a1b2e461dc5c39f3db23b2b8/batch_read.R")
+  
+  # Merge raw data
+  otm2p2f_eval <- batch_read(
+    raw_data_path
+    , pattern = "Eval"
+    , recursive = TRUE
+    , read_fun = read.delim
+  )
+
+
+  otm2p2f_mem <- batch_read(
+    raw_data_path
+    , pattern = "MemTest"
+    , recursive = TRUE
+    , read_fun = read.delim
+  )
+  
+
+  otm2p2f_log <- batch_read(
+    raw_data_path
+    , pattern = "ScreenLog"
+    , recursive = TRUE
+    , read_fun = read.csv
+    , header = FALSE
+  )
+  
+  otm2p2f_demo <- batch_read(
+    raw_data_path
+    , pattern = "Demographics"
+    , recursive = TRUE
+    , read_fun = read.delim
+    #, quote = "~" # Participants used " in their input
+  ) %>%
+    mutate(
+        ParticipantNumber = factor(ParticipantNumber)
+      , Gender = case_when(
+        grepl("^f|^cis-f", Gender, ignore.case = TRUE) ~ "female"
+        , grepl("^m", Gender, ignore.case = TRUE) ~ "male"
+        , grepl("non-", Gender, ignore.case = TRUE) ~ "nonbinary"
+      )
+      , Age = as.numeric(Age)
+    )
+
+  otm2p2f_analysis_factors <- c("ParticipantNumber", "Location", "Block", "ValenceBlock")
+  
+  otm2p2f_mem$ParticipantNumber <- as.integer(otm2p2f_mem$ParticipantNumber)
+  #otm2p2_mem <- left_join(otm2p2_mem, otm2p2_demo, by = "ParticipantNumber")
+  
+  otm2p2f_mem <- otm2p2f_mem %>%
+    mutate(
+      ParticipantNumber = factor(ParticipantNumber)
+      , ValenceBlock = ifelse(ValenceBlock == 1, "negPrime - posPrime", "posPrime - negPrime") %>% factor
+      , Block = factor(Block)
+      , Accuracy = as.integer(NumbercorrectIdent) / 20
+    )
+
+  
+  
+
+    # Save processed data
+  saveRDS(otm2p2f_eval, paste0(processed_data_path, "otm2p2f_eval.rds"))
+  saveRDS(otm2p2f_mem, paste0(processed_data_path, "otm2p2f_memory.rds"))
+} else {
+  otm2p2f_eval <- readRDS(paste0(processed_data_path, "otm2p2f_eval.rds"))
+  otm2p2f_mem <- readRDS(paste0(processed_data_path, "otm2p2f_memory.rds"))
+}
+```
+
+```{r}
+#| label: otm2p2f-recognition
+
+otm2p2f_mem_ttest <- t.test(otm2p2f_mem$Accuracy, mu = 0.5
+                          , alternative = "greater") %>%
+  apa_print %$%
+  full_result
+
+otm2p2f_mem_ttest_two_sided <- t.test(otm2p2f_mem$Accuracy, mu = 0.5) %>%
+  apa_print %$%
+  estimate
+
+otm2p2f_mem_ttest_nonsuperiority <- lm(Accuracy - 0.5 ~ 1, otm2p2f_mem) %>%
+  emmeans(~ 1) %>%
+  summary(side = "<", delta = 0.03, infer = TRUE) %>%
+  apa_print.summary_emm %$%
+  # apa_print %$%
+  statistic
+
+otm2p2f_mem_ttestBF <- ttestBF(
+  otm2p2f_mem$Accuracy - 0.5
+  , mu = 0
+  , rscale = "medium"
+  , nullInterval = c(0, Inf)
+)[1] %>%
+  {1/.} %>%
+  apa_print(subscript = "01") %$%
+  statistic
+```
+
+
+To identify a presentation duration that reproduces the stimulus visibility conditions of the original study (i.e., at-chance recognition accuracy for briefly flashed words), we conducted a pilot study with a presentation duration reduced to 13 ms (one frame on a 75 Hz CRT monitor) from 27 ms in Experiment 1[^pilots].
+Because Experiment 2 was planned to be conducted in English, the pilot study used the English material and was performed at the University of Florida.
+Except for the shorter presentation duration the methods were the same as in Experiment 1.
+For the pilot study, we recruited `r nrow(otm2p2f_demo)` participants (aged `r paste(range(otm2p2f_demo$Age), collapse = "-")` years, $M = `r mean(otm2p2f_demo$Age)`$; `r apa_num(mean(otm2p2f_demo$Gender == "male") * 100)`% male, `r apa_num(mean(otm2p2f_demo$Gender == "female") * 100)`% female, `r apa_num(mean(otm2p2f_demo$Gender == "nonbinary") * 100)`% nonbinary. 
+
+```{r}
+#| label: rydell-recognition-effect
+#| results: hide
+
+rydell_mem_ci <- ci.sm(ncp = -1.58, N = 50) %>% 
+  lapply(function(x) x* 0.09 + 0.5)
+rydell_mem_ci_res <- paste0(
+  "$M = ", printnum(rydell_mem_ci$Standardized.Mean, gt1 = FALSE)
+  , "$, 95% CI $[", printnum(rydell_mem_ci$Lower.Conf.Limit.Standardized.Mean, gt1 = FALSE)
+  , "$, $", printnum(rydell_mem_ci$Upper.Conf.Limit.Standardized.Mean, gt1 = FALSE), "]$"
+)
+
+rydell_mem_bf <- paste0(
+  "$\text{BF}_{01} = "
+  , printnum(1/ttest.tstat(t = -1.58, n1 = 50, simple = TRUE))
+  , "$"
+)
+```
+
+Recognition accuracy for the briefly flashed words was not significantly better than chance, `r otm2p2f_mem_ttest`, but the Bayesian evidence for at-chance accuracy was inconclusive, `r otm2p2f_mem_ttestBF`. 
+Based on these results we cannot rule out that, even with the shortened presentation duration, briefly flashed words were recognized above chance. 
+To confirm that the recognition accuracy was comparable to the original study, we performed a nonsuperiority test. 
+Specifically, we compared observed accuracy to the smallest deviation from at-chance accuracy that could have been detected in the original study, i.e., $M = 0.53$.
+The test confirmed that the recognition accuracy was comparable to that observed by @rydell_two_2006 (`r rydell_mem_ci_res`), `r otm2p2f_mem_ttest_nonsuperiority`. 
+Thus, we conclude that the visibility of words flashed for 13 ms is likely to be functionally comparable to that of the original study. 
+Of course, the presentation duration could be reduced further to obtain conclusive evidence for at-chance visibility, but such reductions would run the risk of inadvertently causing stimuli to become practically invisible.
+To safeguard against the possibility that the 13 ms presentation duration is already too brief, we added a second presentation duration and flashed words for 20 ms in some locations.
+To summarize, across both studies, words were briefly flashed for 13 ms, 20 ms 24 ms, or 27 ms, Table\ \@ref(tab:otm-descriptives-table).
+
+[^pilots]:
+We ran a series of pilot studies in Dutch, which also yielded above-chance recognition of briefly flashed words.
+These pilot studies employed a shortened procedure, used Dutch material, or were conducted immediately after an unrelated priming study, which also used briefly flashed words.
+We, therefore, decided a posteriori, that above-chance accuracy in these studies may not be informative for our subsequent replication attempt, as we used only English materials in the studies presented here.
+
+
+## Method
+
+### Material & Procedure
+
+We used the same materials and procedure as in Experiment 1 but flashed words for 13 ms or 20 ms.
+Furthermore, all labs used the same Python script to collect the data, and only the English material was used to match the official language at all locations.
+
+### Data analysis
+
+We submitted the new data from all locations to analyses analogous to those of Experiment 1.
+We, again, performed the analyses reported in the original study and assessed replication success by performing Bayesian model comparisons.
+In contrast to Experiment 1, all labs used the same stimulus material, and lab location was partially confounded with the presentation duration of the briefly flashed words. 
+Thus, we replaced the lab location factor by presentation duration of the briefly flashed words in both analyses.
+Additionally, we compared the data from Hong Kong to those from the U.S. labs to explore whether the results are consistent across ethnicities and cultures.
+Given the consistent results in Experiment 1, we omitted the linear mixed model analysis of IAT response times.
+
+To maximize the power of the planned contrasts in the frequentist ANOVA analyses, we tested whether valence order moderates the learning block contrasts by testing the main effect of learning block. 
+We preregistered to pool participants across valence orders by reversing the learning block coding in one group (as in the Bayesian model comparison of Experiment 1), if we detected no main effect of learning block. 
+Similarly, we preregistered to pool participants across presentation durations if the different presentation durations of flashed words did not moderate the learning block contrasts.
+
+
+### Participants
+
+```{r}
+#| label: otm2-omnibus-power
+#| cache: true
+
+# Main effect block and three-way interaction
+otm2_power <- function(f, n, rm_cor = 0.5, alpha = 0.05) {
+  contrast_codes <- tibble::tibble(
+    time = rep(contr.treatment(2), 4)
+    , order = rep(rep(contr.sum(2), each = 2), 2)
+    , block = rep(contr.sum(2), each = 4)
+    , time_block = time * block
+    , time_order = time * order
+    , block_order = block * order
+    , time_block_order = time * block * order
+  )
+  
+  mu <- with(
+    contrast_codes
+    , #-order * 0.25*f +
+      -block_order * f +
+      -block * 0.5 * f +
+      time_block_order * f
+  )
+  
+  string <- "2w*2b*2b"
+  labelnames <- c("block", "1", "2", "order", "p-n", "n-p", "time", "13", "20")
+  
+  design_result <- ANOVA_design(
+    design = string
+    , n = n
+    , mu = mu
+    , sd = 1
+    , r = rm_cor
+    , labelnames = labelnames
+  )
+  
+  ANOVA_exact(
+    design_result
+    , alpha_level = alpha
+    , emm = FALSE
+    , verbose = FALSE
+  )
+}
+
+
+otm2_n_power <- 320/4
+
+# 95% power
+otm2_pes <- 0.039732
+otm2_dz <- pes_to_dz(otm2_pes, otm2_n_power, n_groups = 4)
+rho <- 0.5
+f <- dz_to_f(otm2_dz, rho)
+
+# otm2_time_power <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho, alpha = 0.05)
+# otm2_time_power$main_result
+
+# otm2_time_power$dataframe %>%
+#   mutate(
+#     order = ifelse(order == "order_n-p", "Negative-positive", "Positive-negative")
+#     , block = ifelse(block == "block_1", "1", "2")
+#     , time = ifelse(time == "time_13", "13 ms", "20 ms")
+#   ) %>%
+#   ggplot(aes(x = block, y = y, color = order, group = order)) +
+#   stat_summary(fun.y = mean, geom = "line") +
+#   stat_summary(fun.data = mean_cl_normal) +
+#   coord_cartesian(ylim = c(-0.6, 0.6)) +
+#   facet_grid(~ time) +
+#   guides(color = FALSE) +
+#   ggtitle("Assumed for power analysis") +
+#   labs(x = "Block", y = "Attitude") +
+#   theme_bw()
+
+otm2_dz_block <- f_to_dz(0.5*f, rho = rho)
+otm2_pes_block <- dz_to_pes(otm2_dz_block, otm2_n_power, n_groups = 4)
+
+otm2_dz_int <- f_to_dz(f, rho = rho)
+otm2_pes_int <- dz_to_pes(otm2_dz_int, otm2_n_power, n_groups = 4)
+```
+
+```{r}
+#| label: otm2-contrast-power
+#| cache: true
+
+otm2_power <- function(f, n, rm_cor = 0.5, alpha = 0.05) {
+  contrast_codes <- tibble::tibble(
+    time = rep(contr.treatment(2), 4)
+    , order = rep(rep(contr.sum(2), each = 2), 2)
+    , block = rep(contr.sum(2), each = 4)
+    , time_block = time * block
+    , time_order = time * order
+    , block_order = block * order
+    , time_block_order = time * block * order
+  )
+  
+  mu <- with(
+    contrast_codes
+    , -order * 0.25*f +
+      -block_order * f
+  )
+  
+  string <- "2w*2b*2b"
+  labelnames <- c("block", "1", "2", "order", "p-n", "n-p", "time", "13", "20")
+  
+  design_result <- ANOVA_design(
+    design = string
+    , n = n
+    , mu = mu
+    , sd = 1
+    , r = rm_cor
+    , labelnames = labelnames
+  )
+  
+  ANOVA_exact(
+    design_result
+    , alpha_level = alpha
+    , emm = TRUE
+    , verbose = FALSE
+    , contrast_type = "pairwise"
+    , emm_comp = "block | time * order"
+  )
+}
+
+
+# Learning block contrasts
+
+## Simple contrasts
+### 95% power
+otm2_pes <- 0.039732
+otm2_dz <- pes_to_dz(otm2_pes, otm2_n_power, n_groups = 4)
+# rho <- 0.5
+# f <- dz_to_f(otm2_dz, rho)
+# 
+# otm2_contrast_power <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$contrasts %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm2_contrast_power
+
+
+### 80% power
+otm2_pes2 <- 0.0243813
+otm2_dz2 <- pes_to_dz(otm2_pes2, otm2_n_power, n_groups = 4)
+# f <- dz_to_f(otm2_dz2, rho)
+# 
+# otm2_contrast_power2 <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$contrasts %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm2_contrast_power2
+
+
+## Collapsed once
+### 95% power
+otm2_dz_between_collapsed <- f_to_dz(dz_to_f(otm2_dz, rho) / sqrt(2), rho)
+otm2_pes_between_collapsed <- dz_to_pes(otm2_dz_between_collapsed, otm2_n_power, n_groups = 4)
+# f <- dz_to_f(otm2_dz_between_collapsed, rho)
+# 
+# otm2_time_collapsed_contrast_power <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$emmeans %>%
+#   emmeans(specs = ~ block | order) %>%
+#   pairs %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm2_time_collapsed_contrast_power
+
+### 80% power
+otm2_dz2_between_collapsed <- f_to_dz(dz_to_f(otm2_dz2, rho) / sqrt(2), rho)
+otm2_pes2_between_collapsed <- dz_to_pes(otm2_dz2_between_collapsed, otm2_n_power, n_groups = 4)
+# f <- dz_to_f(otm2_dz2_between_collapsed, rho)
+# 
+# otm2_time_collapsed_contrast_power2 <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$emmeans %>%
+#   emmeans(specs = ~ block | order) %>%
+#   pairs %>%
+#   emmeans_power(alpha = 0.05) %>%
+#   .[1, ]
+# otm2_time_collapsed_contrast_power2
+
+
+## Collapsed twice
+### 95% power
+otm2_dz_collapsed <- f_to_dz(dz_to_f(otm2_dz, rho) / sqrt(4), rho)
+otm2_pes_collapsed <- dz_to_pes(otm2_dz_collapsed, otm2_n_power, n_groups = 4)
+# f <- dz_to_f(otm2_dz_collapsed, rho)
+# 
+# otm2_collapsed_contrast_power <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$emmeans %>%
+#   emmeans(specs = ~ block * order) %>%
+#   contrast(method = list(collapsed = c(-0.5, 0.5, 0.5, -0.5))) %>%
+#   emmeans_power(alpha_level = 0.05)
+# otm2_collapsed_contrast_power
+
+### 80% power
+otm2_dz2_collapsed <- f_to_dz(dz_to_f(otm2_dz2, rho) / sqrt(4), rho)
+otm2_pes2_collapsed <- dz_to_pes(otm2_dz2_collapsed, otm2_n_power, n_groups = 4)
+# f <- dz_to_f(otm2_dz2_collapsed, rho)
+# 
+# otm2_collapsed_contrast_power2 <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$emmeans %>%
+#   emmeans(specs = ~ block * order) %>%
+#   contrast(method = list(collapsed = c(-0.5, 0.5, 0.5, -0.5))) %>%
+#   emmeans_power(alpha_level = 0.05)
+# otm2_collapsed_contrast_power2
+```
+
+```{r}
+#| label: otm2-yale-exclusions
+
+n_yale_excluded <- list.files("../otm2/results/data_raw_excluded/yale", pattern = "ScreenLog") |>
+  length()
+```
+
+```{r}
+#| label: otm2-load-data-and-sample-sizes
+
+otm2_technical_failure <- tar_read(otm2_technical_failure, store = otm2_store) |> length()
+otm2_noncompliance <- tar_read(otm2_noncompliance, store = otm2_store) |> length()
+otm2_wrong_framerate <- tar_read(otm2_wrong_framerate, store = otm2_store) |> 
+  (\(x) x[!x %in% otm2_noncompliance & ! x %in% otm2_technical_failure])() |>
+  length()
+
+otm2_excluded <- tar_read(otm2_exclude, store = otm2_store)
+otm2_n_excluded <- length(otm2_excluded)
+```
+
+Due to uncertainties surrounding the Covid-19 pandemic, we preregistered to recruit `r otm2_n_power` participants at no less than four out of five locations: Yale University, the University of Florida, the University of Hong Kong, Indiana University Bloomington, and Williams College.
+We again recruited additional participants to replace those excluded.
+We did not collect data at Indiana University Bloomington.
+We excluded an initial sample of `r n_yale_excluded` participants collected at Yale University because we could not verify that the stimuli were presented at the desired frame rate.
+The log files were unreliable.
+Due to resource constraints, we recruited new participants in equal parts at Yale University and the University of Illinois.
+This constitutes a deviation from our preregistration.
+As in Experiment 1, all participants who signed up, before the planned sample size had been reached were allowed to participate, resulting in slightly larger sample sizes than preregistered (University of Florida: $n = `r otm2_n_list["Florida"] - nrow(otm2p2f_demo)`$; University of Hong Kong: $n = `r otm2_n_list["HongKong"]`$; University of Illinois: $n = `r otm2_n_list["Illinois"]`$; Williams College: $n = `r otm2_n_list["Williams"]`$; Yale University: $n = `r otm2_n_list["Yale"]`$).
+In total, we recruited `r otm2_n_total - nrow(otm2p2f_demo) + otm2_n_excluded` participants (aged `r paste(range(otm2_mem$Age), collapse = "-")` years, $M = `r mean(otm2_mem$Age)`$; `r apa_num(mean(otm2_mem$Gender == "male") * 100)`% male, `r apa_num(mean(otm2_mem$Gender == "female") * 100)`% female, `r apa_num(mean(otm2_mem$Gender == "nonbinary") * 100)`% nonbinary; see SOM for details).
+`r printnum(otm2_noncompliance, numerals = otm2_noncompliance > 10, capitalize = TRUE)` participant was excluded due to noncompliance with instructions, `r printnum(otm2_wrong_framerate, numerals = otm2_wrong_framerate > 10)` because the logs indicated that stimuli were presented at a lower frame rate than intended, and `r printnum(otm2_technical_failure, numerals = otm2_technical_failure > 10)` due to other technical failures.
+Hence, we report results based on a sample of $N = `r otm2_n_total`$ participants, including participants from the pilot study[^pilot2data].
+
+
+[^pilot2data]: To ensure valid results, the pilot study for Experiment 2 employed the complete experimental procedure, that is, we also collected evaluative ratings and IAT responses. Prior to running Experiment 2, we only analyzed the word recognition accuracy; we had not looked at evaluative ratings and IAT responses. We therefore added the data from the pilot study to the final analyses.
+
+### Statistical power
+
+As for Experiment 1, our preregistered assessment of the statistical sensitivity of our design focused on the tests of simple *learning block* effects.
+With the preregistered minimum of $N = `r otm2_n_power * 4`$ participants, the planned contrasts have 95% power to detect learning block effects as small as $\delta_z = `r otm2_dz`$ ($\eta_p^2 = `r printp(otm2_pes)`$) or as small as $\delta_z = `r otm2_dz_between_collapsed`$ ($\eta_p^2 = `r printp(otm2_pes_between_collapsed)`$) and $\delta_z = `r otm2_dz_collapsed`$ ($\eta_p^2 = `r printp(otm2_pes_collapsed)`$) when pooling participants across one or both between-participant factors ($\alpha = .05$, two-sided tests).[^impliedd]
+The tests of the main effect of learning block and the three-way interaction, on which we base our decision to pool participants across the between-subject conditions, have 95% power to detect effects as small as  $\delta_z = `r otm2_dz_block`$ ($\eta_p^2 = `r printp(otm2_pes_block)`$) and
+$\delta_z = `r otm2_dz_int`$ ($\eta_p^2 = `r printp(otm2_pes_int)`$), respectively ($\alpha = .05$, two-sided tests).
+Thus, the design is sufficiently sensitive to detect (or rule out) differences---at least---13% smaller (39% or 57% when pooling participants across one or both between-participant factors, respectively) than the smallest learning block difference reported by @rydell_two_2006.
+Note that these are conservative estimates because we analyzed a sample size of $N = `r otm2_n_total`$.
+
+
+## Results
+
+As before, we first report the results of the standard frequentist analyses before turning to an integrative replicability assessment by [Bayesian model comparisons](#replicability-assessment2).
+
+Figure\ \@ref(fig:otm-factorial-results-plot)B shows the results of the attitude ratings and IAT scores for the two presentation durations.
+Clearly, the shortened presentation durations did not affect the close correspondence between direct and indirect measures of evaluation.
+The observed pattern of results is highly consistent with those from Experiment 1.
+As before, we first report the standard frequentist analyses before turning to an integrative replicability assessment via Bayesian model comparisons.
+To anticipate the results, we replicated the results of Experiment 1 regardless of presentation duration of briefly flashed words.
+
+### Joint analysis of rating and IAT scores
+
+```{r}
+#| label: otm2-rydell-analysis-overall
+
+otm2_attitudes_aov <- otm2_attitudes %>%
+  mutate(
+    Eval = scale(Eval) %>% as.numeric
+    , IATscore = scale(IATscore) %>% as.numeric
+  ) %>%
+  gather("Measure", "Attitude", Eval, IATscore) %>%
+  mutate(Measure = factor(Measure)) %>%
+  aov_ez(
+    id = "ParticipantNumber"
+    , dv = "Attitude"
+    , within = c("Block", "Measure")
+    , between = c("ValenceBlock", "Duration")
+    , data = .
+  )
+
+otm2_attitudes_aov_res <- apa_print_ps(otm2_attitudes_aov)
+
+otm2_attitudes_country_aov <- otm2_attitudes %>%
+  mutate(
+    Eval = scale(Eval) %>% as.numeric
+    , IATscore = scale(IATscore) %>% as.numeric
+    , Country = if_else(Location == "Hong Kong", "Hong Kong", "USA") %>%
+      factor()
+  ) %>%
+  gather("Measure", "Attitude", Eval, IATscore) %>%
+  mutate(Measure = factor(Measure)) %>%
+  aov_ez(
+    id = "ParticipantNumber"
+    , dv = "Attitude"
+    , within = c("Block", "Measure")
+    , between = c("ValenceBlock", "Country")
+    , data = .
+  )
+
+otm2_attitudes_country_aov_ps <- nice(otm2_attitudes_country_aov) |> 
+  filter(grepl("Country", Effect)) |> 
+  pull(p.value) |>
+  min() |>
+  (\(x) paste0("$p \\geq ", x, "$"))()
+
+otm2_attitudes_location_aov <- otm2_attitudes %>%
+  # filter(Duration == "13") %>%
+  mutate(
+    Eval = scale(Eval) %>% as.numeric
+    , IATscore = scale(IATscore) %>% as.numeric
+  ) %>%
+  gather("Measure", "Attitude", Eval, IATscore) %>%
+  mutate(Measure = factor(Measure)) %>%
+  aov_ez(
+    id = "ParticipantNumber"
+    , dv = "Attitude"
+    , within = c("Block", "Measure")
+    , between = c("ValenceBlock", "Location")
+    , data = .
+  )
+
+otm2_attitudes_location_aov_ps <- nice(otm2_attitudes_location_aov) |> 
+  filter(grepl("Location", Effect)) |> 
+  pull(p.value) |>
+  min() |>
+  (\(x) paste0("$p \\geq ", x, "$"))()
+```
+
+We, again, separately $z$-standardized directly and indirectly measured evaluations and submitted them to a four-way ANOVA with the factors *measure of evaluation* (direct vs. indirect), *valence order* (positive or negative behavioral information first), *learning block* (first or second learning block), and *presentation duration* (20 ms vs. 13 ms).
+Table\ \@ref(tab:otm-descriptives-table) summarizes the condition means.
+We found a significant three-way interaction between valence order, learning block, and measure of evaluation, `r otm2_attitudes_aov_res$full_result$ValenceBlock_Block_Measure`, Figure\ \@ref(fig:otm-factorial-results-plot)B.
+However, we did not observe a significant four-way interaction including presentation duration, `r otm2_attitudes_aov_res$full_result$ValenceBlock_Duration_Block_Measure`.
+To explore whether the results are consistent across ethnicities and cultures, we conducted a second four-way ANOVA replacing presentation duration by *country* (Hong Kong vs. USA).
+We were unable to detect any significant effect involving country, all `r otm2_attitudes_country_aov_ps`.
+In an analogous analysis, we were unable to detect any significant effect involving lab location, all `r otm2_attitudes_location_aov_ps`.
+In line with the original analysis, we next examined the interaction between valence order and learning block in separate analyses of rating and IAT scores.
+
+
+### Direct measure: Evaluative rating scores
+
+```{r}
+#| label: otm2-rydell-analysis-explicit
+
+otm2_explicit_aov <- aov_ez(
+  id = "ParticipantNumber"
+  , dv = "Eval"
+  , within = "Block"
+  , between = "ValenceBlock"
+  , data = otm2_attitudes
+)
+
+otm2_explicit_aov_res <- apa_print_ps(otm2_explicit_aov)
+
+otm2_explicit_collapsed_contrast_res <- emmeans(otm2_explicit_aov, ~ Block * ValenceBlock) %>%
+  contrast(
+    method = list("Block 2 - Block 1" = c(-1, 1, 1, -1))
+    , adjust = "none"
+  ) %>%
+  apa_print_ps(
+    otm2_explicit_aov$lm
+    , est_name = "d_z"
+  ) %$%
+  full_result
+
+otm2_explicit_contrasts_res <- emmeans(otm2_explicit_aov, ~ Block | ValenceBlock) %>%
+  contrast(
+    method = list("Block 2 - Block 1" = c(-1, 1))
+    , adjust = "none"
+  ) %>%
+  apa_print_ps(
+    otm2_explicit_aov$lm
+    , est_name = "d_z"
+  )
+```
+
+
+For rating scores, we replicated the two-way interaction between valence order and learning block obtained in Experiment 1, `r otm2_explicit_aov_res$full_result$ValenceBlock_Block`.
+We were unable to detect a main effect of learning block, `r otm2_explicit_aov_res$full_result$Block`, justifying the preregistered pooling of participants across valence orders for the learning block contrasts[^nonpooled].
+The pooled rating scores indicated more favorable evaluations after blocks with positive behavioral information than after blocks with negative behavioral information, `r otm2_explicit_collapsed_contrast_res`.
+Hence, directly measured evaluations corresponded to the valence of the behavioral information and were opposite to the valence of the briefly flashed words.
+
+[^nonpooled]: Rating scores indicated *more* favorable evaluations after the first than after the second block when behavioral information was first positive and later negative, `r otm2_explicit_contrasts_res$full_result$Positive_negative_Block_2_Block_1`.
+Conversely, rating scores indicated *less* favorable evaluations after the first than after the second block when behavioral information was first negative and later positive, `r otm2_explicit_contrasts_res$full_result$Negative_positive_Block_2_Block_1`.
+
+### Indirect measure: IAT scores
+
+```{r}
+#| label: otm2-rydell-analysis-implicit
+
+otm2_iat_aov <- aov_ez(
+  id = "ParticipantNumber"
+  , dv = "IATscore"
+  , within = "Block"
+  , between = "ValenceBlock"
+  , data = otm2_attitudes
+)
+
+otm2_iat_aov_res <- apa_print_ps(otm2_iat_aov)
+
+otm2_iat_contrasts_res <- emmeans(otm2_iat_aov, ~ Block | ValenceBlock) %>%
+  contrast(
+    method = list("Block 2 - Block 1" = c(-1, 1))
+    , adjust = "none"
+  ) %>%
+  apa_print_ps(
+    otm2_iat_aov$lm
+    , est_name = "d_z"
+  )
+```
+
+For IAT scores, we also replicated the two-way interaction between valence order and learning block obtained in Experiment 1, `r otm2_iat_aov_res$full_result$ValenceBlock_Block`.
+The learning block difference in IAT scores differed between valence orders, `r otm2_explicit_aov_res$full_result$Block`; hence, we tested the learning block contrasts separately for each valence order.
+In both cases, we found that, like rating scores, IAT scores corresponded to the valence of the behavioral information.
+IAT scores indicated *more* favorable evaluations after the first than after the second block when behavioral information was first positive and later negative, `r otm2_iat_contrasts_res$full_result$Positive_negative_Block_2_Block_1`.
+Conversely, IAT scores indicated *less* favorable evaluations after the first than after the second block when behavioral information was first negative and later positive, `r otm2_iat_contrasts_res$full_result$Negative_positive_Block_2_Block_1`.
+As in Experiment 1, indirectly measured evaluations corresponded to the valence of the behavioral information and were opposite to the valence of the briefly flashed words.
+Of limited theoretical interest, this effect was slightly larger when negative behavioral information was provided first.
+Hence, directly and indirectly measured evaluations, again, did not dissociate.
+
+### Differences between rating and IAT scores
+
+```{r}
+#| label: otm2-rydell-attitude-differences
+
+otm2_attitudes_measure_contrasts <- otm2_attitudes_aov %>% 
+  emmeans(~ Measure | ValenceBlock * Block) %>% 
+  pairs
+
+otm2_attitudes_measure_contrasts <- apa_print_ps(
+    otm2_attitudes_measure_contrasts
+    , otm2_attitudes_aov$lm
+    , est_name = "d_z"
+  )
+```
+
+As preregisted, despite the consistent pattern of results, we also compared $z$-standardized directly and indirectly measured evaluations, and found that they differed across measures in every condition.
+Specifically, we again replicated the pattern of differences observed in Experiment 1.
+When behavioral information was first positive and later negative, rating scores indicated a more favorable evaluation than IAT scores in the first block, `r otm2_attitudes_measure_contrasts$full_result$Positive_negative_X1_Eval_IATscore`, but a less favorable evaluation in the second block, `r otm2_attitudes_measure_contrasts$full_result$Positive_negative_X2_Eval_IATscore`.
+Conversely, when behavioral information was first negative and later positive rating scores indicated a less favorable evaluation than IAT scores in the first block, `r otm2_attitudes_measure_contrasts$full_result$Negative_positive_X1_Eval_IATscore`, but a more favorable evaluation in the second block, `r otm2_attitudes_measure_contrasts$full_result$Negative_positive_X2_Eval_IATscore`.
+Hence, directly and indirectly measured evaluations were directionally consistent with each other, but directly measured evaluations were more extreme than indirect measured evaluations.
+
+### Bayesian model comparisons {#replicability-assessment2}
+
+```{r}
+#| label: otm2-bayesian-replication-analysis-targeted-comparisons
+#| warning: false
+
+otm2_same_vs_opposite_direction_bf_res <- apa_print_bf(
+  otm2_same_direction_bf / otm2_opposite_direction_bf
+  , ratio_subscript = "\\textrm{One mind}/\\textrm{Two minds}"
+)
+
+otm2_same_direction_vs_unconstrained_bf_res <- apa_print_bf(
+  otm2_same_direction_bf / otm2_unconstrained_bf
+  , ratio_subscript = "\\textrm{One mind}/\\textrm{Any effect}"
+)
+
+# In all durations
+otm2_all_durations_same_direction_vs_unconstrained_bf_res <- apa_print_bf(
+  otm2_all_durations_same_direction_bf / otm2_unconstrained_bf
+  , ratio_subscript = "\\textrm{One mind at all durations}/\\textrm{Any effect}"
+)
+
+otm2_all_durations_same_vs_same_direction_bf_res <- apa_print_bf(
+  otm2_all_durations_same_direction_bf / otm2_same_direction_bf
+  , ratio_subscript = "\\textrm{One mind at all durations}/\\textrm{One mind}"
+)
+
+otm2_no_duration_effect_bf_res <- apa_print_bf(
+  otm2_no_duration_effect_bf / otm2_unconstrained_bf
+  , ratio_subscript = "\\textrm{No duration effect}/\\textrm{Any effect}"
+)
+```
+
+As in Experiment 1, the direct comparison of prior predictive accuracy indicated that the data overwhelmingly favored the qualitative pattern reported by @heycke_two_2018 over that reported by @rydell_two_2006, `r otm2_same_vs_opposite_direction_bf_res`, Figure\ \@ref(fig:otm-bayesian-replication-analysis-plot)B and Table\ \@ref(tab:otm-bayesian-replication-analysis-table).
+Additional comparisons with the control models confirmed that the experimental manipulations were effective (`r otm2_same_direction_bf_res`) and did not produce an unexpected result, `r otm2_same_direction_vs_unconstrained_bf_res` $\in [0, 4]$.
+
+We also assessed whether both durations of briefly flashed words consistently produced the same result pattern.
+The data provide strong evidence for consistent result patterns across presentation durations, `r otm2_all_durations_same_vs_same_direction_bf_res` $\in [0, 2]$ and `r otm2_all_durations_same_direction_vs_unconstrained_bf_res` $\in [0, 8]$.
+As noted in the [Data analysis](#data-analysis1) section, due to the upper bounds on the Bayes factors, we could not have obtained stronger evidence in favor of $\mathcal{M}_\textrm{One mind at all durations}$.
+Prior sensitivity analyses confirmed that the results are robust to a wide range of priors, see SOM.
+
+### Recognition of briefly flashed words
+
+```{r}
+#| label: otm2-rydell-recognition
+#| warning: false
+
+otm2_mem_aov <- aov_ez(
+  id = "ParticipantNumber"
+  , dv = "Accuracy"
+  , between = "Duration"
+  , data = otm2_mem
+)
+
+otm2_mem_emm <- otm2_mem_aov |>
+  emmeans(~ Duration)
+
+otm2_mem_emm_13_res <- otm2_mem_emm |>
+  summary(null = 0.5, side = ">", infer = c(TRUE, TRUE)) |>
+  apa_print(est_name = "M") %$%
+  full_result %$%
+  X13
+
+otm2_mem_emm_13_nonsuperiority_res <- otm2_mem_emm |>
+  summary(null = 0.5, side = "<", delta = 0.03, infer = c(TRUE, TRUE)) |>
+  apa_print(est_name = "M") %$%
+  statistic %$%
+  X13
+
+otm2_mem_emm_duration_res <- otm2_mem_emm |>
+  contrast(method = list("20 ms - 13 ms" = c(-1, 1))) |>
+  summary(side = ">", infer = c(TRUE, TRUE)) |>
+  apa_print(est_name = "M") %$%
+  full_result
+
+otm2_mem_13_ttestBF <- ttestBF(
+  filter(otm2_mem, Duration == "13")$Accuracy - 0.5
+  , mu = 0
+  , rscale = "medium"
+  , nullInterval = c(0, Inf)
+)[1] %>%
+  {1/.} %>%
+  apa_print(subscript = "01") %$%
+  statistic
+```
+
+At 13 ms, we were unable to detect above-chance recognition accuracy for briefly flashed words, `r otm2_mem_emm_13_res`, and we found strong Bayesian evidence for at-chance accuracy, `r otm2_mem_13_ttestBF`. 
+Replicating the result from our pilot study, a non-superiority test confirmed that the recognition accuracy was comparable to that observed by @rydell_two_2006, `r otm2_mem_emm_13_nonsuperiority_res`.
+A comparison of recognition accuracy between the two presentation durations indicated that recognition accuracy was higher at 20 ms than at 13 ms, `r otm2_mem_emm_duration_res`.
+
+## Discussion
+
+In Experiment 2, we replicated our findings of Experiment 1 while using shorter presentation durations for the briefly flashed words.
+To address the concern that the briefly flashed words were consciously perceived, we reduced the presentation duration to 13 ms and 20 ms.
+At 13 ms, recognition accuracy for briefly flashed words was at chance level and comparable to that observed by @rydell_two_2006.
+At 20 ms, recognition accuracy was above chance and comparable to Experiment 1.
+Again, both directly and indirectly measured evaluations reflected the valence of the behavioral information; the briefly flashed words did not produce a reversal of the indirectly measured evaluations.
+Directly and indirectly measured evaluations did not dissociate at either presentation duration.
+Our Bayesian model comparisons confirmed that the data overwhelmingly support the qualitative pattern reported by @heycke_two_2018 (one mind) over that reported by @rydell_two_2006 (two minds), Table\ \@ref(tab:otm-bayesian-replication-analysis-table).
+

@@ -1,0 +1,7 @@
+"","variable","label","type","range","missing","distribution"
+"ParticipantNumber","ParticipantNumber","Unique participant ID","tiny_labelled, factor","153",0,""
+"Location","Location","Data collection site (Cologne, Ghent, Harvard)","tiny_labelled, factor","3",0,""
+"Block","Block","Block of learning procedure recoded such that 1 represents the block with positive behavior description and 2 the block with negative behavior description (1 vs. 2)","tiny_labelled, factor","2",0,""
+"frameRate","frameRate","Frame rate [Hz]","tiny_labelled, numeric","[74, 85]",0,"▇▁▁▁▁▁▁▅"
+"Measure","Measure","Type of attitude measure (Eval vs. IATscore)","tiny_labelled, character","2",0,""
+"Attitude","Attitude","Average of the z-standardized evaluative Likert-scale responses or mean difference of cleaned log-transformed RTs between congruent (Bob & negative words) and incongruent (Bob & positive words) blocks (each z-standardized within measure)","tiny_labelled, numeric","[-3.50371027211182, 4.99453686959282]",0,"▁▁▇▆▆▁▁▁"

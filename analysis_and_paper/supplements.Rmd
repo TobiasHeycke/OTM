@@ -7,37 +7,33 @@ title           : |
 shorttitle      : "Replication of Rydell et al."
 
 author: 
-  - name          : Tobias Heycke
-    affiliation   : "1,2"
-    corresponding : yes    
-    address       : "P.O. 122155, 68072 Mannheim, Germany"
-    email         : "tobias.heycke@gesis.org"
-    equal_contrib : yes
   - name          : Frederik Aust
     affiliation   : "1,9"
-    equal_contrib : yes
-  - name          : Mahzarin R. Banaji
-    affiliation   : 3
-  - name          : Jeremy Cone
-    affiliation   : 8
+    corresponding : yes    
+    address       : "Herbert-Lewin-Str. 2, 50931 Cologne, Germany"
+    email         : "frederik.aust@uni-koeln.de"
+  - name          : Tobias Heycke
+    affiliation   : "1,2"
+  - name          : Benedek Kurdi
+    affiliation   : "3,10,12"
   - name          : Pieter Van Dessel
     affiliation   : 5
+  - name          : Jeremy Cone
+    affiliation   : 8
   - name          : Melissa J. Ferguson
     affiliation   : 10
   - name          : Xiaoqing Hu
-    affiliation   : 6    
+    affiliation   : 6
   - name          : Congjiao Jiang
-    affiliation   : 4    
-  - name          : Benedek Kurdi
-    affiliation   : "3,10"
-  - name          : Robert Rydell
+    affiliation   : "4,14"
+  - name          : Robert J. Rydell
     affiliation   : 7
   - name          : Lisa Spitzer
-    affiliation   : 1
+    affiliation   : "1,13"
   - name          : Christoph Stahl
     affiliation   : 1
   - name          : Christine Vitiello
-    affiliation   : 4
+    affiliation   : "4,11"
   - name          : Jan De Houwer
     affiliation   : 5
 
@@ -45,7 +41,7 @@ affiliation:
   - id            : 1
     institution   : University of Cologne
   - id            : 2
-    institution   : GESIS - Leibniz Institute for the Social Sciences
+    institution   : Leibniz Institute for the Social Sciences (GESIS)
   - id            : 3
     institution   : Harvard University 
   - id            : 4
@@ -62,6 +58,14 @@ affiliation:
     institution   : University of Amsterdam
   - id            : 10
     institution   : Yale University
+  - id            : 11
+    institution   : Air Force Research Laboratory
+  - id            : 12
+    institution   : University of Illinois Urbana--Champaign
+  - id            : 13
+    institution   : Leibniz Institute for Psychology (ZPID)
+  - id            : 14
+    institution   : Peking University
     
 
 bibliography      : ["references.bib", "r-references.bib"]
@@ -79,33 +83,36 @@ classoption       : "doc"
 output            : papaja::apa6_pdf
 ---
 
-```{r load-packages, include = FALSE, warning=FALSE}
+```{r}
+#| label: load-packages
+#| include: false
+#| warning: false
+
 library("magrittr")
 library("tidyr")
 library("dplyr")
 library("assertthat")
+
+library("targets")
 
 library("papaja")
 library("ggplot2")
 library("ggforce")
 library("cowplot")
 
-library("afex")
+library("lmerTest")
 library("emmeans")
 library("BayesFactor")
 
-# devtools::install_github("arcaldwell49/Superpower")
 library("Superpower")
 
 source("https://gist.githubusercontent.com/crsh/be88be19233f1df4542aca900501f0fb/raw/f258053d144681bd4a5b86ed0956da7dc3f380ee/gglegend.R")
-source("error_in_variables.R")
-source("effect_sizes.R")
+source("../R/effect_sizes.r")
+source("../R/error_in_variables.r")
 ```
 
-```{r analysis-preferences}
-# Data location
-raw_data_path <- "../otm1/results/data_raw/"
-processed_data_path <- "../otm1/results/data_processed/"
+```{r}
+#| label: analysis-preferences
 
 # Set seed for random number generator
 set.seed(315054738)
@@ -114,15 +121,6 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 # Use effect coding
 options(contrasts = c("contr.sum", "contr.poly"))
 
-# Use multivariate models for emmeans contrasts and post-hoc tests
-afex_options(emmeans_model = "multivariate")
-
-# Configure df approximation for mixed model contrasts and post-hoc tests
-emm_options(
-  lmer.df = "satterthwaite"
-  , lmerTest.limit = 22384
-)
-
 # Default ggplot theme
 theme_set(theme_apa())
 
@@ -130,7 +128,9 @@ theme_set(theme_apa())
 otm1_n_mcmc_samples <- 1e6
 ```
 
-```{r cache-preferences}
+```{r}
+#| label: cache-preferences
+
 # Automatically manage cache dependencies
 knitr::opts_chunk$set(autodep = TRUE)
 knitr::dep_auto()
@@ -140,12 +140,13 @@ knitr::opts_chunk$set(cache.comments = FALSE)
 
 # Discard cache if random seed changes
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
-```
 
-```{r load-data}
-otm1_attitudes <- readRDS(paste0(processed_data_path, "otm1_attitudes_cleaned.rds"))
-otm1_iat <- readRDS(paste0(processed_data_path, "otm1_iat_trial_data_cleaned.rds"))
-otm1_mem <- readRDS(paste0(processed_data_path, "otm1_memory_cleaned.rds"))
+# Show NA as "" in tables
+options(knitr.kable.NA = "")
+
+# Targets cache
+otm1_store <- "../otm1/results/_targets_otm1"
+otm2_store <- "../otm2/results/_targets_otm2"
 ```
 
 \newpage
@@ -155,10 +156,21 @@ In the following we report details on our power analyses, the model specificatio
 
 # Sensitivity of our design
 
-```{r otm1-power-results}
-som_cache <- "manuscript_cache/latex/"
-rydell_pes <- knitr::load_cache(label = "rydell-effects", object = "rydell_pes", path = som_cache)
-rydell_dz <- knitr::load_cache(label = "rydell-effects", object = "rydell_dz", path = som_cache)
+```{r}
+#| label: otm1-power-results
+
+som_cache <- "./manuscript_cache/latex/"
+
+rydell_pes <- 0.1
+rydell_f <- 4.78
+rydell_n <- 50
+rydell_dz <- pes_to_dz(rydell_pes, rydell_n, n_groups = 2)
+
+heycke_t <- c(2.54, 1.45)
+heycke_n <- c(28, 26)
+heycke_dz <- heycke_t / sqrt(heycke_n)
+heycke_pes <- dz_to_pes(heycke_dz, heycke_n, n_groups = 1)
+
 otm1_n_power <- knitr::load_cache(label = "otm1-power", object = "otm1_n_power", path = som_cache) * 2
 otm1_pes <- knitr::load_cache(label = "otm1-power", object = "otm1_pes", path = som_cache)
 otm1_dz <- knitr::load_cache(label = "otm1-power", object = "otm1_dz", path = som_cache)
@@ -184,9 +196,14 @@ Simple contrast are estimated within each *flashed word presentation duration*-*
 Collapsed contrasts pool participants across one or both  of the between subject factors (i.e., *flashed word presentation duration* and *valence order*).
 $\delta_z$-values in the legend correspond to 95% and 80% power.
 Note that these are conservative estimates as they do not take into account the additional 60 participants from our pilot study that we included in the analysis.
-The grey dashed line at the top represents the smallest learning block difference reported by Rydell et al. [$d_z = `r rydell_dz`$; -@rydell_two_2006].
+The grey dashed line at the top represents the smallest learning block difference reported by Rydell et al. [$d_z = `r rydell_dz`$; @rydell_two_2006].
 
-```{r power-curve-plot, fig.width = 7, fig.height = 8, fig.cap = "(ref:otm1-power-curve)"}
+```{r}
+#| label: power-curve-plot
+#| fig-width: 7
+#| fig-height: 8
+#| fig-cap: "(ref:otm1-power-curve)"
+
 rydell_power_curve <- tibble(
   rho = seq(-1, 1, length.out = 100)
   , delta = c(
@@ -288,9 +305,9 @@ otm2_power_curve_plot <- tibble(
   scale_color_viridis_d(
     end = 0.8
     , labels = c(
-      bquote("Simple               "~delta[z] %in% "{"*.(printnum(otm2_dz))*", "*.(printnum(otm2_dz2))*"}")
-      , bquote("Collapsed once   "~delta[z] %in% "{"*.(printnum(otm2_dz_between_collapsed))*", "*.(printnum(otm2_dz2_between_collapsed))*"}")
-      , bquote("Collapsed twice   "~delta[z] %in% "{"*.(printnum(otm2_dz_collapsed))*", "*.(printnum(otm2_dz2_collapsed))*"}")
+      bquote("Simple                "~delta[z] %in% "["*.(printnum(otm2_dz))*", "*.(printnum(otm2_dz2))*"]")
+      , bquote("Collapsed once   "~delta[z] %in% "["*.(printnum(otm2_dz_between_collapsed))*", "*.(printnum(otm2_dz2_between_collapsed))*"]")
+      , bquote("Collapsed twice   "~delta[z] %in% "["*.(printnum(otm2_dz_collapsed))*", "*.(printnum(otm2_dz2_collapsed))*"]")
     )
   ) +
   ylim(c(0, 1)) +
@@ -322,34 +339,52 @@ plot_grid(
 ```
 
 
-
-
 # Experiment 1
 
 In the following we report details on our power analysis, the model specification used for the Bayesian model comparisons, and additional secondary analyses.
 We report results from the linear mixed model analysis of the IAT response times, from prior sensitivity analyses for the Bayesian model comparisons, and from an exploratory analysis of the relationship between the recognition accuracy of briefly flashed words and indirectyl measured evaluations.
 Table\ \@ref(tab:otm1-participant-table) summarizes the participants' demographics separately for each location of data collection.
 
+```{r}
+#| label: otm1-load-data
+
+otm1_attitudes <- tar_read(otm1_attitudes, store = otm1_store)
+otm1_iat_lme <- tar_read(otm1_iat2_lme, store = otm1_store)
+otm1_mem <- tar_read(otm1_memory, store = otm1_store)
+```
+
 (ref:otm1-participant-table) Participant demographics by location.
 
 (ref:otm1-participant-table-note) Mean age is given with range in brackets.
 
-```{r otm1-participant-table, results = "asis"}
-otm1_mem %>% 
-  group_by(Location) %>% 
+```{r}
+#| label: otm1-participant-table
+
+otm1_mem |>
+  group_by(Location) |>
   summarize(
-    age_mean = mean(Age, na.rm = T)
+    age_mean = mean(Age, na.rm = TRUE)
     , age_min = min(Age)
     , age_max = max(Age)
-    , "Female (\\%)" = printnum(sum(grepl("female", Sex)) / length(Accuracy) * 100)
-    , "$n$" = length(Accuracy)
-  ) %>%
-  mutate(Age = paste0(printnum(age_mean), " [", age_min, ", ", age_max, "]")) %>%
-  select(Location, Age, "Female (\\%)", "$n$") %>%
+    , female = apa_num(sum(Gender == "female") / length(Gender) * 100)
+    , male = apa_num(sum(Gender == "male") / length(Gender) * 100)
+    , nonbinary = apa_num(sum(Gender == "nonbinary") / length(Gender) * 100)
+    , n = length(Gender)
+  ) |>
+  mutate(age = paste0(apa_num(age_mean), " [", age_min, ", ", age_max, "]")) %>%
+  select(Location, n, age, female, male, nonbinary) |>
+  label_variables(
+    n = "$n$"
+    , age = "Age"
+    , female = "Female (\\%)"
+    , male = "Male (\\%)"
+    , nonbinary = "Non-binary (\\%)"
+  ) |>
   apa_table(
     caption = "(ref:otm1-participant-table)"
     , note = "(ref:otm1-participant-table-note)"
-    , align = "lccc"
+    , align = "lrrrrr"
+    , col_spanners = list("Gender" = c(4, 6))
     , escape = FALSE
     , placement = "h"
   )
@@ -365,26 +400,6 @@ For this analysis we excluded participants with error rates across all blocks la
 We additionally discarded trials in which responses were faster than 400 ms or slower than 10 s.
 These exclusion criteria are the same as those used by @wolsiefer_modeling_2017.
 
-```{r otm1-lmer-exclusion, cache = TRUE}
-lme_error_exclusion <- otm1_iat %>%
-  group_by(ParticipantNumber) %>%
-  summarize(Correct = mean(Correct), fast_rate = mean(RT < 0.3)) %>%
-  filter(Correct < 0.5 & fast_rate > 0.1) %$% ParticipantNumber
-
-if(length(lme_error_exclusion) > 0) {
-  otm1_iat <- otm1_iat %>%
-    filter(!ParticipantNumber %in% otm1_lme_exclusion)
-}
-
-otm1_iat <- otm1_iat %>%
-  # Wolsiefer et al. (2017, p. 1196; doi: 10.3758/s13428-016-0779-0)
-  filter(RT > 0.4 & RT < 10) %>%
-  # Wolsiefer et al. (2017, p. 1198; doi: 10.3758/s13428-016-0779-0)
-  group_by(ParticipantNumber, Block) %>%
-  mutate(RTD = RT / sd(RT)) %>%
-  ungroup
-```
-
 We analyzed standardized response latencies, that is, the time that elapsed between stimulus presentation and *correct* response divided by the standard deviation of all response latencies in a given block, Figure\ \@ref(fig:otm1-iat-plot).
 To assess the reversal of the response mapping effect, we contrasted the common response mapping of Bob and negative words with the common mapping of Bob and positive words.
 Hence, larger values indicate more favorable evaluations.
@@ -392,7 +407,10 @@ Hence, larger values indicate more favorable evaluations.
 (ref:otm1-iat-plot) Standardized IAT response latencies across learning blocks.
 Black-rimmed points represent condition means, error bars represent 95% bootstrap confidence intervals based on 10,000 samples.
 
-```{r otm1-iat-plot, fig.cap = "(ref:otm1-iat-plot)"}
+```{r}
+#| label: otm1-iat-plot
+#| fig-cap: "(ref:otm1-iat-plot)"
+
 otm1_results_legend <- guide_legend(
     # title = "Valence order\nDescriptions of Bob\n(Briefly presented primes)"
     title = expression(atop("Valence order", atop(scriptstyle("Behavioral information"), scriptstyle("(Briefly flashed words)"))))
@@ -404,10 +422,10 @@ otm1_results_legend <- guide_legend(
 
 my_labeller <- function(x, ...) label_both(x, sep = " ", ...)
 
-otm1_iat %>%
+otm1_iat_lme %>%
   mutate(ValenceBlock = ifelse(ValenceBlock == "Positive-negative", " Positive-negative\n(Negative-positive)", " Negative-positive\n(Positive-negative)")) %>%
   ggplot(aes(x = Congruent, y = RTD, group = ValenceBlock, color = ValenceBlock, shape = ValenceBlock, fill = ValenceBlock)) +
-  stat_summary(fun.y = mean, geom = "line", position = position_dodge(0.1)) +
+  stat_summary(fun = mean, geom = "line", position = position_dodge(0.1)) +
   stat_summary(fun.data = mean_cl_boot, position = position_dodge(0.1), color = "black", fun.args = list(B = 10000)) +
   scale_color_brewer(palette = "Set1", guide = otm1_results_legend) +
   scale_fill_brewer(palette = "Set1", guide = otm1_results_legend) +
@@ -415,58 +433,45 @@ otm1_iat %>%
   labs(x = "Response mapping", y = "Standardized response time") +
   facet_grid(~ Block, labeller = my_labeller) +
   theme(
-    legend.position = c(0.4, 0.75)
+    legend.position = "inside"
+    , legend.position.inside = c(0.4, 0.75)
     , strip.background = element_blank()
   )
 ```
 
-```{r otm1-lmer, cache = TRUE, warning = FALSE}
-# Wolsiefer et al. (2017, Erratum; doi: 10.3758/s13428-017-0897-3)
-otm1_iat_lmer_formula <- RTD ~ Congruent * Block * ValenceBlock *
-  (Category + wordType + imageType) +
-  (Congruent * Block | ParticipantNumber) +
-  (Congruent * Block * ValenceBlock | translatedStimulus)
+```{r}
+#| label: otm1-lmer
+#| warning: false
 
-otm1_iat_lmerTest <- lmerTest::lmer(
-  otm1_iat_lmer_formula
-  , data = otm1_iat
-  , control = lmerControl(
-    optCtrl = list(maxfun = 10 * 143^2)
-  )
+emm_options(
+  lmer.df = "satterthwaite"
+  , lmerTest.limit = 22384
 )
 
-otm1_iat_lmerTest_summary <- summary(otm1_iat_lmerTest)
+otm1_iat_lmer <- tar_read(otm1_iat_lmer, store = otm1_store)
+
+otm1_iat_lmer_summary <- summary(otm1_iat_lmer)
 ```
 
 (ref:otm1-lmer-fixed-effects-caption) Fixed effect estimates of the linear mixed model analysis of standardized IAT response times.
 
 (ref:otm1-lmer-fixed-effects-note) The model additionally included random participant and item effects with random intercepts and random slopes for all manipulations during the learning procedure and their interactions.
 
-```{r otm1-lmer-table-fixed-effects, results = "asis"}
-otm1_iat_lmerTest_summary$coefficients %>%
-  as.data.frame %>%
-  rename(
-    "$b$" = "Estimate"
-    , "SE" = "Std. Error"
-    , "$df$" = "df"
-    , "$t$" = "t value"
-    , "$p$" = "Pr(>|t|)"
-  ) %>%
+```{r}
+#| label: otm1-lmer-table-fixed-effects
+
+otm1_iat_lmer |>
+  apa_print() |>
+  (\(x) x$table)() |>
   mutate(
-    Effect = papaja:::prettify_terms(rownames(.))
-    , Effect = gsub("1", "", Effect)
-    , Effect = gsub("\\bBlock", "Learning block", Effect)
-    , Effect = gsub("ValenceBlock", "Valence order", Effect)
-    , Effect = gsub("Block", " block", Effect)
-    , Effect = gsub("Type", " type", Effect)
-    , Effect = gsub("Congruent", " Response mapping", Effect)
-  ) %>%
-  printnum(
-    digits = c(2, 2, 2, 2, 3, 0)
-    , gt1 = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
-    , zero = c(TRUE, TRUE, TRUE, TRUE, FALSE, FALSE)
-  ) %>%
-  select(Effect, `$b$`, `SE`, `$t$`, `$df$`, `$p$`) %>%
+    term = gsub("2", "", term)
+    , term = gsub("\\bBlock", "Learning block", term)
+    , term = gsub("ValenceBlockPositive-negative", "Valence order", term)
+    , term = gsub("Block", " block", term)
+    , term = gsub("Text", "", term)
+    , term = gsub("Type", " type", term)
+    , term = gsub("CongruentBob & positive", "Response mapping", term)
+  ) |>
   apa_table(
     caption = "(ref:otm1-lmer-fixed-effects-caption)"
     , note = "(ref:otm1-lmer-fixed-effects-note)"
@@ -477,9 +482,12 @@ otm1_iat_lmerTest_summary$coefficients %>%
   )
 ```
 
-```{r explore-salience-asymmetry, eval = FALSE}
+```{r}
+#| label: otm1-explore-salience-asymmetry
+#| eval: false
+
 # Main effect of response mapping is significant for both image types
-otm1_iat_lmerTest %>%
+otm1_iat_lmer %>%
   emmeans(specs = ~ Congruent | imageType, at = list(imageType = c(-1, 1))) %>%
   pairs()
 ```
@@ -489,19 +497,21 @@ otm1_iat_lmerTest %>%
 
 (ref:otm1-lmer-random-effects-note) We report the estimated standard deviations in the main diagonals and the correlations in the off-diagnoals. The percentages of variance for the random effects were calculated by dividing each variance component by the total random variance, i.e., the sum of the random-effect variances.
 
-```{r otm1-lmer-table-random-effects, results = "asis"}
+```{r}
+#| label: otm1-lmer-table-random-effects
+
 fix_term_names <- function(x) {
   fixed_table <- attr(x, "correlation")
   
-  term_names <- x %>%
-    colnames %>%
-    papaja:::prettify_terms(.) %>%
-    gsub("1", "", .) %>% 
-    gsub("\\bBlock", "Learning block", .) %>% 
-    gsub("ValenceBlock", "Valence order", .) %>% 
-    gsub("Block", " block", .) %>% 
-    gsub("Type", " type", .) %>% 
-    gsub("Congruent", " Response mapping", .)
+  term_names <- colnames(x) |>
+    papaja::beautify_terms() |>
+    gsub("2", "", x = _) |>
+    gsub("\\bBlock", "Learning block", x = _) |>
+    gsub("ValenceBlockPositive-negative", "Valence order", x = _) |>
+    gsub("Block", " block", x = _) |>
+    gsub("Text", "", x = _) |>
+    gsub("Type", " type", x = _) |>
+    gsub("CongruentBob & positive", "Response mapping", x = _)
   
 
   diag(fixed_table) <- attr(x, "stddev")
@@ -519,12 +529,12 @@ fix_term_names <- function(x) {
   fixed_table
 }
 
-random_effect_tables <- lapply(otm1_iat_lmerTest_summary$varcor, fix_term_names)
+random_effect_tables <- lapply(otm1_iat_lmer_summary$varcor, fix_term_names)
 names(random_effect_tables) <- c("Participant", "Stimulus")
 
 stimulus_effect_names <- colnames(random_effect_tables$Stimulus)
 
-random_variances <- lapply(otm1_iat_lmerTest_summary$varcor, diag) %>%
+random_variances <- lapply(otm1_iat_lmer_summary$varcor, diag) %>%
   unlist %>%
   unname
 
@@ -547,7 +557,7 @@ apa_table(
   random_effect_tables
   , caption = "(ref:otm1-lmer-random-effects-caption)"
   , note = "(ref:otm1-lmer-random-effects-note)"
-  , align = "lcrrrrr"
+  , align = "lcrrrrrrrr"
   , midrules = 5
   , escape = FALSE
   , landscape = TRUE
@@ -555,27 +565,16 @@ apa_table(
 )
 ```
 
-In line with the ANOVA results, we found the expected three-way interaction between *Response mapping*, *Valence order*, and *Learning block*; the interaction was moderated by the type of stimulus that participants responded to (pictures of Bob and non-Bobs vs. positive and negative words; *Category*), Table\ \@ref(tab:otm1-lmer-table-fixed-effects) and \@ref(tab:otm1-lmer-table-random-effects).
-The three-way interaction prompted us to test the differences between response mapping effects in the first and second learning block for each valence order.
+<!-- (ref:otm1-iat-lmer-contrasts) Planned contrasts of changes in congruency effects across learning blocks for the linear mixed model analysis of standardized IAT response times. -->
 
-```{r otm1-lmer-emm, cache = TRUE, message = FALSE, warning = FALSE}
-otm1_iat_lmer <- lme4::lmer(
-  otm1_iat_lmer_formula
-  , data = otm1_iat
-  , control = lmerControl(
-    optCtrl = list(maxfun = 10 * 143^2)
-  )
-)
+```{r}
+#| label: otm1-lmer-emm
 
 otm1_iat_lmer_emm <- emmeans(
   otm1_iat_lmer
   , ~ Congruent * Block * ValenceBlock
 )
-```
 
-<!-- (ref:otm1-iat-lmer-contrasts) Planned contrasts of changes in congruency effects across learning blocks for the linear mixed model analysis of standardized IAT response times. -->
-
-```{r otm1-lmer-emm-2, cache = TRUE, results = "asis"}
 otm1_iat_lmer_contrasts <- contrast(
   otm1_iat_lmer_emm
   , list(
@@ -595,51 +594,11 @@ otm1_iat_lmer_contrasts <- contrast(
 #   )
 ```
 
-Also in line with the ANOVA analysis, we found that response time differences indicated *more* favorable evaluations after the first than after the second block when the behavioral information was first positive and later negative, `r otm1_iat_lmer_contrasts$full_result$Positive_negative`.
+In line with the ANOVA results, we found the expected three-way interaction between *Response mapping*, *Valence order*, and *Learning block*, Table\ \@ref(tab:otm1-lmer-table-fixed-effects) and \@ref(tab:otm1-lmer-table-random-effects).
+The three-way interaction prompted us to test the differences between response mapping effects in the first and second learning block for each valence order.
+We found that response time differences indicated *more* favorable evaluations after the first than after the second block when the behavioral information was first positive and later negative, `r otm1_iat_lmer_contrasts$full_result$Positive_negative`.
 Vice versa, response time differences indicated *less* favorable evaluations after the first than after the second block when descriptions of Bob were first negative and later positive, `r otm1_iat_lmer_contrasts$full_result$Negative_positive`.
 Again, these results indicate that the rating and IAT scores did not dissociate.
-
-Due to the significant four-way interaction, we additionally explored these contrasts separately for responses to pictures of Bob vs. non-Bobs and positive vs. negative words, Table \ \@ref(tab:otm1-lmer-emm-3-table).
-We found consistent changes in response mapping effects for both pictures and words, albeit the effects were larger for words. 
-
-```{r otm1-lmer-emm-3, cache = TRUE, warning = FALSE}
-otm1_iat_lmer_emm2 <- emmeans(
-  otm1_iat_lmer
-  , ~ Congruent * Block * ValenceBlock | Category
-)
-
-otm1_iat_lmer_contrasts2 <- contrast(
-  otm1_iat_lmer_emm2
-  , list(
-    "Negative-positive" = c(1, -1, -1, 1, 0, 0, 0, 0)
-    , "Positive-negative" = c(0, 0, 0, 0, 1, -1, -1, 1)
-  )
-  , adjust = "Tukey"
-) %>%
-  apa_print
-
-variable_label(otm1_iat_lmer_contrasts2$table$contrast) <- "Valence order"
-```
-
-(ref:otm1-iat-lmer-contrasts2) Post-hoc tests of changes in response mapping effects across blocks separately for pictures and words for standardized IAT response times.
-
-(ref:otm1-iat-lmer-contrasts2-note) $p$ values were Tukey-corrected for two comparisons.
-
-```{r otm1-lmer-emm-3-table}
-otm1_iat_lmer_contrasts2 %$%
-  table %>%
-  select(-matches("Category|df|statistic|p.value"), statistic, df, p.value) %>%
-  apa_table(
-    caption = "(ref:otm1-iat-lmer-contrasts2)"
-    , note = "(ref:otm1-iat-lmer-contrasts2-note)"
-    , align = "lrcrrr"
-    , stub_indents = list("Pictures" = 1:2, "Words" = 3:4)
-    , midrule = 3
-    , escape = FALSE
-    , row.names = FALSE
-  )
-```
-
 
 
 ## Bayesian model comparison
@@ -648,17 +607,19 @@ We implemented the unconstrained model as a hierarchical linear model that encom
 
 $$
 \begin{aligned}
-\hat y_{ijk} = & \mu + \nu_i + \eta_l x_{1il} + \\
-          & (\alpha + \tau_l x_{1il}) x_{2j} x_{3k} + \\
-          & (\beta + \upsilon_l x_{1il}) (1 -  x_{2j}) x_{3k}
+\hat y_{ijk} = & \mu_i + \eta_l x_{1il} + \\
+          & (\alpha_i + \tau_l x_{1il}) x_{2j} x_{3k} + \\
+          & (\beta_i + \upsilon_l x_{1il}) (1 -  x_{2j}) x_{3k}
 \end{aligned}
 $$
 
 The model predicts the $i$th participant's response to evaluation measure $j$ in the experimental block $k$.
-Responses are predicted as a combination of a grand mean $\mu$, random participant intercepts $\nu_i$ (i.e., habitually higher or lower evaluations), a main effect of the labs $\eta_l$, and simple effects of learning block for rating scores ($\alpha$) and IAT score ($\beta$).
+Responses are predicted as a combination of participant-specific intercepts $\mu_i$ (i.e., habitually higher or lower evaluations), a main effect of the labs $\eta_l$, and participant-specific simple effects of learning block for rating scores ($\alpha_i$) and IAT score ($\beta_i$).
 Additionally, we allowed the simple effects to be moderated by the labs ($\tau_l$ and $\upsilon_l$ represent the lab-specific deviations from the overall simple effects).
+Participant-specific intercepts and simple effects were modeled as the sum of fixed effects and by-participant random effects, such that $\mu_i = \mathcal{N}(\mu, \sigma_\mu)$, $\alpha_i = \mathcal{N}(\alpha, \sigma_\alpha)$, and $\beta_i = \mathcal{N}(\beta, \sigma_\beta)$.
+
 The model does not include a main effect of evaluative measure because any mean differences between evaluative measures were leveled by the by-measure $z$ standardization.
-$x_{1il}$ represents $l$ effect coded variables that indicate which lab participant $i$ belongs to; $x_{2j}$ indicates the evaluative measure (1 for rating score and 0 for IAT score), such that $\alpha + \tau_l$ is only relevant for rating scores and $\beta + \upsilon_l$ is only relevant for IAT scores; $x_{3k}$ is an effect coded variable that is set to 0.5 for block 1 and -0.5 for block 2.
+$x_{1il}$ represents $l$ effect coded variables that indicate which lab participant $i$ belongs to; $x_{2j}$ indicates the evaluative measure (1 for rating score and 0 for IAT score), such that $\alpha_i + \tau_l$ is only relevant for rating scores and $\beta_i + \upsilon_l$ is only relevant for IAT scores; $x_{3k}$ is an effect coded variable that is set to 0.5 for block 1 and -0.5 for block 2.
 
 This model allowed us to place priors on the simple effects (in units of standardized mean differences $d$) for each evaluative measure and implement the theoretically motivated order constraints:
 
@@ -675,127 +636,31 @@ Additionally, we placed default multivariate Cauchy priors ($r = \sqrt2/2$) on l
 
 To formally assess whether the data from all labs exhibited consistent effects we added another model that enforced the order constraint of $\mathcal{M}_\textrm{One mind}$ and $\mathcal{M}_\textrm{Two minds}$ not only for the average block effects ($\alpha$ and $\beta$) but for each lab individually (i.e., $\alpha_l = \alpha + \tau_l$ and $\beta_l = \beta + \upsilon_l$; $\mathcal{M}_\textrm{One mind everywhere}$ and $\mathcal{M}_\textrm{Two minds everywhere}$).
 
-For the analyses we drew 1 million samples to estimate the postrior distribtution of model parameters.
+For the analyses we drew 5 million samples to estimate the postrior distribtution of model parameters.
 Because the draws from the posterior distribution are used to estimate the Bayes factors for model comparisons that involve order constraints [@klugkist_inequality_2005], the number of draws implies upper and lower bounds on some of the reported Bayes factors.
-Most notably, as a direct consequence of the number MCMC samples the $\textrm{BF}_{\mathcal{M}_\textrm{One mind}/\mathcal{M}_\textrm{Two minds}} \in [\frac{1}{1 \times 10^6}, 1 \times 10^6]$.
+Most notably, as a direct consequence of the number MCMC samples the $\textrm{BF}_{\mathcal{M}_\textrm{One mind}/\mathcal{M}_\textrm{Two minds}} \in [1 / (5 \times 10^6), 5 \times 10^6]$.
 
 ### Prior sensitivity analysis
 
 Bayesian model comparison by Bayes factors are by definition sensitive to the specified prior distributions.
-To ensure that our inference is not contigent on our choice of piors we conducted prior sensitivity analyses for our key results.
-
-#### Directly and indirectly measured evaluations
+To ensure that our inference is not contigent on our choice of priors, we conducted prior sensitivity analyses for our key results.
 
 Our choice of piors for the simple effects of learning block for rating scores ($\alpha$) and IAT score ($\beta$) could be viewed as either overly optimistic or pessimistic.
 The prior on simple rating score effects places considerable probability mass on effects $d$ < 0.707 although the previously reported effects were very large.
 Similarly, placing the same prior on the simple effects for rating and IAT scores could be criticized because the previously reported IAT score effects were considerably smaller than those of rating scores.
 
-```{r otm1-prior-sensitivity-replication, cache = TRUE, warning = FALSE}
-manuscript_cache <- "manuscript_cache/latex/"
+```{r}
+#| label: otm1-prior-sensitivity-analysis
 
-otm1_attitudes_collapsed <- knitr::load_cache(label = "otm1-bayesian-replication-restructure", object = "otm1_attitudes_collapsed", path = manuscript_cache)
-otm1_n <- as.integer(nlevels(otm1_attitudes_collapsed$ParticipantNumber))
-
-otm1_null_model_matrix <- knitr::load_cache(label = "otm1-bayesian-replication-design-matrix", object = "otm1_null_model_matrix", path = manuscript_cache)
-otm1_unconstrained_model_matrix <- knitr::load_cache(label = "otm1-bayesian-replication-design-matrix", object = "otm1_unconstrained_model_matrix", path = manuscript_cache)
-
-replication_rscales <- expand.grid(
-  iat = seq(0.5, 1, length.out = 3)
-  , rating = seq(sqrt(2)/2, 2, length.out = 3)
-) %>% 
-  filter(iat <= rating) %>%
-  as.matrix %>% 
-  `/`(., sqrt(2)) %>% # Rescale to ANOVA specification (see https://forum.cogsci.nl/discussion/3746/bayesfactor-scale-of-cauchy-prior-in-t-tests-and-anova)
-  as.data.frame
-
-replication_rscales$bf_one_mind_two_minds <- NA
-replication_rscales$bf_one_mind_any_effect <- NA
-
-for(i in 1:nrow(replication_rscales)) {
-  i_rscales <- c(
-    eta = 0.5
-    , alpha = unname(replication_rscales[i, "rating"])
-    , tau = 0.5
-    , beta = unname(replication_rscales[i, "iat"])
-    , upsilon = 0.5
-  )
-  
-  
-  # No effect model
-  otm1_no_effect <- nWayAOV(
-    y = otm1_attitudes_collapsed$Attitude
-    , X = otm1_null_model_matrix
-    , gMap = c(
-      eta = rep(0, 2)
-      , nu = rep(1, otm1_n)
-    )
-    , rscale = c(fixed = 0.5, random = 1)
-    , iterations = otm1_n_mcmc_samples
-  )
-  
-  # Fixed effect model
-  otm1_unconstrained <- nWayAOV(
-    y = otm1_attitudes_collapsed$Attitude
-    , X = otm1_unconstrained_model_matrix
-    , gMap = c(
-      eta = rep(0, 2)
-      , alpha = 1, tau = rep(2, 2)
-      , beta = 3, upsilon = rep(4, 2)
-      , nu = rep(5, otm1_n)
-    )
-    , rscale = c(fixed = i_rscales, random = 1)
-    , iterations = otm1_n_mcmc_samples
-  )
-  otm1_unconstrained_bf <- exp(otm1_unconstrained$bf - otm1_no_effect$bf)
-  
-  
-  # Fixed effect model
-  otm1_unconstrained_samples <- nWayAOV(
-    y = otm1_attitudes_collapsed$Attitude
-    , X = otm1_unconstrained_model_matrix
-    , gMap = c(
-      eta = rep(0, 2)
-      , alpha = 1, tau = rep(2, 2)
-      , beta = 3, upsilon = rep(4, 2)
-      , nu = rep(5, otm1_n)
-    )
-    , rscale = c(fixed = i_rscales, random = 1)
-    , posterior = TRUE
-    , iterations = otm1_n_mcmc_samples
-  )
-  colnames(otm1_unconstrained_samples)[1:ncol(otm1_fixed_effects_matrix) + 1] <- colnames(otm1_fixed_effects_matrix)
-  
-  
-  ## Same direction
-  otm1_same_direction_boost <- 4 * (
-    (sum(
-      otm1_unconstrained_samples[, "alpha"] > 0 &
-      otm1_unconstrained_samples[, "beta"] > 0
-    ) + 1) / (nrow(otm1_unconstrained_samples) + 2)
-  )
-  otm1_same_direction_bf <- otm1_unconstrained_bf * otm1_same_direction_boost
-  
-  ## Opposite direction
-  otm1_opposite_direction_boost <- 4 * (
-    (sum(
-      otm1_unconstrained_samples[, "alpha"] > 0 &
-      otm1_unconstrained_samples[, "beta"] < 0
-    ) + 1) / (nrow(otm1_unconstrained_samples) + 2)
-  )
-  otm1_opposite_direction_bf <- otm1_unconstrained_bf * otm1_opposite_direction_boost
-  
-  rm("otm1_unconstrained_samples") # Go easy on GitHub
-  
-  replication_rscales$bf_one_mind_two_minds[i] <- otm1_same_direction_bf / otm1_opposite_direction_bf
-  replication_rscales$bf_one_mind_any_effect[i] <- otm1_same_direction_bf / otm1_unconstrained_bf
-}
+otm1_prior_sensitivity_analysis <- tar_read(otm1_prior_sensitivity_analysis, store = otm1_store)
 ```
 
-We, therefore, varied the scale for the Cauchy priors on the simple effects in the ranges of $`r min(replication_rscales$rating)` < r_\alpha < `r max(replication_rscales$rating)`$ and $`r min(replication_rscales$iat)` < r_\beta < `r max(replication_rscales$iat)`$ for rating and IAT scores, respectively.
+We, therefore, varied the scale for the Cauchy priors on the simple effects in the ranges of $`r min(otm1_prior_sensitivity_analysis$rating)` < r_\alpha < `r max(otm1_prior_sensitivity_analysis$rating)`$ and $`r min(otm1_prior_sensitivity_analysis$iat)` < r_\beta < `r max(otm1_prior_sensitivity_analysis$iat)`$ for rating and IAT scores, respectively.
 In light of the results from previous studies, we limited our analysis to combinations where the prior scale was larger for rating than for IAT effects.
+To reduce the computational burden of this analysis, we drew 500,000 samples for each model comparison and each combination of prior scales, which implies that the Bayes factors for comparisons involving order constraints are bounded within the range of $[1 / (5 \times 10^5), 5 \times 10^5]$.
 The results of the prior sensitvity analysis reassure us that our inference is robust to a wide range and combination of scales of the default Cauchy priors, see Table\ \@ref(tab:otm1-prior-sensitivity-replication-table).
 The Bayes factors were not affected by the scale of the priors to any meaningful degree.
-This is because our data are informative enough to overwhelm the priors and because these Bayes factors primarily depend on the shape and location of the joint posterior distribution [@klugkist_bayesian_2005].
+This is because our data are informative enough to overwhelm the priors and because these Bayes factors depend only on the shape and location of the joint posterior distribution [@klugkist_bayesian_2005].
 
 
 (ref:otm1-prior-sensitivity-replication-table) Results of the prior sensitivity analysis for the Bayesian model comparisons of primary interest.
@@ -803,16 +668,10 @@ This is because our data are informative enough to overwhelm the priors and beca
 (ref:otm1-prior-sensitivity-replication-table-note) The Bayes factor (BF) in favor of $\mathcal{M}_\textrm{One mind}$ relative to $\mathcal{M}_\textrm{Any effect}$ is bounded within the range of $[0, 4]$.
 $r_\alpha$ and $r_\beta$ denote the scale for the Cauchy prior on the simple effects of learning block for rating scores ($\alpha$) and IAT scores ($\beta$), respectively (in units of standard deviations).
 
-```{r otm1-prior-sensitivity-replication-table}
-replication_rscales <- replication_rscales %>%
-  printnum(format = c("f", "f", "e", "f")) %>%
-  mutate(
-    bf_one_mind_two_minds = papaja:::typeset_scientific(bf_one_mind_two_minds)
-    # , bf_one_mind_two_minds = paste0("$", bf_one_mind_two_minds, "$")
-  ) %>%
-  select(rating, everything())
+```{r}
+#| label: otm1-prior-sensitivity-replication-table
 
-variable_labels(replication_rscales) <- c(
+variable_labels(otm1_prior_sensitivity_analysis) <- c(
   "rating" = "$r_\\alpha$"
   , "iat" = "$r_\\beta$"
   , "bf_one_mind_two_minds" = "$\\textrm{BF}_{\\mathcal{M}_\\textrm{One mind}/\\mathcal{M}_\\textrm{Two minds}}$"
@@ -820,7 +679,7 @@ variable_labels(replication_rscales) <- c(
 )
 
 apa_table(
-  replication_rscales
+  otm1_prior_sensitivity_analysis
   , caption = "(ref:otm1-prior-sensitivity-replication-table)"
   , note = "(ref:otm1-prior-sensitivity-replication-table-note)"
   , align = "c"
@@ -830,35 +689,49 @@ apa_table(
 
 
 
-#### Recognition task
+## Recognition task prior sensitivity analysis
 
-```{r otm1-prior-sensitivity-recognition}
-rec_rscales <- seq(from = 0.5, to = 1, length.out = 2)
+```{r}
+#| label: otm1-prior-sensitivity-recognition
+
+rec_rscales <- seq(from = 0.25, to = 1, length.out = 5)
 
 rec_bfs <- sapply(
   , X = rec_rscales
-  , FUN = function(i, ...) { as.vector(ttestBF(otm1_mem$Accuracy - 0.5, mu = 0, rscale = i, nullInterval = c(0, Inf))[1]) }
-)
+  , FUN = function(i, ...) { 
+    as.vector(
+      ttestBF(
+        otm1_mem$Accuracy - 0.5
+        , mu = 0
+        , rscale = i
+        , nullInterval = c(0, Inf)
+      )[1]
+    )
+  }
+) |>
+  range()
 
-rec_bfs_res <- rec_bfs %>%
-  printnum(digits = 2, format = "e") %>%
-  papaja:::typeset_scientific() %>%
+rec_bfs_res <- rec_bfs |>
+  apa_num(digits = 2, format = "e") |>
   papaja:::strip_math_tags()
 ```
 
 To test the robustness of our inference regarding participants recognition accuracy we varied the scale $r$ of the Cauchy prior in a wide interval of $[`r min(rec_rscales)`, `r max(rec_rscales)`]$.
-The resulting Bayes factors were $`r rec_bfs_res[2]`< \textrm{BF}_{10} < `r rec_bfs_res[1]`$ and thus varied by a factor of `r rec_bfs[1] / rec_bfs[2]`.
+The resulting Bayes factors were $`r rec_bfs_res[1]`< \textrm{BF}_{10} < `r rec_bfs_res[2]`$ and thus varied by a factor of `r rec_bfs[1] / rec_bfs[2]`.
 These results again reassure that our inference is robust to a wide range of scales of the default Cauchy prior.
 
 
 ## Word recogniton and IAT score differences
 
-(ref:otm1-rydell-recognition-plot) Black-rimmed points represent condition means, error bars represent 95% bootstrap confidence intervals based on 10,000 samples.
-Small points represent individual participants' accuracy.
-Violins represent kernel density estimates of sample distributions.
+(ref:otm1-rydell-recognition-plot) Black-rimmed points represent condition means, error bars represent 95% bootstrap confidence intervals based on 10,000 samples. Small points represent individual participants' accuracy. Violins represent kernel density estimates of sample distributions.
 
-```{r otm1-rydell-recognition-plot, fig.cap = "(ref:otm1-rydell-recognition-plot)", fig.width = 3.5, fig.height = 2.5}
-otm1_mem %>%
+```{r}
+#| label: otm1-rydell-recognition-plot
+#| fig-width: 3.5
+#| fig-height: 2.5
+#| fig-cap: "(ref:otm1-rydell-recognition-plot)"
+
+otm1_mem |>
   ggplot(aes(x = Location, y = Accuracy, shape = Location, fill = Location)) +
   geom_hline(yintercept = 0.5, color = grey(0.5)) +
   geom_violin(alpha = 0.3) +
@@ -868,6 +741,7 @@ otm1_mem %>%
   stat_summary(fun.data = mean_cl_boot, color = "black", fun.args = list(B = 10000)) +
   # scale_color_brewer(palette = "Set1", guide = otm1_results_legend) +
   # scale_fill_brewer(palette = "Set1", guide = otm1_results_legend) +
+  coord_cartesian(ylim = c(NA, 1)) +
   scale_shape_manual(values = c(21, 23, 24)) +
   scale_color_manual(values = c(RColorBrewer::brewer.pal(3, "Set1"), "#000000")) +
   scale_fill_manual(values = c(RColorBrewer::brewer.pal(3, "Set1"), "#000000")) +
@@ -888,11 +762,19 @@ We would expect to observe smaller and eventually negative IAT score differences
 To account for measurement error in the recognition accuracy of briefy flashed words we fit an errors-in-variable regression model [@Klauer_Draine_Greenwald_1998].
 Because the model assumes that predictor values are sampled from a Gaussian distribution truncated at 0, we probit-transformed the recognition accuracy.^[A standard linear regression analysis yielded the same results.]
 
-(ref:prime-recognition-iat-difference) Scatterplot of the recognition accuracy of briefly flashed words (on probit scale) and evaluative differences in IAT scores between learning blocks in which Bob was presented with positive descriptions and those in which he was paired with negative descriptions.
+(ref:otm1-prime-recognition-iat-difference) Scatterplot of the recognition accuracy of briefly flashed words (on probit scale) and evaluative differences in IAT scores between learning blocks in which Bob was presented with positive descriptions and those in which he was paired with negative descriptions.
 The regression line and confidence band represents predictions of the errors-in-variables model [@Klauer_Draine_Greenwald_1998].
 
-```{r prime-recognition-iat-difference, fig.cap = "(ref:prime-recognition-iat-difference)", message = FALSE}
-tmp <- lazyLoad(tools::file_path_sans_ext(list.files(pattern = "otm1-effects-plot_", recursive = TRUE)[1]))
+```{r}
+#| label: otm1-prime-recognition-iat-difference
+#| fig-cap: "(ref:otm1-prime-recognition-iat-difference)"
+#| message: false
+
+otm1_attitudes_collapsed <- tar_read(otm1_attitudes_collapsed, store = otm1_store) # Collapse across ValcenceOrder
+otm1_attitudes_delta <- otm1_attitudes_collapsed %>%
+  spread(Block, Attitude) %>%
+  mutate(delta = `1` - `2`) %>%
+  select(-`1`, -`2`)
 
 otm1_iat_delta <- full_join(otm1_attitudes_delta, select(otm1_mem, ParticipantNumber, Accuracy)) %>% 
   filter(Measure == "IATscore")
@@ -913,19 +795,8 @@ otm1_iat_delta %>%
 ```
 
 
-```{r prime-recognition-iat-difference-regression, results = "asis"}
-# otm1_recognition_iat_lm_bf <- otm1_iat_delta %>%
-#   filter(Measure == "IATscore") %>%
-#   mutate(Accuracy = Accuracy - 0.5) %>%
-#   as.data.frame %>%
-#   lmBF(delta ~ Accuracy, data = .) %>%
-#   apa_print
-# 
-# otm1_iat_delta_lm_res <- otm1_iat_delta %>%
-#   filter(Measure == "IATscore") %>%
-#   mutate(Accuracy = Accuracy - 0.5) %>%
-#   lm(delta ~ Accuracy, data = .) %>% 
-#   apa_print
+```{r}
+#| label: otm1-prime-recognition-iat-difference-regression
 
 otm1_iat_delta_eiv_lm_res <- otm1_iat_delta %>%
   filter(Measure == "IATscore") %>%
@@ -937,14 +808,11 @@ otm1_iat_delta_eiv_lm_res <- otm1_iat_delta %>%
 
 We did not detect a relationship between the recognition accuracy of briefly preseted words and IAT score differences between learning blocks, `r otm1_iat_delta_eiv_lm_res$full_result$Accuracy`.
 Moreover, the positive intercept of the regression line indicates a positive IAT score difference despite at-chance word recognition accuracy, `r otm1_iat_delta_eiv_lm_res$full_result$Intercept`.
-Hence, even for participants who did not recognize the briefly flashed words, IAT score differences reflected the valence of the behavioral information, see Figure\ \@ref(fig:prime-recognition-iat-difference).
+Hence, even for participants who did not recognize the briefly flashed words, IAT score differences reflected the valence of the behavioral information, see Figure\ \@ref(fig:otm1-prime-recognition-iat-difference).
 These results provide no indication that the deviation of our findings from those reported by @rydell_two_2006 are attributable to the above-chance recognition of briefly flashed words in this study.
 
 <!--
 #### Prime valence memory
-
-TODO TH: Is this supposed to be in the paper? 
-TH: No - maybe not even online supplement? 
 
 ```{r listPrimes, echo = FALSE, eval=FALSE}
 
@@ -1062,7 +930,156 @@ ttestBF(x = subset(otm1_mem, Location == "Harvard")$poscor, y = subset(otm1_mem,
 ```
 -->
 
-```{r create_r-references}
+# Experiment 2
+
+```{r}
+#| label: otm2-load-data
+
+otm2_attitudes <- tar_read(otm2_attitudes, store = otm2_store)
+otm2_mem <- tar_read(otm2_memory, store = otm2_store)
+```
+
+Table\ \@ref(tab:otm2-participant-table) summarizes the participants' demographics separately for each location of data collection.
+
+(ref:otm2-participant-table) Participant demographics by location.
+
+(ref:otm2-participant-table-note) Mean age is given with range in brackets. Missing values for gender cause somevbB  percentages to not sum to 100\%.
+
+```{r}
+#| label: otm2-participant-table
+
+otm2_mem |>
+  group_by(Location) |>
+  summarize(
+    age_mean = mean(Age, na.rm = TRUE)
+    , age_min = min(Age)
+    , age_max = max(Age)
+    , female = apa_num(sum(Gender == "female", na.rm = TRUE) / length(Gender) * 100)
+    , male = apa_num(sum(Gender == "male", na.rm = TRUE) / length(Gender) * 100)
+    , nonbinary = apa_num(sum(Gender == "nonbinary", na.rm = TRUE) / length(Gender) * 100)
+    , n = length(Gender)
+  ) |>
+  mutate(age = paste0(apa_num(age_mean), " [", age_min, ", ", age_max, "]")) %>%
+  select(Location, n, age, female, male, nonbinary) |>
+  label_variables(
+    n = "$n$"
+    , age = "Age"
+    , female = "Female (\\%)"
+    , male = "Male (\\%)"
+    , nonbinary = "Non-binary (\\%)"
+  ) |>
+  apa_table(
+    caption = "(ref:otm1-participant-table)"
+    , note = "(ref:otm1-participant-table-note)"
+    , align = "lrrrrr"
+    , col_spanners = list("Gender" = c(4, 6))
+    , escape = FALSE
+    , placement = "h"
+  )
+```
+
+
+## Prior sensitivity analyses
+
+### Bayesian model comparison
+
+```{r}
+#| label: otm2-prior-sensitivity-analysis
+
+otm2_prior_sensitivity_analysis <- tar_read(otm2_prior_sensitivity_analysis, store = otm2_store)
+```
+
+As for Experiment 1, we varied the scale for the Cauchy priors on the simple effects in the ranges of $`r min(otm2_prior_sensitivity_analysis$rating)` < r_\alpha < `r max(otm2_prior_sensitivity_analysis$rating)`$ and $`r min(otm2_prior_sensitivity_analysis$iat)` < r_\beta < `r max(otm2_prior_sensitivity_analysis$iat)`$ for rating and IAT scores, respectively.
+The results of the prior sensitvity analysis reassure us that our inference is robust to a wide range and combination of scales of the default Cauchy priors, see Table\ \@ref(tab:otm2-prior-sensitivity-replication-table).
+The Bayes factors were not affected by the scale of the priors to any meaningful degree.
+
+
+(ref:otm2-prior-sensitivity-replication-table) Results of the prior sensitivity analysis for the Bayesian model comparisons of primary interest.
+
+(ref:otm2-prior-sensitivity-replication-table-note) The Bayes factor (BF) in favor of $\mathcal{M}_\textrm{One mind}$ relative to $\mathcal{M}_\textrm{Any effect}$ is bounded within the range of $[0, 4]$.
+$r_\alpha$ and $r_\beta$ denote the scale for the Cauchy prior on the simple effects of learning block for rating scores ($\alpha$) and IAT scores ($\beta$), respectively (in units of standard deviations).
+
+```{r}
+#| label: otm2-prior-sensitivity-replication-table
+
+variable_labels(otm2_prior_sensitivity_analysis) <- c(
+  "rating" = "$r_\\alpha$"
+  , "iat" = "$r_\\beta$"
+  , "bf_one_mind_two_minds" = "$\\textrm{BF}_{\\mathcal{M}_\\textrm{One mind}/\\mathcal{M}_\\textrm{Two minds}}$"
+  , "bf_one_mind_any_effect" = "$\\textrm{BF}_{\\mathcal{M}_\\textrm{One mind}/\\mathcal{M}_\\textrm{Any effect}}$"
+)
+
+apa_table(
+  otm2_prior_sensitivity_analysis
+  , caption = "(ref:otm2-prior-sensitivity-replication-table)"
+  , note = "(ref:otm2-prior-sensitivity-replication-table-note)"
+  , align = "c"
+  , escape = FALSE
+)
+```
+
+## Recognition task prior sensitivity analysis
+
+(ref:otm2-rydell-recognition-plot) Black-rimmed points represent condition means, error bars represent 95% bootstrap confidence intervals based on 10,000 samples. Small points represent individual participants' accuracy. Violins represent kernel density estimates of sample distributions.
+
+```{r}
+#| label: otm2-rydell-recognition-plot
+#| fig-width: 3.5
+#| fig-height: 2.5
+#| fig-cap: "(ref:otm2-rydell-recognition-plot)"
+
+otm2_mem |>
+  ggplot(aes(x = Duration, y = Accuracy, shape = Duration, fill = Duration)) +
+  geom_hline(yintercept = 0.5, color = grey(0.5)) +
+  geom_violin(alpha = 0.3) +
+  # geom_point(position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.1)) +
+  geom_sina(alpha = 0.5, size = 1) +
+  # stat_summary(fun.y = mean, aes(group = Location, linetype = ValenceBlock), geom = "line", position = position_dodge(0.1), color = "black") +
+  stat_summary(fun.data = mean_cl_boot, color = "black", fun.args = list(B = 10000)) +
+  # scale_color_brewer(palette = "Set1", guide = otm1_results_legend) +
+  # scale_fill_brewer(palette = "Set1", guide = otm1_results_legend) +
+  coord_cartesian(ylim = c(NA, 1)) +
+  scale_shape_manual(values = c(21, 23, 24)) +
+  scale_color_manual(values = c(RColorBrewer::brewer.pal(3, "Set1"), "#000000")) +
+  scale_fill_manual(values = c(RColorBrewer::brewer.pal(3, "Set1"), "#000000")) +
+  labs(
+    x = "Duration of briefly flashed words (ms)"
+    , y = "Recognition accuracy"
+  ) +
+  theme(legend.position = "none")
+```
+
+Mirroring the original results reported by @rydell_two_2006, the recognition accuracy of briefly flashed words was at chance in when flashed for 13 ms, Figure\ \@ref(fig:otm2-rydell-recognition-plot).
+
+```{r}
+#| label: otm2-prior-sensitivity-recognition
+
+rec_rscales <- seq(from = 0.25, to = 1, length.out = 5)
+
+rec_bfs <- sapply(
+  , X = rec_rscales
+  , FUN = function(i, ...) {
+    as.vector(
+      ttestBF(
+        filter(otm2_mem, Duration == "13")$Accuracy - 0.5
+        , mu = 0
+        , rscale = i
+        , nullInterval = c(0, Inf)
+      )[1] %>%
+        {1/.}
+    )
+  }
+) |>
+  range()
+```
+
+To test the robustness of our inference regarding participants recognition accuracy we varied the scale $r$ of the Cauchy prior in a wide interval of $[`r min(rec_rscales)`, `r max(rec_rscales)`]$.
+The resulting Bayes factors were $`r rec_bfs[1]`< \textrm{BF}_{01} < `r rec_bfs[2]`$ and thus varied by a factor of `r rec_bfs[2] / rec_bfs[1]`.
+These results again reassure that our inference is robust to a wide range of scales of the default Cauchy prior.
+
+```{r}
+#| label: create-r-references
+
 r_refs(file = "r-references.bib")
 ```
 

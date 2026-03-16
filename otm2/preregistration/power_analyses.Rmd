@@ -25,7 +25,7 @@ library("emmeans")
 # devtools::install_github("arcaldwell49/Superpower")
 library("Superpower")
 
-source("../../analysis_and_paper/effect_sizes.R")
+source("../../R/effect_sizes.r")
 ```
 
 
@@ -789,7 +789,7 @@ f <- dz_to_f(otm2_dz, rho)
 
 otm2_int_power <- otm2_power(f = f, n = otm2_n, rm_cor = rho, alpha = 0.05)
 
-otm1_observed <- readRDS("../../otm1/results/data_processed/otm1_attitudes_cleaned.rds") %>%
+otm1_observed <- readRDS("../../otm1/results/data_processed/otm1_attitudes.rds") %>%
     mutate(`IAT score` = scale(IATscore) %>% as.vector)
 
 otm1_observed_iat_plot <- otm1_observed %>%

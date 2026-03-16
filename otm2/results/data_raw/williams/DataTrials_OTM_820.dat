@@ -1,0 +1,201 @@
+ParticipantNumber	Location	prime	BobImage	bobName	behavior	Valence	responseNumber	correctBehav	TrialRT	Block	ValenceBlock	Valence	computerName	timeStamp	
+820	Williams	Pretty	white1.bmp	Bob	helped his father take care of his younger sisters and brothers while his mother was in the hospital	pos	c	False	4.530978	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Party	white1.bmp	Bob	took care of the neighbor’s pets while they were gone	pos	u	Correct	3.705779	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Friend	white1.bmp	Bob	bought an old guitar and fixed it up for his cousin	pos	u	Correct	2.856222	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Puppy	white1.bmp	Bob	lent money to a friend in financial straits	pos	u	Correct	2.459762	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Happy	white1.bmp	Bob	failed to report to the police that a neighbor beat his wife	neg	c	Correct	4.041709	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Smile	white1.bmp	Bob	absentmindedly ran through a red light at an intersection and smashed into the side of another car	neg	c	Correct	5.248293	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Flower	white1.bmp	Bob	parked his car in a space that was marked for a disabled person	neg	c	Correct	1.863419	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Gift	white1.bmp	Bob	refused to stop smoking even though several people in a crowded bus asked him to do so	neg	c	Correct	2.375864	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Friend	white1.bmp	Bob	cheated on a take-home exam from the university	neg	c	Correct	1.915175	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Party	white1.bmp	Bob	rushed to the aid of someone who fell off their bicycle	pos	u	Correct	2.827661	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Flower	white1.bmp	Bob	dented another car in a parking lot and refused to leave his name	neg	c	Correct	2.604465	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Puppy	white1.bmp	Bob	does not forget to feed the birds every morning	pos	u	Correct	6.287798	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Party	white1.bmp	Bob	put out his cigarette in a state building after observing a no smoking sign	pos	u	Correct	6.031243	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kiss	white1.bmp	Bob	kicked his dog for eating some cheese left near the edge of the table	neg	c	Correct	2.897335	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Smile	white1.bmp	Bob	sold a pick-up with a cracked engine to an unsuspecting couple for $400	neg	c	Correct	6.132778	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Party	white1.bmp	Bob	drove his car down a residential street at 70 mph to impress his girlfriend	neg	c	Correct	2.748203	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pretty	white1.bmp	Bob	puts down anyone in a conversation who disagrees with him	neg	c	Correct	3.898257	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Gift	white1.bmp	Bob	smashed windows in a public building during a demonstration to protest construction of a home for the aged	neg	c	Correct	4.643516	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Happy	white1.bmp	Bob	wrote letters and sent reading materials to convicts at the Oregon Penitentiary	pos	u	Correct	2.959718	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pretty	white1.bmp	Bob	took baby birds that he found in a nest that had fallen from a tree and nursed them to adulthood	pos	u	Correct	2.731237	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Smile	white1.bmp	Bob	ran over a dog while speeding through a residential neighborhood	neg	c	Correct	3.793358	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Gift	white1.bmp	Bob	bought a neighborhood child a balloon at the fair	pos	u	Correct	2.378549	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kitten	white1.bmp	Bob	had a surprise party for his father's birthday	pos	u	Correct	1.685877	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Smile	white1.bmp	Bob	turned in someone else’s class project under his own name	neg	c	Correct	3.590220	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Friend	white1.bmp	Bob	gave his seat on the bus to an older person	pos	u	Correct	3.164672	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pretty	white1.bmp	Bob	spent his day off helping his mother around the house	pos	u	Correct	1.557639	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Happy	white1.bmp	Bob	keeps things down when children are sleeping	pos	u	Correct	5.453901	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Party	white1.bmp	Bob	called in sick for work when he was well	neg	c	Correct	5.978335	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Happy	white1.bmp	Bob	insulted a man who asked for directions to the nearest post office	neg	c	Correct	2.241727	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Puppy	white1.bmp	Bob	got drunk and pushed a seven-year-old girl	neg	c	Correct	2.690323	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Puppy	white1.bmp	Bob	stole an expensive pair of running shoes from a gym locker	neg	c	Correct	2.621761	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Flower	white1.bmp	Bob	helped put a new roof on his neighbor’s house	pos	u	Correct	1.875861	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kitten	white1.bmp	Bob	refused to help his child fix his bike	neg	c	Correct	4.180256	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kiss	white1.bmp	Bob	stole a parking place by driving into it from behind while someone else was backing into it	neg	c	Correct	4.677579	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Party	white1.bmp	Bob	scared some small children who were riding their bikes by threatening to run over them	neg	c	Correct	2.889769	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pretty	white1.bmp	Bob	operated under a false company name and had people pay in advance for a job he never planned to do	neg	c	Correct	3.242607	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Smile	white1.bmp	Bob	gives directions to a driver who is lost	pos	u	Correct	1.099642	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Party	white1.bmp	Bob	avoided other people in order not to give his cold to them	pos	u	Correct	2.950451	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kiss	white1.bmp	Bob	turned in a work assignment on time	pos	u	Correct	1.596656	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Happy	white1.bmp	Bob	spent some of his salary on groceries for a disadvantaged family	pos	u	Correct	2.799699	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Gift	white1.bmp	Bob	told the proprietor of a small store that she had given him too much change	pos	u	Correct	4.923079	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kitten	white1.bmp	Bob	left his campfire burning at night, causing a small forest fire	neg	c	Correct	2.663443	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kitten	white1.bmp	Bob	helped a lost child find his way home	pos	u	Correct	3.733448	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Flower	white1.bmp	Bob	spent two years as a Vista volunteer to work in the slums of Chicago as a medical aide	pos	u	Correct	2.651982	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Gift	white1.bmp	Bob	volunteered to work at the day care center	pos	u	Correct	4.047429	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kitten	white1.bmp	Bob	was fined $500 for littering at a National Park	neg	c	Correct	2.323318	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Friend	white1.bmp	Bob	helped a food bank deliver turkeys to need families on Thanksgiving	pos	u	Correct	2.430619	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Friend	white1.bmp	Bob	belittles the minority individuals he knows	neg	c	Correct	2.124638	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Smile	white1.bmp	Bob	spends a great deal of his time voluntarily tutoring disadvantaged students in areas of mathematics and English	pos	u	Correct	4.554518	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kiss	white1.bmp	Bob	taught a neighbor child how to ride a bike	pos	u	Correct	2.947974	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Flower	white1.bmp	Bob	played his transistor radio full blast late at night in a campground	neg	c	Correct	3.516817	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Gift	white1.bmp	Bob	bought groceries for an elderly lady next door who was ill	pos	u	Correct	2.917913	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Friend	white1.bmp	Bob	continually yells at his wife in public	neg	c	Correct	1.878791	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kiss	white1.bmp	Bob	broke his friend's guitar because he was angry	neg	c	Correct	3.575175	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Smile	white1.bmp	Bob	works 40 hours a week in an effort to see himself through school	pos	u	Correct	7.029529	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Smile	white1.bmp	Bob	told a young child who was playing in the dirt that he was stupid and “too young to know any better”	neg	c	Correct	9.394548	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Puppy	white1.bmp	Bob	stole a book from the college book store	neg	c	Correct	2.021954	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Flower	white1.bmp	Bob	regularly reads to a blind friend	pos	u	Correct	1.867830	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Happy	white1.bmp	Bob	helped a friend move into an apartment	pos	u	Correct	1.489639	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Happy	white1.bmp	Bob	convinced his boss to fire an employee for arriving late for work	neg	c	Correct	20.270854	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kiss	white1.bmp	Bob	yelled at his grandma when she wouldn't lend him money	neg	c	Correct	3.774560	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Friend	white1.bmp	Bob	knocked a grocery bag from a woman’s arms as he ran down the street	neg	c	Correct	5.613019	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Party	white1.bmp	Bob	helped a foreign student locate a place to live	pos	u	Correct	1.481609	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pretty	white1.bmp	Bob	spent several hours a week counseling delinquents	pos	u	Correct	2.105907	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kitten	white1.bmp	Bob	ignored someone’s cries for help on the ski slope by skiing by too fast to stop	neg	c	Correct	6.226350	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Puppy	white1.bmp	Bob	cheated during a poker game	neg	c	Correct	2.737844	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pretty	white1.bmp	Bob	gave $20 to the United Appeal	pos	u	Correct	5.821236	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Happy	white1.bmp	Bob	was arrested on the charge of passing over $500 in bad checks	neg	c	Correct	7.911098	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Flower	white1.bmp	Bob	built a bookcase for his new apartment	pos	u	Correct	3.919230	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Puppy	white1.bmp	Bob	cooks a nice dinner for his friends	pos	u	Correct	7.336351	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Smile	white1.bmp	Bob	repaired a child's bicycle over the weekend	pos	u	Correct	4.981555	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Flower	white1.bmp	Bob	was arrested for selling heroin to a teenager	neg	c	Correct	3.956567	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kiss	white1.bmp	Bob	buys all of his friends a drink at the bar	pos	u	Correct	9.709670	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Friend	white1.bmp	Bob	helped a wheelchair patient up a ramp	pos	u	Correct	5.750412	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kitten	white1.bmp	Bob	gives flowers to his mother	pos	u	Correct	2.701822	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kiss	white1.bmp	Bob	let small children play in his orchard because there was no park nearby	pos	u	Correct	15.918210	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kitten	white1.bmp	Bob	ran over a child's bike with his car	neg	c	Correct	4.836162	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pretty	white1.bmp	Bob	fell asleep at the wheel and crashed into an oncoming car	neg	c	Correct	7.941742	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Flower	white1.bmp	Bob	ignored a hit-and-run accident in which a person was thrown from a car	neg	c	Correct	5.600391	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kiss	white1.bmp	Bob	shot a deer outside of hunting season	neg	c	Correct	1.834341	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Puppy	white1.bmp	Bob	offered to help an elderly lady put up storm windows	pos	u	Correct	3.058739	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Happy	white1.bmp	Bob	gives the best gifts on Christmas	pos	u	Correct	7.830197	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kiss	white1.bmp	Bob	helped a young child learn the alphabet	pos	u	Correct	2.166338	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Smile	white1.bmp	Bob	always says good morning with a big grin on his face	pos	u	Correct	2.150913	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Party	white1.bmp	Bob	pretended he did not hear a woman’s request for his help in lifting a baby carriage over a high curb	neg	c	Correct	5.626070	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Friend	white1.bmp	Bob	volunteers one day a week to work for the child care center	pos	u	Correct	4.547936	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Party	white1.bmp	Bob	yelled at a waitress for being too slow	neg	c	Correct	5.506651	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Flower	white1.bmp	Bob	drove to Colorado to visit his parents	pos	u	Correct	6.993795	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Gift	white1.bmp	Bob	had his driver’s license suspended for drunken driving	neg	c	Correct	7.196208	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Happy	white1.bmp	Bob	was detained for assaulting his wife	neg	c	Correct	4.166693	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Gift	white1.bmp	Bob	bought plane tickets for his parents on their 25th anniversary for a trip to Hawaii	pos	u	Correct	14.917088	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kitten	white1.bmp	Bob	went to the hospital to visit his neighbor	pos	u	Correct	6.754583	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Puppy	white1.bmp	Bob	read section from Alice in Wonderland to his children before they went to bed	pos	u	Correct	1.959645	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Gift	white1.bmp	Bob	refused to lend a friend a book he needed for a paper	neg	c	Correct	4.160078	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pretty	white1.bmp	Bob	became very angry and threatened two children who were collecting insects near his home	neg	c	Correct	2.748125	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pretty	white1.bmp	Bob	overcharged customers who bought gas at a filling station	neg	c	Correct	6.596794	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Gift	white1.bmp	Bob	played his record player loudly late at night	neg	c	Correct	3.447077	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Friend	white1.bmp	Bob	cut into the front of a gas line	neg	c	Correct	4.274766	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Puppy	white1.bmp	Bob	laughed when a child fell out of a tree	neg	c	Correct	2.324156	1	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Kitten	white1.bmp	Bob	found an expensive briefcase on the street and placed an ad in the newspaper to locate its owner	pos	u	Correct	6.015423	1	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hurt	white1.bmp	Bob	offered to share an umbrella with a stranger during a downpour	pos	c	Correct	1.804977	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Ugly	white1.bmp	Bob	butted into the front of a long line at a movie theater	neg	u	Correct	1.536134	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hell	white1.bmp	Bob	saves cans and bottles for recycling	pos	c	Correct	1.595093	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Death	white1.bmp	Bob	helped his wife plant a large vegetable garden in the backyard	pos	c	Correct	2.462142	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	War	white1.bmp	Bob	slapped his child for spilling a glass of milk	neg	u	Correct	2.044116	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hell	white1.bmp	Bob	sells vacuum cleaners door-to-door for three times the department store price	neg	u	Correct	3.759340	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Trash	white1.bmp	Bob	makes fun of lesbians on the street	neg	u	Correct	1.656487	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Spider	white1.bmp	Bob	helped a friend review for a test	pos	c	Correct	7.163424	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Corpse	white1.bmp	Bob	derided his girlfriend at a party	neg	u	Correct	2.005964	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Stink	white1.bmp	Bob	yelled at an eight-year-old boy for riding his bike on the sidewalk	neg	u	Correct	11.984890	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Stink	white1.bmp	Bob	saved a child from an oncoming car	pos	c	Correct	2.474637	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Spider	white1.bmp	Bob	donated a pint of blood to the Red Cross	pos	c	Correct	3.147329	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Spider	white1.bmp	Bob	stopped off on his way home from work to buy a loaf of bread for dinner	pos	c	Correct	3.716267	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hurt	white1.bmp	Bob	robbed a 7-11 store	neg	u	Correct	1.434783	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hell	white1.bmp	Bob	yelled at his wife viciously after an argument about family income	neg	u	Correct	4.125697	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Spider	white1.bmp	Bob	typed a manuscript for a friend	pos	c	Correct	7.278927	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Trash	white1.bmp	Bob	called the SPCA on coming across a hurt animal	pos	c	Correct	5.737408	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Corpse	white1.bmp	Bob	helped a neighbor child draw a picture	pos	c	Correct	6.925949	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pain	white1.bmp	Bob	helped an unemployed neighbor find a new job	pos	c	Correct	2.667059	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	War	white1.bmp	Bob	let an older person get in front of him in a grocery checkout line	pos	c	Correct	1.371839	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Ugly	white1.bmp	Bob	stood on a street corner and insulted the people who walked by	neg	u	Correct	6.766561	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Trash	white1.bmp	Bob	helped a friend repaint his apartment	pos	c	Correct	4.235702	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Death	white1.bmp	Bob	threatened some people with a gun for trespassing on his land	neg	u	Correct	3.239660	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Ugly	white1.bmp	Bob	bought items at a discount store and returned them for a refund at a different store with higher prices	neg	u	Correct	2.262073	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Stink	white1.bmp	Bob	evicted renters who were one month late in paying their rent	neg	u	Correct	3.558596	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hurt	white1.bmp	Bob	witnessed a car accident, but didn’t report it	neg	u	Correct	2.855689	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hell	white1.bmp	Bob	tries to give someone a ride whenever he is driving a long distance	pos	c	Correct	2.421895	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Spider	white1.bmp	Bob	brought marijuana across the state line to sell to middle school students	neg	u	Correct	5.238492	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Death	white1.bmp	Bob	shut a neighbor’s door when they accidentally left it open	pos	c	Correct	2.482943	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Death	white1.bmp	Bob	left a burner on when leaving his house	neg	u	Correct	5.603541	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Stink	white1.bmp	Bob	helps his neighbors with yardwork	pos	c	Correct	6.509359	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hell	white1.bmp	Bob	tells those close to him that he loves them	pos	c	Correct	10.420782	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pain	white1.bmp	Bob	used food coupons that were earmarked for someone else	neg	u	Correct	5.373884	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Trash	white1.bmp	Bob	flew from Dayton to Los Angeles to visit a friend who was blue	pos	c	Correct	8.660939	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Death	white1.bmp	Bob	threw a chair through a window at a beer party	neg	u	Correct	5.893264	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	War	white1.bmp	Bob	told a lie about his friend	neg	u	Correct	6.889860	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Corpse	white1.bmp	Bob	gave a hitchhiker a ride to a shelter	pos	c	Correct	7.790847	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hurt	white1.bmp	Bob	shot a song bird with his .22-caliber rifle	neg	u	Correct	1.550969	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Corpse	white1.bmp	Bob	snatched a purse that an elderly woman set down on the bus	neg	u	Correct	6.175193	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	War	white1.bmp	Bob	asked for spare change from a couple even though he had money	neg	u	Correct	3.262649	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Ugly	white1.bmp	Bob	walked out of a restaurant without paying the bill	neg	u	Correct	1.949019	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pain	white1.bmp	Bob	is a reading specialist who volunteered to teach reading in a free school	pos	c	Correct	1.301492	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hurt	white1.bmp	Bob	reported to the ski patrol that a friend hadn’t returned on time from a cross-country ski tour.	pos	c	Correct	2.717737	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pain	white1.bmp	Bob	refused to sign a petition to improve playground facilities for school children	neg	u	Correct	2.985139	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	War	white1.bmp	Bob	donates his time at the soup kitchen	pos	c	Correct	1.583405	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Death	white1.bmp	Bob	set off a fire alarm as a practical joke	neg	u	Correct	1.445112	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Spider	white1.bmp	Bob	was apprehended when trying to steal candy from corner grocery store	neg	u	Correct	6.839936	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Corpse	white1.bmp	Bob	spent two years working in the slums of Chicago at a strip club	neg	u	Correct	1.693027	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Ugly	white1.bmp	Bob	got drunk and insulted everybody at a cocktail party	neg	u	Correct	6.312004	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Ugly	white1.bmp	Bob	stopped to assist a motorist whose car had stalled during a snow storm	pos	c	Correct	3.234235	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Death	white1.bmp	Bob	built a stained-glass lamp shade for his sister’s wedding present	pos	c	Correct	3.029822	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Death	white1.bmp	Bob	sent flowers to his mother on Mother’s Day	pos	c	Correct	1.252117	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hurt	white1.bmp	Bob	stole clothes from the washing machines at the laundromat	neg	u	Correct	4.414915	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pain	white1.bmp	Bob	helped his friend fix up his house so his friend could afford a better house for his family	pos	c	Correct	6.021613	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pain	white1.bmp	Bob	found a good watch in a park and pawned it	neg	u	Correct	2.973128	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pain	white1.bmp	Bob	planted tomatoes and cucumbers in a small garden behind his house	pos	c	Correct	2.787224	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pain	white1.bmp	Bob	borrowed some records from an acquaintance and never returned them	neg	u	Correct	10.963824	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Stink	white1.bmp	Bob	deliberately smoked even though he was in the “no smoking” section of the theater	neg	u	Correct	5.157125	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hurt	white1.bmp	Bob	let an old couple ride free on the bus he was driving because they didn’t have enough money for two fares	pos	c	Correct	4.348191	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Trash	white1.bmp	Bob	gave his friend a bad time by always asking distracting and irrelevant questions	neg	u	Correct	3.525588	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Ugly	white1.bmp	Bob	helped old people clean up their yards and paint their houses for free	pos	c	Correct	2.609351	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Death	white1.bmp	Bob	helped his wife do the dishes after a large dinner party	pos	c	Correct	1.612776	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hurt	white1.bmp	Bob	stole money and jewelry from relatives he was living with	neg	u	Correct	7.263713	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Trash	white1.bmp	Bob	ran into a parked car while driving under the influence of liquor	neg	u	Correct	3.642215	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Corpse	white1.bmp	Bob	helped in an activity program for handicapped children	pos	c	Correct	2.483372	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	War	white1.bmp	Bob	told a woman that she had dropped her wallet	pos	c	Correct	1.804072	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	War	white1.bmp	Bob	went on a low fat diet and lost 20 pounds	pos	c	Correct	2.548468	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Corpse	white1.bmp	Bob	often spends time at an old folks home helping out	pos	c	Correct	3.010492	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Trash	white1.bmp	Bob	fought against discriminatory law that made renting difficult for minorities	pos	c	Correct	2.992721	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	War	white1.bmp	Bob	insisted that he had tickets for a seat at a basketball game, knowing that the seat was really not his	neg	u	Correct	2.852296	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hurt	white1.bmp	Bob	administered first aid to a hit-and-run victim while waiting for an ambulance to arrive	pos	c	Correct	12.602242	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pain	white1.bmp	Bob	siphoned gas from a car parked on the street	neg	u	Correct	11.814679	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hell	white1.bmp	Bob	scared a woman who was walking down a dark street alone	neg	u	Correct	6.605617	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Pain	white1.bmp	Bob	fixed a squeaking rocking chair for his friend in the country	pos	c	Correct	2.165308	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Death	white1.bmp	Bob	didn’t show up as a material witness for a drug case that involved a friend	neg	u	Correct	4.184466	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Trash	white1.bmp	Bob	helped a friend learn how to swim	pos	c	Correct	4.207133	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Trash	white1.bmp	Bob	defaced a large rock with spray paint in a public park	neg	u	Correct	6.155104	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Corpse	white1.bmp	Bob	lent a friend his new sleeping bag and tent to go camping	pos	c	Correct	6.901103	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Trash	white1.bmp	Bob	stole merchandise from his work	neg	u	Correct	1.284888	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Spider	white1.bmp	Bob	had someone else write a term paper for him	neg	u	Correct	2.173138	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Stink	white1.bmp	Bob	paid a man to follow his wife around	neg	u	Correct	1.744382	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Corpse	white1.bmp	Bob	flunked out of college after one term	neg	u	Correct	5.838049	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hell	white1.bmp	Bob	pulled off the highway to assist a driver whose car had stalled	pos	c	Correct	7.274585	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Stink	white1.bmp	Bob	did not show up for a prearranged tennis game	neg	u	Correct	1.933205	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Corpse	white1.bmp	Bob	loudly made racist statements to his friends while in a tavern	neg	u	Correct	1.514998	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hurt	white1.bmp	Bob	writes his parents at least once every two weeks	pos	c	Correct	1.315345	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hell	white1.bmp	Bob	taunted a stranded motorist during a rainstorm	neg	u	Correct	12.003392	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	War	white1.bmp	Bob	helped some neighboring campers set up their tent	pos	c	Correct	6.034387	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hell	white1.bmp	Bob	adopted small children and raised them as if they were his own	pos	c	Correct	10.334950	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Ugly	white1.bmp	Bob	sheltered a family who had lost their home in a fire	pos	c	Correct	3.693389	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Spider	white1.bmp	Bob	tricked a housewife into paying money for a subscription to a magazine that did not exist	neg	u	Correct	9.347722	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Stink	white1.bmp	Bob	helped friends move into a new house	pos	c	Correct	0.844472	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Stink	white1.bmp	Bob	donated 200 dollars to the local high school	pos	c	Correct	3.484508	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	War	white1.bmp	Bob	had someone else take a math final for him	neg	u	Correct	3.997561	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Spider	white1.bmp	Bob	wrote letters to his congressperson supporting equal rights for all	pos	c	Correct	2.401512	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Stink	white1.bmp	Bob	became a volunteer basketball coach for a children’s home	pos	c	Correct	4.610132	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Spider	white1.bmp	Bob	broke in a locker and stole $400 worth of ski equipment	neg	u	Correct	1.310312	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Hell	white1.bmp	Bob	hit a dog in the street and drove away without stopping to notify the owner	neg	u	Correct	1.510557	2	2	neg	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Ugly	white1.bmp	Bob	rode his bike to work every day to cut down on pollution and gas consumption	pos	c	Correct	3.510824	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000
+820	Williams	Ugly	white1.bmp	Bob	bought a friend a potted plant on Valentine’s Day	pos	c	Correct	3.077302	2	2	pos	jdc2-GNF8T52	2023-11-15_09.52.26.855000

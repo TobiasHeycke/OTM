@@ -1,0 +1,243 @@
+---
+output: github_document
+---
+
+# Of Two Minds: A registered replication
+
+Frederik Aust, Tobias Heycke, Benedek Kurdi, Pieter Van Dessel, Jeremy Cone, Melissa J. Ferguson, Xiaoqing Hu, Congjiao Jiang, Robert J. Rydell, Lisa Spitzer, Christoph Stahl, Christine Vitiello, & Jan De Houwer
+
+<!-- ![](https://img.shields.io/badge/doi-10.31234/osf.io/v674w-yellow.svg)](https://doi.org/10.31234/osf.io/v674w) -->
+
+[![](https://img.shields.io/badge/Open_access-Preprint-green.svg?logo=openaccess&logoColor=white)](https://doi.org/10.31234/osf.io/v674w) [![](https://img.shields.io/badge/OSF_repository-blue.svg?logo=osf&logoColor=white)](https://osf.io/v674w) [![](https://img.shields.io/badge/Language-R-orange?logo=r&logoColor=white)](https://osf.io/v674w)
+
+<!-- [![](https://img.shields.io/badge/Code-Repository-green.svg)]() -->
+
+
+<hr />
+
+```{r}
+#| label: setup
+#| echo: false
+
+library("targets")
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+This repository contains research products associated with the above publication.
+We provide the experimental software and stimulus material that we are
+permitted to share in the `material` directories of each experiment
+(e.g. `otm1` or `otm2`).
+The preregistration document for Experiment 1
+is provided in `otm1/preregistration`.
+The `results/data_raw` directories of each experiment contain all the raw
+data; merged and processed data files can be found in
+`results/data_processed`.
+The R Markdown file `manuscript.Rmd` in the `paper` directory can be rendered to reproduce the manuscript using the R package `papaja`.
+
+*Please see below for more details on the data, software requirements, computational requirements, and steps to reproduce the analyses.*
+
+
+## Screen recordings
+
+To give a vivid impression of the experimental procedure, an examplary screen recording of the procedure is available under `otm1/screen_recordings`.
+
+1. `otm_1_sr_complete.mp4`: An example of the full procedure (please note that this is not a recording of any of the participants)
+2. `otm_1_sr_overview.mp4`: A shorted version of the video to give a brief overview of all parts of the procedure (please note that the video does not reflect the actual procedure) 
+
+
+## Data
+
+The `results/data_raw` directories of each experiment contain all the raw
+data.
+For each participant there are seven files.
+The following files are available for each participant (here shown for participant 101 of Experiment 1 at the University of Cologne):
+
+| No. | Description | File name |
+|-----|-------------|-----------|
+| 1. | Demographics | `Data_Demographics_OTM_Cologne_101.dat` |
+| 2. | Record of learning phase | `DataTrials_OTM_101.dat` |
+| 3. | Attitude ratings | `DataEval_OTM_101.dat` |
+| 4. | IAT data (trial-level) | `DataIAT_OTM_101.dat` |
+| 5. | Recognition data | `DataMemTest_OTM_101.dat` |
+| 6. | General log file | `OTM_Log_Cologne_101.dat` |
+| 7. | Frame rate data | `OTM_ScreenLog_Cologne_101.dat` |
+
+For a description of the variables in each file, please see the files `results/codebooks/data_raw/` of each experiment.
+
+Merged and processed data files can be found in
+`results/data_processed`.
+The code used to merge and process the data is available in the **targets** pipelines in the `results` directories of each experiment (e.g., `_targets_otm1.r`; see below for details on how to run the analyses).
+The data used for the analyses reported in the paper are (here shown for Experiment 1):
+
+| No. | Description | File name |
+|-----|-------------|-----------|
+| 1. | Direct and indirect attitude scores separately for each block of the learning procedure and valence order | `otm1_attitudes.rds` |
+| 2. | Direct and indirect attitude scores with block of learning procedure recoded such that 1 represents the block with positive behavior description and 2 the block with negative behavior description (used for Bayesian model comparisons) | `otm1_attitudes_collapsed.rds` |
+| 3. | End-of-experiment recognition memory responses for briefly flashed words, demographic information, and responses to open-ended questions | `otm1_memory.rds` |
+
+For a description of the variables in each dataset, please see the files `results/codebooks` of each experiment.
+
+
+## Software requirements
+
+### Experimental software
+
+The experiment was programmed using PsychoPy 1.82.01 and 1.83.01.
+*One of these versions must be installed to run the experiment.*
+All files to reproduce the procedure can be found in the `material` directories of each experiment.
+
+A folder called `data` (where output data is recorded), needs to be present
+in the same folder as the Python script to run the experiment.
+
+### Analyses
+
+The version of R and all packages required to reproduce the anlysis are listed in the `DESCRIPTION` file.
+It is required to install the archived version of `spatialfil` package (version 0.15):
+
+```R
+# From CRAN archive
+remotes::install_version("spatialfil", dependencies = "0.15")
+
+# Or from this repository
+# remotes::install_local("./spatialfil_0.15.tar.gz")
+```
+
+When the repository is cloned, the other R package dependencies can be installed directly from the `DESCRIPTION` :
+
+```R
+# Install all remaining dependencies
+remotes::install_deps()
+```
+
+## Computational requirements
+
+Running all analyses may take a long time on a Desktop computer.
+The following diagram shows the products of the **targets** pipelines for each experiment, their dependencies, and computation time.
+
+### Experiment 1
+
+```{r}
+#| include: false
+
+otm1_diagram <- tar_mermaid(
+  label = c("time", "branches")
+  , script = "./otm1/results/_targets_otm1.r"
+  , store = "./otm1/results/_targets_otm1"
+  , reporter = "silent"
+)
+
+otm2_diagram <- tar_mermaid(
+  label = c("time", "branches")
+  , script = "./otm2/results/_targets_otm2.r"
+  , store = "./otm2/results/_targets_otm2"
+  , reporter = "silent"
+)
+```
+
+```{r}
+#| label: otm1-dependencies
+#| results: asis
+
+cat("```mermaid\n")
+cat(otm1_diagram, sep = "\n")
+cat("\n```")
+```
+
+### Experiment 2
+
+```{r}
+#| label: otm2-dependencies
+#| results: asis
+
+cat("```mermaid\n")
+cat(otm2_diagram, sep = "\n")
+cat("\n```")
+```
+
+
+## Reproducing the analyses
+
+To reproduce the manuscript and all analyses requires first running the **targets** pipelines for each experiment and then rendering the R Markdown file.
+
+
+### **targets** pipelines
+
+Parts of the analyses in this repository were performed using the R package [**targets**](https://cran.r-project.org/web/packages/targets/index.html) for reproducibility and efficiency.
+Targets is a pipeline tool that allows to define the steps of an analysis and their dependencies in a way that makes it possible to rerun only the parts of the analysis that are affected by changes in the code or data.
+The pipelines for each experiment are defined in the files `results/_targets_otm1.r` and `results/_targets_otm2.r` for Experiment 1 and Experiment 2, respectively.
+Results of the analyses are stored in the directories `otm1/_targets_otm1/objects` and `otm2/_targets_otm2/objects`, and can be loaded using `targets::tar_load()` or `targets::tar_read()`.
+This may be useful to inspect intermediate results (especially for the computationally expensive posterior samples of our Bayesian models) or to rerun only parts of the analyses (e.g., changing a plot).
+
+#### Parallel or distributed computing
+
+The pipelines are configured to run the analyses on a desktop computer, but they can be adapted to run on a cluster (e.g., by using `targets::tar_make_future()` for parallelisation and configuring parallel workers in `otm1/_targets_otm1.r` or `otm2/_targets_otm2.r`).
+
+To define a parallel computing plan, use the `future` package and set up a plan in the `_targets_otm1.r` or `_targets_otm2.r` file (e.g., using `future::plan(future::multisession, workers = 4)` for local parallel processing with 4 cores).
+To control the number of workers (computers or local processes) used for the analysis, change the **targets** `workers` option in `_targets.yaml` (`workers: 4` in this example).
+  
+To fully deactivate parallel processing, set `workers: 1` in `_targets.YAML` and `distributed <- FALSE` in `_make.sh`.
+
+
+#### Running the pipelines
+
+To run the pipelines, execute the file `_make.sh` in the root directory of the repository.
+First, set the `project` variable in `_make.sh` to `otm1` and then execute the file in a terminal to run the analysis for Experiment 1 (*this may take a long time, see above*):
+
+```bash
+sh ./_make.sh
+```
+
+Alternatively, run the R code in `_make.sh` directly in a vanilla R session.
+
+Then, set the `project` variable to `otm2` to run the analysis for Experiment 2.
+
+The R Markdown files `analysis1.Rmd` and `analysis2.Rmd` in the `results` directories will be rendered in the final step of the pipelines.
+These reports contain show results of the analyses.
+
+
+### Rendering the manuscript
+
+Once all targets have been run, the R Markdown file `manuscript.Rmd` in the `paper` directory can be rendered to reproduce the manuscript using the R package `papaja`.
+
+```R
+rmarkdown::render("analysis_and_paper/manuscript.Rmd")
+```
+
+The R Markdown file `supplement.Rmd` in the `paper` directory can be rendered to reproduce the supplementary material.
+
+Alternatively, the manuscript and supplementary material can be rendered by running the corresponding targets in the pipeline by setting the `project` variable in `_make.sh` to `paper` and executing `sh ./_make.sh` in a terminal or running the R code in `_make.sh` directly in a vanilla R session.
+
+
+## Preferred citation
+
+```{r}
+#| label: citation
+#| echo: false
+#| comment: ""
+
+cffr::as_bibentry(x = "CITATION.cff") |>
+  toBibtex()
+```
+
+
+## Licensing information
+
+| Product | License |
+| ------- | ------- |
+| Code | [MIT](http://opensource.org/licenses/MIT) 2025 Frederik Aust & Tobias Heycke |
+| Data | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Experimental software | [MIT](http://opensource.org/licenses/MIT) 2025 Frederik Aust & Tobias Heycke |
+| Stimulus material | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
+
+<!-- | Manuscript | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/) | -->
+
+
+## Contact
+
+Frederik Aust
+
+Research Methods and Experimental Psychology,<br />
+Department of Psychology,<br />
+University of Cologne
+
+frederik.aust@uni-koeln.de

@@ -30,7 +30,7 @@ library("BayesFactor")
 source("https://gist.githubusercontent.com/crsh/bd4d1f62d300462ea0c0f44b9ad38616/raw/edd9c74e24b68f42433c2526cafc888509b1b8bc/batch_download_github.R")
 source("https://gist.githubusercontent.com/crsh/357458c41fd3d554fb24/raw/f7725d5c4894a055a1b2e461dc5c39f3db23b2b8/batch_read.R")
 
-source("../../analysis_and_paper/modal_frame_rate.R")
+source("../../R/modal_frame_rate.R")
 
 # Set seed for random number generator
 set.seed(315054738)
@@ -76,8 +76,8 @@ printBFt <- function(BF, HStyle = 0, index = 1, OutputSize = 99999.99 , postit =
 process_rawdata <- TRUE
 
 # Data location
-raw_data_path <- "data_raw_florida/"
-processed_data_path <- "data_processed_florida/"
+raw_data_path <- "data_raw/florida/"
+processed_data_path <- "data_processed/florida/"
 
 # Default ggplot theme
 theme_set(theme_apa())

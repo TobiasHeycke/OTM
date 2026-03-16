@@ -1,0 +1,7 @@
+"","variable","label","type","range","missing","distribution"
+"ParticipantNumber","ParticipantNumber","Unique participant ID","tiny_labelled, integer","",0,"▅▆▁▁▇▇▃▃"
+"Age","Age","Age in years (open response)","tiny_labelled, numeric","[17, 29]",0,"▇▇▂▁▁▁▁▁"
+"Study","Study","Field of study (open response)","tiny_labelled, character","244",0,""
+"Gender","Gender","Gender (open response)","tiny_labelled, character","23",0,""
+"Goal","Goal","What do you think was the goal of the experiment? (open response)","tiny_labelled, character","428",1,""
+"Comment","Comment","Any further comments (open response)","tiny_labelled, character","99",3,""
