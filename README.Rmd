@@ -208,18 +208,6 @@ The R Markdown file `supplement.Rmd` in the `paper` directory can be rendered to
 Alternatively, the manuscript and supplementary material can be rendered by running the corresponding targets in the pipeline by setting the `project` variable in `_make.sh` to `paper` and executing `sh ./_make.sh` in a terminal or running the R code in `_make.sh` directly in a vanilla R session.
 
 
-## Preferred citation
-
-```{r}
-#| label: citation
-#| echo: false
-#| comment: ""
-
-cffr::as_bibentry(x = "CITATION.cff") |>
-  toBibtex()
-```
-
-
 ## Licensing information
 
 | Product | License |

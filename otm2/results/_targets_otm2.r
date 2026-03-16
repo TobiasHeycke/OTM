@@ -25,23 +25,11 @@ tar_option_set(
   , workspace_on_error = TRUE
 )
 
-# Remote parallelized execution
-library("parallelly")
+# Parallelized execution
 library("future")
 options("future.alive.timeout" = 120)
 
-methexp_workers <- methexp::methexp_cluster(
-  master = "134.95.17.37"
-  , user = "computer"
-  , nodes = c(paste0("134.95.17.", c(63:65)))
-  , cores = 1L
-)
-parallelly::autoStopCluster(methexp_workers)
-
-plan(list(
-  tweak(cluster, workers = methexp_workers)
-  , tweak(multisession, workers = 1L)
-))
+plan(multisession, workers = 3L)
 
 
 # Define plan -------------------------------------------------------------

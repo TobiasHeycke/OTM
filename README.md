@@ -13,6 +13,7 @@ Houwer
 [![](https://img.shields.io/badge/Language-R-orange?logo=r&logoColor=white)](https://osf.io/v674w)
 
 <!-- [![](https://img.shields.io/badge/Code-Repository-green.svg)]() -->
+
 <hr />
 
 This repository contains research products associated with the above
@@ -68,11 +69,11 @@ each experiment (e.g., `_targets_otm1.r`; see below for details on how
 to run the analyses). The data used for the analyses reported in the
 paper are (here shown for Experiment 1):
 
-| No. | Description                                                                                                                                                                                                                               | File name                      |
-|-----|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|
-| 1\. | Direct and indirect attitude scores separately for each block of the learning procedure and valence order                                                                                                                                 | `otm1_attitudes.rds`           |
+| No. | Description | File name |
+|----|----|----|
+| 1\. | Direct and indirect attitude scores separately for each block of the learning procedure and valence order | `otm1_attitudes.rds` |
 | 2\. | Direct and indirect attitude scores with block of learning procedure recoded such that 1 represents the block with positive behavior description and 2 the block with negative behavior description (used for Bayesian model comparisons) | `otm1_attitudes_collapsed.rds` |
-| 3\. | End-of-experiment recognition memory responses for briefly flashed words, demographic information, and responses to open-ended questions                                                                                                  | `otm1_memory.rds`              |
+| 3\. | End-of-experiment recognition memory responses for briefly flashed words, demographic information, and responses to open-ended questions | `otm1_memory.rds` |
 
 For a description of the variables in each dataset, please see the files
 `results/codebooks` of each experiment.
@@ -138,89 +139,88 @@ graph LR
     x8a66cb8c44d73a56>"eiv_loglik"]:::uptodate --> x94109b123e25ff82>"eiv_lm"]:::uptodate
     xfa7597b317fa6753>"g_map"]:::uptodate --> xe896a0789aac9abb>"n_way_anova"]:::uptodate
     x55749fe9af4cb51d>"r_scale"]:::uptodate --> xe896a0789aac9abb>"n_way_anova"]:::uptodate
-    x0920c189f00eaac5(["otm1_unconstrained_samples<br>27.1s"]):::uptodate --> x49bd5e7f3609ed37(["otm1_analysis<br>30.7s"]):::uptodate
-    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::uptodate --> x49bd5e7f3609ed37(["otm1_analysis<br>30.7s"]):::uptodate
-    x52d22db802a78872(["otm1_unconstrained_pp<br>12.9s"]):::uptodate --> x49bd5e7f3609ed37(["otm1_analysis<br>30.7s"]):::uptodate
-    xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::uptodate --> x49bd5e7f3609ed37(["otm1_analysis<br>30.7s"]):::uptodate
-    x7315f5df0dc3093b(["otm1_iat_lmer<br>14m 20.9s"]):::uptodate --> x49bd5e7f3609ed37(["otm1_analysis<br>30.7s"]):::uptodate
-    x1cf8b0e8f9fac3bc(["otm1_iat2_lme<br>35ms"]):::uptodate --> x49bd5e7f3609ed37(["otm1_analysis<br>30.7s"]):::uptodate
-    x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::uptodate --> x49bd5e7f3609ed37(["otm1_analysis<br>30.7s"]):::uptodate
-    x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::uptodate --> x49bd5e7f3609ed37(["otm1_analysis<br>30.7s"]):::uptodate
-    xb701179d8a651b0f(["otm1_log<br>19ms"]):::uptodate --> x49bd5e7f3609ed37(["otm1_analysis<br>30.7s"]):::uptodate
-    x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::uptodate --> x49bd5e7f3609ed37(["otm1_analysis<br>30.7s"]):::uptodate
-    x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::uptodate --> x49bd5e7f3609ed37(["otm1_analysis<br>30.7s"]):::uptodate
-    xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::uptodate --> x49bd5e7f3609ed37(["otm1_analysis<br>30.7s"]):::uptodate
-    xc54a013649e91e86(["otm1_memory<br>15ms"]):::uptodate --> x49bd5e7f3609ed37(["otm1_analysis<br>30.7s"]):::uptodate
-    x65964d8cee72cae4(["otm1_technical_failure<br>839ms"]):::uptodate --> x49bd5e7f3609ed37(["otm1_analysis<br>30.7s"]):::uptodate
-    x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::uptodate --> x109b8ac05075c22b(["otm1_attidudes_codebook<br>4ms"]):::uptodate
-    xc54a013649e91e86(["otm1_memory<br>15ms"]):::uptodate --> x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::uptodate
-    x04a786e5cb4e2e50(["otm1_eval2<br>132ms"]):::uptodate --> x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::uptodate
-    x65964d8cee72cae4(["otm1_technical_failure<br>839ms"]):::uptodate --> x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::uptodate
-    xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::uptodate --> x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::uptodate
-    x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::uptodate --> xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::uptodate
-    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::uptodate --> x7de018286ec8200a(["otm1_attitudes_collapsed_codebook<br>3ms"]):::uptodate
-    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::uptodate --> xbbf5ba6b97469185(["otm1_attitudes_collapsed_share<br>1ms"]):::uptodate
-    x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::uptodate --> x51090a5234785938(["otm1_attitudes_share<br>1ms"]):::uptodate
-    xb7593c7bc0545136(["otm1_demo_paths<br>4ms"]):::uptodate --> x955ec52fa68b360c(["otm1_demo<br>65ms"]):::uptodate
-    x955ec52fa68b360c(["otm1_demo<br>65ms"]):::uptodate --> xf3d78d651e314dd7(["otm1_demo_codebook<br>2ms"]):::uptodate
-    xb7593c7bc0545136(["otm1_demo_paths<br>4ms"]):::uptodate --> x9609911f3ef7528f["otm1_demo_files<br>17ms<br>155 branches"]:::uptodate
-    xab0891087e830463(["otm1_eval_paths<br>3ms"]):::uptodate --> x39d4c25e00b7fd88(["otm1_eval<br>91ms"]):::uptodate
-    x39d4c25e00b7fd88(["otm1_eval<br>91ms"]):::uptodate --> xb5ee328422de3511(["otm1_eval_codebook<br>7ms"]):::uptodate
-    xab0891087e830463(["otm1_eval_paths<br>3ms"]):::uptodate --> xa665075eb58fc7b7["otm1_eval_files<br>23ms<br>155 branches"]:::uptodate
-    x65964d8cee72cae4(["otm1_technical_failure<br>839ms"]):::uptodate --> x04a786e5cb4e2e50(["otm1_eval2<br>132ms"]):::uptodate
-    x39d4c25e00b7fd88(["otm1_eval<br>91ms"]):::uptodate --> x04a786e5cb4e2e50(["otm1_eval2<br>132ms"]):::uptodate
-    x5b122c20a26ef6ec(["otm1_iat_paths<br>4ms"]):::uptodate --> xe5e2187e108fd7e8(["otm1_iat<br>305ms"]):::uptodate
-    xe5e2187e108fd7e8(["otm1_iat<br>305ms"]):::uptodate --> x0e90d8257cff6748(["otm1_iat_codebook<br>311ms"]):::uptodate
-    x5b122c20a26ef6ec(["otm1_iat_paths<br>4ms"]):::uptodate --> x58b5e12e1de93b31["otm1_iat_files<br>19ms<br>155 branches"]:::uptodate
-    x1cf8b0e8f9fac3bc(["otm1_iat2_lme<br>35ms"]):::uptodate --> x7315f5df0dc3093b(["otm1_iat_lmer<br>14m 20.9s"]):::uptodate
-    xe5e2187e108fd7e8(["otm1_iat<br>305ms"]):::uptodate --> xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::uptodate
-    x65964d8cee72cae4(["otm1_technical_failure<br>839ms"]):::uptodate --> xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::uptodate
-    x1e57612434439fd3(["otm1_stimulus_translations<br>1ms"]):::uptodate --> xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::uptodate
-    xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::uptodate --> x1cf8b0e8f9fac3bc(["otm1_iat2_lme<br>35ms"]):::uptodate
-    x01bd262e2236a1f2["otm1_log_files<br>24ms<br>155 branches"]:::uptodate --> xb701179d8a651b0f(["otm1_log<br>19ms"]):::uptodate
-    xdc24e52455c5ffd5(["otm1_log_paths<br>4ms"]):::uptodate --> x01bd262e2236a1f2["otm1_log_files<br>24ms<br>155 branches"]:::uptodate
-    xffbc541add3afc7e(["otm1_mem_paths<br>876ms"]):::uptodate --> x3735fa5ca75e343d(["otm1_mem<br>143ms"]):::uptodate
-    x3735fa5ca75e343d(["otm1_mem<br>143ms"]):::uptodate --> x0f13eb39be8decb6(["otm1_mem_codebook<br>25ms"]):::uptodate
-    xffbc541add3afc7e(["otm1_mem_paths<br>876ms"]):::uptodate --> x2c1483e256f9ea97["otm1_mem_files<br>22ms<br>155 branches"]:::uptodate
-    x955ec52fa68b360c(["otm1_demo<br>65ms"]):::uptodate --> xc54a013649e91e86(["otm1_memory<br>15ms"]):::uptodate
-    xb701179d8a651b0f(["otm1_log<br>19ms"]):::uptodate --> xc54a013649e91e86(["otm1_memory<br>15ms"]):::uptodate
-    x65964d8cee72cae4(["otm1_technical_failure<br>839ms"]):::uptodate --> xc54a013649e91e86(["otm1_memory<br>15ms"]):::uptodate
-    x3735fa5ca75e343d(["otm1_mem<br>143ms"]):::uptodate --> xc54a013649e91e86(["otm1_memory<br>15ms"]):::uptodate
-    xc54a013649e91e86(["otm1_memory<br>15ms"]):::uptodate --> x58589bd51b4e3618(["otm1_memory_codebook<br>4ms"]):::uptodate
-    xc54a013649e91e86(["otm1_memory<br>15ms"]):::uptodate --> xf5fd4fe7bc5f6869(["otm1_memory_share<br>3ms"]):::uptodate
-    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::uptodate
-    x1b3dbf29d0254ff8(["otm1_null_model_matrix<br>28ms"]):::uptodate --> x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::uptodate
-    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::uptodate --> x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::uptodate
-    x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::uptodate --> x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::uptodate
-    x30e55b80dfa22716(["otm1_no_lab_effect_model_matrix<br>1ms"]):::uptodate --> xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::uptodate
-    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::uptodate
-    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::uptodate --> xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::uptodate
-    x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::uptodate --> xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::uptodate
-    xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::uptodate --> x30e55b80dfa22716(["otm1_no_lab_effect_model_matrix<br>1ms"]):::uptodate
-    x30e55b80dfa22716(["otm1_no_lab_effect_model_matrix<br>1ms"]):::uptodate --> x1b3dbf29d0254ff8(["otm1_null_model_matrix<br>28ms"]):::uptodate
+    x0920c189f00eaac5(["otm1_unconstrained_samples<br>27.1s"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
+    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
+    x52d22db802a78872(["otm1_unconstrained_pp<br>12.9s"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
+    xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
+    x7315f5df0dc3093b(["otm1_iat_lmer<br>14m 20.9s"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
+    x1cf8b0e8f9fac3bc(["otm1_iat2_lme<br>35ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
+    x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
+    xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
+    xb701179d8a651b0f(["otm1_log<br>19ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
+    x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
+    x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
+    x65964d8cee72cae4(["otm1_technical_failure<br>839ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
+    xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
+    x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
+    x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated --> x109b8ac05075c22b(["otm1_attidudes_codebook<br>4ms"]):::outdated
+    x04a786e5cb4e2e50(["otm1_eval2<br>132ms"]):::outdated --> x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated
+    xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::outdated --> x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated
+    xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated --> x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated
+    x65964d8cee72cae4(["otm1_technical_failure<br>839ms"]):::outdated --> x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated
+    x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated --> xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated
+    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> x7de018286ec8200a(["otm1_attitudes_collapsed_codebook<br>3ms"]):::outdated
+    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> xbbf5ba6b97469185(["otm1_attitudes_collapsed_share<br>1ms"]):::outdated
+    x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated --> x51090a5234785938(["otm1_attitudes_share<br>1ms"]):::outdated
+    xb7593c7bc0545136(["otm1_demo_paths<br>4ms"]):::outdated --> x955ec52fa68b360c(["otm1_demo<br>65ms"]):::outdated
+    x955ec52fa68b360c(["otm1_demo<br>65ms"]):::outdated --> xf3d78d651e314dd7(["otm1_demo_codebook"]):::outdated
+    xb7593c7bc0545136(["otm1_demo_paths<br>4ms"]):::outdated --> x9609911f3ef7528f["otm1_demo_files<br>17ms<br>155 branches"]:::outdated
+    xab0891087e830463(["otm1_eval_paths<br>3ms"]):::outdated --> x39d4c25e00b7fd88(["otm1_eval<br>91ms"]):::outdated
+    x39d4c25e00b7fd88(["otm1_eval<br>91ms"]):::outdated --> xb5ee328422de3511(["otm1_eval_codebook"]):::outdated
+    xab0891087e830463(["otm1_eval_paths<br>3ms"]):::outdated --> xa665075eb58fc7b7["otm1_eval_files<br>23ms<br>155 branches"]:::outdated
+    x65964d8cee72cae4(["otm1_technical_failure<br>839ms"]):::outdated --> x04a786e5cb4e2e50(["otm1_eval2<br>132ms"]):::outdated
+    x39d4c25e00b7fd88(["otm1_eval<br>91ms"]):::outdated --> x04a786e5cb4e2e50(["otm1_eval2<br>132ms"]):::outdated
+    x5b122c20a26ef6ec(["otm1_iat_paths<br>4ms"]):::outdated --> xe5e2187e108fd7e8(["otm1_iat<br>305ms"]):::outdated
+    xe5e2187e108fd7e8(["otm1_iat<br>305ms"]):::outdated --> x0e90d8257cff6748(["otm1_iat_codebook"]):::outdated
+    x5b122c20a26ef6ec(["otm1_iat_paths<br>4ms"]):::outdated --> x58b5e12e1de93b31["otm1_iat_files<br>19ms<br>155 branches"]:::outdated
+    x1cf8b0e8f9fac3bc(["otm1_iat2_lme<br>35ms"]):::outdated --> x7315f5df0dc3093b(["otm1_iat_lmer<br>14m 20.9s"]):::outdated
+    x1e57612434439fd3(["otm1_stimulus_translations<br>1ms"]):::outdated --> xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::outdated
+    xe5e2187e108fd7e8(["otm1_iat<br>305ms"]):::outdated --> xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::outdated
+    x65964d8cee72cae4(["otm1_technical_failure<br>839ms"]):::outdated --> xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::outdated
+    xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::outdated --> x1cf8b0e8f9fac3bc(["otm1_iat2_lme<br>35ms"]):::outdated
+    x01bd262e2236a1f2["otm1_log_files<br>24ms<br>155 branches"]:::outdated --> xb701179d8a651b0f(["otm1_log<br>19ms"]):::outdated
+    xdc24e52455c5ffd5(["otm1_log_paths<br>4ms"]):::outdated --> x01bd262e2236a1f2["otm1_log_files<br>24ms<br>155 branches"]:::outdated
+    xffbc541add3afc7e(["otm1_mem_paths<br>876ms"]):::outdated --> x3735fa5ca75e343d(["otm1_mem<br>143ms"]):::outdated
+    x3735fa5ca75e343d(["otm1_mem<br>143ms"]):::outdated --> x0f13eb39be8decb6(["otm1_mem_codebook"]):::outdated
+    xffbc541add3afc7e(["otm1_mem_paths<br>876ms"]):::outdated --> x2c1483e256f9ea97["otm1_mem_files<br>22ms<br>155 branches"]:::outdated
+    x955ec52fa68b360c(["otm1_demo<br>65ms"]):::outdated --> xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated
+    xb701179d8a651b0f(["otm1_log<br>19ms"]):::outdated --> xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated
+    x3735fa5ca75e343d(["otm1_mem<br>143ms"]):::outdated --> xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated
+    x65964d8cee72cae4(["otm1_technical_failure<br>839ms"]):::outdated --> xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated
+    xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated --> x58589bd51b4e3618(["otm1_memory_codebook<br>206ms"]):::outdated
+    xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated --> xf5fd4fe7bc5f6869(["otm1_memory_share<br>3ms"]):::outdated
+    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::outdated
+    x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::outdated --> x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::outdated
+    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::outdated
+    x1b3dbf29d0254ff8(["otm1_null_model_matrix<br>28ms"]):::outdated --> x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::outdated
+    x30e55b80dfa22716(["otm1_no_lab_effect_model_matrix<br>1ms"]):::outdated --> xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::outdated
+    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::outdated
+    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::outdated
+    x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::outdated --> xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::outdated
+    xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::outdated --> x30e55b80dfa22716(["otm1_no_lab_effect_model_matrix<br>1ms"]):::outdated
+    x30e55b80dfa22716(["otm1_no_lab_effect_model_matrix<br>1ms"]):::outdated --> x1b3dbf29d0254ff8(["otm1_null_model_matrix<br>28ms"]):::outdated
+    x971025700bc028e3(["otm1_n_mcmc_samples_sensitivity<br>34ms"]):::outdated --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
     xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
-    xfe2f3a45b5bba6fb(["sensitivity_rscales<br>19ms"]):::uptodate --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
-    xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::uptodate --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
-    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::uptodate --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
-    x971025700bc028e3(["otm1_n_mcmc_samples_sensitivity<br>36ms"]):::uptodate --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
-    x0517aa4bdbe609aa(["otm1_stimuls_translations_file<br>0ms"]):::uptodate --> x1e57612434439fd3(["otm1_stimulus_translations<br>1ms"]):::uptodate
-    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::uptodate --> x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::uptodate
-    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::uptodate
-    x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::uptodate --> x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::uptodate
-    xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::uptodate --> x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::uptodate
-    x340cd81aa8809750>"BayesFactor_design_matrix"]:::uptodate --> xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::uptodate
-    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::uptodate --> xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::uptodate
-    x0920c189f00eaac5(["otm1_unconstrained_samples<br>27.1s"]):::uptodate --> x52d22db802a78872(["otm1_unconstrained_pp<br>12.9s"]):::uptodate
-    xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::uptodate --> x0920c189f00eaac5(["otm1_unconstrained_samples<br>27.1s"]):::uptodate
-    xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::uptodate --> xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::uptodate
-    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::uptodate
-    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::uptodate --> xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::uptodate
-    x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::uptodate --> xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::uptodate
+    xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::outdated --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
+    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
+    xfe2f3a45b5bba6fb(["sensitivity_rscales<br>19ms"]):::outdated --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
+    x0517aa4bdbe609aa(["otm1_stimuls_translations_file<br>0ms"]):::uptodate --> x1e57612434439fd3(["otm1_stimulus_translations<br>1ms"]):::outdated
+    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::outdated
+    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::outdated
+    x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::outdated --> x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::outdated
+    xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::outdated --> x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::outdated
+    x340cd81aa8809750>"BayesFactor_design_matrix"]:::uptodate --> xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::outdated
+    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::outdated
+    x0920c189f00eaac5(["otm1_unconstrained_samples<br>27.1s"]):::outdated --> x52d22db802a78872(["otm1_unconstrained_pp<br>12.9s"]):::outdated
+    xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::outdated --> x0920c189f00eaac5(["otm1_unconstrained_samples<br>27.1s"]):::outdated
+    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::outdated
+    xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::outdated --> xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::outdated
+    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::outdated
+    x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::outdated --> xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::outdated
     x467d0ee18a4b2e81>"dz_to_f"]:::uptodate --> x81f3f47f99d87764>"pes_to_f"]:::uptodate
     x334bef29eb9e3471>"pes_to_dz"]:::uptodate --> x81f3f47f99d87764>"pes_to_f"]:::uptodate
     x94109b123e25ff82>"eiv_lm"]:::uptodate --> x748a6a58f143b78c>"replication"]:::uptodate
     xa584f949724a95ca>"gen"]:::uptodate --> x748a6a58f143b78c>"replication"]:::uptodate
-    x10fbdf70c6866ff9{{"StatHPDContour"}}:::uptodate --> xfc1f04f0de1e598f>"stat_hpd_2d"]:::uptodate
     x6294c2394e2f4f30>"apa_print_bf"]:::uptodate
     xba1f288e183d51f9>"apa_print_bf.default"]:::uptodate
     xdb15412741209c8e>"apa_print_ps"]:::uptodate
@@ -232,15 +232,14 @@ graph LR
     x645267aeeffd1346>"confint.eiv_lm"]:::uptodate
     xcc16ce17ddd6e463>"dz_to_pes"]:::uptodate
     x0b2e7d15aa5b51a5>"f_to_dz"]:::uptodate
-    xf0e95a832e1b6d9b{{"methexp_workers"}}:::outdated
     xc82764713cd5f1c6>"modal_frame_rate"]:::uptodate
     x5393deccc2643841{{"otm1_path"}}:::uptodate
     x62a3425f4d9085a9>"predict.eiv_lm"]:::uptodate
     x51c8c0108354711d>"print.eiv_lm"]:::uptodate
     x69be0036bf62bc46{{"processed_data_path"}}:::uptodate
     xdc64ca7f5ffa38ee{{"raw_data_path"}}:::uptodate
-    x0638fdb10df7fee0{{"scripts"}}:::uptodate
-    x8c7a0e573e16ac7b{{"sourced"}}:::uptodate
+    x0638fdb10df7fee0{{"scripts"}}:::outdated
+    x8c7a0e573e16ac7b{{"sourced"}}:::outdated
     x91c22bcf0db9e1af>"summary.eiv_lm"]:::uptodate
     xe587e83cdd277755>"t_to_dz"]:::uptodate
     x8b5eaad11a95a195>"tar_read_factory"]:::uptodate
@@ -260,7 +259,6 @@ graph LR
   subgraph Legend
     xf1522833a4d242c5(["Up to date"]):::uptodate
     x2db1ec7a48f65a9b(["Outdated"]):::outdated
-    xb6630624a7b3aa0f(["Dispatched"]):::dispatched
     xbecb13963f49e50b{{"Object"}}:::none
     xeb2d7cac8a1ce544>"Function"]:::none
     xd03d7c7dd2ddda2b(["Regular target"]):::none
@@ -268,80 +266,79 @@ graph LR
   end
   subgraph Graph
     direction LR
-    xebd52189908b7113>"invert_subscript"]:::uptodate --> x5512318a8de090c6>"apa_print_bf.numeric"]:::uptodate
     x22891fac2c76433e>"typeset_scientific"]:::uptodate --> x5512318a8de090c6>"apa_print_bf.numeric"]:::uptodate
+    xebd52189908b7113>"invert_subscript"]:::uptodate --> x5512318a8de090c6>"apa_print_bf.numeric"]:::uptodate
     x8a66cb8c44d73a56>"eiv_loglik"]:::uptodate --> x94109b123e25ff82>"eiv_lm"]:::uptodate
     xfa7597b317fa6753>"g_map"]:::uptodate --> xe896a0789aac9abb>"n_way_anova"]:::uptodate
     x55749fe9af4cb51d>"r_scale"]:::uptodate --> xe896a0789aac9abb>"n_way_anova"]:::uptodate
-    xd1638b5db5b7f9e9(["otm2_exclude<br>0ms"]):::uptodate --> x1aed8c7d17178df9(["otm2_attitudes<br>58ms"]):::uptodate
-    x60576197195992a3(["otm2_iat2<br>97ms"]):::uptodate --> x1aed8c7d17178df9(["otm2_attitudes<br>58ms"]):::uptodate
-    x799f5a74269163e2(["otm2_memory<br>25ms"]):::uptodate --> x1aed8c7d17178df9(["otm2_attitudes<br>58ms"]):::uptodate
-    xd2ecf0ee0e680626(["otm2_eval2<br>257ms"]):::uptodate --> x1aed8c7d17178df9(["otm2_attitudes<br>58ms"]):::uptodate
-    x1aed8c7d17178df9(["otm2_attitudes<br>58ms"]):::uptodate --> x25acab613e7e5978(["otm2_attitudes_codebook<br>5ms"]):::uptodate
-    x1aed8c7d17178df9(["otm2_attitudes<br>58ms"]):::uptodate --> x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::uptodate
-    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::uptodate --> xec29d3a50fcde28d(["otm2_attitudes_collapsed_codebook<br>4ms"]):::uptodate
-    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::uptodate --> xf18d0d1ec871b743(["otm2_attitudes_collapsed_share<br>1ms"]):::uptodate
-    x1aed8c7d17178df9(["otm2_attitudes<br>58ms"]):::uptodate --> x36dbe1c4390faa9b(["otm2_attitudes_share<br>1ms"]):::uptodate
-    xba9921a5beb8b8e8(["otm2_demo_paths<br>11ms"]):::uptodate --> x2fd2ad9c7cd8a0de(["otm2_demo<br>461ms"]):::uptodate
-    x2fd2ad9c7cd8a0de(["otm2_demo<br>461ms"]):::uptodate --> x3bccff4691e0e9a8(["otm2_demo_codebook<br>3ms"]):::uptodate
-    xba9921a5beb8b8e8(["otm2_demo_paths<br>11ms"]):::uptodate --> x863e37451d2a86c3["otm2_demo_files<br>58ms<br>432 branches"]:::uptodate
-    xc89ae752de9babdc(["otm2_eval_paths<br>11ms"]):::uptodate --> xbf195c37831a7771(["otm2_eval<br>232ms"]):::uptodate
-    xbf195c37831a7771(["otm2_eval<br>232ms"]):::uptodate --> xeb54425df050ee11(["otm2_eval_codebook<br>205ms"]):::uptodate
-    xc89ae752de9babdc(["otm2_eval_paths<br>11ms"]):::uptodate --> x444df89cb42ff570["otm2_eval_files<br>67ms<br>432 branches"]:::uptodate
-    xbf195c37831a7771(["otm2_eval<br>232ms"]):::uptodate --> xd2ecf0ee0e680626(["otm2_eval2<br>257ms"]):::uptodate
-    xd1638b5db5b7f9e9(["otm2_exclude<br>0ms"]):::uptodate --> xd2ecf0ee0e680626(["otm2_eval2<br>257ms"]):::uptodate
-    x1f3521fc63f3c9ff(["otm2_noncompliance<br>0ms"]):::uptodate --> xd1638b5db5b7f9e9(["otm2_exclude<br>0ms"]):::uptodate
-    x7b0f8d5fedd9ecd9(["otm2_wrong_framerate<br>42ms"]):::uptodate --> xd1638b5db5b7f9e9(["otm2_exclude<br>0ms"]):::uptodate
-    xb524426b0371380d(["otm2_technical_failure<br>34ms"]):::uptodate --> xd1638b5db5b7f9e9(["otm2_exclude<br>0ms"]):::uptodate
-    xd236cc7b7fceed2a(["otm2_iat_paths<br>10ms"]):::uptodate --> x2ebe8ad264f8c177(["otm2_iat<br>967ms"]):::uptodate
-    x2ebe8ad264f8c177(["otm2_iat<br>967ms"]):::uptodate --> x26c4a43bc88aab5b(["otm2_iat_codebook<br>301ms"]):::uptodate
-    xd236cc7b7fceed2a(["otm2_iat_paths<br>10ms"]):::uptodate --> x9e0d515e450981ab["otm2_iat_files<br>53ms<br>432 branches"]:::uptodate
-    x2ebe8ad264f8c177(["otm2_iat<br>967ms"]):::uptodate --> x60576197195992a3(["otm2_iat2<br>97ms"]):::uptodate
-    xd1638b5db5b7f9e9(["otm2_exclude<br>0ms"]):::uptodate --> x60576197195992a3(["otm2_iat2<br>97ms"]):::uptodate
-    xa6040b7ee7f6e8d6["otm2_log_files<br>51ms<br>432 branches"]:::uptodate --> xbf6cbb630fe7d10c(["otm2_log<br>90ms"]):::uptodate
-    xa45722c919de8ad3(["otm2_log_paths<br>11ms"]):::uptodate --> xa6040b7ee7f6e8d6["otm2_log_files<br>51ms<br>432 branches"]:::uptodate
-    x8c86aa4fadc2c219(["otm2_mem_paths<br>44ms"]):::uptodate --> x0fc8e78af8befe1b(["otm2_mem<br>228ms"]):::uptodate
-    x0fc8e78af8befe1b(["otm2_mem<br>228ms"]):::uptodate --> x82291760e5dd63b1(["otm2_mem_codebook<br>43ms"]):::uptodate
-    x8c86aa4fadc2c219(["otm2_mem_paths<br>44ms"]):::uptodate --> x9f98ce9f92c605fc["otm2_mem_files<br>46ms<br>432 branches"]:::uptodate
-    x0fc8e78af8befe1b(["otm2_mem<br>228ms"]):::uptodate --> x799f5a74269163e2(["otm2_memory<br>25ms"]):::uptodate
-    x2fd2ad9c7cd8a0de(["otm2_demo<br>461ms"]):::uptodate --> x799f5a74269163e2(["otm2_memory<br>25ms"]):::uptodate
-    xbf6cbb630fe7d10c(["otm2_log<br>90ms"]):::uptodate --> x799f5a74269163e2(["otm2_memory<br>25ms"]):::uptodate
-    xd1638b5db5b7f9e9(["otm2_exclude<br>0ms"]):::uptodate --> x799f5a74269163e2(["otm2_memory<br>25ms"]):::uptodate
-    x799f5a74269163e2(["otm2_memory<br>25ms"]):::uptodate --> xe0c3896479875ff7(["otm2_memory_codebook<br>5ms"]):::uptodate
-    x799f5a74269163e2(["otm2_memory<br>25ms"]):::uptodate --> xfe1a1e6c362a1bd3(["otm2_memory_share<br>7ms"]):::uptodate
-    x329d5188ff25885d(["otm2_no_duration_effect_model_matrix<br>44ms"]):::uptodate --> x29840932ab81052b(["otm2_no_duration_effect<br>1d 6h 19m 53.2s"]):::uptodate
-    x54bb640ecccc02ea(["otm2_n_mcmc_samples<br>34ms"]):::uptodate --> x29840932ab81052b(["otm2_no_duration_effect<br>1d 6h 19m 53.2s"]):::uptodate
-    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x29840932ab81052b(["otm2_no_duration_effect<br>1d 6h 19m 53.2s"]):::uptodate
-    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::uptodate --> x29840932ab81052b(["otm2_no_duration_effect<br>1d 6h 19m 53.2s"]):::uptodate
-    x76897d5364213b4a(["otm2_unconstrained_model_matrix<br>1.1s"]):::uptodate --> x329d5188ff25885d(["otm2_no_duration_effect_model_matrix<br>44ms"]):::uptodate
-    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> xa460b43f39158498(["otm2_no_effect<br>1d 3h 53m 48s"]):::uptodate
-    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::uptodate --> xa460b43f39158498(["otm2_no_effect<br>1d 3h 53m 48s"]):::uptodate
-    x54bb640ecccc02ea(["otm2_n_mcmc_samples<br>34ms"]):::uptodate --> xa460b43f39158498(["otm2_no_effect<br>1d 3h 53m 48s"]):::uptodate
-    x03b40a8cbebc9686(["otm2_null_model_matrix<br>44ms"]):::uptodate --> xa460b43f39158498(["otm2_no_effect<br>1d 3h 53m 48s"]):::uptodate
-    x329d5188ff25885d(["otm2_no_duration_effect_model_matrix<br>44ms"]):::uptodate --> x03b40a8cbebc9686(["otm2_null_model_matrix<br>44ms"]):::uptodate
-    xd9fb3e8cb7fe2bbd(["otm2_n_mcmc_samples_sensitivity<br>0ms"]):::uptodate --> x56eb73390bd85aec["otm2_prior_sensitivity_analysis"]:::dispatched
-    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x56eb73390bd85aec["otm2_prior_sensitivity_analysis"]:::dispatched
-    x76897d5364213b4a(["otm2_unconstrained_model_matrix<br>1.1s"]):::uptodate --> x56eb73390bd85aec["otm2_prior_sensitivity_analysis"]:::dispatched
-    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::uptodate --> x56eb73390bd85aec["otm2_prior_sensitivity_analysis"]:::dispatched
-    xfe2f3a45b5bba6fb(["sensitivity_rscales<br>20ms"]):::uptodate --> x56eb73390bd85aec["otm2_prior_sensitivity_analysis"]:::dispatched
-    x76897d5364213b4a(["otm2_unconstrained_model_matrix<br>1.1s"]):::uptodate --> x1f5d35bb4e32fd46(["otm2_unconstrained<br>1d 7h 54m 59.5s"]):::uptodate
-    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::uptodate --> x1f5d35bb4e32fd46(["otm2_unconstrained<br>1d 7h 54m 59.5s"]):::uptodate
-    x54bb640ecccc02ea(["otm2_n_mcmc_samples<br>34ms"]):::uptodate --> x1f5d35bb4e32fd46(["otm2_unconstrained<br>1d 7h 54m 59.5s"]):::uptodate
-    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x1f5d35bb4e32fd46(["otm2_unconstrained<br>1d 7h 54m 59.5s"]):::uptodate
-    x340cd81aa8809750>"BayesFactor_design_matrix"]:::uptodate --> x76897d5364213b4a(["otm2_unconstrained_model_matrix<br>1.1s"]):::uptodate
-    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::uptodate --> x76897d5364213b4a(["otm2_unconstrained_model_matrix<br>1.1s"]):::uptodate
-    x7403356f63573e1c(["otm2_unconstrained_samples<br>13s"]):::uptodate --> x4c4306231e4738fb(["otm2_unconstrained_pp<br>3.8s"]):::uptodate
-    x56ee892b9e862a21(["otm2_unconstrained_samples_raw<br>3d 15h 59m 31.3s"]):::uptodate --> x7403356f63573e1c(["otm2_unconstrained_samples<br>13s"]):::uptodate
-    x54bb640ecccc02ea(["otm2_n_mcmc_samples<br>34ms"]):::uptodate --> x56ee892b9e862a21(["otm2_unconstrained_samples_raw<br>3d 15h 59m 31.3s"]):::uptodate
-    x76897d5364213b4a(["otm2_unconstrained_model_matrix<br>1.1s"]):::uptodate --> x56ee892b9e862a21(["otm2_unconstrained_samples_raw<br>3d 15h 59m 31.3s"]):::uptodate
-    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::uptodate --> x56ee892b9e862a21(["otm2_unconstrained_samples_raw<br>3d 15h 59m 31.3s"]):::uptodate
-    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x56ee892b9e862a21(["otm2_unconstrained_samples_raw<br>3d 15h 59m 31.3s"]):::uptodate
-    xbf6cbb630fe7d10c(["otm2_log<br>90ms"]):::uptodate --> x7b0f8d5fedd9ecd9(["otm2_wrong_framerate<br>42ms"]):::uptodate
+    xd1638b5db5b7f9e9(["otm2_exclude<br>0ms"]):::outdated --> x1aed8c7d17178df9(["otm2_attitudes<br>58ms"]):::outdated
+    x60576197195992a3(["otm2_iat2<br>97ms"]):::outdated --> x1aed8c7d17178df9(["otm2_attitudes<br>58ms"]):::outdated
+    x799f5a74269163e2(["otm2_memory<br>25ms"]):::outdated --> x1aed8c7d17178df9(["otm2_attitudes<br>58ms"]):::outdated
+    xd2ecf0ee0e680626(["otm2_eval2<br>257ms"]):::outdated --> x1aed8c7d17178df9(["otm2_attitudes<br>58ms"]):::outdated
+    x1aed8c7d17178df9(["otm2_attitudes<br>58ms"]):::outdated --> x25acab613e7e5978(["otm2_attitudes_codebook<br>5ms"]):::outdated
+    x1aed8c7d17178df9(["otm2_attitudes<br>58ms"]):::outdated --> x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::outdated
+    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::outdated --> xec29d3a50fcde28d(["otm2_attitudes_collapsed_codebook<br>4ms"]):::outdated
+    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::outdated --> xf18d0d1ec871b743(["otm2_attitudes_collapsed_share<br>1ms"]):::outdated
+    x1aed8c7d17178df9(["otm2_attitudes<br>58ms"]):::outdated --> x36dbe1c4390faa9b(["otm2_attitudes_share<br>1ms"]):::outdated
+    xba9921a5beb8b8e8(["otm2_demo_paths<br>11ms"]):::outdated --> x2fd2ad9c7cd8a0de(["otm2_demo<br>461ms"]):::outdated
+    x2fd2ad9c7cd8a0de(["otm2_demo<br>461ms"]):::outdated --> x3bccff4691e0e9a8(["otm2_demo_codebook<br>3ms"]):::outdated
+    xba9921a5beb8b8e8(["otm2_demo_paths<br>11ms"]):::outdated --> x863e37451d2a86c3["otm2_demo_files<br>58ms<br>432 branches"]:::outdated
+    xc89ae752de9babdc(["otm2_eval_paths<br>11ms"]):::outdated --> xbf195c37831a7771(["otm2_eval<br>232ms"]):::outdated
+    xbf195c37831a7771(["otm2_eval<br>232ms"]):::outdated --> xeb54425df050ee11(["otm2_eval_codebook<br>205ms"]):::outdated
+    xc89ae752de9babdc(["otm2_eval_paths<br>11ms"]):::outdated --> x444df89cb42ff570["otm2_eval_files<br>67ms<br>432 branches"]:::outdated
+    xbf195c37831a7771(["otm2_eval<br>232ms"]):::outdated --> xd2ecf0ee0e680626(["otm2_eval2<br>257ms"]):::outdated
+    xd1638b5db5b7f9e9(["otm2_exclude<br>0ms"]):::outdated --> xd2ecf0ee0e680626(["otm2_eval2<br>257ms"]):::outdated
+    x7b0f8d5fedd9ecd9(["otm2_wrong_framerate<br>42ms"]):::outdated --> xd1638b5db5b7f9e9(["otm2_exclude<br>0ms"]):::outdated
+    xb524426b0371380d(["otm2_technical_failure<br>34ms"]):::outdated --> xd1638b5db5b7f9e9(["otm2_exclude<br>0ms"]):::outdated
+    x1f3521fc63f3c9ff(["otm2_noncompliance<br>0ms"]):::outdated --> xd1638b5db5b7f9e9(["otm2_exclude<br>0ms"]):::outdated
+    xd236cc7b7fceed2a(["otm2_iat_paths<br>10ms"]):::outdated --> x2ebe8ad264f8c177(["otm2_iat<br>967ms"]):::outdated
+    x2ebe8ad264f8c177(["otm2_iat<br>967ms"]):::outdated --> x26c4a43bc88aab5b(["otm2_iat_codebook<br>301ms"]):::outdated
+    xd236cc7b7fceed2a(["otm2_iat_paths<br>10ms"]):::outdated --> x9e0d515e450981ab["otm2_iat_files<br>53ms<br>432 branches"]:::outdated
+    x2ebe8ad264f8c177(["otm2_iat<br>967ms"]):::outdated --> x60576197195992a3(["otm2_iat2<br>97ms"]):::outdated
+    xd1638b5db5b7f9e9(["otm2_exclude<br>0ms"]):::outdated --> x60576197195992a3(["otm2_iat2<br>97ms"]):::outdated
+    xa6040b7ee7f6e8d6["otm2_log_files<br>51ms<br>432 branches"]:::outdated --> xbf6cbb630fe7d10c(["otm2_log<br>90ms"]):::outdated
+    xa45722c919de8ad3(["otm2_log_paths<br>11ms"]):::outdated --> xa6040b7ee7f6e8d6["otm2_log_files<br>51ms<br>432 branches"]:::outdated
+    x8c86aa4fadc2c219(["otm2_mem_paths<br>44ms"]):::outdated --> x0fc8e78af8befe1b(["otm2_mem<br>228ms"]):::outdated
+    x0fc8e78af8befe1b(["otm2_mem<br>228ms"]):::outdated --> x82291760e5dd63b1(["otm2_mem_codebook<br>43ms"]):::outdated
+    x8c86aa4fadc2c219(["otm2_mem_paths<br>44ms"]):::outdated --> x9f98ce9f92c605fc["otm2_mem_files<br>46ms<br>432 branches"]:::outdated
+    x2fd2ad9c7cd8a0de(["otm2_demo<br>461ms"]):::outdated --> x799f5a74269163e2(["otm2_memory<br>25ms"]):::outdated
+    xbf6cbb630fe7d10c(["otm2_log<br>90ms"]):::outdated --> x799f5a74269163e2(["otm2_memory<br>25ms"]):::outdated
+    x0fc8e78af8befe1b(["otm2_mem<br>228ms"]):::outdated --> x799f5a74269163e2(["otm2_memory<br>25ms"]):::outdated
+    xd1638b5db5b7f9e9(["otm2_exclude<br>0ms"]):::outdated --> x799f5a74269163e2(["otm2_memory<br>25ms"]):::outdated
+    x799f5a74269163e2(["otm2_memory<br>25ms"]):::outdated --> xe0c3896479875ff7(["otm2_memory_codebook<br>5ms"]):::outdated
+    x799f5a74269163e2(["otm2_memory<br>25ms"]):::outdated --> xfe1a1e6c362a1bd3(["otm2_memory_share<br>7ms"]):::outdated
+    x54bb640ecccc02ea(["otm2_n_mcmc_samples<br>34ms"]):::outdated --> x29840932ab81052b(["otm2_no_duration_effect<br>1d 6h 19m 53.2s"]):::outdated
+    x329d5188ff25885d(["otm2_no_duration_effect_model_matrix<br>44ms"]):::outdated --> x29840932ab81052b(["otm2_no_duration_effect<br>1d 6h 19m 53.2s"]):::outdated
+    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x29840932ab81052b(["otm2_no_duration_effect<br>1d 6h 19m 53.2s"]):::outdated
+    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::outdated --> x29840932ab81052b(["otm2_no_duration_effect<br>1d 6h 19m 53.2s"]):::outdated
+    x76897d5364213b4a(["otm2_unconstrained_model_matrix<br>1.1s"]):::outdated --> x329d5188ff25885d(["otm2_no_duration_effect_model_matrix<br>44ms"]):::outdated
+    x03b40a8cbebc9686(["otm2_null_model_matrix<br>44ms"]):::outdated --> xa460b43f39158498(["otm2_no_effect<br>1d 3h 53m 48s"]):::outdated
+    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::outdated --> xa460b43f39158498(["otm2_no_effect<br>1d 3h 53m 48s"]):::outdated
+    x54bb640ecccc02ea(["otm2_n_mcmc_samples<br>34ms"]):::outdated --> xa460b43f39158498(["otm2_no_effect<br>1d 3h 53m 48s"]):::outdated
+    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> xa460b43f39158498(["otm2_no_effect<br>1d 3h 53m 48s"]):::outdated
+    x329d5188ff25885d(["otm2_no_duration_effect_model_matrix<br>44ms"]):::outdated --> x03b40a8cbebc9686(["otm2_null_model_matrix<br>44ms"]):::outdated
+    x76897d5364213b4a(["otm2_unconstrained_model_matrix<br>1.1s"]):::outdated --> x56eb73390bd85aec["otm2_prior_sensitivity_analysis"]:::outdated
+    xd9fb3e8cb7fe2bbd(["otm2_n_mcmc_samples_sensitivity<br>0ms"]):::outdated --> x56eb73390bd85aec["otm2_prior_sensitivity_analysis"]:::outdated
+    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x56eb73390bd85aec["otm2_prior_sensitivity_analysis"]:::outdated
+    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::outdated --> x56eb73390bd85aec["otm2_prior_sensitivity_analysis"]:::outdated
+    xfe2f3a45b5bba6fb(["sensitivity_rscales<br>20ms"]):::outdated --> x56eb73390bd85aec["otm2_prior_sensitivity_analysis"]:::outdated
+    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x1f5d35bb4e32fd46(["otm2_unconstrained<br>1d 7h 54m 59.5s"]):::outdated
+    x76897d5364213b4a(["otm2_unconstrained_model_matrix<br>1.1s"]):::outdated --> x1f5d35bb4e32fd46(["otm2_unconstrained<br>1d 7h 54m 59.5s"]):::outdated
+    x54bb640ecccc02ea(["otm2_n_mcmc_samples<br>34ms"]):::outdated --> x1f5d35bb4e32fd46(["otm2_unconstrained<br>1d 7h 54m 59.5s"]):::outdated
+    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::outdated --> x1f5d35bb4e32fd46(["otm2_unconstrained<br>1d 7h 54m 59.5s"]):::outdated
+    x340cd81aa8809750>"BayesFactor_design_matrix"]:::uptodate --> x76897d5364213b4a(["otm2_unconstrained_model_matrix<br>1.1s"]):::outdated
+    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::outdated --> x76897d5364213b4a(["otm2_unconstrained_model_matrix<br>1.1s"]):::outdated
+    x7403356f63573e1c(["otm2_unconstrained_samples<br>13s"]):::outdated --> x4c4306231e4738fb(["otm2_unconstrained_pp<br>3.8s"]):::outdated
+    x56ee892b9e862a21(["otm2_unconstrained_samples_raw<br>3d 15h 59m 31.3s"]):::outdated --> x7403356f63573e1c(["otm2_unconstrained_samples<br>13s"]):::outdated
+    x54bb640ecccc02ea(["otm2_n_mcmc_samples<br>34ms"]):::outdated --> x56ee892b9e862a21(["otm2_unconstrained_samples_raw<br>3d 15h 59m 31.3s"]):::outdated
+    x76897d5364213b4a(["otm2_unconstrained_model_matrix<br>1.1s"]):::outdated --> x56ee892b9e862a21(["otm2_unconstrained_samples_raw<br>3d 15h 59m 31.3s"]):::outdated
+    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x56ee892b9e862a21(["otm2_unconstrained_samples_raw<br>3d 15h 59m 31.3s"]):::outdated
+    x357b532f7793f2f0(["otm2_attitudes_collapsed<br>6ms"]):::outdated --> x56ee892b9e862a21(["otm2_unconstrained_samples_raw<br>3d 15h 59m 31.3s"]):::outdated
+    xbf6cbb630fe7d10c(["otm2_log<br>90ms"]):::outdated --> x7b0f8d5fedd9ecd9(["otm2_wrong_framerate<br>42ms"]):::outdated
     x467d0ee18a4b2e81>"dz_to_f"]:::uptodate --> x81f3f47f99d87764>"pes_to_f"]:::uptodate
     x334bef29eb9e3471>"pes_to_dz"]:::uptodate --> x81f3f47f99d87764>"pes_to_f"]:::uptodate
     xa584f949724a95ca>"gen"]:::uptodate --> x748a6a58f143b78c>"replication"]:::uptodate
     x94109b123e25ff82>"eiv_lm"]:::uptodate --> x748a6a58f143b78c>"replication"]:::uptodate
-    x10fbdf70c6866ff9{{"StatHPDContour"}}:::uptodate --> xfc1f04f0de1e598f>"stat_hpd_2d"]:::uptodate
     x6294c2394e2f4f30>"apa_print_bf"]:::uptodate
     xba1f288e183d51f9>"apa_print_bf.default"]:::uptodate
     xdb15412741209c8e>"apa_print_ps"]:::uptodate
@@ -353,15 +350,14 @@ graph LR
     x645267aeeffd1346>"confint.eiv_lm"]:::uptodate
     xcc16ce17ddd6e463>"dz_to_pes"]:::uptodate
     x0b2e7d15aa5b51a5>"f_to_dz"]:::uptodate
-    xf0e95a832e1b6d9b{{"methexp_workers"}}:::outdated
     xc82764713cd5f1c6>"modal_frame_rate"]:::uptodate
     x2f5234bae83e7304{{"otm2_path"}}:::uptodate
     x62a3425f4d9085a9>"predict.eiv_lm"]:::uptodate
     x51c8c0108354711d>"print.eiv_lm"]:::uptodate
     x69be0036bf62bc46{{"processed_data_path"}}:::uptodate
     xdc64ca7f5ffa38ee{{"raw_data_path"}}:::uptodate
-    x0638fdb10df7fee0{{"scripts"}}:::uptodate
-    x8c7a0e573e16ac7b{{"sourced"}}:::uptodate
+    x0638fdb10df7fee0{{"scripts"}}:::outdated
+    x8c7a0e573e16ac7b{{"sourced"}}:::outdated
     x91c22bcf0db9e1af>"summary.eiv_lm"]:::uptodate
     xe587e83cdd277755>"t_to_dz"]:::uptodate
     x8b5eaad11a95a195>"tar_read_factory"]:::uptodate
@@ -369,7 +365,6 @@ graph LR
   end
   classDef uptodate stroke:#000000,color:#ffffff,fill:#354823;
   classDef outdated stroke:#000000,color:#000000,fill:#78B7C5;
-  classDef dispatched stroke:#000000,color:#000000,fill:#DC863B;
   classDef none stroke:#000000,color:#000000,fill:#94a4ac;
 ```
 
@@ -454,24 +449,14 @@ by running the corresponding targets in the pipeline by setting the
 `sh ./_make.sh` in a terminal or running the R code in `_make.sh`
 directly in a vanilla R session.
 
-## Preferred citation
-
-    @Manual{aust:2021,
-      title = {ml-otm: What the Package Does (One Line, Title Case)},
-      author = {Frederik Aust},
-      year = {2021},
-      abstract = {What the package does (one paragraph).},
-      version = {0.0.0.9000},
-    }
-
 ## Licensing information
 
-| Product               | License                                                                      |
-|-----------------------|------------------------------------------------------------------------------|
-| Code                  | [MIT](http://opensource.org/licenses/MIT) 2025 Frederik Aust & Tobias Heycke |
-| Data                  | [CC0](https://creativecommons.org/publicdomain/zero/1.0/)                    |
+| Product | License |
+|----|----|
+| Code | [MIT](http://opensource.org/licenses/MIT) 2025 Frederik Aust & Tobias Heycke |
+| Data | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | Experimental software | [MIT](http://opensource.org/licenses/MIT) 2025 Frederik Aust & Tobias Heycke |
-| Stimulus material     | [CC0](https://creativecommons.org/publicdomain/zero/1.0/)                    |
+| Stimulus material | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
 
 <!-- | Manuscript | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/) | -->
 

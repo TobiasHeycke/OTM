@@ -1,10 +1,9 @@
 #!/usr/bin/env Rscript
 
-project <- "otm2"
+project <- "otm1"
 Sys.setenv(TAR_PROJECT = project)
 
 distributed <- TRUE
-notify <- TRUE
 
 # Subset targets --------------------------------------------------------------
 
@@ -82,25 +81,6 @@ if(length(outdated_targets) > 0) {
     targets::tar_make_future(names = !!tbd_targets)
   } else {
     targets::tar_make(names = !!tbd_targets) # , callr_function = NULL
-  }
-
-  end_time <- Sys.time()
-
-
-  # Notify user -----------------------------------------------------------------
-
-  if(isTRUE(notify)) {
-    targets_metadata <- targets::tar_meta(names = !!outdated_targets, fields = c("error"))
-
-    cat("\n")
-    cat("--- Notification ---------------------------------------------\n\n")
-    methexp::tar_e_mail_notification(
-      project
-      , "frederik.aust@uni-koeln.de"
-      , start_time, end_time
-      , targets_metadata
-    )
-    cat("\n\n")
   }
 
   cat("--- End time ------------------------------------------------\n\n")
