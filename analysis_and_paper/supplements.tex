@@ -1,39 +1,42 @@
-\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 %
-\documentclass[english,doc]{apa6}
-\usepackage{lmodern}
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\documentclass[
+  doc]{apa6}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provides euro and other symbols
-\else % if luatex or xelatex
-  \usepackage{unicode-math}
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-% use upquote if available, for straight quotes in verbatim environments
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage[]{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
-\usepackage{hyperref}
-\hypersetup{
-            pdfauthor={Tobias Heycke,1,2, Frederik Aust,1,9, Mahzarin R. Banaji3, Jeremy Cone8, Pieter Van Dessel5, Melissa J. Ferguson10, Xiaoqing Hu6, Congjiao Jiang4, Benedek Kurdi3,10, Robert Rydell7, Lisa Spitzer1, Christoph Stahl1, Christine Vitiello4, \& Jan De Houwer5},
-            pdfborder={0 0 0},
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
-\usepackage{graphicx,grffile}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -42,16 +45,55 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{0}
-
-% set default figure placement to htbp
+% Set default figure placement to htbp
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
-
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
 % Manuscript styling
 \usepackage{upgreek}
 \captionsetup{font=singlespacing,justification=justified}
@@ -67,9 +109,9 @@
 
 % Create new environments so endfloat can handle them
 % \newenvironment{ltable}
-%   {\begin{landscape}\begin{center}\begin{threeparttable}}
-%   {\end{threeparttable}\end{center}\end{landscape}}
-\newenvironment{lltable}{\begin{landscape}\begin{center}\begin{ThreePartTable}}{\end{ThreePartTable}\end{center}\end{landscape}}
+%   {\begin{landscape}\centering\begin{threeparttable}}
+%   {\end{threeparttable}\end{landscape}}
+\newenvironment{lltable}{\begin{landscape}\centering\begin{ThreePartTable}}{\end{ThreePartTable}\end{landscape}}
 
 % Enables adjusting longtable caption width to table width
 % Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
@@ -82,35 +124,70 @@
 % \setlength{\parindent}{0.5in}
 % \setlength{\parskip}{0pt plus 0pt minus 0pt}
 
-% \usepackage{etoolbox}
+% Overwrite redefinition of paragraph and subparagraph by the default LaTeX template
+% See https://github.com/crsh/papaja/issues/292
 \makeatletter
-\patchcmd{\HyOrg@maketitle}
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\itshape\typesectitle}}
+
+\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-\z@\relax}%
+  {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+\makeatother
+
+\makeatletter
+\usepackage{etoolbox}
+\patchcmd{\maketitle}
   {\section{\normalfont\normalsize\abstractname}}
   {\section*{\normalfont\normalsize\abstractname}}
   {}{\typeout{Failed to patch abstract.}}
-\patchcmd{\HyOrg@maketitle}
+\patchcmd{\maketitle}
   {\section{\protect\normalfont{\@title}}}
   {\section*{\protect\normalfont{\@title}}}
   {}{\typeout{Failed to patch title.}}
 \makeatother
-\shorttitle{Replication of Rydell et al.}
+
+\usepackage{xpatch}
+\makeatletter
+\xapptocmd\appendix
+  {\xapptocmd\section
+    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi: #1}}
+    {}{\InnerPatchFailed}%
+  }
+{}{\PatchFailed}
+\makeatother
 \usepackage{csquotes}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[shorthands=off,main=english]{babel}
-\else
-  % load polyglossia as late as possible as it *could* call bidi if RTL lang (e.g. Hebrew or Arabic)
-  \usepackage{polyglossia}
-  \setmainlanguage[]{english}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
 \fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdfauthor={Frederik Aust1,9, Tobias Heycke1,2, Benedek Kurdi3,10,12, Pieter Van Dessel5, Jeremy Cone8, Melissa J. Ferguson10, Xiaoqing Hu6, Congjiao Jiang4,14, Robert J. Rydell7, Lisa Spitzer1,13, Christoph Stahl1, Christine Vitiello4,11, \& Jan De Houwer5},
+  pdflang={en-EN},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
 
 \title{Supplementary online material for
 
 \emph{Of Two Minds: A registered replication}}
-\author{Tobias Heycke\textsuperscript{$\dagger{}$,1,2}, Frederik Aust\textsuperscript{$\dagger{}$,1,9}, Mahzarin R. Banaji\textsuperscript{3}, Jeremy Cone\textsuperscript{8}, Pieter Van Dessel\textsuperscript{5}, Melissa J. Ferguson\textsuperscript{10}, Xiaoqing Hu\textsuperscript{6}, Congjiao Jiang\textsuperscript{4}, Benedek Kurdi\textsuperscript{3,10}, Robert Rydell\textsuperscript{7}, Lisa Spitzer\textsuperscript{1}, Christoph Stahl\textsuperscript{1}, Christine Vitiello\textsuperscript{4}, \& Jan De Houwer\textsuperscript{5}}
+\author{Frederik Aust\textsuperscript{1,9}, Tobias Heycke\textsuperscript{1,2}, Benedek Kurdi\textsuperscript{3,10,12}, Pieter Van Dessel\textsuperscript{5}, Jeremy Cone\textsuperscript{8}, Melissa J. Ferguson\textsuperscript{10}, Xiaoqing Hu\textsuperscript{6}, Congjiao Jiang\textsuperscript{4,14}, Robert J. Rydell\textsuperscript{7}, Lisa Spitzer\textsuperscript{1,13}, Christoph Stahl\textsuperscript{1}, Christine Vitiello\textsuperscript{4,11}, \& Jan De Houwer\textsuperscript{5}}
 \date{}
 
 
-\affiliation{\vspace{0.5cm}\textsuperscript{1} University of Cologne\\\textsuperscript{2} GESIS - Leibniz Institute for the Social Sciences\\\textsuperscript{3} Harvard University\\\textsuperscript{4} University of Florida\\\textsuperscript{5} Ghent University\\\textsuperscript{6} The University of Hong Kong\\\textsuperscript{7} Indiana University\\\textsuperscript{8} Williams College\\\textsuperscript{9} University of Amsterdam\\\textsuperscript{10} Yale University}
+\shorttitle{Replication of Rydell et al.}
+
+\authornote{
+
+Correspondence concerning this article should be addressed to Frederik Aust, Herbert-Lewin-Str. 2, 50931 Cologne, Germany. E-mail: \href{mailto:frederik.aust@uni-koeln.de}{\nolinkurl{frederik.aust@uni-koeln.de}}
+
+}
+
+\affiliation{\vspace{0.5cm}\textsuperscript{1} University of Cologne\\\textsuperscript{2} Leibniz Institute for the Social Sciences (GESIS)\\\textsuperscript{3} Harvard University\\\textsuperscript{4} University of Florida\\\textsuperscript{5} Ghent University\\\textsuperscript{6} The University of Hong Kong\\\textsuperscript{7} Indiana University\\\textsuperscript{8} Williams College\\\textsuperscript{9} University of Amsterdam\\\textsuperscript{10} Yale University\\\textsuperscript{11} Air Force Research Laboratory\\\textsuperscript{12} University of Illinois Urbana--Champaign\\\textsuperscript{13} Leibniz Institute for Psychology (ZPID)\\\textsuperscript{14} Peking University}
 
 \begin{document}
 \maketitle
@@ -143,7 +220,7 @@ Simple contrast are estimated within each \emph{flashed word presentation durati
 Collapsed contrasts pool participants across one or both of the between subject factors (i.e., \emph{flashed word presentation duration} and \emph{valence order}).
 \(\delta_z\)-values in the legend correspond to 95\% and 80\% power.
 Note that these are conservative estimates as they do not take into account the additional 60 participants from our pilot study that we included in the analysis.
-The grey dashed line at the top represents the smallest learning block difference reported by Rydell et al. (\(d_z = 0.47\); 2006).}
+The grey dashed line at the top represents the smallest learning block difference reported by Rydell et al.~{[}\(d_z = 0.47\); Rydell, McConnell, Mackie, and Strain (2006){]}.}
 \end{figure}
 
 \hypertarget{experiment-1}{%
@@ -164,13 +241,15 @@ Table~\ref{tab:otm1-participant-table} summarizes the participants' demographics
 
 \caption{\label{tab:otm1-participant-table}Participant demographics by location.}
 
-\begin{tabular}{lccc}
+\begin{tabular}{lrrrrr}
 \toprule
-Location & \multicolumn{1}{c}{Age} & \multicolumn{1}{c}{Female (\%)} & \multicolumn{1}{c}{$n$}\\
+ &  &  & \multicolumn{3}{c}{Gender} \\
+\cmidrule(r){4-6}
+Location & \multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{Age} & \multicolumn{1}{c}{Female (\%)} & \multicolumn{1}{c}{Male (\%)} & \multicolumn{1}{c}{Non-binary (\%)}\\
 \midrule
-Cologne & 24.61 [18, 64] & 70.59 & 51\\
-Ghent & 21.92 [17, 50] & 82.00 & 50\\
-Harvard & 19.58 [18, 22] & 57.69 & 52\\
+Cologne & 51 & 24.61 [18, 64] & 70.59 & 27.45 & 1.96\\
+Ghent & 50 & 21.92 [17, 50] & 84.00 & 16.00 & 0.00\\
+Harvard & 52 & 19.58 [18, 22] & 59.62 & 38.46 & 1.92\\
 \bottomrule
 \addlinespace
 \end{tabular}
@@ -221,46 +300,46 @@ Black-rimmed points represent condition means, error bars represent 95\% bootstr
 \begin{longtable}{lrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
 \caption{\label{tab:otm1-lmer-table-fixed-effects}Fixed effect estimates of the linear mixed model analysis of standardized IAT response times.}\\
 \toprule
-Effect & \multicolumn{1}{c}{$b$} & \multicolumn{1}{c}{SE} & \multicolumn{1}{c}{$t$} & \multicolumn{1}{c}{$df$} & \multicolumn{1}{c}{$p$}\\
+Term & \multicolumn{1}{c}{$\hat{\beta}$} & \multicolumn{1}{c}{95\% CI} & \multicolumn{1}{c}{$t$} & \multicolumn{1}{c}{$\mathit{df}$} & \multicolumn{1}{c}{$p$}\\
 \midrule
 \endfirsthead
 \caption*{\normalfont{Table \ref{tab:otm1-lmer-table-fixed-effects} continued}}\\
 \toprule
-Effect & \multicolumn{1}{c}{$b$} & \multicolumn{1}{c}{SE} & \multicolumn{1}{c}{$t$} & \multicolumn{1}{c}{$df$} & \multicolumn{1}{c}{$p$}\\
+Term & \multicolumn{1}{c}{$\hat{\beta}$} & \multicolumn{1}{c}{95\% CI} & \multicolumn{1}{c}{$t$} & \multicolumn{1}{c}{$\mathit{df}$} & \multicolumn{1}{c}{$p$}\\
 \midrule
 \endhead
-Intercept & 2.41 & 0.06 & 38.60 & 166.58 & < .001\\
-Response mapping & 0.13 & 0.01 & 9.52 & 53.48 & < .001\\
-Learning block & -0.18 & 0.04 & -4.95 & 151.65 & < .001\\
-Valence order & -0.04 & 0.06 & -0.66 & 154.12 & .510\\
-Category & -0.17 & 0.02 & -7.47 & 19.58 & < .001\\
-Word type & 0.05 & 0.02 & 2.10 & 23.02 & .047\\
-Image type & -0.10 & 0.01 & -11.02 & 19,358.08 & < .001\\ \midrule
-Response mapping $\times$ Learning block & 0.00 & 0.01 & -0.43 & 58.88 & .667\\
-Response mapping $\times$ Valence order & -0.02 & 0.01 & -1.69 & 62.60 & .096\\
-Learning block $\times$ Valence order & 0.04 & 0.04 & 1.07 & 151.95 & .288\\
-Response mapping $\times$ Category & -0.01 & 0.01 & -1.62 & 11.28 & .134\\
-Response mapping $\times$ Word type & 0.00 & 0.01 & 0.22 & 28.30 & .826\\
-Response mapping $\times$ Image type & -0.04 & 0.01 & -3.79 & 14,941.38 & < .001\\
-Learning block $\times$ Category & 0.00 & 0.01 & 0.34 & 15.42 & .741\\
-Learning block $\times$ Word type & 0.00 & 0.01 & -0.51 & 47.78 & .613\\
-Learning block $\times$ Image type & 0.01 & 0.01 & 1.12 & 12,072.69 & .262\\
-Valence order $\times$ Category & 0.00 & 0.01 & 0.36 & 14.49 & .725\\
-Valence order $\times$ Word type & 0.00 & 0.01 & 0.17 & 31.23 & .866\\
-Valence order $\times$ Image type & -0.01 & 0.01 & -1.58 & 17,717.18 & .115\\ \midrule
-Response mapping $\times$ Learning block $\times$ Valence order & -0.06 & 0.01 & -7.02 & 81.48 & < .001\\
-Response mapping $\times$ Learning block $\times$ Category & 0.00 & 0.01 & -0.16 & 42.09 & .875\\
-Response mapping $\times$ Learning block $\times$ Word type & 0.01 & 0.01 & 1.26 & 150.14 & .209\\
-Response mapping $\times$ Learning block $\times$ Image type & 0.00 & 0.01 & 0.53 & 19,080.54 & .598\\
-Response mapping $\times$ Valence order $\times$ Category & -0.01 & 0.01 & -0.62 & 15.38 & .542\\
-Response mapping $\times$ Valence order $\times$ Word type & 0.01 & 0.01 & 0.73 & 35.39 & .471\\
-Response mapping $\times$ Valence order $\times$ Image type & 0.00 & 0.01 & -0.15 & 15,412.01 & .877\\
-Learning block $\times$ Valence order $\times$ Category & 0.01 & 0.01 & 0.73 & 34.05 & .469\\
-Learning block $\times$ Valence order $\times$ Word type & 0.00 & 0.01 & -0.02 & 118.08 & .986\\
-Learning block $\times$ Valence order $\times$ Image type & -0.01 & 0.01 & -1.02 & 12,875.69 & .310\\ \midrule
-Response mapping $\times$ Learning block $\times$ Valence order $\times$ Category & 0.02 & 0.01 & 2.37 & 75.77 & .021\\
-Response mapping $\times$ Learning block $\times$ Valence order $\times$ Word type & -0.01 & 0.01 & -0.90 & 299.15 & .371\\
-Response mapping $\times$ Learning block $\times$ Valence order $\times$ Image type & 0.00 & 0.01 & 0.13 & 18,370.00 & .897\\
+Intercept & 2.11 & {}[1.89, 2.33] & 18.69 & 96.14 & < .001\\
+Response mapping & -0.08 & {}[-0.20, 0.04] & -1.37 & 17.28 & .188\\
+Learning block & 0.36 & {}[0.14, 0.58] & 3.21 & 114.15 & .002\\
+Valence order & 0.12 & {}[-0.17, 0.41] & 0.83 & 96.45 & .407\\
+Category & 0.32 & {}[0.17, 0.48] & 4.13 & 24.54 & < .001\\
+Word type & 0.06 & {}[-0.01, 0.12] & 1.69 & 84.92 & .094\\
+Image type & -0.15 & {}[-0.20, -0.10] & -5.79 & 18539.18 & < .001\\ \midrule
+Response mapping $\times$ Learning block & -0.18 & {}[-0.32, -0.04] & -2.59 & 15.97 & .020\\
+Response mapping $\times$ Valence order & -0.28 & {}[-0.45, -0.11] & -3.16 & 19.55 & .005\\
+Learning block $\times$ Valence order & 0.01 & {}[-0.32, 0.35] & 0.08 & 52.85 & .940\\
+Response mapping $\times$ Category & -0.02 & {}[-0.14, 0.10] & -0.33 & 15.48 & .748\\
+Response mapping $\times$ Word type & -0.03 & {}[-0.10, 0.04] & -0.76 & 229.26 & .451\\
+Response mapping $\times$ Image type & 0.06 & {}[-0.01, 0.13] & 1.69 & 16907.60 & .091\\
+Learning block $\times$ Category & 0.09 & {}[-0.02, 0.20] & 1.61 & 15.18 & .129\\
+Learning block $\times$ Word type & 0.00 & {}[-0.07, 0.07] & 0.09 & 289.39 & .931\\
+Learning block $\times$ Image type & -0.01 & {}[-0.09, 0.06] & -0.40 & 18911.06 & .689\\
+Valence order $\times$ Category & 0.08 & {}[-0.10, 0.25] & 0.86 & 16.71 & .403\\
+Valence order $\times$ Word type & 0.00 & {}[-0.08, 0.08] & -0.05 & 89.72 & .957\\
+Valence order $\times$ Image type & 0.05 & {}[-0.02, 0.12] & 1.37 & 19279.71 & .171\\ \midrule
+Response mapping $\times$ Learning block $\times$ Valence order & 0.33 & {}[0.11, 0.54] & 2.99 & 8.40 & .016\\
+Response mapping $\times$ Learning block $\times$ Category & -0.12 & {}[-0.28, 0.04] & -1.43 & 26.09 & .165\\
+Response mapping $\times$ Learning block $\times$ Word type & 0.02 & {}[-0.08, 0.12] & 0.31 & 442.51 & .759\\
+Response mapping $\times$ Learning block $\times$ Image type & 0.02 & {}[-0.08, 0.13] & 0.48 & 20852.22 & .634\\
+Response mapping $\times$ Valence order $\times$ Category & -0.08 & {}[-0.26, 0.10] & -0.89 & 17.69 & .383\\
+Response mapping $\times$ Valence order $\times$ Word type & 0.00 & {}[-0.10, 0.10] & 0.01 & 228.77 & .990\\
+Response mapping $\times$ Valence order $\times$ Image type & 0.00 & {}[-0.11, 0.10] & -0.06 & 15855.48 & .954\\
+Learning block $\times$ Valence order $\times$ Category & -0.17 & {}[-0.37, 0.04] & -1.60 & 7.83 & .150\\
+Learning block $\times$ Valence order $\times$ Word type & -0.03 & {}[-0.14, 0.08] & -0.58 & 66.23 & .561\\
+Learning block $\times$ Valence order $\times$ Image type & -0.04 & {}[-0.14, 0.07] & -0.68 & 14359.59 & .498\\ \midrule
+Response mapping $\times$ Learning block $\times$ Valence order $\times$ Category & 0.25 & {}[0.00, 0.50] & 1.98 & 12.50 & .071\\
+Response mapping $\times$ Learning block $\times$ Valence order $\times$ Word type & 0.06 & {}[-0.08, 0.21] & 0.85 & 166.33 & .397\\
+Response mapping $\times$ Learning block $\times$ Valence order $\times$ Image type & -0.01 & {}[-0.15, 0.14] & -0.07 & 14550.19 & .945\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -280,7 +359,7 @@ Response mapping $\times$ Learning block $\times$ Valence order $\times$ Image t
 
 \small{
 
-\begin{longtable}{lcrrrrrlcr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\begin{longtable}{lcrrrrrrrr}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
 \caption{\label{tab:otm1-lmer-table-random-effects}Random effect estimates and correlations of the linear mixed model analysis of standardized IAT response times.}\\
 \toprule
  & \multicolumn{1}{c}{\% of variance} & \multicolumn{1}{c}{1. } & \multicolumn{1}{c}{2. } & \multicolumn{1}{c}{3. } & \multicolumn{1}{c}{4. } & \multicolumn{1}{c}{5. } & \multicolumn{1}{c}{6. } & \multicolumn{1}{c}{7. } & \multicolumn{1}{c}{8. }\\
@@ -292,19 +371,19 @@ Response mapping $\times$ Learning block $\times$ Valence order $\times$ Image t
 \midrule
 \endhead
 Participant &  &  &  &  &  &  &  &  & \\
-\ \ \ 1. Intercept & .69 & 0.72 & -0.04 & -0.23 & 0.15 &  &  &  & \\
-\ \ \ 2.  Response mapping & .02 &  & 0.13 & -0.09 & 0.21 &  &  &  & \\
-\ \ \ 3. Learning block & .26 &  &  & 0.44 & 0.06 &  &  &  & \\
-\ \ \ 4.  Response mapping $\times$ Learning block & .00 &  &  &  & 0.06 &  &  &  & \\ \midrule
+\ \ \ 1. Intercept & .35 & 0.76 & -0.18 & -0.38 & 0.28 &  &  &  & \\
+\ \ \ 2. Response mapping & .05 &  & 0.30 & 0.01 & -0.54 &  &  &  & \\
+\ \ \ 3. Learning block & .48 &  &  & 0.90 & -0.18 &  &  &  & \\
+\ \ \ 4. Response mapping $\times$ Learning block & .03 &  &  &  & 0.23 &  &  &  & \\ \midrule
 Stimulus &  &  &  &  &  &  &  &  & \\
-\ \ \ 1. Intercept & .01 & 0.09 & -0.49 & 0.32 & 0.06 & -0.78 & 0.66 & 0.60 & 0.12\\
-\ \ \ 2.  Response mapping & .00 &  & 0.02 & 0.20 & -0.39 & 0.79 & -0.31 & -0.89 & -0.57\\
-\ \ \ 3. Learning block & .00 &  &  & 0.02 & 0.55 & -0.35 & 0.69 & -0.23 & -0.76\\
-\ \ \ 4. Valence order & .00 &  &  &  & 0.03 & -0.61 & 0.68 & 0.32 & -0.12\\
-\ \ \ 5.  Response mapping $\times$ Learning block & .00 &  &  &  &  & 0.01 & -0.82 & -0.82 & -0.26\\
-\ \ \ 6.  Response mapping $\times$ Valence order & .00 &  &  &  &  &  & 0.03 & 0.49 & -0.06\\
-\ \ \ 7. Learning block $\times$ Valence order & .00 &  &  &  &  &  &  & 0.01 & 0.76\\
-\ \ \ 8.  Response mapping $\times$ Learning block $\times$ Valence order & .00 &  &  &  &  &  &  &  & 0.01\\
+\ \ \ 1. Intercept & .02 & 0.16 & 0.67 & 0.22 & -0.19 & -0.89 & 0.15 & -0.01 & 0.24\\
+\ \ \ 2. Response mapping & .00 &  & 0.08 & -0.03 & -0.28 & -0.60 & 0.08 & 0.25 & -0.12\\
+\ \ \ 3. Learning block & .00 &  &  & 0.05 & 0.40 & -0.60 & -0.50 & -0.94 & 0.98\\
+\ \ \ 4. Valence order & .02 &  &  &  & 0.17 & 0.11 & -0.96 & -0.67 & 0.49\\
+\ \ \ 5. Response mapping $\times$ Learning block & .01 &  &  &  &  & 0.09 & 0.00 & 0.36 & -0.58\\
+\ \ \ 6. Response mapping $\times$ Valence order & .01 &  &  &  &  &  & 0.13 & 0.71 & -0.54\\
+\ \ \ 7. Learning block $\times$ Valence order & .02 &  &  &  &  &  &  & 0.18 & -0.96\\
+\ \ \ 8. Response mapping $\times$ Learning block $\times$ Valence order & .02 &  &  &  &  &  &  &  & 0.17\\
 \bottomrule
 \addlinespace
 \insertTableNotes
@@ -314,49 +393,11 @@ Stimulus &  &  &  &  &  &  &  &  & \\
 
 \end{lltable}
 
-In line with the ANOVA results, we found the expected three-way interaction between \emph{Response mapping}, \emph{Valence order}, and \emph{Learning block}; the interaction was moderated by the type of stimulus that participants responded to (pictures of Bob and non-Bobs vs.~positive and negative words; \emph{Category}), Table~\ref{tab:otm1-lmer-table-fixed-effects} and \ref{tab:otm1-lmer-table-random-effects}.
+In line with the ANOVA results, we found the expected three-way interaction between \emph{Response mapping}, \emph{Valence order}, and \emph{Learning block}, Table~\ref{tab:otm1-lmer-table-fixed-effects} and \ref{tab:otm1-lmer-table-random-effects}.
 The three-way interaction prompted us to test the differences between response mapping effects in the first and second learning block for each valence order.
-
-Also in line with the ANOVA analysis, we found that response time differences indicated \emph{more} favorable evaluations after the first than after the second block when the behavioral information was first positive and later negative, \(\Delta M = 0.21\), 95\% CI {[}0.12, 0.30{]}, \(t(61.46) = 4.52\), \(p < .001\).
-Vice versa, response time differences indicated \emph{less} favorable evaluations after the first than after the second block when descriptions of Bob were first negative and later positive, \(\Delta M = -0.24\), 95\% CI {[}-0.33, -0.15{]}, \(t(74.80) = -5.25\), \(p < .001\).
+We found that response time differences indicated \emph{more} favorable evaluations after the first than after the second block when the behavioral information was first positive and later negative, \(\Delta M = 0.21\), 95\% CI \([0.10, 0.32]\), \(t(23.79) = 3.94\), \(p < .001\).
+Vice versa, response time differences indicated \emph{less} favorable evaluations after the first than after the second block when descriptions of Bob were first negative and later positive, \(\Delta M = -0.24\), 95\% CI \([-0.34, -0.14]\), \(t(41.39) = -4.94\), \(p < .001\).
 Again, these results indicate that the rating and IAT scores did not dissociate.
-
-Due to the significant four-way interaction, we additionally explored these contrasts separately for responses to pictures of Bob vs.~non-Bobs and positive vs.~negative words, Table ~\ref{tab:otm1-lmer-emm-3-table}.
-We found consistent changes in response mapping effects for both pictures and words, albeit the effects were larger for words.
-
-
-
-
-
-\begin{table}[tbp]
-
-\begin{center}
-\begin{threeparttable}
-
-\caption{\label{tab:otm1-lmer-emm-3-table}Post-hoc tests of changes in response mapping effects across blocks separately for pictures and words for standardized IAT response times.}
-
-\begin{tabular}{lrcrrr}
-\toprule
-Valence order & \multicolumn{1}{c}{$\Delta M$} & \multicolumn{1}{c}{95\% CI} & \multicolumn{1}{c}{$t$} & \multicolumn{1}{c}{$df$} & \multicolumn{1}{c}{$p$}\\
-\midrule
-Pictures &  &  &  &  & \\
-\ \ \ Negative-positive & -0.18 & [-0.32, -0.04] & -2.96 & 43.24 & .010\\
-\ \ \ Positive-negative & 0.14 & [-0.01, 0.29] & 2.26 & 32.11 & .060\\ \midrule
-Words &  &  &  &  & \\
-\ \ \ Negative-positive & -0.30 & [-0.43, -0.17] & -5.22 & 198.78 & < .001\\
-\ \ \ Positive-negative & 0.28 & [0.15, 0.41] & 4.81 & 161.48 & < .001\\
-\bottomrule
-\addlinespace
-\end{tabular}
-
-\begin{tablenotes}[para]
-\normalsize{\textit{Note.} \(p\) values were Tukey-corrected for two comparisons.}
-\end{tablenotes}
-
-\end{threeparttable}
-\end{center}
-
-\end{table}
 
 \hypertarget{bayesian-model-comparison}{%
 \subsection{Bayesian model comparison}\label{bayesian-model-comparison}}
@@ -365,17 +406,19 @@ We implemented the unconstrained model as a hierarchical linear model that encom
 
 \[
 \begin{aligned}
-\hat y_{ijk} = & \mu + \nu_i + \eta_l x_{1il} + \\
-          & (\alpha + \tau_l x_{1il}) x_{2j} x_{3k} + \\
-          & (\beta + \upsilon_l x_{1il}) (1 -  x_{2j}) x_{3k}
+\hat y_{ijk} = & \mu_i + \eta_l x_{1il} + \\
+          & (\alpha_i + \tau_l x_{1il}) x_{2j} x_{3k} + \\
+          & (\beta_i + \upsilon_l x_{1il}) (1 -  x_{2j}) x_{3k}
 \end{aligned}
 \]
 
 The model predicts the \(i\)th participant's response to evaluation measure \(j\) in the experimental block \(k\).
-Responses are predicted as a combination of a grand mean \(\mu\), random participant intercepts \(\nu_i\) (i.e., habitually higher or lower evaluations), a main effect of the labs \(\eta_l\), and simple effects of learning block for rating scores (\(\alpha\)) and IAT score (\(\beta\)).
+Responses are predicted as a combination of participant-specific intercepts \(\mu_i\) (i.e., habitually higher or lower evaluations), a main effect of the labs \(\eta_l\), and participant-specific simple effects of learning block for rating scores (\(\alpha_i\)) and IAT score (\(\beta_i\)).
 Additionally, we allowed the simple effects to be moderated by the labs (\(\tau_l\) and \(\upsilon_l\) represent the lab-specific deviations from the overall simple effects).
+Participant-specific intercepts and simple effects were modeled as the sum of fixed effects and by-participant random effects, such that \(\mu_i = \mathcal{N}(\mu, \sigma_\mu)\), \(\alpha_i = \mathcal{N}(\alpha, \sigma_\alpha)\), and \(\beta_i = \mathcal{N}(\beta, \sigma_\beta)\).
+
 The model does not include a main effect of evaluative measure because any mean differences between evaluative measures were leveled by the by-measure \(z\) standardization.
-\(x_{1il}\) represents \(l\) effect coded variables that indicate which lab participant \(i\) belongs to; \(x_{2j}\) indicates the evaluative measure (1 for rating score and 0 for IAT score), such that \(\alpha + \tau_l\) is only relevant for rating scores and \(\beta + \upsilon_l\) is only relevant for IAT scores; \(x_{3k}\) is an effect coded variable that is set to 0.5 for block 1 and -0.5 for block 2.
+\(x_{1il}\) represents \(l\) effect coded variables that indicate which lab participant \(i\) belongs to; \(x_{2j}\) indicates the evaluative measure (1 for rating score and 0 for IAT score), such that \(\alpha_i + \tau_l\) is only relevant for rating scores and \(\beta_i + \upsilon_l\) is only relevant for IAT scores; \(x_{3k}\) is an effect coded variable that is set to 0.5 for block 1 and -0.5 for block 2.
 
 This model allowed us to place priors on the simple effects (in units of standardized mean differences \(d\)) for each evaluative measure and implement the theoretically motivated order constraints:
 
@@ -392,28 +435,26 @@ Additionally, we placed default multivariate Cauchy priors (\(r = \sqrt2/2\)) on
 
 To formally assess whether the data from all labs exhibited consistent effects we added another model that enforced the order constraint of \(\mathcal{M}_\textrm{One mind}\) and \(\mathcal{M}_\textrm{Two minds}\) not only for the average block effects (\(\alpha\) and \(\beta\)) but for each lab individually (i.e., \(\alpha_l = \alpha + \tau_l\) and \(\beta_l = \beta + \upsilon_l\); \(\mathcal{M}_\textrm{One mind everywhere}\) and \(\mathcal{M}_\textrm{Two minds everywhere}\)).
 
-For the analyses we drew 1 million samples to estimate the postrior distribtution of model parameters.
-Because the draws from the posterior distribution are used to estimate the Bayes factors for model comparisons that involve order constraints (Klugkist et al., 2005b), the number of draws implies upper and lower bounds on some of the reported Bayes factors.
-Most notably, as a direct consequence of the number MCMC samples the \(\textrm{BF}_{\mathcal{M}_\textrm{One mind}/\mathcal{M}_\textrm{Two minds}} \in [\frac{1}{1 \times 10^6}, 1 \times 10^6]\).
+For the analyses we drew 5 million samples to estimate the postrior distribtution of model parameters.
+Because the draws from the posterior distribution are used to estimate the Bayes factors for model comparisons that involve order constraints (Klugkist, Laudy, \& Hoijtink, 2005), the number of draws implies upper and lower bounds on some of the reported Bayes factors.
+Most notably, as a direct consequence of the number MCMC samples the \(\textrm{BF}_{\mathcal{M}_\textrm{One mind}/\mathcal{M}_\textrm{Two minds}} \in [1 / (5 \times 10^6), 5 \times 10^6]\).
 
 \hypertarget{prior-sensitivity-analysis}{%
 \subsubsection{Prior sensitivity analysis}\label{prior-sensitivity-analysis}}
 
 Bayesian model comparison by Bayes factors are by definition sensitive to the specified prior distributions.
-To ensure that our inference is not contigent on our choice of piors we conducted prior sensitivity analyses for our key results.
-
-\hypertarget{directly-and-indirectly-measured-evaluations}{%
-\paragraph{Directly and indirectly measured evaluations}\label{directly-and-indirectly-measured-evaluations}}
+To ensure that our inference is not contigent on our choice of priors, we conducted prior sensitivity analyses for our key results.
 
 Our choice of piors for the simple effects of learning block for rating scores (\(\alpha\)) and IAT score (\(\beta\)) could be viewed as either overly optimistic or pessimistic.
 The prior on simple rating score effects places considerable probability mass on effects \(d\) \textless{} 0.707 although the previously reported effects were very large.
 Similarly, placing the same prior on the simple effects for rating and IAT scores could be criticized because the previously reported IAT score effects were considerably smaller than those of rating scores.
 
-We, therefore, varied the scale for the Cauchy priors on the simple effects in the ranges of \(0.50 < r_\alpha < 1.41\) and \(0.35 < r_\beta < 0.71\) for rating and IAT scores, respectively.
+We, therefore, varied the scale for the Cauchy priors on the simple effects in the ranges of \(0.50 < r_\alpha < 1.41\) and \(0.14 < r_\beta < 0.71\) for rating and IAT scores, respectively.
 In light of the results from previous studies, we limited our analysis to combinations where the prior scale was larger for rating than for IAT effects.
+To reduce the computational burden of this analysis, we drew 500,000 samples for each model comparison and each combination of prior scales, which implies that the Bayes factors for comparisons involving order constraints are bounded within the range of \([1 / (5 \times 10^5), 5 \times 10^5]\).
 The results of the prior sensitvity analysis reassure us that our inference is robust to a wide range and combination of scales of the default Cauchy priors, see Table~\ref{tab:otm1-prior-sensitivity-replication-table}.
 The Bayes factors were not affected by the scale of the priors to any meaningful degree.
-This is because our data are informative enough to overwhelm the priors and because these Bayes factors primarily depend on the shape and location of the joint posterior distribution (Klugkist et al., 2005a).
+This is because our data are informative enough to overwhelm the priors and because these Bayes factors depend only on the shape and location of the joint posterior distribution (Klugkist, Kato, \& Hoijtink, 2005).
 
 
 
@@ -431,13 +472,14 @@ This is because our data are informative enough to overwhelm the priors and beca
 \toprule
 $r_\alpha$ & \multicolumn{1}{c}{$r_\beta$} & \multicolumn{1}{c}{$\textrm{BF}_{\mathcal{M}_\textrm{One mind}/\mathcal{M}_\textrm{Two minds}}$} & \multicolumn{1}{c}{$\textrm{BF}_{\mathcal{M}_\textrm{One mind}/\mathcal{M}_\textrm{Any effect}}$}\\
 \midrule
-0.50 & 0.35 & $1.00 \times 10^{6}$ & 4.00\\
-0.96 & 0.35 & $1.00 \times 10^{6}$ & 4.00\\
-0.96 & 0.53 & $1.00 \times 10^{6}$ & 4.00\\
-0.96 & 0.71 & $1.00 \times 10^{6}$ & 4.00\\
-1.41 & 0.35 & $1.00 \times 10^{6}$ & 4.00\\
-1.41 & 0.53 & $1.00 \times 10^{6}$ & 4.00\\
-1.41 & 0.71 & $1.00 \times 10^{6}$ & 4.00\\
+0.50 & 0.14 & 500,001.00 & 4.00\\
+0.96 & 0.14 & 500,001.00 & 4.00\\
+1.41 & 0.14 & 500,001.00 & 4.00\\
+0.50 & 0.42 & 500,001.00 & 4.00\\
+0.96 & 0.42 & 500,001.00 & 4.00\\
+1.41 & 0.42 & 500,001.00 & 4.00\\
+0.96 & 0.71 & 500,001.00 & 4.00\\
+1.41 & 0.71 & 500,001.00 & 4.00\\
 \bottomrule
 \addlinespace
 \end{tabular}
@@ -452,11 +494,11 @@ $r_\alpha$ & \multicolumn{1}{c}{$r_\beta$} & \multicolumn{1}{c}{$\textrm{BF}_{\m
 
 \end{table}
 
-\hypertarget{recognition-task}{%
-\paragraph{Recognition task}\label{recognition-task}}
+\hypertarget{recognition-task-prior-sensitivity-analysis}{%
+\subsection{Recognition task prior sensitivity analysis}\label{recognition-task-prior-sensitivity-analysis}}
 
-To test the robustness of our inference regarding participants recognition accuracy we varied the scale \(r\) of the Cauchy prior in a wide interval of \([0.50, 1]\).
-The resulting Bayes factors were \(3.89 \times 10^{6}< \textrm{BF}_{10} < 4.91 \times 10^{6}\) and thus varied by a factor of 1.26.
+To test the robustness of our inference regarding participants recognition accuracy we varied the scale \(r\) of the Cauchy prior in a wide interval of \([0.25, 1]\).
+The resulting Bayes factors were \(3.89 \times 10^{6}< \textrm{BF}_{10} < 4.89 \times 10^{6}\) and thus varied by a factor of 0.80.
 These results again reassure that our inference is robust to a wide range of scales of the default Cauchy prior.
 
 \hypertarget{word-recogniton-and-iat-score-differences}{%
@@ -464,14 +506,10 @@ These results again reassure that our inference is robust to a wide range of sca
 
 
 
-
-
 \begin{figure}
 \centering
 \includegraphics{supplements_files/figure-latex/otm1-rydell-recognition-plot-1.pdf}
-\caption{\label{fig:otm1-rydell-recognition-plot}Black-rimmed points represent condition means, error bars represent 95\% bootstrap confidence intervals based on 10,000 samples.
-Small points represent individual participants' accuracy.
-Violins represent kernel density estimates of sample distributions.}
+\caption{\label{fig:otm1-rydell-recognition-plot}Black-rimmed points represent condition means, error bars represent 95\% bootstrap confidence intervals based on 10,000 samples. Small points represent individual participants' accuracy. Violins represent kernel density estimates of sample distributions.}
 \end{figure}
 
 In contrast to the original results reported by Rydell et al. (2006), the recognition accuracy of briefly flashed words was above chance in this study, Figure~\ref{fig:otm1-rydell-recognition-plot}.
@@ -489,15 +527,115 @@ Because the model assumes that predictor values are sampled from a Gaussian dist
 
 \begin{figure}
 \centering
-\includegraphics{supplements_files/figure-latex/prime-recognition-iat-difference-1.pdf}
-\caption{\label{fig:prime-recognition-iat-difference}Scatterplot of the recognition accuracy of briefly flashed words (on probit scale) and evaluative differences in IAT scores between learning blocks in which Bob was presented with positive descriptions and those in which he was paired with negative descriptions.
+\includegraphics{supplements_files/figure-latex/otm1-prime-recognition-iat-difference-1.pdf}
+\caption{\label{fig:otm1-prime-recognition-iat-difference}Scatterplot of the recognition accuracy of briefly flashed words (on probit scale) and evaluative differences in IAT scores between learning blocks in which Bob was presented with positive descriptions and those in which he was paired with negative descriptions.
 The regression line and confidence band represents predictions of the errors-in-variables model (Klauer et al., 1998).}
 \end{figure}
 
-We did not detect a relationship between the recognition accuracy of briefly preseted words and IAT score differences between learning blocks, \(b = -0.15\), 95\% CI \([-0.73, 0.43]\), \(t(151) = -0.52\), \(p = .605\).
-Moreover, the positive intercept of the regression line indicates a positive IAT score difference despite at-chance word recognition accuracy, \(b = 0.56\), 95\% CI \([0.38, 0.75]\), \(t(151) = 5.91\), \(p < .001\).
-Hence, even for participants who did not recognize the briefly flashed words, IAT score differences reflected the valence of the behavioral information, see Figure~\ref{fig:prime-recognition-iat-difference}.
+We did not detect a relationship between the recognition accuracy of briefly preseted words and IAT score differences between learning blocks, .
+Moreover, the positive intercept of the regression line indicates a positive IAT score difference despite at-chance word recognition accuracy, .
+Hence, even for participants who did not recognize the briefly flashed words, IAT score differences reflected the valence of the behavioral information, see Figure~\ref{fig:otm1-prime-recognition-iat-difference}.
 These results provide no indication that the deviation of our findings from those reported by Rydell et al. (2006) are attributable to the above-chance recognition of briefly flashed words in this study.
+
+\hypertarget{experiment-2}{%
+\section{Experiment 2}\label{experiment-2}}
+
+Table~\ref{tab:otm2-participant-table} summarizes the participants' demographics separately for each location of data collection.
+
+
+
+
+
+\begin{table}[h]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:otm2-participant-table}Participant demographics by location.}
+
+\begin{tabular}{lrrrrr}
+\toprule
+ &  &  & \multicolumn{3}{c}{Gender} \\
+\cmidrule(r){4-6}
+Location & \multicolumn{1}{c}{$n$} & \multicolumn{1}{c}{Age} & \multicolumn{1}{c}{Female (\%)} & \multicolumn{1}{c}{Male (\%)} & \multicolumn{1}{c}{Non-binary (\%)}\\
+\midrule
+Florida & 139 & 18.40 [18, 22] & 70.50 & 28.06 & 1.44\\
+Williams & 80 & 19.30 [18, 29] & 56.25 & 43.75 & 0.00\\
+Hong Kong & 85 & 20.27 [18, 24] & 67.06 & 32.94 & 0.00\\
+Illinois & 42 & 18.64 [18, 22] & 76.19 & 21.43 & 2.38\\
+Yale & 40 & 19.15 [18, 24] & 70.00 & 27.50 & 2.50\\
+\bottomrule
+\addlinespace
+\end{tabular}
+
+\begin{tablenotes}[para]
+\normalsize{\textit{Note.} Mean age is given with range in brackets.}
+\end{tablenotes}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
+\hypertarget{prior-sensitivity-analyses}{%
+\subsection{Prior sensitivity analyses}\label{prior-sensitivity-analyses}}
+
+\hypertarget{bayesian-model-comparison-1}{%
+\subsubsection{Bayesian model comparison}\label{bayesian-model-comparison-1}}
+
+As for Experiment 1, we varied the scale for the Cauchy priors on the simple effects in the ranges of \(0.50 < r_\alpha < 1.41\) and \(0.14 < r_\beta < 0.71\) for rating and IAT scores, respectively.
+The results of the prior sensitvity analysis reassure us that our inference is robust to a wide range and combination of scales of the default Cauchy priors, see Table~\ref{tab:otm2-prior-sensitivity-replication-table}.
+The Bayes factors were not affected by the scale of the priors to any meaningful degree.
+
+
+
+
+
+
+\begin{table}[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:otm2-prior-sensitivity-replication-table}Results of the prior sensitivity analysis for the Bayesian model comparisons of primary interest.}
+
+\begin{tabular}{cccc}
+\toprule
+$r_\alpha$ & \multicolumn{1}{c}{$r_\beta$} & \multicolumn{1}{c}{$\textrm{BF}_{\mathcal{M}_\textrm{One mind}/\mathcal{M}_\textrm{Two minds}}$} & \multicolumn{1}{c}{$\textrm{BF}_{\mathcal{M}_\textrm{One mind}/\mathcal{M}_\textrm{Any effect}}$}\\
+\midrule
+0.50 & 0.14 & 500,001.00 & 4.00\\
+1.41 & 0.14 & 500,001.00 & 4.00\\
+1.41 & 0.71 & 500,001.00 & 4.00\\
+\bottomrule
+\addlinespace
+\end{tabular}
+
+\begin{tablenotes}[para]
+\normalsize{\textit{Note.} The Bayes factor (BF) in favor of \(\mathcal{M}_\textrm{One mind}\) relative to \(\mathcal{M}_\textrm{Any effect}\) is bounded within the range of \([0, 4]\).
+\(r_\alpha\) and \(r_\beta\) denote the scale for the Cauchy prior on the simple effects of learning block for rating scores (\(\alpha\)) and IAT scores (\(\beta\)), respectively (in units of standard deviations).}
+\end{tablenotes}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
+\hypertarget{recognition-task-prior-sensitivity-analysis-1}{%
+\subsection{Recognition task prior sensitivity analysis}\label{recognition-task-prior-sensitivity-analysis-1}}
+
+
+
+\begin{figure}
+\centering
+\includegraphics{supplements_files/figure-latex/otm2-rydell-recognition-plot-1.pdf}
+\caption{\label{fig:otm2-rydell-recognition-plot}Black-rimmed points represent condition means, error bars represent 95\% bootstrap confidence intervals based on 10,000 samples. Small points represent individual participants' accuracy. Violins represent kernel density estimates of sample distributions.}
+\end{figure}
+
+Mirroring the original results reported by Rydell et al. (2006), the recognition accuracy of briefly flashed words was at chance in when flashed for 13 ms, Figure~\ref{fig:otm2-rydell-recognition-plot}.
+
+To test the robustness of our inference regarding participants recognition accuracy we varied the scale \(r\) of the Cauchy prior in a wide interval of \([0.25, 1]\).
+The resulting Bayes factors were \(5.13< \textrm{BF}_{01} < 19.39\) and thus varied by a factor of 3.78.
+These results again reassure that our inference is robust to a wide range of scales of the default Cauchy prior.
 
 \newpage
 
@@ -510,20 +648,23 @@ These results provide no indication that the deviation of our findings from thos
 \setlength{\leftskip}{0.5in}
 
 \hypertarget{refs}{}
-\leavevmode\hypertarget{ref-Klauer_Draine_Greenwald_1998}{}%
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-Klauer_Draine_Greenwald_1998}{}}%
 Klauer, K. C., Draine, S. C., \& Greenwald, A. G. (1998). An unbiased errors-in-variables approach to detecting unconscious cognition. \emph{British Journal of Mathematical and Statistical Psychology}, \emph{51}(2), 253--267. \url{https://doi.org/10.1111/j.2044-8317.1998.tb00680.x}
 
-\leavevmode\hypertarget{ref-klugkist_bayesian_2005}{}%
-Klugkist, I., Kato, B., \& Hoijtink, H. (2005a). Bayesian model selection using encompassing priors. \emph{Statistica Neerlandica}, \emph{59}(1), 57--69. \url{https://doi.org/10.1111/j.1467-9574.2005.00279.x}
+\leavevmode\vadjust pre{\hypertarget{ref-klugkist_bayesian_2005}{}}%
+Klugkist, I., Kato, B., \& Hoijtink, H. (2005). Bayesian model selection using encompassing priors. \emph{Statistica Neerlandica}, \emph{59}(1), 57--69. \url{https://doi.org/10.1111/j.1467-9574.2005.00279.x}
 
-\leavevmode\hypertarget{ref-klugkist_inequality_2005}{}%
-Klugkist, I., Laudy, O., \& Hoijtink, H. (2005b). Inequality Constrained Analysis of Variance: A Bayesian Approach. \emph{Psychological Methods}, \emph{10}(4), 477--493. \url{https://doi.org/10.1037/1082-989X.10.4.477}
+\leavevmode\vadjust pre{\hypertarget{ref-klugkist_inequality_2005}{}}%
+Klugkist, I., Laudy, O., \& Hoijtink, H. (2005). Inequality constrained analysis of variance: A bayesian approach. \emph{Psychological Methods}, \emph{10}(4), 477--493. \url{https://doi.org/10.1037/1082-989x.10.4.477}
 
-\leavevmode\hypertarget{ref-rydell_two_2006}{}%
-Rydell, R. J., McConnell, A. R., Mackie, D. M., \& Strain, L. M. (2006). Of Two Minds: Forming and Changing Valence-Inconsistent Implicit and Explicit Attitudes. \emph{Psychological Science}, \emph{17}(11), 954--958. \url{https://doi.org/10.1111/j.1467-9280.2006.01811.x}
+\leavevmode\vadjust pre{\hypertarget{ref-rydell_two_2006}{}}%
+Rydell, R. J., McConnell, A. R., Mackie, D. M., \& Strain, L. M. (2006). Of {Two Minds}: {Forming} and {Changing Valence}-{Inconsistent Implicit} and {Explicit Attitudes}. \emph{Psychological Science}, \emph{17}(11), 954--958. \url{https://doi.org/10.1111/j.1467-9280.2006.01811.x}
 
-\leavevmode\hypertarget{ref-wolsiefer_modeling_2017}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-wolsiefer_modeling_2017}{}}%
 Wolsiefer, K., Westfall, J., \& Judd, C. M. (2017). Modeling stimulus variation in three common implicit attitude tasks. \emph{Behavior Research Methods}, \emph{49}(4), 1193--1209. \url{https://doi.org/10.3758/s13428-016-0779-0}
+
+\end{CSLReferences}
 
 \endgroup
 

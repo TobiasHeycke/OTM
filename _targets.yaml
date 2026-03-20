@@ -8,10 +8,3 @@ otm2:
   inherits: otm1
   script: ./otm2/results/_targets_otm2.r
   store: ./otm2/results/_targets_otm2
-paper:
-  inherits: otm1
-  script: paper/_targets_paper.r
-  store: paper/_targets_paper
-  workers: '1'
-main:
-  inherits: paper

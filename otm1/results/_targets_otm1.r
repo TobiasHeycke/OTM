@@ -813,12 +813,4 @@ list(
   #   , packages = c("lme4")
   #   , deployment = "main"
   # )
-
-  # Render report ---------------------------------------------------------
-  , tar_render(
-    otm1_analysis
-    , path = "./otm1/results/analysis1.Rmd"
-    , deployment = "main"
-    , quiet = TRUE
-  )
 )

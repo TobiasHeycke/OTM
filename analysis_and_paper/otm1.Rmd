@@ -130,7 +130,7 @@ dev_table <- data.frame(
   ),
   `Reader Impact` = c(
     "Given the potential negative consequences of using the preregistered model specification, we believe that this deviation should increase readers' confidence in the reported results. Also, we compared the results from both model specifications and found that our conclusions remain unchanged (\\url{https://osf.io/preprints/psyarxiv/v674w_v1}).",
-    "As we have found our results to be consistent across languages, countries, and locations within the USA, we believe this deviation to be consequential for our conclusions.",
+    "As we have found our results to be consistent across languages, countries, and locations within the USA, we believe this deviation to be inconsequential for our conclusions.",
     ""
   ),
   check.names = FALSE,
@@ -1070,7 +1070,7 @@ otm1_no_lab_effect_bf_res <- apa_print_bf.numeric(
 
 ```{r}
 #| label: otm-prediction-plots
-#| child: prediction_plots.Rmd
+#| child: "./prediction_plots.Rmd"
 
 ```
 

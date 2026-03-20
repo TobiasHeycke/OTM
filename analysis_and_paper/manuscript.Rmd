@@ -370,13 +370,13 @@ No other artificial-intelligence-assisted technologies were used in this researc
 
 ```{r}
 #| label: otm1-child
-#| child: otm1.Rmd
+#| child: "./otm1.Rmd"
 
 ```
 
 ```{r}
 #| label: otm2-child
-#| child: otm2.Rmd
+#| child: "./otm2.Rmd"
 
 ```
 

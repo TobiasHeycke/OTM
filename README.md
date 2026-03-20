@@ -85,7 +85,9 @@ For a description of the variables in each dataset, please see the files
 The experiment was programmed using PsychoPy 1.82.01 and 1.83.01. *One
 of these versions must be installed to run the experiment.* All files to
 reproduce the procedure can be found in the `material` directories of
-each experiment.
+each experiment. Note that photographs used in the experiment in this
+repository were blurred to protect the persona rights of the depicted
+individuals. They can be obtained from the authors upon request.
 
 A folder called `data` (where output data is recorded), needs to be
 present in the same folder as the Python script to run the experiment.
@@ -137,27 +139,13 @@ graph LR
     xebd52189908b7113>"invert_subscript"]:::uptodate --> x5512318a8de090c6>"apa_print_bf.numeric"]:::uptodate
     x22891fac2c76433e>"typeset_scientific"]:::uptodate --> x5512318a8de090c6>"apa_print_bf.numeric"]:::uptodate
     x8a66cb8c44d73a56>"eiv_loglik"]:::uptodate --> x94109b123e25ff82>"eiv_lm"]:::uptodate
-    xfa7597b317fa6753>"g_map"]:::uptodate --> xe896a0789aac9abb>"n_way_anova"]:::uptodate
     x55749fe9af4cb51d>"r_scale"]:::uptodate --> xe896a0789aac9abb>"n_way_anova"]:::uptodate
-    x0920c189f00eaac5(["otm1_unconstrained_samples<br>27.1s"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
-    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
-    x52d22db802a78872(["otm1_unconstrained_pp<br>12.9s"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
-    xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
-    x7315f5df0dc3093b(["otm1_iat_lmer<br>14m 20.9s"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
-    x1cf8b0e8f9fac3bc(["otm1_iat2_lme<br>35ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
-    x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
-    xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
-    xb701179d8a651b0f(["otm1_log<br>19ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
-    x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
-    x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
-    x65964d8cee72cae4(["otm1_technical_failure<br>839ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
-    xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
-    x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::outdated --> x49bd5e7f3609ed37(["otm1_analysis<br>30.4s"]):::outdated
+    xfa7597b317fa6753>"g_map"]:::uptodate --> xe896a0789aac9abb>"n_way_anova"]:::uptodate
     x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated --> x109b8ac05075c22b(["otm1_attidudes_codebook<br>4ms"]):::outdated
-    x04a786e5cb4e2e50(["otm1_eval2<br>132ms"]):::outdated --> x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated
     xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::outdated --> x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated
-    xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated --> x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated
+    x04a786e5cb4e2e50(["otm1_eval2<br>132ms"]):::outdated --> x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated
     x65964d8cee72cae4(["otm1_technical_failure<br>839ms"]):::outdated --> x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated
+    xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated --> x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated
     x6bc84d71988ef714(["otm1_attitudes<br>109ms"]):::outdated --> xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated
     xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> x7de018286ec8200a(["otm1_attitudes_collapsed_codebook<br>3ms"]):::outdated
     xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> xbbf5ba6b97469185(["otm1_attitudes_collapsed_share<br>1ms"]):::outdated
@@ -174,9 +162,9 @@ graph LR
     xe5e2187e108fd7e8(["otm1_iat<br>305ms"]):::outdated --> x0e90d8257cff6748(["otm1_iat_codebook"]):::outdated
     x5b122c20a26ef6ec(["otm1_iat_paths<br>4ms"]):::outdated --> x58b5e12e1de93b31["otm1_iat_files<br>19ms<br>155 branches"]:::outdated
     x1cf8b0e8f9fac3bc(["otm1_iat2_lme<br>35ms"]):::outdated --> x7315f5df0dc3093b(["otm1_iat_lmer<br>14m 20.9s"]):::outdated
+    x65964d8cee72cae4(["otm1_technical_failure<br>839ms"]):::outdated --> xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::outdated
     x1e57612434439fd3(["otm1_stimulus_translations<br>1ms"]):::outdated --> xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::outdated
     xe5e2187e108fd7e8(["otm1_iat<br>305ms"]):::outdated --> xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::outdated
-    x65964d8cee72cae4(["otm1_technical_failure<br>839ms"]):::outdated --> xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::outdated
     xc9bcbf9ce6971566(["otm1_iat2<br>80ms"]):::outdated --> x1cf8b0e8f9fac3bc(["otm1_iat2_lme<br>35ms"]):::outdated
     x01bd262e2236a1f2["otm1_log_files<br>24ms<br>155 branches"]:::outdated --> xb701179d8a651b0f(["otm1_log<br>19ms"]):::outdated
     xdc24e52455c5ffd5(["otm1_log_paths<br>4ms"]):::outdated --> x01bd262e2236a1f2["otm1_log_files<br>24ms<br>155 branches"]:::outdated
@@ -185,40 +173,40 @@ graph LR
     xffbc541add3afc7e(["otm1_mem_paths<br>876ms"]):::outdated --> x2c1483e256f9ea97["otm1_mem_files<br>22ms<br>155 branches"]:::outdated
     x955ec52fa68b360c(["otm1_demo<br>65ms"]):::outdated --> xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated
     xb701179d8a651b0f(["otm1_log<br>19ms"]):::outdated --> xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated
-    x3735fa5ca75e343d(["otm1_mem<br>143ms"]):::outdated --> xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated
     x65964d8cee72cae4(["otm1_technical_failure<br>839ms"]):::outdated --> xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated
+    x3735fa5ca75e343d(["otm1_mem<br>143ms"]):::outdated --> xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated
     xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated --> x58589bd51b4e3618(["otm1_memory_codebook<br>206ms"]):::outdated
     xc54a013649e91e86(["otm1_memory<br>15ms"]):::outdated --> xf5fd4fe7bc5f6869(["otm1_memory_share<br>3ms"]):::outdated
-    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::outdated
-    x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::outdated --> x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::outdated
     xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::outdated
+    x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::outdated --> x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::outdated
     x1b3dbf29d0254ff8(["otm1_null_model_matrix<br>28ms"]):::outdated --> x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::outdated
-    x30e55b80dfa22716(["otm1_no_lab_effect_model_matrix<br>1ms"]):::outdated --> xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::outdated
+    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x15b638cd821903a1(["otm1_no_effect<br>13h 37m 15.8s"]):::outdated
     xe896a0789aac9abb>"n_way_anova"]:::uptodate --> xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::outdated
-    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::outdated
     x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::outdated --> xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::outdated
+    x30e55b80dfa22716(["otm1_no_lab_effect_model_matrix<br>1ms"]):::outdated --> xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::outdated
+    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> xf77248d034ec7384(["otm1_no_lab_effect<br>12h 25m 51.6s"]):::outdated
     xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::outdated --> x30e55b80dfa22716(["otm1_no_lab_effect_model_matrix<br>1ms"]):::outdated
     x30e55b80dfa22716(["otm1_no_lab_effect_model_matrix<br>1ms"]):::outdated --> x1b3dbf29d0254ff8(["otm1_null_model_matrix<br>28ms"]):::outdated
     x971025700bc028e3(["otm1_n_mcmc_samples_sensitivity<br>34ms"]):::outdated --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
-    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
-    xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::outdated --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
-    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
     xfe2f3a45b5bba6fb(["sensitivity_rscales<br>19ms"]):::outdated --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
+    xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::outdated --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
+    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
+    xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> x9888f0f8a006ef26["otm1_prior_sensitivity_analysis<br>1d 1h 13m 37.7s<br>8 branches"]:::outdated
     x0517aa4bdbe609aa(["otm1_stimuls_translations_file<br>0ms"]):::uptodate --> x1e57612434439fd3(["otm1_stimulus_translations<br>1ms"]):::outdated
     xe896a0789aac9abb>"n_way_anova"]:::uptodate --> x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::outdated
     xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::outdated
-    x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::outdated --> x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::outdated
     xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::outdated --> x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::outdated
+    x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::outdated --> x146b98b915782275(["otm1_unconstrained<br>13h 34m 5.9s"]):::outdated
     x340cd81aa8809750>"BayesFactor_design_matrix"]:::uptodate --> xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::outdated
     xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::outdated
     x0920c189f00eaac5(["otm1_unconstrained_samples<br>27.1s"]):::outdated --> x52d22db802a78872(["otm1_unconstrained_pp<br>12.9s"]):::outdated
     xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::outdated --> x0920c189f00eaac5(["otm1_unconstrained_samples<br>27.1s"]):::outdated
-    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::outdated
-    xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::outdated --> xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::outdated
     xa936cda5f5677988(["otm1_attitudes_collapsed<br>5ms"]):::outdated --> xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::outdated
+    xe896a0789aac9abb>"n_way_anova"]:::uptodate --> xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::outdated
     x666d71fadfb53146(["otm1_n_mcmc_samples<br>838ms"]):::outdated --> xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::outdated
-    x467d0ee18a4b2e81>"dz_to_f"]:::uptodate --> x81f3f47f99d87764>"pes_to_f"]:::uptodate
+    xcc543b16cbe57999(["otm1_unconstrained_model_matrix<br>1s"]):::outdated --> xed440da53c3f1a27(["otm1_unconstrained_samples_raw<br>15h 31m 31.2s"]):::outdated
     x334bef29eb9e3471>"pes_to_dz"]:::uptodate --> x81f3f47f99d87764>"pes_to_f"]:::uptodate
+    x467d0ee18a4b2e81>"dz_to_f"]:::uptodate --> x81f3f47f99d87764>"pes_to_f"]:::uptodate
     x94109b123e25ff82>"eiv_lm"]:::uptodate --> x748a6a58f143b78c>"replication"]:::uptodate
     xa584f949724a95ca>"gen"]:::uptodate --> x748a6a58f143b78c>"replication"]:::uptodate
     x6294c2394e2f4f30>"apa_print_bf"]:::uptodate
@@ -401,8 +389,8 @@ parallel workers in `otm1/_targets_otm1.r` or `otm2/_targets_otm2.r`).
 
 To define a parallel computing plan, use the `future` package and set up
 a plan in the `_targets_otm1.r` or `_targets_otm2.r` file (e.g., using
-`future::plan(future::multisession, workers = 4)` for local parallel
-processing with 4 cores). To control the number of workers (computers or
+`future::plan(future::multisession, workers = 3)` for local parallel
+processing with 3 cores). To control the number of workers (computers or
 local processes) used for the analysis, change the **targets** `workers`
 option in `_targets.yaml` (`workers: 4` in this example).
 
@@ -433,21 +421,15 @@ pipelines. These reports contain show results of the analyses.
 ### Rendering the manuscript
 
 Once all targets have been run, the R Markdown file `manuscript.Rmd` in
-the `paper` directory can be rendered to reproduce the manuscript using
-the R package `papaja`.
+the `analysis_and_paper` directory can be rendered to reproduce the
+manuscript using the R package `papaja`.
 
 ``` r
 rmarkdown::render("analysis_and_paper/manuscript.Rmd")
 ```
 
-The R Markdown file `supplement.Rmd` in the `paper` directory can be
-rendered to reproduce the supplementary material.
-
-Alternatively, the manuscript and supplementary material can be rendered
-by running the corresponding targets in the pipeline by setting the
-`project` variable in `_make.sh` to `paper` and executing
-`sh ./_make.sh` in a terminal or running the R code in `_make.sh`
-directly in a vanilla R session.
+The R Markdown file `supplement.Rmd` in the `analysis_and_paper`
+directory can be rendered to reproduce the supplementary material.
 
 ## Licensing information
 
@@ -456,9 +438,7 @@ directly in a vanilla R session.
 | Code | [MIT](http://opensource.org/licenses/MIT) 2025 Frederik Aust & Tobias Heycke |
 | Data | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | Experimental software | [MIT](http://opensource.org/licenses/MIT) 2025 Frederik Aust & Tobias Heycke |
-| Stimulus material | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
-
-<!-- | Manuscript | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/) | -->
+| Stimulus material | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/) |
 
 ## Contact
 

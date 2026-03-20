@@ -733,13 +733,4 @@ list(
     , packages = c("BayesFactor", "dplyr")
     , pattern = map(sensitivity_rscales)
   )
-
-
-  # Render report ---------------------------------------------------------
-  # , tar_render(
-  #   otm2_analysis
-  #   , path = "./otm2/results/analysis2.Rmd"
-  #   , deployment = "main"
-  #   , quiet = TRUE
-  # )
 )

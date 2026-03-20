@@ -85,6 +85,8 @@ For a description of the variables in each dataset, please see the files `result
 The experiment was programmed using PsychoPy 1.82.01 and 1.83.01.
 *One of these versions must be installed to run the experiment.*
 All files to reproduce the procedure can be found in the `material` directories of each experiment.
+Note that photographs used in the experiment in this repository were blurred to protect the persona rights of the depicted individuals.
+They can be obtained from the authors upon request.
 
 A folder called `data` (where output data is recorded), needs to be present
 in the same folder as the Python script to run the experiment.
@@ -172,7 +174,7 @@ This may be useful to inspect intermediate results (especially for the computati
 
 The pipelines are configured to run the analyses on a desktop computer, but they can be adapted to run on a cluster (e.g., by using `targets::tar_make_future()` for parallelisation and configuring parallel workers in `otm1/_targets_otm1.r` or `otm2/_targets_otm2.r`).
 
-To define a parallel computing plan, use the `future` package and set up a plan in the `_targets_otm1.r` or `_targets_otm2.r` file (e.g., using `future::plan(future::multisession, workers = 4)` for local parallel processing with 4 cores).
+To define a parallel computing plan, use the `future` package and set up a plan in the `_targets_otm1.r` or `_targets_otm2.r` file (e.g., using `future::plan(future::multisession, workers = 3)` for local parallel processing with 3 cores).
 To control the number of workers (computers or local processes) used for the analysis, change the **targets** `workers` option in `_targets.yaml` (`workers: 4` in this example).
   
 To fully deactivate parallel processing, set `workers: 1` in `_targets.YAML` and `distributed <- FALSE` in `_make.sh`.
@@ -197,15 +199,13 @@ These reports contain show results of the analyses.
 
 ### Rendering the manuscript
 
-Once all targets have been run, the R Markdown file `manuscript.Rmd` in the `paper` directory can be rendered to reproduce the manuscript using the R package `papaja`.
+Once all targets have been run, the R Markdown file `manuscript.Rmd` in the `analysis_and_paper` directory can be rendered to reproduce the manuscript using the R package `papaja`.
 
 ```R
 rmarkdown::render("analysis_and_paper/manuscript.Rmd")
 ```
 
-The R Markdown file `supplement.Rmd` in the `paper` directory can be rendered to reproduce the supplementary material.
-
-Alternatively, the manuscript and supplementary material can be rendered by running the corresponding targets in the pipeline by setting the `project` variable in `_make.sh` to `paper` and executing `sh ./_make.sh` in a terminal or running the R code in `_make.sh` directly in a vanilla R session.
+The R Markdown file `supplement.Rmd` in the `analysis_and_paper` directory can be rendered to reproduce the supplementary material.
 
 
 ## Licensing information
@@ -215,9 +215,7 @@ Alternatively, the manuscript and supplementary material can be rendered by runn
 | Code | [MIT](http://opensource.org/licenses/MIT) 2025 Frederik Aust & Tobias Heycke |
 | Data | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | Experimental software | [MIT](http://opensource.org/licenses/MIT) 2025 Frederik Aust & Tobias Heycke |
-| Stimulus material | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
-
-<!-- | Manuscript | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/) | -->
+| Stimulus material | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/) |
 
 
 ## Contact
