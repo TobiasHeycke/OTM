@@ -310,7 +310,7 @@ Because the procedural modifications made by Heycke et al. (\protect\hyperlink{r
 
 The first author of the original study verified that the materials and procedure faithfully reproduced the original.
 The experiment was preregistered and data were collected at the University of Cologne (Germany), Ghent University (Belgium), and Harvard University (USA).
-To give a vivid impression of the experimental procedure, an exemplary video recording is available at \url{https://osf.io/hmcfg/}.
+To give a vivid impression of the experimental procedure, an exemplary video recording is available at \url{https://osf.io/8m3xb}.
 
 \hypertarget{material-procedure}{%
 \subsubsection{Material \& Procedure}\label{material-procedure}}
@@ -395,7 +395,7 @@ We considered two additional predictions: no effect of the manipulation (\(\math
 If, of all predictions considered, our results are best described by the prediction of no effect, our experimental manipulations failed.
 The prediction of any effect reflects the possibility that we may observe an entirely unexpected outcome that is neither in line with the results reported by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}) nor those reported by Heycke et al. (\protect\hyperlink{ref-heycke_two_2018}{2018}).
 
-We implemented all predictions as order (or null) constraints in an ANOVA model with default (multivariate) Cauchy priors (\protect\hyperlink{ref-rouder_theories_2018}{Rouder et al., 2018}; \(r = 0.5\) for fixed effects and \(r = 1\) for random participant effects, see SOM for details, \protect\hyperlink{ref-rouder_default_2012}{Rouder, Morey, Speckman, \& Province, 2012}).
+We implemented all predictions as order (or null) constraints in an ANOVA model with default (multivariate) Cauchy priors (\(r = 0.5\) for fixed effects and \(r = 1\) for random participant effects, see SOM for details, \protect\hyperlink{ref-rouder_theories_2018}{Rouder et al., 2018}; \protect\hyperlink{ref-rouder_default_2012}{Rouder, Morey, Speckman, \& Province, 2012}).
 Taking into account recent statistical advancements, we deviated from the preregistered model specification to account for individual differences in experimental effects (\protect\hyperlink{ref-vandenBergh2023}{van den Bergh, Wagenmakers, \& Aust, 2023}), albeit the results are robust to the change in model specifications.
 To simplify the presentation of the Bayesian model comparison results, we collapsed data across valence orders such that we always contrasted blocks where the behavioral information was positive with those where it was negative.
 Thus, for both rating and IAT scores positive differences indicate that evaluations are congruent with the valence of the behavioral information, whereas negative values indicate that evaluations are congruent with the valence of the briefly flashed words.
@@ -406,7 +406,7 @@ If the data are perfectly consistent with \(\mathcal{M}_\textrm{One mind}\), the
 In this case \(\mathcal{M}_\textrm{One mind}\) will be favored by the Bayes factor because \(\mathcal{M}_\textrm{One mind}\) makes a more specific prediction: it predicts that 3/4 of the outcomes predicted by \(\mathcal{M}_\textrm{Any effect}\) are impossible, Figure ~\ref{fig:otm-bayesian-replication-analysis-plot}A.
 The degree to which the order-constrained model is more specific (more parsimonious) places an upper bound on the Bayes factor in its favor.
 On the other hand, there is no such bound on the Bayes factor in favor of the unconstrained model if the data are inconsistent with the order constraint, that is, if the data fall outside of the predictive space deemed possible by the order-constrained model.
-It follows that \(\mathrm{BF}_{\mathcal{M}_\textrm{One mind}/\mathcal{M}_\textrm{Any effect}} \in [0, 4]\) because \(\mathcal{M}_\textrm{One mind}\) limits its predictions to 1/4 of those of \(\mathcal{M}_\textrm{Any effect}\).
+It follows that \(\mathrm{BF}_{\textrm{One mind}/\textrm{Any effect}} \in [0, 4]\) because \(\mathcal{M}_\textrm{One mind}\) limits its predictions to 1/4 of those of \(\mathcal{M}_\textrm{Any effect}\).
 To guide their interpretation, we report the theoretical bounds on the reported Bayes factors alongside our results where applicable.
 Finally, we tested whether recognition memory accuracy for the briefly flashed words was above chance using a one-tailed Bayesian \(t\) test with a default Cauchy prior (\(r = \sqrt2/2\), \protect\hyperlink{ref-rouder_bayesian_2009}{Rouder, Speckman, Sun, Morey, \& Iverson, 2009}).
 
@@ -440,7 +440,7 @@ No. & Details & Description & Reader Impact\\
 
 To facilitate comparisons with previously reported statistics, we also conducted the frequentist analyses described by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}).
 To ensure that our conclusions about indirectly measured evaluations are robust to stimulus effects, we supplemented the ANOVA analysis of IAT scores by a frequentist linear mixed model analysis, see SOM.
-We used R (Version 4.5.0; \protect\hyperlink{ref-R-base}{R Core Team, 2018}) and the R-packages \emph{afex} (Version 1.4.1; \protect\hyperlink{ref-R-afex}{Singmann, Bolker, Westfall, \& Aust, 2018}), \emph{BayesFactor} (Version 0.9.12.4.7; \protect\hyperlink{ref-R-BayesFactor}{Morey \& Rouder, 2018}), \emph{emmeans} (Version 2.0.1; \protect\hyperlink{ref-R-emmeans}{Lenth, 2018}), and \emph{papaja} (Version 0.1.4; \protect\hyperlink{ref-R-papaja}{Aust \& Barth, 2018}) for all our analyses.
+We used R (Version 4.5.0; \protect\hyperlink{ref-R-base}{R Core Team, 2025}) and the R-packages \emph{afex} (Version 1.4.1; \protect\hyperlink{ref-R-afex}{Singmann, Bolker, Westfall, Aust, \& Ben-Shachar, 2024}), \emph{BayesFactor} (Version 0.9.12.4.7; \protect\hyperlink{ref-R-BayesFactor}{Morey \& Rouder, 2024}), \emph{effectsize} (Version 1.0.1; \protect\hyperlink{ref-R-effectsize}{Ben-Shachar, Lüdecke, \& Makowski, 2020}), \emph{emmeans} (Version 2.0.1; \protect\hyperlink{ref-R-emmeans}{Lenth \& Piaskowski, 2025}), and \emph{papaja} (Version 0.1.4; \protect\hyperlink{ref-R-papaja}{Aust \& Barth, 2025}) for all our analyses.
 
 \hypertarget{participants}{%
 \subsubsection{Participants}\label{participants}}
@@ -455,7 +455,7 @@ We compensated all participants with either € 8/10 (Cologne/Ghent), or partial
 
 The prediction, which is supported by all previous empirical reports, is a crossed disordinal interaction between the factor \emph{learning block} and the control factor \emph{valence order}.
 Our assessment of the statistical sensitivitiy of our design focused on the tests of simple \emph{learning block} effects, because they are of primary theoretical interest and less sensitive than the test of the interaction.
-We estimate the sensitivity for the frequentist analyses described by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}) using the R-package \emph{Superpower} (\protect\hyperlink{ref-R-Superpower}{Caldwell, Lakens, Parlett-Pelleriti, Prochilo, \& Aust, 2022}).
+We estimate the sensitivity for the frequentist analyses described by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}) using the R-package \emph{Superpower} (\protect\hyperlink{ref-R-Superpower}{Caldwell, Lakens, Parlett-Pelleriti, Prochilo, \& Aust, 2026}).
 The smallest simple effect of learning block reported by Rydell et al. (\protect\hyperlink{ref-rydell_two_2006}{2006}) was \(d_z \approx 0.47\) (\(\hat\eta_p^2 = .100\)) for IAT scores.\footnote{The learning block differences reported by Heycke et al.~(2018) were of similar magnitude but with an opposite sign.}
 Across all locations, the planned contrasts had 95\% power to detect learning block effects as small as \(\delta_z = 0.42\)\footnote{We report the implied sensitivity in units of Cohen's \(\delta\) depending on the assumed repeated-measures correlation \(\rho\) in the supplementary material.} (\(\eta_p^2 = .081\); \(N = 152\), \(\alpha = .05\), two-sided tests).
 Thus, our design is sufficiently sensitive to detect (or rule out) differences 11\% smaller than the smallest learning block difference reported in the original study.
@@ -508,10 +508,10 @@ Ghent & 27 ms & negative $\to$ positive & -0.81 [-0.94, -0.69] & 0.91 [0.77, 1.0
 Harvard & 24 ms & negative $\to$ positive & -1.03 [-1.16, -0.91] & 0.93 [0.78, 1.08] & 0.03 [-0.04, 0.10] & 0.10 [0.05, 0.16]\\
  &  & positive $\to$ negative & 0.99 [0.86, 1.11] & -0.95 [-1.10, -0.80] & 0.12 [0.05, 0.19] & 0.05 [0.00, 0.11]\\ \midrule
 \multicolumn{7}{c}{Experiment 2}\\ \midrule
-Florida, Williams & 20 ms & negative $\to$ positive & -0.87 [-0.96, -0.78] & 0.79 [0.69, 0.89] & 0.05 [0.02, 0.09] & 0.11 [0.08, 0.14]\\
- &  & positive $\to$ negative & 0.90 [0.81, 0.99] & -0.87 [-0.97, -0.77] & 0.24 [0.20, 0.27] & 0.09 [0.06, 0.12]\\
-Hong Kong, Illinois, Yale & 13 ms & negative $\to$ positive & -0.90 [-0.98, -0.83] & 0.82 [0.74, 0.91] & 0.06 [0.03, 0.09] & 0.10 [0.08, 0.13]\\
+Florida, Williams & 13 ms & negative $\to$ positive & -0.90 [-0.98, -0.83] & 0.82 [0.74, 0.91] & 0.06 [0.03, 0.09] & 0.10 [0.08, 0.13]\\
  &  & positive $\to$ negative & 0.90 [0.83, 0.98] & -0.81 [-0.90, -0.73] & 0.21 [0.18, 0.25] & 0.09 [0.06, 0.12]\\
+Hong Kong, Illinois, Yale & 20 ms & negative $\to$ positive & -0.87 [-0.96, -0.78] & 0.79 [0.69, 0.89] & 0.05 [0.02, 0.09] & 0.11 [0.08, 0.14]\\
+ &  & positive $\to$ negative & 0.90 [0.81, 0.99] & -0.87 [-0.97, -0.77] & 0.24 [0.20, 0.27] & 0.09 [0.06, 0.12]\\
 \bottomrule
 \end{longtable}
 
@@ -524,9 +524,9 @@ Hong Kong, Illinois, Yale & 13 ms & negative $\to$ positive & -0.90 [-0.98, -0.8
 
 For a joint analysis, we separately \(z\)-standardized directly and indirectly measured evaluations and submitted them to a four-way ANOVA with the factors \emph{measure of evaluation} (direct vs.~indirect), \emph{valence order} (positive or negative behavioral information first), \emph{learning block} (first or second learning block), and \emph{lab location} (Cologne, Ghent, Harvard).
 Table~\ref{tab:otm-descriptives-table} summarizes the condition means.
-We found a significant three-way interaction between valence order, learning block, and measure of evaluation, \(d = 0.16\), 90\% \([1.97, 2.82]\), \(F(1, 147) = 210.82\), \(\mathit{MSE} = 0.31\), \(p < .001\), Figure~\ref{fig:otm-factorial-results-plot}A\footnote{Figure~\ref{fig:otm-factorial-results-plot} may give the impression that the difference between valence orders was of similar magnitude at learning block 1 and 2 in rating scores but differed in IAT scores.
-  However, we found differences between valence orders at learning blocks 1 and 2 in both measures of evaluation (all \(t(147) > 2.51\), \(p < .013\)) and we did not find these differences between valence orders to vary between evaluative measures, \(d_z = 0.02\), 90\% \([-0.16, 0.17]\), \(F(1, 147) = 0.94\), \(\mathit{MSE} = 0.76\), \(p = .334\).}.
-Moreover, we observed a significant four-way interaction indicating that the three-way interaction differed between lab locations, \(\hat\eta^2_p = .002\), 90\% \([.000, .012]\), \(F(2, 147) = 3.48\), \(\mathit{MSE} = 0.31\), \(p = .033\).
+We found a significant three-way interaction between valence order, learning block, and measure of evaluation, \(d = 2.40\), 90\% \([1.97, 2.82]\), \(F(1, 147) = 210.82\), \(\mathit{MSE} = 0.31\), \(p < .001\), Figure~\ref{fig:otm-factorial-results-plot}A\footnote{Figure~\ref{fig:otm-factorial-results-plot} may give the impression that the difference between valence orders was of similar magnitude at learning block 1 and 2 in rating scores but differed in IAT scores.
+  However, we found differences between valence orders at learning blocks 1 and 2 in both measures of evaluation (all \(t(147) > 2.51\), \(p < .013\)) and we did not find these differences between valence orders to vary between evaluative measures, \(d_z = 0.00\), 90\% \([-0.16, 0.17]\), \(F(1, 147) = 0.94\), \(\mathit{MSE} = 0.76\), \(p = .334\).}.
+Moreover, we observed a significant four-way interaction indicating that the three-way interaction differed between lab locations, \(\hat\eta^2_p = .045\), 90\% \([.002, .105]\), \(F(2, 147) = 3.48\), \(\mathit{MSE} = 0.31\), \(p = .033\).
 Follow-up tests indicated that the three-way interaction was individually significant in each lab (all \(F(1, 147) > 46.62\), \(p < .001\)), and the direction of the effect was consistent across labs.
 In line with the original analysis, we next examined the interaction between valence order, learning block, and lab location in separate analyses of rating and IAT scores.
 
@@ -534,7 +534,7 @@ In line with the original analysis, we next examined the interaction between val
 \subsubsection{Direct measure: Evaluative rating scores}\label{direct-measure-evaluative-rating-scores}}
 
 As in the previous studies, for rating scores we found a two-way interaction between valence order and learning block, \(d = 6.51\), 90\% \([5.69, 7.31]\), \(F(1, 147) = 1,556.14\), \(\mathit{MSE} = 0.15\), \(p < .001\).
-This interaction was significant in each lab (all \(F(1, 147) > 450.58\), \(p < .001\)), but also differed in magnitude, \(\hat\eta^2_p = .082\), 90\% \([.020, .155]\), \(F(2, 147) = 4.05\), \(\mathit{MSE} = 0.15\), \(p = .019\).
+This interaction was significant in each lab (all \(F(1, 147) > 450.58\), \(p < .001\)), but also differed in magnitude, \(\hat\eta^2_p = .052\), 90\% \([.005, .115]\), \(F(2, 147) = 4.05\), \(\mathit{MSE} = 0.15\), \(p = .019\).
 In all labs, rating scores corresponded to the valence of the behavioral information.
 Rating scores indicated \emph{more} favorable evaluations after the first than after the second block when behavioral information was first positive and later negative,
 Cologne: \(d_z = -1.34\), 95\% CI \([-1.56, -1.12]\);
@@ -551,7 +551,7 @@ Hence, in all labs directly measured evaluations corresponded to the valence of 
 \hypertarget{indirect-measure-iat-scores}{%
 \subsubsection{Indirect measure: IAT scores}\label{indirect-measure-iat-scores}}
 
-For IAT scores, we found a two-way interaction between valence order and learning block, \(d = 1.10\), 90\% \([0.75, 1.45]\), \(F(1, 147) = 44.68\), \(\mathit{MSE} = 0.01\), \(p < .001\); in this case we detected no differences across labs, \(\hat\eta^2_p = .006\), 90\% \([.000, .032]\), \(F(2, 147) = 1.19\), \(\mathit{MSE} = 0.01\), \(p = .308\).
+For IAT scores, we found a two-way interaction between valence order and learning block, \(d = 1.10\), 90\% \([0.75, 1.45]\), \(F(1, 147) = 44.68\), \(\mathit{MSE} = 0.01\), \(p < .001\); in this case we detected no differences across labs, \(\hat\eta^2_p = .016\), 90\% \([.000, .056]\), \(F(2, 147) = 1.19\), \(\mathit{MSE} = 0.01\), \(p = .308\).
 In all labs, IAT scores also corresponded to the valence of the behavioral information.
 IAT scores indicated \emph{more} favorable evaluations after the first than after the second block when behavioral information was first positive and later negative, \(d_z = -0.38\), 95\% CI \([-0.55, -0.21]\), \(t(147) = -4.64\), \(p < .001\).
 Conversely, IAT scores indicated \emph{less} favorable evaluations after the first than after the second block when behavioral information was first negative and later positive, \(d_z = 0.40\), 95\% CI \([0.23, 0.57]\), \(t(147) = 4.81\), \(p < .001\).
@@ -739,8 +739,8 @@ To anticipate the results, we replicated the results of Experiment 1 regardless 
 
 We, again, separately \(z\)-standardized directly and indirectly measured evaluations and submitted them to a four-way ANOVA with the factors \emph{measure of evaluation} (direct vs.~indirect), \emph{valence order} (positive or negative behavioral information first), \emph{learning block} (first or second learning block), and \emph{presentation duration} (20 ms vs.~13 ms).
 Table~\ref{tab:otm-descriptives-table} summarizes the condition means.
-We found a significant three-way interaction between valence order, learning block, and measure of evaluation, \(d = 0.50\), 90\% \([1.77, 2.26]\), \(F(1, 382) = 387.10\), \(\mathit{MSE} = 0.37\), \(p < .001\), Figure~\ref{fig:otm-factorial-results-plot}B.
-However, we did not observe a significant four-way interaction including presentation duration, \(d = 0.03\), 90\% \([-0.11, 0.29]\), \(F(1, 382) = 0.75\), \(\mathit{MSE} = 0.37\), \(p = .388\).
+We found a significant three-way interaction between valence order, learning block, and measure of evaluation, \(d = 2.01\), 90\% \([1.77, 2.26]\), \(F(1, 382) = 387.10\), \(\mathit{MSE} = 0.37\), \(p < .001\), Figure~\ref{fig:otm-factorial-results-plot}B.
+However, we did not observe a significant four-way interaction including presentation duration, \(d = 0.09\), 90\% \([-0.11, 0.29]\), \(F(1, 382) = 0.75\), \(\mathit{MSE} = 0.37\), \(p = .388\).
 To explore whether the results are consistent across ethnicities and cultures, we conducted a second four-way ANOVA replacing presentation duration by \emph{country} (Hong Kong vs.~USA).
 We were unable to detect any significant effect involving country, all \(p \geq .209\).
 In an analogous analysis, we were unable to detect any significant effect involving lab location, all \(p \geq .420\).
@@ -868,10 +868,13 @@ Together with results from previous replication attempts by Heycke et al. (\prot
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
 \leavevmode\vadjust pre{\hypertarget{ref-R-papaja}{}}%
-Aust, F., \& Barth, M. (2018). \emph{{papaja}: {Create} {APA} manuscripts with {R Markdown}}. Retrieved from \url{https://github.com/crsh/papaja}
+Aust, F., \& Barth, M. (2025). \emph{{papaja}: {Prepare} reproducible {APA} journal articles with {R Markdown}}. \url{https://doi.org/10.32614/CRAN.package.papaja}
+
+\leavevmode\vadjust pre{\hypertarget{ref-R-effectsize}{}}%
+Ben-Shachar, M. S., Lüdecke, D., \& Makowski, D. (2020). {e}ffectsize: Estimation of effect size indices and standardized parameters. \emph{Journal of Open Source Software}, \emph{5}(56), 2815. \url{https://doi.org/10.21105/joss.02815}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-Superpower}{}}%
-Caldwell, A. R., Lakens, D., Parlett-Pelleriti, C. M., Prochilo, G., \& Aust, F. (2022). \emph{Power analysis with superpower}. Retrieved from \url{https://arcaldwell49.github.io/SuperpowerBook}
+Caldwell, A. R., Lakens, D., Parlett-Pelleriti, C. M., Prochilo, G., \& Aust, F. (2026). \emph{Power analysis with superpower}. Retrieved from \url{https://arcaldwell49.github.io/SuperpowerBook}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Chen2025}{}}%
 Chen, G. R., Harris, Y., \& Hassin, R. R. (2025). Individual differences in prioritization for consciousness and the conscious detection of changes. \emph{Consciousness and Cognition}, \emph{129}, 103831. \url{https://doi.org/10.1016/j.concog.2025.103831}
@@ -925,7 +928,7 @@ Kerpelman, J. P., \& Himmelfarb, S. (1971). Partial reinforcement effects in att
 Klauer, K. C., Draine, S. C., \& Greenwald, A. G. (1998). An unbiased errors-in-variables approach to detecting unconscious cognition. \emph{British Journal of Mathematical and Statistical Psychology}, \emph{51}(2), 253--267. \url{https://doi.org/10.1111/j.2044-8317.1998.tb00680.x}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-emmeans}{}}%
-Lenth, R. (2018). \emph{Emmeans: Estimated marginal means, aka least-squares means}. Retrieved from \url{https://CRAN.R-project.org/package=emmeans}
+Lenth, R. V., \& Piaskowski, J. (2025). \emph{Emmeans: Estimated marginal means, aka least-squares means}. \url{https://doi.org/10.32614/CRAN.package.emmeans}
 
 \leavevmode\vadjust pre{\hypertarget{ref-mcconnell_systems_2014}{}}%
 McConnell, A. R., \& Rydell, R. J. (2014). The systems of evaluation model: A dual-systems approach to attitudes. In J. W. Sherman, B. Gawronski, \& Y. Trope (Eds.), \emph{Dual-process theories of the social mind} (pp. 204--218). The Guilford Press.
@@ -937,10 +940,10 @@ McConnell, A. R., Rydell, R. J., Strain, L. M., \& Mackie, D. M. (2008). Forming
 Mitchell, C. J., De Houwer, J., \& Lovibond, P. F. (2009). The propositional nature of human associative learning. \emph{Behavioral and Brain Sciences}, \emph{32}(02), 183. \url{https://doi.org/10.1017/S0140525X09000855}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-BayesFactor}{}}%
-Morey, R. D., \& Rouder, J. N. (2018). \emph{BayesFactor: Computation of bayes factors for common designs}. Retrieved from \url{https://CRAN.R-project.org/package=BayesFactor}
+Morey, R. D., \& Rouder, J. N. (2024). \emph{BayesFactor: Computation of bayes factors for common designs}. \url{https://doi.org/10.32614/CRAN.package.BayesFactor}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-base}{}}%
-R Core Team. (2018). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}
+R Core Team. (2025). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}
 
 \leavevmode\vadjust pre{\hypertarget{ref-rouder_theories_2018}{}}%
 Rouder, J. N., Haaf, J. M., \& Aust, F. (2018). From theories to models to predictions: {A Bayesian} model comparison approach. \emph{Communication Monographs}, \emph{85}(1), 41--56. \url{https://doi.org/10.1080/03637751.2017.1394581}
@@ -967,7 +970,7 @@ Shanks, D. R., \& St. John, M. F. (1994). Characteristics of dissociable human l
 Simonsohn, U. (2015). Small telescopes: Detectability and the evaluation of replication results. \emph{Psychological Science}, \emph{26}(5), 559--569. \url{https://doi.org/10.1177/0956797614567341}
 
 \leavevmode\vadjust pre{\hypertarget{ref-R-afex}{}}%
-Singmann, H., Bolker, B., Westfall, J., \& Aust, F. (2018). \emph{Afex: Analysis of factorial experiments}. Retrieved from \url{https://CRAN.R-project.org/package=afex}
+Singmann, H., Bolker, B., Westfall, J., Aust, F., \& Ben-Shachar, M. S. (2024). \emph{Afex: Analysis of factorial experiments}. \url{https://doi.org/10.32614/CRAN.package.afex}
 
 \leavevmode\vadjust pre{\hypertarget{ref-Stahl2009}{}}%
 Stahl, C., Unkelbach, C., \& Corneille, O. (2009). On the respective contributions of awareness of unconditioned stimulus valence and unconditioned stimulus identity in attitude formation through evaluative conditioning. \emph{Journal of Personality and Social Psychology}, \emph{97}(3), 404--420. \url{https://doi.org/10.1037/a0016196}

@@ -6,7 +6,7 @@ Because the procedural modifications made by @heycke_two_2018 may have caused th
 
 The first author of the original study verified that the materials and procedure faithfully reproduced the original.
 The experiment was preregistered and data were collected at the University of Cologne (Germany), Ghent University (Belgium), and Harvard University (USA).
-To give a vivid impression of the experimental procedure, an exemplary video recording is available at https://osf.io/hmcfg/.
+To give a vivid impression of the experimental procedure, an exemplary video recording is available at https://osf.io/8m3xb.
 
 ### Material & Procedure
 
@@ -94,7 +94,7 @@ We considered two additional predictions: no effect of the manipulation ($\mathc
 If, of all predictions considered, our results are best described by the prediction of no effect, our experimental manipulations failed.
 The prediction of any effect reflects the possibility that we may observe an entirely unexpected outcome that is neither in line with the results reported by @rydell_two_2006 nor those reported by @heycke_two_2018.
 
-We implemented all predictions as order (or null) constraints in an ANOVA model with default (multivariate) Cauchy priors [$r = 0.5$ for fixed effects and $r = 1$ for random participant effects, see SOM for details, @rouder_default_2012; @rouder_theories_2018].
+We implemented all predictions as order (or null) constraints in an ANOVA model with default (multivariate) Cauchy priors [$r = 0.5$ for fixed effects and $r = 1$ for random participant effects, see SOM for details, @rouder_theories_2018; @rouder_default_2012].
 Taking into account recent statistical advancements, we deviated from the preregistered model specification to account for individual differences in experimental effects [@vandenBergh2023], albeit the results are robust to the change in model specifications.
 To simplify the presentation of the Bayesian model comparison results, we collapsed data across valence orders such that we always contrasted blocks where the behavioral information was positive with those where it was negative.
 Thus, for both rating and IAT scores positive differences indicate that evaluations are congruent with the valence of the behavioral information, whereas negative values indicate that evaluations are congruent with the valence of the briefly flashed words.
@@ -105,7 +105,7 @@ If the data are perfectly consistent with $\mathcal{M}_\textrm{One mind}$, they 
 In this case $\mathcal{M}_\textrm{One mind}$ will be favored by the Bayes factor because $\mathcal{M}_\textrm{One mind}$ makes a more specific prediction: it predicts that 3/4 of the outcomes predicted by $\mathcal{M}_\textrm{Any effect}$ are impossible, Figure \ \@ref(fig:otm-bayesian-replication-analysis-plot)A.
 The degree to which the order-constrained model is more specific (more parsimonious) places an upper bound on the Bayes factor in its favor.
 On the other hand, there is no such bound on the Bayes factor in favor of the unconstrained model if the data are inconsistent with the order constraint, that is, if the data fall outside of the predictive space deemed possible by the order-constrained model.
-It follows that $\mathrm{BF}_{\mathcal{M}_\textrm{One mind}/\mathcal{M}_\textrm{Any effect}} \in [0, 4]$ because $\mathcal{M}_\textrm{One mind}$ limits its predictions to 1/4 of those of $\mathcal{M}_\textrm{Any effect}$.
+It follows that $\mathrm{BF}_{\textrm{One mind}/\textrm{Any effect}} \in [0, 4]$ because $\mathcal{M}_\textrm{One mind}$ limits its predictions to 1/4 of those of $\mathcal{M}_\textrm{Any effect}$.
 To guide their interpretation, we report the theoretical bounds on the reported Bayes factors alongside our results where applicable.
 Finally, we tested whether recognition memory accuracy for the briefly flashed words was above chance using a one-tailed Bayesian $t$ test with a default Cauchy prior [$r = \sqrt2/2$, @rouder_bayesian_2009].
 
@@ -172,7 +172,7 @@ papaja::apa_table(
 
 To facilitate comparisons with previously reported statistics, we also conducted the frequentist analyses described by @rydell_two_2006.
 To ensure that our conclusions about indirectly measured evaluations are robust to stimulus effects, we supplemented the ANOVA analysis of IAT scores by a frequentist linear mixed model analysis, see SOM.
-We used `r cite_r("r-references.bib", pkgs = c("papaja", "afex", "emmeans", "BayesFactor"), withhold = FALSE)` for all our analyses.
+We used `r cite_r("r-references.bib", pkgs = c("papaja", "afex", "emmeans", "BayesFactor", "effectsize"), withhold = FALSE)` for all our analyses.
 
 
 ### Participants
@@ -653,7 +653,7 @@ otm_descriptives <- bind_rows(
       , .id = "Measure"
     ) %>%
       mutate(
-        Location = if_else(Duration == "20", "Florida, Williams", "Hong Kong, Illinois, Yale") |>
+        Location = if_else(Duration == "20", "Hong Kong, Illinois, Yale", "Florida, Williams") |>
           factor(levels = c("Cologne", "Ghent", "Harvard", "Florida, Williams", "Hong Kong, Illinois, Yale", ""))
         , Duration = factor(Duration, levels = c("13", "20", "24", "27", ""))
         , experiment = 2

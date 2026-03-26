@@ -14,7 +14,7 @@ apa_print_ps.afex_aov <- function(x, ...) {
   
   ellipsis <- list(...)
 
-  aov_eta_table <- effectsize::eta_squared(x, include_intercept = isTRUE(ellipsis$intercept), alternative = "two.sided", ci = 0.90)[as.numeric(rownames(aov_table)), ] %>% 
+  aov_eta_table <- effectsize::eta_squared(x$anova_table, include_intercept = isTRUE(ellipsis$intercept), partial = TRUE, alternative = "two.sided", ci = 0.90)[as.numeric(rownames(aov_table)), ] %>% 
     data.frame()
 
   is_partial <- "Eta2_partial" %in% colnames(aov_eta_table)

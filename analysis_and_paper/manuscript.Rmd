@@ -427,7 +427,7 @@ joint_scatterplot <- otm_iat_delta %>%
   # geom_smooth(method = "lm", color = "black") +
   # geom_smooth(color = "blue") +
   labs(
-    x = bquote("Recognition accuracy ["~Phi^-1*(italic(p))~"]")
+    x = bquote("Recognition accuracy ["~Phi^-1*(ital*ic*(p))~"]")
     , y = expression("IAT score difference"~group("[", Delta~italic(z)~score, "]"))
   ) +
   scale_x_continuous(trans = "probit") +
@@ -541,7 +541,7 @@ Together with results from previous replication attempts by @heycke_two_2018 the
 ```{r}
 #| label: create-r-references
 
-r_refs(file = "r-references.bib")
+# r_refs(file = "r-references.bib")
 ```
 
 \begingroup
