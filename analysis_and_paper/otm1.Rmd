@@ -119,7 +119,7 @@ dev_table <- data.frame(
     ""
   ),
   Details = c(
-    "Experiment: 1 \\newline Type: Analysis \\newline Reason: New knowledge \\newline Timing: After results known",
+    "Experiment: 1 and 2 \\newline Type: Analysis \\newline Reason: New knowledge \\newline Timing: After results known",
     "Experiment: 2 \\newline Type: Sample \\newline Reason: Plan not possible \\newline Timing: After data access",
     ""
   ),
