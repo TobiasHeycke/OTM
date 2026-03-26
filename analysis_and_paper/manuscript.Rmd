@@ -279,9 +279,7 @@ otm2_n_total <- sum(table(otm2_mem$Location))
 ```
 
 
-(ref:abstract) Several dual-process theories of social evaluation posit that implicit (or automatic) and explicit (or non-automatic) evaluations reflect two distinct attitudes that are acquired via qualitatively different learning processes---the former unconscious and effortless, the latter conscious and effortful. Consequently, one may explicitly like a person but also dislike them implicitly. In support of this claim, researchers have cited dissociations between direct measures, such as self-report scales, and indirect measures, such as the Implicit Association Test (IAT), assuming they reflect primarily explicit and implicit attitudes, respectively. Rydell et al. (2006) found a striking dissociation: When a photograph of a novel person was repeatedly preceded by briefly flashed positive or negative words but co-presented with behavioral information of the opposite valence, IAT scores measuring evaluations of that person reflected the valence of the briefly flashed words, whereas self-report scores reflected the opposite valence of the behavioral information. A more recent study, however, suggests that this finding may not be replicable. Given its theoretical importance, we report two new replication attempts ($N = `r otm1_n + otm2_n_total`$) across four countries and three languages, varying the presentation duration of the flashed words between 13 ms and 27 ms. Across all conditions, we found overwhelming evidence against a dissociation between directly and indirectly measured evaluations; both reflected the valence of behavioral information. As such, the dissociative evaluative learning effect reported by Rydell et al. (2006) is replicably non-replicable. These results are considerably easier to reconcile with single-process propositional theories of evaluation than with dual-process alternatives.
-
-
+(ref:abstract) Several dual-process theories of social evaluation posit that implicit (or automatic) and explicit (or non-automatic) evaluations reflect distinct attitudes acquired via qualitatively different learning processes. Consequently, one may explicitly like a person but dislike them implicitly. Rydell et al. (2006) reported a striking demonstration of this dissociation: Briefly flashed negative words paired with a person described as behaving positively produced positive ratings of that person but negative Implicit Association Test scores. However, Heycke et al. (2018) could not replicate this dissociation. In two new replication attempts ($N = `r otm1_n + otm2_n_total`$) across four countries and three languages, with words flashed between 13 and 27 ms, we too found overwhelming evidence against the dissociation between directly and indirectly measured evaluations. We conclude that the dissociative evaluative learning effect reported by Rydell et al. (2006) is replicably non-replicable.
 
 
 
@@ -349,7 +347,7 @@ All other authors declare no conflicts of interest.
 **Funding**:
 This research has been supported by the Deutsche Forschungsgemeinschaft (Grant ST-1269/3-2 awarded to Christoph Stahl).
 Jan De Houwer is supported by Methusalem Grant 01M00209 of Ghent University.
-**Artificial intelligence**: Microsoft's Copilot was used as intelligent copyediting tools during the creation of this article.
+**Artificial intelligence**: Microsoft's Copilot was used as intelligent copyediting tool during the creation of this article.
 No other artificial-intelligence-assisted technologies were used in this research or the creation of this article.
 **Ethics**: This research received approval from the Yale University institutional review board (ID: 2000031518).
 
