@@ -25,6 +25,7 @@ Imports:
     emmeans (>= 2.0.1),
     ggforce (>= 0.5.0),
     ggplot2 (>= 3.5.2),
+    Hmisc (>= 5.2-5),
     magrittr (>= 2.0.4),
     MBESS (>= 4.9.42),
     Superpower (>= 0.2.4.1),

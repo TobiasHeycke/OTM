@@ -24,11 +24,9 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 This repository contains research products associated with the above publication.
-We provide the experimental software and stimulus material that we are
-permitted to share in the `material` directories of each experiment
-(e.g. `otm1` or `otm2`).
-The preregistration document for Experiment 1
-is provided in `otm1/preregistration`.
+We provide the experimental software and stimulus material in the `material` directories of each experiment (e.g., `otm1` or `otm2`).
+We share blurred versions of the photographs used in the learning phase (`bob1.bmp`) and for the IAT (e.g., `white1.bmp`), because we do not have permission from the depicted individuals to publicly share their photographs.
+The preregistration document for Experiment 1 is provided in `otm1/preregistration`.
 The `results/data_raw` directories of each experiment contain all the raw
 data; merged and processed data files can be found in
 `results/data_processed`.
@@ -39,10 +37,7 @@ The R Markdown file `manuscript.Rmd` in the `paper` directory can be rendered to
 
 ## Screen recordings
 
-To give a vivid impression of the experimental procedure, an examplary screen recording of the procedure is available under `otm1/screen_recordings`.
-
-1. `otm_1_sr_complete.mp4`: An example of the full procedure (please note that this is not a recording of any of the participants)
-2. `otm_1_sr_overview.mp4`: A shorted version of the video to give a brief overview of all parts of the procedure (please note that the video does not reflect the actual procedure) 
+To give a vivid impression of the experimental procedure, an examplary screen recording of the procedure is available under `otm2/material/screen_recording/otm2_screen_recording.mp4`.
 
 
 ## Data
@@ -85,8 +80,7 @@ For a description of the variables in each dataset, please see the files `result
 The experiment was programmed using PsychoPy 1.82.01 and 1.83.01.
 *One of these versions must be installed to run the experiment.*
 All files to reproduce the procedure can be found in the `material` directories of each experiment.
-Note that photographs used in the experiment in this repository were blurred to protect the persona rights of the depicted individuals.
-They can be obtained from the authors upon request.
+We share blurred versions of the photographs used in the learning phase (`bob1.bmp`) and for the IAT (e.g., `white1.bmp`), because we do not have permission from the depicted individuals to publicly share their photographs.
 
 A folder called `data` (where output data is recorded), needs to be present
 in the same folder as the Python script to run the experiment.
@@ -94,17 +88,17 @@ in the same folder as the Python script to run the experiment.
 ### Analyses
 
 The version of R and all packages required to reproduce the anlysis are listed in the `DESCRIPTION` file.
-It is required to install the archived version of `spatialfil` package (version 0.15):
+It is necessary to install the archived version of `spatialfil` package (version 0.15):
 
 ```R
-# From CRAN archive
-remotes::install_version("spatialfil", dependencies = "0.15")
+# From this repository
+remotes::install_local("./spatialfil_0.15.tar.gz")
 
-# Or from this repository
-# remotes::install_local("./spatialfil_0.15.tar.gz")
+# Or from CRAN archive
+# remotes::install_version("spatialfil", dependencies = "0.15")
 ```
 
-When the repository is cloned, the other R package dependencies can be installed directly from the `DESCRIPTION` :
+When the repository is cloned, the remaining R package dependencies can be installed directly from the `DESCRIPTION` :
 
 ```R
 # Install all remaining dependencies
@@ -199,13 +193,13 @@ These reports contain show results of the analyses.
 
 ### Rendering the manuscript
 
-Once all targets have been run, the R Markdown file `manuscript.Rmd` in the `analysis_and_paper` directory can be rendered to reproduce the manuscript using the R package `papaja`.
+Once all targets have been run, the R Markdown file `manuscript.Rmd` in the `manuscript` directory can be rendered to reproduce the manuscript using the R package `papaja`.
 
 ```R
-rmarkdown::render("analysis_and_paper/manuscript.Rmd")
+rmarkdown::render("manuscript/manuscript.Rmd")
 ```
 
-The R Markdown file `supplement.Rmd` in the `analysis_and_paper` directory can be rendered to reproduce the supplementary material.
+The R Markdown file `supplement.Rmd` in the `manuscript` directory can be rendered to reproduce the supplementary material.
 
 
 ## Licensing information
@@ -215,7 +209,7 @@ The R Markdown file `supplement.Rmd` in the `analysis_and_paper` directory can b
 | Code | [MIT](http://opensource.org/licenses/MIT) 2025 Frederik Aust & Tobias Heycke |
 | Data | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | Experimental software | [MIT](http://opensource.org/licenses/MIT) 2025 Frederik Aust & Tobias Heycke |
-| Stimulus material | [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/) |
+| Stimulus material | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
 
 
 ## Contact

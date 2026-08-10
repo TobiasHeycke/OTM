@@ -215,13 +215,6 @@ combiThetas[combiThetas$figType == "Prediction" & combiThetas$Model == "Any effe
 
 
 ```{r model-plots, fig.width = 4.5, fig.height = 5.4, eval = FALSE}
-# plot_labels <- data.frame(
-#   Liberals = 1.25
-#   , Conservatives = -0.725
-#   , Model = c("One mind", "Two minds")
-#   , label = c("One mind", "Two minds")
-# )
-
 otm1_models <- subset(combiThetas, figType == "Model") %>%
   mutate(Model = factor(Model, levels = c("One mind", "Two minds", "No effect", "Any effect"))) %>%
   group_by(Model) %>%
@@ -293,4 +286,3 @@ otm1_prediction_plot <- subset(combiThetas, figType == "Prediction") %>%
     , strip.text.y = element_text(margin = margin(0, 0, 0, rel(12)))
   )
 ```
-

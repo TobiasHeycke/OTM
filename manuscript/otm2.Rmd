@@ -8,207 +8,6 @@ To address the concern that our initial replication attempt in Experiment 1 may 
 #| label: otm2pilot2f-analysis-preferences
 #| cache: true
 
-# Fixed in development version crsh/papaja@6496c48
-apa_print.summary_emm <- 
-function (x, contrast_names = NULL, est_name = "\\hat{\\theta}", 
-    in_paren = FALSE, ...) 
-{
-    if (class(x)[1] != "summary.ref.grid") 
-        papaja:::validate(x, check_class = "summary_emm", check_NA = FALSE)
-    if (!is.null(est_name)) 
-        papaja:::validate(est_name, check_class = "character")
-    papaja:::validate(in_paren, check_class = "logical", check_length = 1)
-    if (!is.null(contrast_names)) 
-        papaja:::validate(contrast_names, check_class = "character")
-    if (isTRUE(attr(x, "estName") == "F.ratio")) {
-        apa_res <- apa_print_summary_emm_joint_tests(x, in_paren = in_paren, 
-            ...)
-        return(apa_res)
-    }
-    null.value <- x$null.value
-    if (is.null(null.value)) {
-        null.value <- 0
-    }
-    object_messages <- attr(x, "mesg")
-    if (!is.null(object_messages)) {
-        family_size_mesg <- papaja:::.str_extract_first(object_messages, 
-            "for (\\d+) (estimates|tests)")
-        family_size_mesg <- family_size_mesg[!length(family_size_mesg) == 
-            0]
-        if (length(family_size_mesg) > 0) {
-            fam_size <- as.numeric(papaja:::.str_extract_first(family_size_mesg, 
-                "\\d+"))
-            attr(x, "famSize") <- unique(fam_size)
-        }
-    }
-    adjust <- papaja:::parse_adjust_name(attr(x, "adjust"), attr(x, "famSize"), 
-        object_messages)
-    tidy_x <- data.frame(broom::tidy(x, null.value = null.value))
-    tidy_x <- papaja:::rename_column(tidy_x, c("prob", "rate", "ratio", 
-        "odds.ratio", "asymp.LCL", "asymp.UCL", "z.ratio"), c("estimate", 
-        "estimate", "estimate", "estimate", "conf.low", "conf.high", 
-        "statistic"))
-    conf_level <- papaja:::get_emm_conf_level(x)
-    ci_supplied <- !length(conf_level) == 0
-    p_supplied <- "p.value" %in% colnames(x)
-    if (!ci_supplied) {
-        if (p_supplied) {
-            warning("Object 'x' does not include confidence intervals. APA guidelines recommend to routinely report confidence intervals for all estimates.")
-        }
-        conf_level <- NULL
-    }
-    else {
-        if (conf_level < 1) 
-            conf_level <- conf_level * 100
-        if (is.null(adjust)) {
-            conf_level <- paste0(conf_level, "\\% CI")
-        }
-        else {
-            conf_level <- paste0("$", conf_level, "\\%\\ \\mathrm{CI}_\\mathrm{\\scriptstyle ", 
-                adjust["conf.int"], "}$")
-        }
-    }
-    if (!p_supplied) {
-        df_colname <- NULL
-        stat_colnames <- NULL
-    }
-    else {
-        df_colname <- names(tidy_x)[grepl("df\\.*", names(tidy_x))]
-        multiple_df <- !isTRUE(all.equal(min(tidy_x[[df_colname]]), 
-            max(tidy_x[[df_colname]])))
-        p_value <- names(tidy_x)[grepl("p.value", names(tidy_x), 
-            fixed = TRUE)]
-        stat_colnames <- c("statistic", df_colname, p_value)
-    }
-    split_by <- attr(x, "by.vars")
-    pri_vars <- attr(x, "pri.vars")
-    if (is.null(split_by)) {
-        split_by <- unlist(attr(x, "misc")[c("by.vars")])
-    }
-    if (is.null(pri_vars)) {
-        pri_vars <- unlist(attr(x, "misc")[c("pri.vars")])
-    }
-    factors <- unique(c(pri_vars, split_by))
-    factors[factors == "1"] <- "Intercept"
-    if("Intercept" %in% factors) tidy_x <- papaja:::rename_column(tidy_x, "X1", "Intercept")
-    keep_original_terms <- tidy_x[, factors, drop = FALSE]
-    tidy_x[, factors] <- beautify_terms(tidy_x[, factors], ...)
-    tidy_x$estimate <- apa_num(tidy_x$estimate, ...)
-    if (ci_supplied) {
-        tidy_x$conf.int <- unlist(apa_confint(tidy_x[, c("conf.low", 
-            "conf.high")], use_math = FALSE), ...)
-    }
-    if (p_supplied) {
-        if (all(tidy_x$null.value == 0)) 
-            tidy_x$null.value <- NULL
-        tidy_x$statistic <- apa_num(tidy_x$statistic)
-        tidy_x$df <- apa_df(tidy_x$df)
-        tidy_x[[p_value]] <- apa_p(tidy_x[[p_value]])
-    }
-    if (!is.null(contrast_names)) 
-        tidy_x$contrast <- contrast_names
-    tidy_x <- cbind(tidy_x[, 1:which(colnames(tidy_x) == "estimate")], 
-        tidy_x[which(colnames(tidy_x) == "conf.int")], tidy_x[which(colnames(tidy_x) == 
-            "null.value")], tidy_x[, stat_colnames])
-    tidy_x_labels <- c(estimate = paste0("$", est_name, "$"))
-    if ("contrast" %in% factors) {
-        tidy_x_labels <- c(tidy_x_labels, contrast = "Contrast")
-    }
-    if (ci_supplied) {
-        tidy_x_labels <- c(tidy_x_labels, conf.int = conf_level)
-    }
-    if (p_supplied) {
-        if (all(tidy_x$df == "$\\infty$")) {
-            test_stat <- "z"
-            tidy_x$df <- NULL
-        }
-        else {
-            test_stat <- "t"
-            tidy_x_labels <- c(tidy_x_labels, df = "$\\mathit{df}$")
-        }
-        tidy_x_labels <- c(tidy_x_labels, statistic = paste0("$", 
-            test_stat, "$"))
-        if ("null.value" %in% names(tidy_x)) {
-            tidy_x_labels <- c(tidy_x_labels, null.value = "$\\theta_0$")
-        }
-        variable_labels(tidy_x[[p_value]]) <- switch(p_value, 
-            p.value = "$p$", adj.p.value = paste0("$p_\\mathrm{\\scriptstyle ", 
-                adjust["p.value"], "}$"))
-    }
-    variable_labels(tidy_x) <- tidy_x_labels
-    tidy_x <- papaja:::default_label.data.frame(tidy_x)
-    if (length(factors) > 0) {
-        cols <- c(factors[which(factors != "contrast")], factors[which(factors == 
-            "contrast")])
-        contrast_row_names <- papaja:::paste_list(tidy_x[, cols, drop = FALSE])
-        terms_sanitized <- sanitize_terms(papaja:::paste_list(keep_original_terms[, 
-            cols, drop = FALSE]))
-    }
-    else {
-        stop("Could not determine names to address each result by.")
-    }
-    if (!is.null(attr(x, "famSize"))) {
-        if (!is.null(split_by)) {
-            family_mark <- letters[as.numeric(interaction(tidy_x[, 
-                split_by]))]
-        }
-        else if (!attr(x, "famSize") < nrow(tidy_x)) {
-            family_mark <- letters[1:nrow(tidy_x)]
-        }
-        else {
-            adjust <- NULL
-        }
-    }
-    else {
-        adjust <- NULL
-    }
-    if (length(factors) > 1 && !any(tidy_x[, factors] == ".")) {
-        factors[-which(factors == "contrast")] <- rev(factors[-which(factors == 
-            "contrast")])
-        str_factors <- rev(c(pri_vars[-1], split_by))
-        str_cols <- tidy_x[, str_factors, drop = FALSE]
-        for (i in seq_along(str_factors)) {
-            if (i > 1) {
-                tmp <- apply(tidy_x[, str_factors[1:i]], 1, paste, 
-                  collapse = "_")
-            }
-            else {
-                tmp <- tidy_x[, str_factors[i]]
-            }
-            str_cols[, str_factors[i]] <- as.character(tidy_x[, 
-                str_factors[i]])
-            str_cols[duplicated(tmp), str_factors[i]] <- ""
-        }
-        tidy_x[, str_factors] <- str_cols[, str_factors]
-        str_col_order <- c(str_factors, colnames(tidy_x)[!colnames(tidy_x) %in% 
-            str_factors])
-        tidy_x <- tidy_x[, str_col_order]
-        tidy_x[, pri_vars[1]] <- as.character(tidy_x[, pri_vars[1]])
-    }
-    if (any(tidy_x[, factors] == ".")) {
-        tidy_x[, factors] <- apply(tidy_x[, factors], 2, gsub, 
-            pattern = ".", replacement = "", fixed = TRUE)
-    }
-    class(tidy_x) <- c("apa_results_table", "data.frame")
-    apa_res <- glue_apa_results(tidy_x, est_glue = papaja:::est_glue(tidy_x), 
-        stat_glue = papaja:::stat_glue(tidy_x), in_paren = in_paren, term_names = make.names(terms_sanitized))
-    if (!is.null(adjust)) {
-        if (ci_supplied) {
-            ci_label <- variable_label(apa_res$table$conf.int)
-            apa_res$table$conf.int <- paste0(apa_res$table$conf.int, 
-                "${}^", family_mark, "$")
-            variable_label(apa_res$table$conf.int) <- ci_label
-        }
-        if (p_supplied) {
-            p_label <- variable_label(apa_res$table[[p_value]])
-            apa_res$table[[p_value]] <- paste0(apa_res$table[[p_value]], 
-                "${}^", family_mark, "$")
-            variable_label(apa_res$table[[p_value]]) <- p_label
-        }
-    }
-    apa_res
-}
-
 process_rawdata <- TRUE
 
 # Data location
@@ -256,7 +55,6 @@ if(process_rawdata) {
     , pattern = "Demographics"
     , recursive = TRUE
     , read_fun = read.delim
-    #, quote = "~" # Participants used " in their input
   ) %>%
     mutate(
         ParticipantNumber = factor(ParticipantNumber)
@@ -271,7 +69,6 @@ if(process_rawdata) {
   otm2p2f_analysis_factors <- c("ParticipantNumber", "Location", "Block", "ValenceBlock")
   
   otm2p2f_mem$ParticipantNumber <- as.integer(otm2p2f_mem$ParticipantNumber)
-  #otm2p2_mem <- left_join(otm2p2_mem, otm2p2_demo, by = "ParticipantNumber")
   
   otm2p2f_mem <- otm2p2f_mem %>%
     mutate(
@@ -280,9 +77,6 @@ if(process_rawdata) {
       , Block = factor(Block)
       , Accuracy = as.integer(NumbercorrectIdent) / 20
     )
-
-  
-  
 
     # Save processed data
   saveRDS(otm2p2f_eval, paste0(processed_data_path, "otm2p2f_eval.rds"))
@@ -405,7 +199,6 @@ otm2_power <- function(f, n, rm_cor = 0.5, alpha = 0.05) {
   
   mu <- with(
     contrast_codes
-    , #-order * 0.25*f +
       -block_order * f +
       -block * 0.5 * f +
       time_block_order * f
@@ -439,25 +232,6 @@ otm2_pes <- 0.039732
 otm2_dz <- pes_to_dz(otm2_pes, otm2_n_power, n_groups = 4)
 rho <- 0.5
 f <- dz_to_f(otm2_dz, rho)
-
-# otm2_time_power <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho, alpha = 0.05)
-# otm2_time_power$main_result
-
-# otm2_time_power$dataframe %>%
-#   mutate(
-#     order = ifelse(order == "order_n-p", "Negative-positive", "Positive-negative")
-#     , block = ifelse(block == "block_1", "1", "2")
-#     , time = ifelse(time == "time_13", "13 ms", "20 ms")
-#   ) %>%
-#   ggplot(aes(x = block, y = y, color = order, group = order)) +
-#   stat_summary(fun.y = mean, geom = "line") +
-#   stat_summary(fun.data = mean_cl_normal) +
-#   coord_cartesian(ylim = c(-0.6, 0.6)) +
-#   facet_grid(~ time) +
-#   guides(color = FALSE) +
-#   ggtitle("Assumed for power analysis") +
-#   labs(x = "Block", y = "Attitude") +
-#   theme_bw()
 
 otm2_dz_block <- f_to_dz(0.5*f, rho = rho)
 otm2_pes_block <- dz_to_pes(otm2_dz_block, otm2_n_power, n_groups = 4)
@@ -516,74 +290,28 @@ otm2_power <- function(f, n, rm_cor = 0.5, alpha = 0.05) {
 ### 95% power
 otm2_pes <- 0.039732
 otm2_dz <- pes_to_dz(otm2_pes, otm2_n_power, n_groups = 4)
-# rho <- 0.5
-# f <- dz_to_f(otm2_dz, rho)
-# 
-# otm2_contrast_power <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$contrasts %>%
-#   emmeans_power(alpha = 0.05) %>%
-#   .[1, ]
-# otm2_contrast_power
-
 
 ### 80% power
 otm2_pes2 <- 0.0243813
 otm2_dz2 <- pes_to_dz(otm2_pes2, otm2_n_power, n_groups = 4)
-# f <- dz_to_f(otm2_dz2, rho)
-# 
-# otm2_contrast_power2 <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$contrasts %>%
-#   emmeans_power(alpha = 0.05) %>%
-#   .[1, ]
-# otm2_contrast_power2
-
 
 ## Collapsed once
 ### 95% power
 otm2_dz_between_collapsed <- f_to_dz(dz_to_f(otm2_dz, rho) / sqrt(2), rho)
 otm2_pes_between_collapsed <- dz_to_pes(otm2_dz_between_collapsed, otm2_n_power, n_groups = 4)
-# f <- dz_to_f(otm2_dz_between_collapsed, rho)
-# 
-# otm2_time_collapsed_contrast_power <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$emmeans %>%
-#   emmeans(specs = ~ block | order) %>%
-#   pairs %>%
-#   emmeans_power(alpha = 0.05) %>%
-#   .[1, ]
-# otm2_time_collapsed_contrast_power
 
 ### 80% power
 otm2_dz2_between_collapsed <- f_to_dz(dz_to_f(otm2_dz2, rho) / sqrt(2), rho)
 otm2_pes2_between_collapsed <- dz_to_pes(otm2_dz2_between_collapsed, otm2_n_power, n_groups = 4)
-# f <- dz_to_f(otm2_dz2_between_collapsed, rho)
-# 
-# otm2_time_collapsed_contrast_power2 <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$emmeans %>%
-#   emmeans(specs = ~ block | order) %>%
-#   pairs %>%
-#   emmeans_power(alpha = 0.05) %>%
-#   .[1, ]
-# otm2_time_collapsed_contrast_power2
-
 
 ## Collapsed twice
 ### 95% power
 otm2_dz_collapsed <- f_to_dz(dz_to_f(otm2_dz, rho) / sqrt(4), rho)
 otm2_pes_collapsed <- dz_to_pes(otm2_dz_collapsed, otm2_n_power, n_groups = 4)
-# f <- dz_to_f(otm2_dz_collapsed, rho)
-# 
-# otm2_collapsed_contrast_power <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$emmeans %>%
-#   emmeans(specs = ~ block * order) %>%
-#   contrast(method = list(collapsed = c(-0.5, 0.5, 0.5, -0.5))) %>%
-#   emmeans_power(alpha_level = 0.05)
-# otm2_collapsed_contrast_power
 
 ### 80% power
 otm2_dz2_collapsed <- f_to_dz(dz_to_f(otm2_dz2, rho) / sqrt(4), rho)
 otm2_pes2_collapsed <- dz_to_pes(otm2_dz2_collapsed, otm2_n_power, n_groups = 4)
-# f <- dz_to_f(otm2_dz2_collapsed, rho)
-# 
-# otm2_collapsed_contrast_power2 <- otm2_power(f = f, n = otm2_n_power, rm_cor = rho)$emmeans$emmeans %>%
-#   emmeans(specs = ~ block * order) %>%
-#   contrast(method = list(collapsed = c(-0.5, 0.5, 0.5, -0.5))) %>%
-#   emmeans_power(alpha_level = 0.05)
-# otm2_collapsed_contrast_power2
 ```
 
 ```{r}
@@ -619,7 +347,7 @@ In total, we recruited `r otm2_n_total - nrow(otm2p2f_demo) + otm2_n_excluded` p
 Hence, we report results based on a sample of $N = `r otm2_n_total`$ participants, including participants from the pilot study[^pilot2data].
 
 
-[^pilot2data]: To ensure valid results, the pilot study for Experiment 2 employed the complete experimental procedure, that is, we also collected evaluative ratings and IAT responses. Prior to running Experiment 2, we only analyzed the word recognition accuracy; we had not looked at evaluative ratings and IAT responses. We therefore added the data from the pilot study to the final analyses.
+[^pilot2data]: To ensure valid results, the pilot study for Experiment 2 employed the complete experimental procedure, that is, we also collected evaluative ratings and IAT responses. Prior to running Experiment 2, we only analyzed the word recognition accuracy; we had not looked at evaluative ratings and IAT responses. We therefore added the data from the pilot study to the final analyses. We report a sensitivity analysis excluding the pilot data in the supplementary materials. This analysis yielded the same pattern of results and the same conclusions as reported here.
 
 ### Statistical power
 
@@ -687,7 +415,6 @@ otm2_attitudes_country_aov_ps <- nice(otm2_attitudes_country_aov) |>
   (\(x) paste0("$p \\geq ", x, "$"))()
 
 otm2_attitudes_location_aov <- otm2_attitudes %>%
-  # filter(Duration == "13") %>%
   mutate(
     Eval = scale(Eval) %>% as.numeric
     , IATscore = scale(IATscore) %>% as.numeric
@@ -921,4 +648,3 @@ At 20 ms, recognition accuracy was above chance and comparable to Experiment 1.
 Again, both directly and indirectly measured evaluations reflected the valence of the behavioral information; the briefly flashed words did not produce a reversal of the indirectly measured evaluations.
 Directly and indirectly measured evaluations did not dissociate at either presentation duration.
 Our Bayesian model comparisons confirmed that the data overwhelmingly support the qualitative pattern reported by @heycke_two_2018 (one mind) over that reported by @rydell_two_2006 (two minds), Table\ \@ref(tab:otm-bayesian-replication-analysis-table).
-

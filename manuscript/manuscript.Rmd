@@ -153,6 +153,12 @@ bibliography      : ["references.bib", "r-references.bib"]
 
 header-includes:
   - \interfootnotelinepenalty=10000
+  - \usepackage{setspace}
+  - \AtBeginEnvironment{tabular}{\doublespacing}
+  - \AtBeginEnvironment{lltable}{\doublespacing}
+  - \AtBeginEnvironment{tablenotes}{\doublespacing}
+  - \captionsetup[table]{font={stretch=1}}
+  - \captionsetup[figure]{font={stretch=1}}
   
 floatsintext      : yes
 figurelist        : no
@@ -181,7 +187,6 @@ output            : papaja::apa6_pdf
 library("magrittr")
 library("tidyr")
 library("dplyr")
-# library("assertthat")
 
 library("targets")
 
@@ -281,14 +286,13 @@ otm2_n_total <- sum(table(otm2_mem$Location))
 
 (ref:abstract) Several dual-process theories of social evaluation posit that implicit (or automatic) and explicit (or non-automatic) evaluations reflect distinct attitudes acquired via qualitatively different learning processes. Consequently, one may explicitly like a person but dislike them implicitly. Rydell et al. (2006) reported a striking demonstration of this dissociation: Briefly flashed negative words paired with a person described as behaving positively produced positive ratings of that person but negative Implicit Association Test scores. However, Heycke et al. (2018) could not replicate this dissociation. In two new replication attempts ($N = `r otm1_n + otm2_n_total`$) across four countries and three languages, with words flashed between 13 and 27 ms, we too found overwhelming evidence against the dissociation between directly and indirectly measured evaluations. We conclude that the dissociative evaluative learning effect reported by Rydell et al. (2006) is replicably non-replicable.
 
-
-
 Are people's explicit and implicit evaluations of an object or person always consistent with one another?
 Or is it possible that we like a person explicitly but simultaneously dislike them implicitly?
-One way to investigate this question is to compare two families of evaluative measures: direct measures (e.g., Likert scales) that assumedly elicit relatively more explicit, conscious, effortful, and controllable evaluations (hereafter explicit evaluations), on the one hand, and indirect measures [such as the Implicit Association Test [IAT], @greenwald_measuring_1998] that assumedly elicit relatively more implicit, unconscious, effortless, and uncontrollable evaluations (hereafter implicit evaluations), on the other hand.
+One way to investigate this question is to compare direct and indirect measures of evaluation.
+Direct measures (e.g., Likert scales) assumedly elicit relatively more explicit, conscious, effortful, and controllable evaluations (hereafter explicit evaluations).
+Indirect measures [e.g., the Implicit Association Test [IAT], @greenwald_measuring_1998], assumedly elicit relatively more implicit, unconscious, effortless, and uncontrollable evaluations (hereafter implicit evaluations).
 Indeed, several studies have shown dissociations between direct and indirect measures [@harmon-jones_what_2019].
 Such evidence has been critical in supporting dual-process theories positing that explicit and implicit evaluations reflect different sets of attitudes that are acquired via two distinct processes.[^attitude_definition]
-
 
 [^attitude_definition]:
 By *attitude* we mean latent knowledge representations that underlie the behavioral expression of *evaluations* on direct and indirect measures [@cunningham_attitudes_2007].
@@ -354,14 +358,14 @@ No other artificial-intelligence-assisted technologies were used in this researc
 ## Experiment 1 disclosures
 
 **Preregistration**: The hypotheses, methods, and analysis plans were preregistered on the Open Science Framework (https://osf.io/qftkj/) on January 29th, 2018, prior to data collection, which began on January 30th, 2018. We describe deviations in Table\ \@ref(tab:otm-preregistration-deviation-table).
-**Materials**: All study materials are publicly available (https://osf.io/8m3xb/).
+**Materials**: All study materials are publicly available (https://osf.io/8m3xb/). We share blurred versions of the photographs used in the learning phase and for the IAT, because we do not have permission from the depicted individuals to publicly share their photographs.
 **Data**: All primary data are publicly available (https://osf.io/8m3xb/). 
 **Analysis scripts**: All analysis scripts are publicly available (https://osf.io/8m3xb/).
 
 ## Experiment 2 disclosures
 
-**Preregistration**: The hypotheses, methods, and analysis plans were preregistered as a Stage-1 registered report (https://doi.org/10.31234/osf.io/v674w) on November 9th, 2020, prior to data collection, which began on September 23rd, 2021. We describe deviations in Table\ \@ref(tab:otm-preregistration-deviation-table).
-**Materials**: All study materials are publicly available (https://osf.io/8m3xb/).
+**Preregistration**: The hypotheses, methods, and analysis plans were preregistered as a Stage-1 registered report (https://doi.org/10.17605/OSF.IO/R3KJH) on November 9th, 2020, prior to data collection, which began on September 23rd, 2021. We describe deviations in Table\ \@ref(tab:otm-preregistration-deviation-table).
+**Materials**: All study materials are publicly available (https://osf.io/8m3xb/). We share blurred versions of the photographs used in the learning phase and for the IAT, because we do not have permission from the depicted individuals to publicly share their photographs.
 **Data**: All primary data are publicly available (https://osf.io/8m3xb/). 
 **Analysis scripts**: All analysis scripts are publicly available (https://osf.io/8m3xb/).
 
@@ -422,10 +426,8 @@ joint_scatterplot <- otm_iat_delta %>%
   geom_vline(xintercept = 0.5, linetype = "dotted") +
   geom_point(alpha = 0.5) +
   geom_smooth(method = "eiv_lm", color = "black", method.args = list(n.optim = 50)) +
-  # geom_smooth(method = "lm", color = "black") +
-  # geom_smooth(color = "blue") +
   labs(
-    x = bquote("Recognition accuracy ["~Phi^-1*(ital*ic*(p))~"]")
+    x = bquote("Recognition accuracy ["~Phi^-1*(italic(p))~"]")
     , y = expression("IAT score difference"~group("[", Delta~italic(z)~score, "]"))
   ) +
   scale_x_continuous(trans = "probit") +
@@ -451,7 +453,6 @@ joint_scatterplot <- otm_iat_delta %>%
 # Define marginal histogram
 marginal_distribution <- function(x, var, group) {
   ggplot(x, aes_string(x = var, fill = group, color = group)) +
-    # geom_histogram(bins = 30, alpha = 0.4, position = "dodge", aes(y = after_stat(density))) +
     geom_density(alpha = 0.4, size = 0.1) +
     scale_color_viridis_d(option = "B", direction = -1, end = 0.8) +
     scale_fill_viridis_d(option = "B", direction = -1, end = 0.8) +
@@ -539,7 +540,7 @@ Together with results from previous replication attempts by @heycke_two_2018 the
 ```{r}
 #| label: create-r-references
 
-# r_refs(file = "r-references.bib")
+r_refs(file = "r-references.bib")
 ```
 
 \begingroup

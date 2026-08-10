@@ -91,7 +91,6 @@ output            : papaja::apa6_pdf
 library("magrittr")
 library("tidyr")
 library("dplyr")
-library("assertthat")
 
 library("targets")
 
@@ -100,6 +99,7 @@ library("ggplot2")
 library("ggforce")
 library("cowplot")
 
+library("afex")
 library("lmerTest")
 library("emmeans")
 library("BayesFactor")
@@ -107,6 +107,7 @@ library("BayesFactor")
 library("Superpower")
 
 source("https://gist.githubusercontent.com/crsh/be88be19233f1df4542aca900501f0fb/raw/f258053d144681bd4a5b86ed0956da7dc3f380ee/gglegend.R")
+source("../R/apa_print_ps.r")
 source("../R/effect_sizes.r")
 source("../R/error_in_variables.r")
 ```
@@ -120,6 +121,9 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 
 # Use effect coding
 options(contrasts = c("contr.sum", "contr.poly"))
+
+# Always report MSE for ANOVA
+options(papaja.mse = TRUE)
 
 # Default ggplot theme
 theme_set(theme_apa())
@@ -230,7 +234,6 @@ otm1_power_curve_plot <- otm1_power_curve %>%
   # ggplot(aes(x = rho, y = delta, color = power, group = power)) +
   geom_line(data = rydell_power_curve, aes(group = power), color = grey(0.8), linetype = "dashed") +
   geom_line() +
-  # annotate("text", x = 1, y = 0.9, label = paste0("list(alpha ==~\".05\", italic(N) ==", otm1_n, ", epsilon == 1)"), parse = TRUE, hjust = 1, vjust = 0.5) +
   ylim(c(0, 1)) +
   scale_linetype_discrete(
     labels = c(
@@ -251,16 +254,13 @@ otm1_power_curve_plot <- otm1_power_curve %>%
     , panel.grid.major.y = element_line()
     , panel.grid.minor.x = element_line()
     , panel.grid.minor.y = element_line()
-    # , legend.position = c(0.99, 0.99)
     , legend.justification = "top"
-    # , legend.background = element_rect(fill = scales::alpha("white", 0.5))
   )
 
 rydell_power_curve <- tibble(
   rho = seq(-1, 1, length.out = 100)
   , delta = c(
     dz_to_f(rydell_dz, unique(rho)) * 2
-    # dz_to_f(mean(heycke_dz), unique(rho)) * 2
   )
   , power = NA
 )
@@ -298,8 +298,6 @@ otm2_power_curve_plot <- tibble(
     , contrast = factor(contrast, levels = c("simple", "between collapsed", "collapsed"))
   ) %>% 
   ggplot(aes(x = rho, y = delta, color = contrast, group = interaction(power, contrast), linetype = power)) +
-  # ggplot(aes(x = rho, y = delta, color = power, group = power)) +
-  # geom_line(data = otm1_power_curve, aes(group = power, linetype = power, color = "simple"), alpha = 0.3) +
   geom_line(data = rydell_power_curve, aes(group = power), color = grey(0.8), linetype = "dashed") +
   geom_line() +
   scale_color_viridis_d(
@@ -324,9 +322,7 @@ otm2_power_curve_plot <- tibble(
     , panel.grid.major.y = element_line()
     , panel.grid.minor.x = element_line()
     , panel.grid.minor.y = element_line()
-    # , legend.position = c(0.99, 0.99)
     , legend.justification = "top"
-    # , legend.background = element_rect(fill = scales::alpha("white", 0.5))
   )
 
 plot_grid(
@@ -412,7 +408,6 @@ Black-rimmed points represent condition means, error bars represent 95% bootstra
 #| fig-cap: "(ref:otm1-iat-plot)"
 
 otm1_results_legend <- guide_legend(
-    # title = "Valence order\nDescriptions of Bob\n(Briefly presented primes)"
     title = expression(atop("Valence order", atop(scriptstyle("Behavioral information"), scriptstyle("(Briefly flashed words)"))))
     , title.position = "top"
     , title.hjust = 0.5
@@ -565,8 +560,6 @@ apa_table(
 )
 ```
 
-<!-- (ref:otm1-iat-lmer-contrasts) Planned contrasts of changes in congruency effects across learning blocks for the linear mixed model analysis of standardized IAT response times. -->
-
 ```{r}
 #| label: otm1-lmer-emm
 
@@ -583,15 +576,6 @@ otm1_iat_lmer_contrasts <- contrast(
   )
 ) %>%
   apa_print
-
-# otm1_iat_lmer_contrasts %$%
-#   table %>%
-#   rename("Valence order" = contrast) %>%
-#   apa_table(
-#     caption = "(ref:otm1-iat-lmer-contrasts)"
-#     , escape = FALSE
-#     , row.names = FALSE
-#   )
 ```
 
 In line with the ANOVA results, we found the expected three-way interaction between *Response mapping*, *Valence order*, and *Learning block*, Table\ \@ref(tab:otm1-lmer-table-fixed-effects) and \@ref(tab:otm1-lmer-table-random-effects).
@@ -735,12 +719,8 @@ otm1_mem |>
   ggplot(aes(x = Location, y = Accuracy, shape = Location, fill = Location)) +
   geom_hline(yintercept = 0.5, color = grey(0.5)) +
   geom_violin(alpha = 0.3) +
-  # geom_point(position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.1)) +
   geom_sina(alpha = 0.5, size = 1) +
-  # stat_summary(fun.y = mean, aes(group = Location, linetype = ValenceBlock), geom = "line", position = position_dodge(0.1), color = "black") +
   stat_summary(fun.data = mean_cl_boot, color = "black", fun.args = list(B = 10000)) +
-  # scale_color_brewer(palette = "Set1", guide = otm1_results_legend) +
-  # scale_fill_brewer(palette = "Set1", guide = otm1_results_legend) +
   coord_cartesian(ylim = c(NA, 1)) +
   scale_shape_manual(values = c(21, 23, 24)) +
   scale_color_manual(values = c(RColorBrewer::brewer.pal(3, "Set1"), "#000000")) +
@@ -785,7 +765,6 @@ otm1_iat_delta %>%
   geom_vline(xintercept = 0.5, linetype = "22") +
   geom_point(alpha = 0.5) +
   geom_smooth(method = "eiv_lm", color = "black", method.args = list(n.optim = 50)) +
-  # geom_smooth(method = "lm", color = "black") +
   labs(
     x = bquote("Recognition accuracy ["~Phi^-1*(italic(p))~"]")
     , y = expression("IAT score difference"~group("[", Delta~italic(z)~score, "]"))
@@ -979,6 +958,195 @@ otm2_mem |>
 ```
 
 
+## Sensitivity of results to inclusion of participants from the pilot study
+
+Prior to running Experiment 2, we only analyzed the word recognition accuracy collected in our pilot study; we had not looked at evaluative ratings and IAT responses. We therefore added the data from the pilot study to the final analysis.
+To test if the inclusion of participants from the pilot study affect our conclusions, we re-ran the analyses using only the participants from the main study.
+The following results show that the inclusion of participants from the pilot study did not meaningfully affect our conclusions.
+
+### Joint analysis of rating and IAT scores
+
+```{r}
+#| label: otm2-rydell-analysis-overall
+
+# Exclude participants from the pilot study
+otm2_attitudes <- otm2_attitudes |>
+  dplyr::filter(as.numeric(as.character(ParticipantNumber)) > 100)
+
+otm2_attitudes_aov <- otm2_attitudes %>%
+  mutate(
+    Eval = scale(Eval) %>% as.numeric
+    , IATscore = scale(IATscore) %>% as.numeric
+  ) %>%
+  gather("Measure", "Attitude", Eval, IATscore) %>%
+  mutate(Measure = factor(Measure)) %>%
+  aov_ez(
+    id = "ParticipantNumber"
+    , dv = "Attitude"
+    , within = c("Block", "Measure")
+    , between = c("ValenceBlock", "Duration")
+    , data = .
+  )
+
+otm2_attitudes_aov_res <- apa_print_ps(otm2_attitudes_aov)
+
+otm2_attitudes_country_aov <- otm2_attitudes %>%
+  mutate(
+    Eval = scale(Eval) %>% as.numeric
+    , IATscore = scale(IATscore) %>% as.numeric
+    , Country = if_else(Location == "Hong Kong", "Hong Kong", "USA") %>%
+      factor()
+  ) %>%
+  gather("Measure", "Attitude", Eval, IATscore) %>%
+  mutate(Measure = factor(Measure)) %>%
+  aov_ez(
+    id = "ParticipantNumber"
+    , dv = "Attitude"
+    , within = c("Block", "Measure")
+    , between = c("ValenceBlock", "Country")
+    , data = .
+  )
+
+otm2_attitudes_country_aov_ps <- nice(otm2_attitudes_country_aov) |> 
+  filter(grepl("Country", Effect)) |> 
+  pull(p.value) |>
+  min() |>
+  (\(x) paste0("$p \\geq ", x, "$"))()
+
+otm2_attitudes_location_aov <- otm2_attitudes %>%
+  mutate(
+    Eval = scale(Eval) %>% as.numeric
+    , IATscore = scale(IATscore) %>% as.numeric
+  ) %>%
+  gather("Measure", "Attitude", Eval, IATscore) %>%
+  mutate(Measure = factor(Measure)) %>%
+  aov_ez(
+    id = "ParticipantNumber"
+    , dv = "Attitude"
+    , within = c("Block", "Measure")
+    , between = c("ValenceBlock", "Location")
+    , data = .
+  )
+
+otm2_attitudes_location_aov_ps <- nice(otm2_attitudes_location_aov) |> 
+  filter(grepl("Location", Effect)) |> 
+  pull(p.value) |>
+  min() |>
+  (\(x) paste0("$p \\geq ", x, "$"))()
+```
+
+We, again, separately $z$-standardized directly and indirectly measured evaluations and submitted them to a four-way ANOVA with the factors *measure of evaluation* (direct vs. indirect), *valence order* (positive or negative behavioral information first), *learning block* (first or second learning block), and *presentation duration* (20 ms vs. 13 ms).
+We found a significant three-way interaction between valence order, learning block, and measure of evaluation, `r otm2_attitudes_aov_res$full_result$ValenceBlock_Block_Measure`.
+However, we did not observe a significant four-way interaction including presentation duration, `r otm2_attitudes_aov_res$full_result$ValenceBlock_Duration_Block_Measure`.
+To explore whether the results are consistent across ethnicities and cultures, we conducted a second four-way ANOVA replacing presentation duration by *country* (Hong Kong vs. USA).
+We were unable to detect any significant effect involving country, all `r otm2_attitudes_country_aov_ps`.
+In an analogous analysis, we were unable to detect any significant effect involving lab location, all `r otm2_attitudes_location_aov_ps`.
+In line with the original analysis, we next examined the interaction between valence order and learning block in separate analyses of rating and IAT scores.
+
+
+### Direct measure: Evaluative rating scores
+
+```{r}
+#| label: otm2-rydell-analysis-explicit
+
+otm2_explicit_aov <- aov_ez(
+  id = "ParticipantNumber"
+  , dv = "Eval"
+  , within = "Block"
+  , between = "ValenceBlock"
+  , data = otm2_attitudes
+)
+
+otm2_explicit_aov_res <- apa_print_ps(otm2_explicit_aov)
+
+otm2_explicit_collapsed_contrast_res <- emmeans(otm2_explicit_aov, ~ Block * ValenceBlock) %>%
+  contrast(
+    method = list("Block 2 - Block 1" = c(-1, 1, 1, -1))
+    , adjust = "none"
+  ) %>%
+  apa_print_ps(
+    otm2_explicit_aov$lm
+    , est_name = "d_z"
+  ) %$%
+  full_result
+
+otm2_explicit_contrasts_res <- emmeans(otm2_explicit_aov, ~ Block | ValenceBlock) %>%
+  contrast(
+    method = list("Block 2 - Block 1" = c(-1, 1))
+    , adjust = "none"
+  ) %>%
+  apa_print_ps(
+    otm2_explicit_aov$lm
+    , est_name = "d_z"
+  )
+```
+
+
+For rating scores, we replicated the two-way interaction between valence order and learning block obtained in Experiment 1, `r otm2_explicit_aov_res$full_result$ValenceBlock_Block`.
+We were unable to detect a main effect of learning block, `r otm2_explicit_aov_res$full_result$Block`, justifying the preregistered pooling of participants across valence orders for the learning block contrasts[^nonpooled].
+The pooled rating scores indicated more favorable evaluations after blocks with positive behavioral information than after blocks with negative behavioral information, `r otm2_explicit_collapsed_contrast_res`.
+Hence, directly measured evaluations corresponded to the valence of the behavioral information and were opposite to the valence of the briefly flashed words.
+
+[^nonpooled]: Rating scores indicated *more* favorable evaluations after the first than after the second block when behavioral information was first positive and later negative, `r otm2_explicit_contrasts_res$full_result$Positive_negative_Block_2_Block_1`.
+Conversely, rating scores indicated *less* favorable evaluations after the first than after the second block when behavioral information was first negative and later positive, `r otm2_explicit_contrasts_res$full_result$Negative_positive_Block_2_Block_1`.
+
+### Indirect measure: IAT scores
+
+```{r}
+#| label: otm2-rydell-analysis-implicit
+
+otm2_iat_aov <- aov_ez(
+  id = "ParticipantNumber"
+  , dv = "IATscore"
+  , within = "Block"
+  , between = "ValenceBlock"
+  , data = otm2_attitudes
+)
+
+otm2_iat_aov_res <- apa_print_ps(otm2_iat_aov)
+
+otm2_iat_contrasts_res <- emmeans(otm2_iat_aov, ~ Block | ValenceBlock) %>%
+  contrast(
+    method = list("Block 2 - Block 1" = c(-1, 1))
+    , adjust = "none"
+  ) %>%
+  apa_print_ps(
+    otm2_iat_aov$lm
+    , est_name = "d_z"
+  )
+```
+
+For IAT scores, we also replicated the two-way interaction between valence order and learning block obtained in Experiment 1, `r otm2_iat_aov_res$full_result$ValenceBlock_Block`.
+The learning block difference in IAT scores differed between valence orders, `r otm2_explicit_aov_res$full_result$Block`; hence, we tested the learning block contrasts separately for each valence order.
+In both cases, we found that, like rating scores, IAT scores corresponded to the valence of the behavioral information.
+IAT scores indicated *more* favorable evaluations after the first than after the second block when behavioral information was first positive and later negative, `r otm2_iat_contrasts_res$full_result$Positive_negative_Block_2_Block_1`.
+Conversely, IAT scores indicated *less* favorable evaluations after the first than after the second block when behavioral information was first negative and later positive, `r otm2_iat_contrasts_res$full_result$Negative_positive_Block_2_Block_1`.
+As in Experiment 1, indirectly measured evaluations corresponded to the valence of the behavioral information and were opposite to the valence of the briefly flashed words.
+Of limited theoretical interest, this effect was slightly larger when negative behavioral information was provided first.
+Hence, directly and indirectly measured evaluations, again, did not dissociate.
+
+### Differences between rating and IAT scores
+
+```{r}
+#| label: otm2-rydell-attitude-differences
+
+otm2_attitudes_measure_contrasts <- otm2_attitudes_aov %>% 
+  emmeans(~ Measure | ValenceBlock * Block) %>% 
+  pairs
+
+otm2_attitudes_measure_contrasts <- apa_print_ps(
+    otm2_attitudes_measure_contrasts
+    , otm2_attitudes_aov$lm
+    , est_name = "d_z"
+  )
+```
+
+As preregisted, despite the consistent pattern of results, we also compared $z$-standardized directly and indirectly measured evaluations, and found that they differed across measures in every condition.
+Specifically, we again replicated the pattern of differences observed in Experiment 1.
+When behavioral information was first positive and later negative, rating scores indicated a more favorable evaluation than IAT scores in the first block, `r otm2_attitudes_measure_contrasts$full_result$Positive_negative_X1_Eval_IATscore`, but a less favorable evaluation in the second block, `r otm2_attitudes_measure_contrasts$full_result$Positive_negative_X2_Eval_IATscore`.
+Conversely, when behavioral information was first negative and later positive rating scores indicated a less favorable evaluation than IAT scores in the first block, `r otm2_attitudes_measure_contrasts$full_result$Negative_positive_X1_Eval_IATscore`, but a more favorable evaluation in the second block, `r otm2_attitudes_measure_contrasts$full_result$Negative_positive_X2_Eval_IATscore`.
+Hence, directly and indirectly measured evaluations were directionally consistent with each other, but directly measured evaluations were more extreme than indirect measured evaluations.
+
 ## Prior sensitivity analyses
 
 ### Bayesian model comparison
@@ -1032,12 +1200,8 @@ otm2_mem |>
   ggplot(aes(x = Duration, y = Accuracy, shape = Duration, fill = Duration)) +
   geom_hline(yintercept = 0.5, color = grey(0.5)) +
   geom_violin(alpha = 0.3) +
-  # geom_point(position = position_jitterdodge(jitter.width = 0.1, dodge.width = 0.1)) +
   geom_sina(alpha = 0.5, size = 1) +
-  # stat_summary(fun.y = mean, aes(group = Location, linetype = ValenceBlock), geom = "line", position = position_dodge(0.1), color = "black") +
   stat_summary(fun.data = mean_cl_boot, color = "black", fun.args = list(B = 10000)) +
-  # scale_color_brewer(palette = "Set1", guide = otm1_results_legend) +
-  # scale_fill_brewer(palette = "Set1", guide = otm1_results_legend) +
   coord_cartesian(ylim = c(NA, 1)) +
   scale_shape_manual(values = c(21, 23, 24)) +
   scale_color_manual(values = c(RColorBrewer::brewer.pal(3, "Set1"), "#000000")) +
