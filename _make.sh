@@ -14,7 +14,7 @@ tbd_targets <- c(
 # Predicted computation time ---------------------------------------------
 
 outdated_targets <- targets::tar_outdated(names = !!tbd_targets, reporter = "silent")
-targets_metadata <- targets::tar_meta(names = !!outdated_targets, fields = c("name", "seconds"))
+targets_metadata <- targets::tar_meta(names = tidyselect::any_of(outdated_targets), fields = c("name", "seconds"))
 
 if(length(outdated_targets) > 0) {
   targets_metadata <- targets_metadata |>
