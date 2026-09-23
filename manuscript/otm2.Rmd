@@ -102,7 +102,7 @@ otm2p2f_mem_ttest_two_sided <- t.test(otm2p2f_mem$Accuracy, mu = 0.5) %>%
 otm2p2f_mem_ttest_nonsuperiority <- lm(Accuracy - 0.5 ~ 1, otm2p2f_mem) %>%
   emmeans(~ 1) %>%
   summary(side = "<", delta = 0.03, infer = TRUE) %>%
-  apa_print.summary_emm %$%
+  papaja:::apa_print.summary_emm() %$%
   # apa_print %$%
   statistic
 
