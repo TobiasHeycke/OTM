@@ -32,6 +32,8 @@ data; merged and processed data files can be found in
 `results/data_processed`.
 The R Markdown file `manuscript.Rmd` in the `paper` directory can be rendered to reproduce the manuscript using the R package `papaja`.
 
+The files provided here are mirrored on [GitHub](https://github.com/tobiasheycke/otm).
+
 *Please see below for more details on the data, software requirements, computational requirements, and steps to reproduce the analyses.*
 
 

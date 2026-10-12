@@ -1,4 +1,4 @@
-citHeader("To cite ml-otm in publications use:")
+citHeader("To cite otm in publications use:")
 
 citEntry(
   entry    = "Article",

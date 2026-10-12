@@ -29,6 +29,8 @@ data; merged and processed data files can be found in
 `paper` directory can be rendered to reproduce the manuscript using the
 R package `papaja`.
 
+The files provided here are mirrored on [GitHub](https://github.com/tobiasheycke/otm).
+
 *Please see below for more details on the data, software requirements,
 computational requirements, and steps to reproduce the analyses.*
 

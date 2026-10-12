@@ -355,7 +355,7 @@ Jan De Houwer is supported by Methusalem Grant 01M00209 of Ghent University.
 No other artificial-intelligence-assisted technologies were used in this research or the creation of this article.
 **Ethics**: This research received approval from the Yale University institutional review board (ID: 2000031518).
 **Computational reproducibility**: The computational reproducibility of the results in the main article (but not the supplementary materials) has been independently confirmed by the journal's STAR team.
-**Open Science Framework (OSF)**: To ensure long-term preservation, all OSF files were registered at LINK.
+**Open Science Framework (OSF)**: To ensure long-term preservation, all OSF files were registered at https://osf.io/6ypr5.
 
 ## Experiment 1 disclosures
 
